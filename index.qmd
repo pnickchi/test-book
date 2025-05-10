@@ -1,9 +1,5 @@
 # Preface {.unnumbered}
 
-This is a Quarto book.
+This is a mini book for hypothesis testing in statistics. This book covers the tests from DSCI 552 in MDS program at UBC. 
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
-
-```{r}
-1 + 1
-```
+- Todolist: add more context here 

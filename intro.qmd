@@ -1,9 +1,5 @@
-# Introduction
+# Introduction {.unnumbered}
 
-This is a book created from markdown and executable code.
+This is a mini-book on hypothesis testing in statistics. It covers the tests taught in DSCI 552 in the MDS program at UBC.
 
-See @knuth84 for additional discussion of literate programming.
-
-```{r}
-1 + 1
-```
+- Todolist: add more context and information here
