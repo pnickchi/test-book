@@ -1,2 +1,13 @@
 # Chapter 1: Tests for One Sample {.unnumbered}
-This chapter introduces statistical tests designed for one-sample analysis
+This chapter introduces statistical tests designed to analyze a single sample, which is a fundamental task in data analysis across many disciplines. Whether you're evaluating whether the average recovery time from a treatment differs from a known standard, assessing whether student test scores exceed a benchmark, or testing if the proportion of success in a group differs from an expected rate, these methods help determine whether the observed values are statistically significant or simply due to chance.
+
+There are several statistical tests used to evaluate hypotheses about a single sample. The appropriate test depends on the type of variable (mean or proportion), sample size, and whether population parameters like variance are known. Key tests include:
+
+## One-sample z-test for the mean
+Used when the population variance is known. This test compares the sample mean to a hypothesized population mean.
+
+## One-sample t-test for the mean
+Used when the population variance is unknown and the sample is either normally distributed or sufficiently large. It compares the sample mean to a hypothesized value under these more realistic conditions.
+
+## One-sample z-test for proportions
+Used to test whether the observed proportion in a sample differs significantly from a hypothesized population proportion.
