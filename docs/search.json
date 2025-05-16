@@ -18,5 +18,75 @@
     "crumbs": [
       "Introduction"
     ]
+  },
+  {
+    "objectID": "chapter2.html",
+    "href": "chapter2.html",
+    "title": "Chapter 2: Tests for Two Samples",
+    "section": "",
+    "text": "1. Tests to compare the mean\nThis chapter introduces statistical tests designed to compare two samples—a fundamental task in data analysis across many disciplines. Whether you’re comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion of two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically meaningful or simply due to chance.\nBroadly speaking, there are two main types of comparisons:\nThe choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R code examples using real or simulated datasets to help ground the concepts in practice.",
+    "crumbs": [
+      "Chapter 2: Tests for Two Samples"
+    ]
+  },
+  {
+    "objectID": "chapter2.html#how-to-code-in-r",
+    "href": "chapter2.html#how-to-code-in-r",
+    "title": "Chapter 2: Tests for Two Samples",
+    "section": "How to code in R?",
+    "text": "How to code in R?\n\nx &lt;- rnorm(100)\ny &lt;- rnorm(200, mean = 10)\nt.test(x, y)\n\n\n    Welch Two Sample t-test\n\ndata:  x and y\nt = -81.59, df = 200.15, p-value &lt; 2.2e-16\nalternative hypothesis: true difference in means is not equal to 0\n95 percent confidence interval:\n -10.463077  -9.969265\nsample estimates:\n mean of x  mean of y \n-0.0672655 10.1489053",
+    "crumbs": [
+      "Chapter 2: Tests for Two Samples"
+    ]
+  },
+  {
+    "objectID": "chapter2.html#paired-samples",
+    "href": "chapter2.html#paired-samples",
+    "title": "Chapter 2: Tests for Two Samples",
+    "section": "Paired Samples",
+    "text": "Paired Samples\n\nExample dataset in R\n\nTBD\n\n\n\nHow to code in R?",
+    "crumbs": [
+      "Chapter 2: Tests for Two Samples"
+    ]
+  },
+  {
+    "objectID": "chapter2.html#independent-samples",
+    "href": "chapter2.html#independent-samples",
+    "title": "Chapter 2: Tests for Two Samples",
+    "section": "Independent Samples",
+    "text": "Independent Samples\nIndependent samples arise when the observations in one group do not influence or relate to the observations in the other. A classic example comes from educational research:\nSuppose you’re interested in whether a new method of teaching introductory physics improves student performance. To investigate this, you decide to test the method at two universities: the University of British Columbia (UBC) and Simon Fraser University (SFU). You apply the new teaching method at SFU and compare the results to students taught with the traditional method at UBC.\nIn this scenario, students at UBC and SFU form two distinct, unrelated groups. Since the students are not paired or matched across schools, and each individual belongs to only one group, the samples are independent.\nLet us assume that each population has an unknown average physics score—denoted by:\n\\[\n    \\mu_1 \\quad \\text{(mean for UBC)}, \\quad \\mu_2 \\quad \\text{(mean for SFU)}.\n\\]\nSince we don’t have access to all students’ grades, we take a random sample from each school. Suppose:\n\nFrom UBC (Population 1), we obtain a sample of size \\(n\\), denoted as: \\[X_1, X_2, \\ldots, X_n\\]\nFrom SFU (Population 2), we obtain a sample of size \\(m\\), denoted as: \\[Y_1, Y_2, \\ldots, Y_m\\]\n\nNote that the sample sizes \\(n\\) and \\(m\\) do not need to be equal. Now, the central question becomes:\nIs there a statistically significant difference between the mean physics scores of the two groups?\nIn formal terms, we test the hypotheses:\n\\[H_0: \\mu_1 = \\mu_2 \\quad \\text{versus} \\quad H_A: \\mu_1 \\ne \\mu_2\\]\nTo test this, we use the two-sample t-test, which compares the sample means and incorporates variability within and between the samples. If we assume equal population variances, the test statistic is:\n\\[t = \\frac{\\bar{X} - \\bar{Y}}{s_p \\sqrt{\\frac{1}{n} + \\frac{1}{m}}}\\]\nwhere:\n\n\\(\\bar{X}\\) and \\(\\bar{Y}\\) are the sample means for UBC and SFU, respectively,\n\\(s_p\\) is the , computed as:\n\\(s_p = \\sqrt{\\frac{(n - 1)s_X^2 + (m - 1)s_Y^2}{n + m - 2}}\\)\n\\(s_X^2\\) and \\(s_Y^2\\) are the sample variances of the two groups.\n\nIf the assumption of equal variances is questionable, we instead use Welch’s t-test, which adjusts the standard error and degrees of freedom accordingly.\nIf the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers), we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it.\nIn the sections that follow, we will demonstrate how to: - Explore the data visually and statistically, - Perform the relevant hypothesis tests in R, - Check test assumptions (e.g., normality, variance equality), - Interpret results using both \\(p\\)-values and confidence intervals.\n\nExample dataset in R\n\nTBD\n\n\n\nHow to code in R?\n\nx &lt;- rnorm(100)\ny &lt;- rnorm(200, mean = 10)\nt.test(x, y)\n\n\n    Welch Two Sample t-test\n\ndata:  x and y\nt = -82.714, df = 201.51, p-value &lt; 2.2e-16\nalternative hypothesis: true difference in means is not equal to 0\n95 percent confidence interval:\n -10.409591  -9.924844\nsample estimates:\nmean of x mean of y \n-0.237894  9.929324",
+    "crumbs": [
+      "Chapter 2: Tests for Two Samples"
+    ]
+  },
+  {
+    "objectID": "chapter2.html#example-dataset-in-r",
+    "href": "chapter2.html#example-dataset-in-r",
+    "title": "Chapter 2: Tests for Two Samples",
+    "section": "Example dataset in R",
+    "text": "Example dataset in R\n\nTBD",
+    "crumbs": [
+      "Chapter 2: Tests for Two Samples"
+    ]
+  },
+  {
+    "objectID": "chapter2.html#tests-to-compare-the-mean",
+    "href": "chapter2.html#tests-to-compare-the-mean",
+    "title": "Chapter 2: Tests for Two Samples",
+    "section": "",
+    "text": "Independent samples}, where the observations in one group are unrelated to those in the other, and\nPaired (or dependent) samples}, where observations are naturally matched in some way, such as before-and-after measurements.",
+    "crumbs": [
+      "Chapter 2: Tests for Two Samples"
+    ]
+  },
+  {
+    "objectID": "chapter2.html#tests-to-compare-the-proportion",
+    "href": "chapter2.html#tests-to-compare-the-proportion",
+    "title": "Chapter 2: Tests for Two Samples",
+    "section": "2. Tests to compare the proportion",
+    "text": "2. Tests to compare the proportion",
+    "crumbs": [
+      "Chapter 2: Tests for Two Samples"
+    ]
   }
 ]

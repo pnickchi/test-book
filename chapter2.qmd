@@ -1,1 +1,84 @@
 # Chapter 2: Tests for Two Samples {.unnumbered}
+
+This chapter introduces statistical tests designed to compare two samples which is a fundamental task in data analysis across many disciplines. Whether you're comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion among two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically significant or simply due to chance.
+
+## 1. Tests to compare the mean
+
+Broadly speaking, there are two main types of tests to compare the means between two populations:
+
+-   Independent samples, where the observations in one group are unrelated to those in the other, and
+-   Paired (or dependent) samples, where observations are naturally matched in some way, such as before-and-after measurements.
+
+The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R code examples using real or simulated datasets to help ground the concepts in practice.
+
+## Independent Samples
+
+Independent samples arise when the observations in one group do not influence or relate to the observations in the other. A classic example comes from educational research:
+
+Suppose you're interested in whether a new method of teaching introductory physics improves student performance. To investigate this, you decide to test the method at two universities: the University of British Columbia (UBC) and Simon Fraser University (SFU). You apply the new teaching method at SFU and compare the results to students taught with the traditional method at UBC.
+
+In this scenario, students at UBC and SFU form two distinct, unrelated groups. Since the students are not paired or matched across schools, and each individual belongs to only one group, the samples are independent.
+
+Let us assume that each population has an unknown average physics score—denoted by:
+
+$$
+    \mu_1 \quad \text{(mean for UBC)}, \quad \mu_2 \quad \text{(mean for SFU)}.
+$$
+
+Since we don’t have access to all students' grades, we take a random sample from each school. Suppose:
+
+-   From UBC (Population 1), we obtain a sample of size $n$, denoted as: $$X_1, X_2, \ldots, X_n$$
+
+-   From SFU (Population 2), we obtain a sample of size $m$, denoted as: $$Y_1, Y_2, \ldots, Y_m$$
+
+Note that the sample sizes $n$ and $m$ do not need to be equal. Now, the central question becomes:
+
+**Is there a statistically significant difference between the mean physics scores of the two groups?**
+
+In formal terms, we test the hypotheses:
+
+$$H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2$$
+
+To test this, we use the **two-sample** t-test, which compares the sample means and incorporates variability within and between the samples. If we assume equal population variances, the test statistic is:
+
+$$t = \frac{\bar{X} - \bar{Y}}{s_p \sqrt{\frac{1}{n} + \frac{1}{m}}}$$
+
+where:
+
+-   $\bar{X}$ and $\bar{Y}$ are the sample means for UBC and SFU, respectively,
+-   $s_p$ is the \textbf{pooled standard deviation}, computed as:
+-   $s_p = \sqrt{\frac{(n - 1)s_X^2 + (m - 1)s_Y^2}{n + m - 2}}$
+-   $s_X^2$ and $s_Y^2$ are the sample variances of the two groups.
+
+If the assumption of equal variances is questionable, we instead use Welch’s t-test, which adjusts the standard error and degrees of freedom accordingly.
+
+If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers), we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it.
+
+Now let us see how we can run the test on some example datasets in R!
+
+
+### Example dataset in R
+
+-   TBD
+
+### How to code in R?
+
+```{r}
+# This is example for now. I will replace it later with a real dataset
+x <- rnorm(100)
+y <- rnorm(200, mean = 10)
+t.test(x, y)
+```
+
+## Paired Samples
+
+- Description
+
+### Example dataset in R
+
+-   TBD
+
+### How to code in R?
+
+
+## 2. Tests to compare the proportion

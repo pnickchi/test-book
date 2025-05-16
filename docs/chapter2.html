@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -37,10 +71,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-4130754fb9587f3408204fcb3c683cb1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -69,6 +103,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -147,8 +210,25 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#tests-to-compare-the-mean" id="toc-tests-to-compare-the-mean" class="nav-link active" data-scroll-target="#tests-to-compare-the-mean">1. Tests to compare the mean</a></li>
+  <li><a href="#independent-samples" id="toc-independent-samples" class="nav-link" data-scroll-target="#independent-samples">Independent Samples</a>
+  <ul class="collapse">
+  <li><a href="#example-dataset-in-r" id="toc-example-dataset-in-r" class="nav-link" data-scroll-target="#example-dataset-in-r">Example dataset in R</a></li>
+  <li><a href="#how-to-code-in-r" id="toc-how-to-code-in-r" class="nav-link" data-scroll-target="#how-to-code-in-r">How to code in R?</a></li>
+  </ul></li>
+  <li><a href="#paired-samples" id="toc-paired-samples" class="nav-link" data-scroll-target="#paired-samples">Paired Samples</a>
+  <ul class="collapse">
+  <li><a href="#example-dataset-in-r-1" id="toc-example-dataset-in-r-1" class="nav-link" data-scroll-target="#example-dataset-in-r-1">Example dataset in R</a></li>
+  <li><a href="#how-to-code-in-r-1" id="toc-how-to-code-in-r-1" class="nav-link" data-scroll-target="#how-to-code-in-r-1">How to code in R?</a></li>
+  </ul></li>
+  <li><a href="#tests-to-compare-the-proportion" id="toc-tests-to-compare-the-proportion" class="nav-link" data-scroll-target="#tests-to-compare-the-proportion">2. Tests to compare the proportion</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -172,8 +252,91 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>This chapter introduces statistical tests designed to compare two samples—a fundamental task in data analysis across many disciplines. Whether you’re comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion of two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically meaningful or simply due to chance.</p>
+<section id="tests-to-compare-the-mean" class="level2">
+<h2 class="anchored" data-anchor-id="tests-to-compare-the-mean">1. Tests to compare the mean</h2>
+<p>Broadly speaking, there are two main types of comparisons:</p>
+<ul>
+<li>Independent samples}, where the observations in one group are unrelated to those in the other, and</li>
+<li>Paired (or dependent) samples}, where observations are naturally matched in some way, such as before-and-after measurements.</li>
+</ul>
+<p>The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R code examples using real or simulated datasets to help ground the concepts in practice.</p>
+</section>
+<section id="independent-samples" class="level2">
+<h2 class="anchored" data-anchor-id="independent-samples">Independent Samples</h2>
+<p>Independent samples arise when the observations in one group do not influence or relate to the observations in the other. A classic example comes from educational research:</p>
+<p>Suppose you’re interested in whether a new method of teaching introductory physics improves student performance. To investigate this, you decide to test the method at two universities: the University of British Columbia (UBC) and Simon Fraser University (SFU). You apply the new teaching method at SFU and compare the results to students taught with the traditional method at UBC.</p>
+<p>In this scenario, students at UBC and SFU form two distinct, unrelated groups. Since the students are not paired or matched across schools, and each individual belongs to only one group, the samples are independent.</p>
+<p>Let us assume that each population has an unknown average physics score—denoted by:</p>
+<p><span class="math display">\[
+    \mu_1 \quad \text{(mean for UBC)}, \quad \mu_2 \quad \text{(mean for SFU)}.
+\]</span></p>
+<p>Since we don’t have access to all students’ grades, we take a random sample from each school. Suppose:</p>
+<ul>
+<li><p>From UBC (Population 1), we obtain a sample of size <span class="math inline">\(n\)</span>, denoted as: <span class="math display">\[X_1, X_2, \ldots, X_n\]</span></p></li>
+<li><p>From SFU (Population 2), we obtain a sample of size <span class="math inline">\(m\)</span>, denoted as: <span class="math display">\[Y_1, Y_2, \ldots, Y_m\]</span></p></li>
+</ul>
+<p>Note that the sample sizes <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> do not need to be equal. Now, the central question becomes:</p>
+<p><strong>Is there a statistically significant difference between the mean physics scores of the two groups?</strong></p>
+<p>In formal terms, we test the hypotheses:</p>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2\]</span></p>
+<p>To test this, we use the <strong>two-sample</strong> t-test, which compares the sample means and incorporates variability within and between the samples. If we assume equal population variances, the test statistic is:</p>
+<p><span class="math display">\[t = \frac{\bar{X} - \bar{Y}}{s_p \sqrt{\frac{1}{n} + \frac{1}{m}}}\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> are the sample means for UBC and SFU, respectively,</li>
+<li><span class="math inline">\(s_p\)</span> is the , computed as:</li>
+<li><span class="math inline">\(s_p = \sqrt{\frac{(n - 1)s_X^2 + (m - 1)s_Y^2}{n + m - 2}}\)</span></li>
+<li><span class="math inline">\(s_X^2\)</span> and <span class="math inline">\(s_Y^2\)</span> are the sample variances of the two groups.</li>
+</ul>
+<p>If the assumption of equal variances is questionable, we instead use Welch’s t-test, which adjusts the standard error and degrees of freedom accordingly.</p>
+<p>If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers), we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it.</p>
+<p>In the sections that follow, we will demonstrate how to: - Explore the data visually and statistically, - Perform the relevant hypothesis tests in R, - Check test assumptions (e.g., normality, variance equality), - Interpret results using both <span class="math inline">\(p\)</span>-values and confidence intervals.</p>
+<section id="example-dataset-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="example-dataset-in-r">Example dataset in R</h3>
+<ul>
+<li>TBD</li>
+</ul>
+</section>
+<section id="how-to-code-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-code-in-r">How to code in R?</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="at">mean =</span> <span class="dv">10</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  x and y
+t = -82.714, df = 201.51, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -10.409591  -9.924844
+sample estimates:
+mean of x mean of y 
+-0.237894  9.929324 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="paired-samples" class="level2">
+<h2 class="anchored" data-anchor-id="paired-samples">Paired Samples</h2>
+<section id="example-dataset-in-r-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-dataset-in-r-1">Example dataset in R</h3>
+<ul>
+<li>TBD</li>
+</ul>
+</section>
+<section id="how-to-code-in-r-1" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-code-in-r-1">How to code in R?</h3>
+</section>
+</section>
+<section id="tests-to-compare-the-proportion" class="level2">
+<h2 class="anchored" data-anchor-id="tests-to-compare-the-proportion">2. Tests to compare the proportion</h2>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -258,8 +421,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -370,7 +531,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
