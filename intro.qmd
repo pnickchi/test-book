@@ -1,5 +1,33 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DZWGQVJSHE');
+</script>
+
 # Introduction {.unnumbered}
 
 This is a mini-book on hypothesis testing in statistics. It covers the tests taught in DSCI 552 in the MDS program at UBC.
 
-- Todolist: add more context and information here
+-   Todolist: add more context and information here
+
+## The Test Mind Map
+
+::: {#fig-test-mindmap}
+```{mermaid}
+mindmap
+  root((Frequentist
+  Hypothesis 
+  Testing
+  ))
+    Classical <br/>Tests
+      )Chapter 1: <br/>Tests for <br/>One Sample(
+      )Chapter 2: <br/>Tests for <br/>Two Samples(
+      )Chapter 3: <br/>ANOVA Related <br/>Tests(
+    Simulation Based <br/>Tests
+```
+:::
+

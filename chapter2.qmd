@@ -1,3 +1,13 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DZWGQVJSHE');
+</script>
+
 # Chapter 2: Tests for Two Samples {.unnumbered}
 
 This chapter introduces statistical tests designed to compare two samples which is a fundamental task in data analysis across many disciplines. Whether you're comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion among two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically significant or simply due to chance.
@@ -56,7 +66,6 @@ If the normality assumption is also not satisfied (e.g., due to skewed distribut
 
 Now let us see how we can run the test on some example datasets in R!
 
-
 ### Example dataset in R
 
 -   TBD
@@ -72,13 +81,12 @@ t.test(x, y)
 
 ## Paired Samples
 
-- Description
+-   Description
 
 ### Example dataset in R
 
 -   TBD
 
 ### How to code in R?
-
 
 ## 2. Tests to compare the proportion

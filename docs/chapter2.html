@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
-
+<meta name="generator" content="quarto-1.5.53">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
-<title>Chapter 2: Tests for Two Samples – The mini test book</title>
+<title>Chapter 2: Tests for Two Samples – The Mini Test Book</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -56,7 +53,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -71,16 +67,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4130754fb9587f3408204fcb3c683cb1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
+  "panel-placement": "end",
+  "type": "overlay",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -101,12 +96,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
+}</script><style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -131,16 +122,46 @@ const typesetMath = (el) => {
 window.Quarto = {
   typesetMath
 };
-</script>
-
+</script><link rel="stylesheet" href="custom.css">
 </head>
-
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">The Mini Test Book</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+    <a href="https://github.com/pnickchi/test-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
+<li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=%7Curl%7C">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+</div>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -151,16 +172,11 @@ window.Quarto = {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="./">The mini test book</a> 
-    </div>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./img/toolkit.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
@@ -169,10 +185,16 @@ window.Quarto = {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./privacy-policy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Website Privacy Policy</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -206,35 +228,33 @@ window.Quarto = {
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">The tools</h2>
    
   <ul>
-  <li><a href="#tests-to-compare-the-mean" id="toc-tests-to-compare-the-mean" class="nav-link active" data-scroll-target="#tests-to-compare-the-mean">1. Tests to compare the mean</a></li>
-  <li><a href="#independent-samples" id="toc-independent-samples" class="nav-link" data-scroll-target="#independent-samples">Independent Samples</a>
-  <ul class="collapse">
-  <li><a href="#example-dataset-in-r" id="toc-example-dataset-in-r" class="nav-link" data-scroll-target="#example-dataset-in-r">Example dataset in R</a></li>
+<li><a href="#tests-to-compare-the-mean" id="toc-tests-to-compare-the-mean" class="nav-link active" data-scroll-target="#tests-to-compare-the-mean">1. Tests to compare the mean</a></li>
+  <li>
+<a href="#independent-samples" id="toc-independent-samples" class="nav-link" data-scroll-target="#independent-samples">Independent Samples</a>
+  <ul>
+<li><a href="#example-dataset-in-r" id="toc-example-dataset-in-r" class="nav-link" data-scroll-target="#example-dataset-in-r">Example dataset in R</a></li>
   <li><a href="#how-to-code-in-r" id="toc-how-to-code-in-r" class="nav-link" data-scroll-target="#how-to-code-in-r">How to code in R?</a></li>
-  </ul></li>
-  <li><a href="#paired-samples" id="toc-paired-samples" class="nav-link" data-scroll-target="#paired-samples">Paired Samples</a>
-  <ul class="collapse">
-  <li><a href="#example-dataset-in-r-1" id="toc-example-dataset-in-r-1" class="nav-link" data-scroll-target="#example-dataset-in-r-1">Example dataset in R</a></li>
-  <li><a href="#how-to-code-in-r-1" id="toc-how-to-code-in-r-1" class="nav-link" data-scroll-target="#how-to-code-in-r-1">How to code in R?</a></li>
-  </ul></li>
-  <li><a href="#tests-to-compare-the-proportion" id="toc-tests-to-compare-the-proportion" class="nav-link" data-scroll-target="#tests-to-compare-the-proportion">2. Tests to compare the proportion</a></li>
   </ul>
-</nav>
+</li>
+  <li>
+<a href="#paired-samples" id="toc-paired-samples" class="nav-link" data-scroll-target="#paired-samples">Paired Samples</a>
+  <ul>
+<li><a href="#example-dataset-in-r-1" id="toc-example-dataset-in-r-1" class="nav-link" data-scroll-target="#example-dataset-in-r-1">Example dataset in R</a></li>
+  <li><a href="#how-to-code-in-r-1" id="toc-how-to-code-in-r-1" class="nav-link" data-scroll-target="#how-to-code-in-r-1">How to code in R?</a></li>
+  </ul>
+</li>
+  <li><a href="#tests-to-compare-the-proportion" id="toc-tests-to-compare-the-proportion" class="nav-link" data-scroll-target="#tests-to-compare-the-proportion">2. Tests to compare the proportion</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/chapter2.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/chapter2.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Chapter 2: Tests for Two Samples</h1>
 </div>
 
@@ -249,21 +269,21 @@ window.Quarto = {
   
 
 
-</header>
+</header><!-- Google tag (gtag.js) --><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-
-<p>This chapter introduces statistical tests designed to compare two samples—a fundamental task in data analysis across many disciplines. Whether you’re comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion of two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically meaningful or simply due to chance.</p>
-<section id="tests-to-compare-the-mean" class="level2">
-<h2 class="anchored" data-anchor-id="tests-to-compare-the-mean">1. Tests to compare the mean</h2>
-<p>Broadly speaking, there are two main types of comparisons:</p>
+  gtag('config', 'G-DZWGQVJSHE');
+</script><p>This chapter introduces statistical tests designed to compare two samples which is a fundamental task in data analysis across many disciplines. Whether you’re comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion among two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically significant or simply due to chance.</p>
+<section id="tests-to-compare-the-mean" class="level2"><h2 class="anchored" data-anchor-id="tests-to-compare-the-mean">1. Tests to compare the mean</h2>
+<p>Broadly speaking, there are two main types of tests to compare the means between two populations:</p>
 <ul>
-<li>Independent samples}, where the observations in one group are unrelated to those in the other, and</li>
-<li>Paired (or dependent) samples}, where observations are naturally matched in some way, such as before-and-after measurements.</li>
+<li>Independent samples, where the observations in one group are unrelated to those in the other, and</li>
+<li>Paired (or dependent) samples, where observations are naturally matched in some way, such as before-and-after measurements.</li>
 </ul>
 <p>The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R code examples using real or simulated datasets to help ground the concepts in practice.</p>
-</section>
-<section id="independent-samples" class="level2">
-<h2 class="anchored" data-anchor-id="independent-samples">Independent Samples</h2>
+</section><section id="independent-samples" class="level2"><h2 class="anchored" data-anchor-id="independent-samples">Independent Samples</h2>
 <p>Independent samples arise when the observations in one group do not influence or relate to the observations in the other. A classic example comes from educational research:</p>
 <p>Suppose you’re interested in whether a new method of teaching introductory physics improves student performance. To investigate this, you decide to test the method at two universities: the University of British Columbia (UBC) and Simon Fraser University (SFU). You apply the new teaching method at SFU and compare the results to students taught with the traditional method at UBC.</p>
 <p>In this scenario, students at UBC and SFU form two distinct, unrelated groups. Since the students are not paired or matched across schools, and each individual belongs to only one group, the samples are independent.</p>
@@ -284,62 +304,52 @@ window.Quarto = {
 <p><span class="math display">\[t = \frac{\bar{X} - \bar{Y}}{s_p \sqrt{\frac{1}{n} + \frac{1}{m}}}\]</span></p>
 <p>where:</p>
 <ul>
-<li><span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> are the sample means for UBC and SFU, respectively,</li>
-<li><span class="math inline">\(s_p\)</span> is the , computed as:</li>
+<li>
+<span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> are the sample means for UBC and SFU, respectively,</li>
+<li>
+<span class="math inline">\(s_p\)</span> is the , computed as:</li>
 <li><span class="math inline">\(s_p = \sqrt{\frac{(n - 1)s_X^2 + (m - 1)s_Y^2}{n + m - 2}}\)</span></li>
-<li><span class="math inline">\(s_X^2\)</span> and <span class="math inline">\(s_Y^2\)</span> are the sample variances of the two groups.</li>
+<li>
+<span class="math inline">\(s_X^2\)</span> and <span class="math inline">\(s_Y^2\)</span> are the sample variances of the two groups.</li>
 </ul>
 <p>If the assumption of equal variances is questionable, we instead use Welch’s t-test, which adjusts the standard error and degrees of freedom accordingly.</p>
 <p>If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers), we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it.</p>
-<p>In the sections that follow, we will demonstrate how to: - Explore the data visually and statistically, - Perform the relevant hypothesis tests in R, - Check test assumptions (e.g., normality, variance equality), - Interpret results using both <span class="math inline">\(p\)</span>-values and confidence intervals.</p>
-<section id="example-dataset-in-r" class="level3">
-<h3 class="anchored" data-anchor-id="example-dataset-in-r">Example dataset in R</h3>
+<p>Now let us see how we can run the test on some example datasets in R!</p>
+<section id="example-dataset-in-r" class="level3"><h3 class="anchored" data-anchor-id="example-dataset-in-r">Example dataset in R</h3>
 <ul>
 <li>TBD</li>
-</ul>
-</section>
-<section id="how-to-code-in-r" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-code-in-r">How to code in R?</h3>
+</ul></section><section id="how-to-code-in-r" class="level3"><h3 class="anchored" data-anchor-id="how-to-code-in-r">How to code in R?</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="at">mean =</span> <span class="dv">10</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This is example for now. I will replace it later with a real dataset</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">200</span>, mean <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
 
 data:  x and y
-t = -82.714, df = 201.51, p-value &lt; 2.2e-16
+t = -80.798, df = 214.02, p-value &lt; 2.2e-16
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -10.409591  -9.924844
+ -10.133415  -9.650772
 sample estimates:
-mean of x mean of y 
--0.237894  9.929324 </code></pre>
+  mean of x   mean of y 
+-0.03084369  9.86124949 </code></pre>
 </div>
 </div>
-</section>
-</section>
-<section id="paired-samples" class="level2">
-<h2 class="anchored" data-anchor-id="paired-samples">Paired Samples</h2>
-<section id="example-dataset-in-r-1" class="level3">
-<h3 class="anchored" data-anchor-id="example-dataset-in-r-1">Example dataset in R</h3>
+</section></section><section id="paired-samples" class="level2"><h2 class="anchored" data-anchor-id="paired-samples">Paired Samples</h2>
+<ul>
+<li>Description</li>
+</ul>
+<section id="example-dataset-in-r-1" class="level3"><h3 class="anchored" data-anchor-id="example-dataset-in-r-1">Example dataset in R</h3>
 <ul>
 <li>TBD</li>
-</ul>
-</section>
-<section id="how-to-code-in-r-1" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-code-in-r-1">How to code in R?</h3>
-</section>
-</section>
-<section id="tests-to-compare-the-proportion" class="level2">
-<h2 class="anchored" data-anchor-id="tests-to-compare-the-proportion">2. Tests to compare the proportion</h2>
+</ul></section><section id="how-to-code-in-r-1" class="level3"><h3 class="anchored" data-anchor-id="how-to-code-in-r-1">How to code in R?</h3>
+</section></section><section id="tests-to-compare-the-proportion" class="level2"><h2 class="anchored" data-anchor-id="tests-to-compare-the-proportion">2. Tests to compare the proportion</h2>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -421,6 +431,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -429,7 +441,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/pnickchi\.github\.io\/test-book\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -443,6 +455,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         if (link.dataset.originalHref !== undefined) {
           link.href = link.dataset.originalHref;
         }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
       }
     }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -531,6 +550,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -755,9 +775,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./chapter1.html" class="pagination-link" aria-label="Chapter 1: Tests for One Sample">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Chapter 1: Tests for One Sample</span>
       </a>          
@@ -769,8 +787,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2025; G. Alexi Rodríguez-Arelis, Kate Manskaia, and Payman Nickchi<br><a href="https://www.flaticon.com/free-icon/toolkit_4229807?term=tool+box&amp;page=1&amp;position=24&amp;origin=tag&amp;related_id=4229807" title="toolkit icons">Toolkit icon created by Freepik - Flaticon</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/chapter2.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/chapter2.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
-
-
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
