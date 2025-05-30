@@ -4,7 +4,7 @@ project:
 
 book:
   title: "The Mini Test Book"
-  subtitle: "TBD"
+  subtitle: "(in development)"
   author:
     - name: 
       - G. Alexi Rodríguez-Arelis
@@ -42,14 +42,14 @@ book:
 
   chapters:
     - index.qmd
-    - privacy-policy.qmd
-    - intro.qmd
-    - chapter1.qmd
-    - chapter2.qmd
-    - chapter3.qmd
-    - references.qmd
+    - book/privacy-policy.qmd
+    - book/intro.qmd
+    - book/chapter1.qmd
+    - book/chapter2.qmd
+    - book/chapter3.qmd
+    - book/references.qmd
 
-bibliography: references.bib
+bibliography: book/references.bib
 
 format:
   html:

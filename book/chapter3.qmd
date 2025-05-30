@@ -1,0 +1,33 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DZWGQVJSHE');
+</script>
+
+# Chapter 3: ANOVA-related Tests for $k$ Continuous Population Means {.unnumbered}
+
+::: {#fig-test-chapter-3-mindmap}
+```{mermaid}
+mindmap
+  root((Frequentist
+  Hypothesis 
+  Testings
+  ))
+    Simulation Based<br/>Tests
+    Classical<br/>Tests
+      (Chapter 1: <br/>Tests for One<br/>Continuous<br/>Population Mean)
+      (Chapter 2: <br/>Tests for Two<br/>Continuous<br/>Population Means)
+      (Chapter 3: <br/>ANOVA-related <br/>Tests for<br/>k Continuous<br/>Population Means)
+        {{Unbounded<br/>Responses}}
+          One<br/>Factor type<br/>Feature
+            )One way<br/>ANOVA(
+          Two<br/>Factor type<br/>Features
+            )Two way<br/>ANOVA(
+```
+
+A specific hypothesis testing mind map outlining the techniques explored in this chapter, which include ANOVA-related tests for $k$ population means.
+:::

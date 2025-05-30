@@ -1,4 +1,5 @@
 <!-- Google tag (gtag.js) -->
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -8,17 +9,46 @@
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 
-
 ```{r, echo = FALSE}
 #| label: setup
 #| include: false
 library(tidyverse)
 ```
 
-
 # Chapter 2: Tests for Two Samples {.unnumbered}
 
 This chapter introduces statistical tests designed to compare two samples which is a fundamental task in data analysis across many disciplines. Whether you're comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion among two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically significant or simply due to chance.
+
+::: {#fig-test-chapter-2-mindmap}
+```{mermaid}
+mindmap
+  root((Frequentist
+  Hypothesis 
+  Testings
+  ))
+    Simulation Based<br/>Tests
+    Classical<br/>Tests
+      (Chapter 1: <br/>Tests for One<br/>Continuous<br/>Population Mean)
+      (Chapter 2: <br/>Tests for Two<br/>Continuous<br/>Population Means)
+        Two<br/>Independent<br/>Populations
+          {{Unbounded<br/>Responses}}
+            Unknown<br/>Population<br/>Variances
+              Population<br/>Variances<br/>are assumed<br/>to be Equal
+                )Two sample<br/>Student's t test<br/>for Independent<br/>Samples(
+              Population<br/>Variances<br/>are assumed<br/>to be Unequal
+                )Two sample<br/>Welch's t test<br/>for Independent<br/>Samples(
+            Known<br/>Population<br/>Variances
+              )Two sample z test<br/>for Independent<br/>Samples(
+          {{Proportions between<br/>0 and 1<br/>obtained from two <br/>Binary Responses}}
+            )Two sample z test<br/>for Independent<br/>Samples(
+        Two<br/>Related<br/>Populations or<br/>Measurements
+          {{Unbounded<br/>Responses}}
+            )Two sample t test<br/>for Paired<br/>Samples(
+      (Chapter 3: <br/>ANOVA-related <br/>Tests for<br/>k Continuous<br/>Population Means)
+```
+
+A specific hypothesis testing mind map outlining the techniques explored in this chapter, which are classical tests for two continuous population means.
+:::
 
 This chapter covers two types of tests. First, we discuss tests for comparing the means of two samples, which are used to make inferences about population means. Second, we examine tests for comparing proportions between two samples.
 
@@ -72,10 +102,9 @@ where:
 
 Under the assumption that null hypothesis is correct (i.e. $\mu_1=\mu_2$) then the test statistic defined above follows a t-distribution with $n+m-2$ degrees of freedom (which we denote it by $T_{n+m-2}$). Knowing the distribution of this statistic helps us to compute $\textit{p-value}$ of the test as follows:
 
-$$\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)$$
-**Note:** The probability is multiplied by two since we have a two sided hypothesis (alternative is $\mu_1 \neq \mu_2$). For a one sided test (when alternative hypothesis is $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) we do not need to multiply by two. 
+$$\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)$$ **Note:** The probability is multiplied by two since we have a two sided hypothesis (alternative is $\mu_1 \neq \mu_2$). For a one sided test (when alternative hypothesis is $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) we do not need to multiply by two.
 
-If the assumption of equal variances is questionable, we instead use Welch’s t-test, which adjusts the standard error and degrees of freedom accordingly. The Welch's test statistic is computed as: 
+If the assumption of equal variances is questionable, we instead use Welch’s t-test, which adjusts the standard error and degrees of freedom accordingly. The Welch's test statistic is computed as:
 
 $$t = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{s_X^2}{n} + \frac{s_Y^2}{m}}}$$
 
@@ -84,12 +113,11 @@ Under the assumption that null hypothesis is correct, the test statistics define
 $$\nu = \frac{\left( \frac{s_1^2}{n} + \frac{s_2^2}{m} \right)^2}
 {\frac{\left( \frac{s_1^2}{n} \right)^2}{n - 1} + \frac{\left( \frac{s_2^2}{m} \right)^2}{m - 1}}$$
 
-Note that this degree of freedom is not necessaily an integer number (could be a real number). When we run t-test, we operate under the assumption that: 1) either the sample size is large enough (we are thinking about $n=30$ at least) so that central limit theorem assumptions work well, or 2) the distribution of our sample in each group is normal or symmetric enough. 
+Note that this degree of freedom is not necessaily an integer number (could be a real number). When we run t-test, we operate under the assumption that: 1) either the sample size is large enough (we are thinking about $n=30$ at least) so that central limit theorem assumptions work well, or 2) the distribution of our sample in each group is normal or symmetric enough.
 
 If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers) or we have a very small sample size, we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it. You can read more about it LINK.
 
 Now let us see how to run the two-sample test on some example datasets in R. We will first describe the dataset we want to use, and then show how to run the test in R.
-
 
 ### Example dataset
 
@@ -103,11 +131,11 @@ ABn_data
 
 The columns in the dataset are as follows:
 
-- Font: A factor variable with three levels — small, medium, and large.
+-   Font: A factor variable with three levels — small, medium, and large.
 
-- Button Colour: A factor variable with two levels — Red and Blue.
+-   Button Colour: A factor variable with two levels — Red and Blue.
 
-- Duration: A continuous variable representing the duration of each visit, recorded in minutes.
+-   Duration: A continuous variable representing the duration of each visit, recorded in minutes.
 
 The main statistical question we are asking here is:
 
@@ -127,42 +155,39 @@ duration_blue <- ABn_data %>% filter(Colour == 'Blue') %>% pull(Duration)
 duration_blue
 ```
 
-
 ### How to run this test in R?
 
 In order to run this test, similar to what we learned in (LINK to chapter 1) we can use `t.test` function in R. The function can be used to perform one or two sample t-tests. The relevant arguments of the function are as follows:
 
-- `x` is (non-empty) numeric vector of data values.
-- `y` is also (non-empty) numeric vector of data values (can be `NULL` if you run a one sample test).
-- `var.equal` is a binary value (TRUE/FALSE) to indicate if R needs to assume equal variance or not.
+-   `x` is (non-empty) numeric vector of data values.
+-   `y` is also (non-empty) numeric vector of data values (can be `NULL` if you run a one sample test).
+-   `var.equal` is a binary value (TRUE/FALSE) to indicate if R needs to assume equal variance or not.
 
-Therefore we can run the test for two different cases. 
+Therefore we can run the test for two different cases.
 
-- Case 1: Under the assumption that variances between two populations are equal:
+-   Case 1: Under the assumption that variances between two populations are equal:
 
 ```{r}
 t.test(x = duration_red, y = duration_blue, var.equal = TRUE)
 ```
 
-
-- Case 2: Under the assumption that variances between two populations are **NOT** equal:
+-   Case 2: Under the assumption that variances between two populations are **NOT** equal:
 
 ```{r}
 t.test(x = duration_red, y = duration_blue, var.equal = FALSE)
 ```
 
-
 In both outputs, we can see the following:
 
-- `t` is the test statistic.
+-   `t` is the test statistic.
 
-- `df` is the degrees of freedom for the test.
+-   `df` is the degrees of freedom for the test.
 
 `p-value` is the p-value of the test. Note that, by default, this is for a two-sided test. If you need to conduct a one-sided test, you can either divide the p-value by two or use the alternative argument in the t.test function.
 
-- `95 percent confidence interval` provides the 95% confidence interval for $\mu_1 - \mu_2$.
+-   `95 percent confidence interval` provides the 95% confidence interval for $\mu_1 - \mu_2$.
 
-- `sample estimates` gives the sample means for each group.
+-   `sample estimates` gives the sample means for each group.
 
 **Note:** By default the value of `var.equal` is `FALSE`.
 
@@ -174,21 +199,19 @@ Suppose you're investigating whether a new diet plan reduces blood pressure. You
 
 To formulate the problem and hypothesis, let us assume that each individual has two measurements:
 
-- Before the diet: $X_1, X_2, \ldots, X_n$
+-   Before the diet: $X_1, X_2, \ldots, X_n$
 
-- After the diet: $Y_1, Y_2, \ldots, Y_n$
+-   After the diet: $Y_1, Y_2, \ldots, Y_n$
 
 Note that in this case the sample size is the same (in both before and after diet sample we have $n$ observations). We call this a paired sample. Since the samples are paired, we define the difference for each individual as follows:
 
-$$D_i = Y_i - X_i \quad \textit{for} \quad i = 1,2, \ldots, n$$
-Each $D_i$ is the difference of blood pressure after and before using new diet. The main statistical question now is:
+$$D_i = Y_i - X_i \quad \textit{for} \quad i = 1,2, \ldots, n$$ Each $D_i$ is the difference of blood pressure after and before using new diet. The main statistical question now is:
 
 **Is there a statistically significant difference in the mean blood pressure before and after the diet?**
 
 In other words, we test the following hypothesis:
 
-$$H_0: \mu_D = 0 \quad \text{versus} \quad H_A: \mu_D \ne 0$$
-Here the notation of $\mu_D$ is the population mean of the differences of $D_i$ which is an unknown parameter in the population. To test this hypothesis, we use the paired t-test, which is essentially a one-sample t-test on the differences $D_1, D_2, \ldots, D_n$. We test $\mu_D=0$ because if there is an actual effect of diet on blood pressure, we expect the null hypothesis to be rejected. 
+$$H_0: \mu_D = 0 \quad \text{versus} \quad H_A: \mu_D \ne 0$$ Here the notation of $\mu_D$ is the population mean of the differences of $D_i$ which is an unknown parameter in the population. To test this hypothesis, we use the paired t-test, which is essentially a one-sample t-test on the differences $D_1, D_2, \ldots, D_n$. We test $\mu_D=0$ because if there is an actual effect of diet on blood pressure, we expect the null hypothesis to be rejected.
 
 The test statistic for this hypothesis testing is:
 
@@ -196,9 +219,9 @@ $$t = \frac{\bar{D}}{s_D / \sqrt{n}}$$
 
 where:
 
-- $\bar{D}$ is the sample mean of the differences, 
-- $s_D$ is the sample standard deviation of the differences,
-- $n$ is the number of pairs.
+-   $\bar{D}$ is the sample mean of the differences,
+-   $s_D$ is the sample standard deviation of the differences,
+-   $n$ is the number of pairs.
 
 The standard deviation of the differences is calculated as:
 
@@ -207,7 +230,6 @@ $$s_D = \sqrt{ \frac{1}{n - 1} \sum_{i=1}^n (D_i - \bar{D})^2 }$$
 Under the null hypothesis, the test statistic follows a t-distribution with $n-1$ degrees of freedom. For this test, we can compute the $\textit{p-value}$ as:
 
 $$\textit{p-value} = 2 \times \Pr(T_{n - 1} \ge |t|)$$
-
 
 ### Example dataset in R
 

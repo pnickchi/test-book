@@ -8,9 +8,33 @@
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 
-# Chapter 1: Tests for One Sample {.unnumbered}
+# Chapter 1: Tests for One Continuous Population Mean {.unnumbered}
 
 This chapter introduces statistical tests designed to analyze a single sample, which is a fundamental task in data analysis across many disciplines. Whether you're evaluating whether the average recovery time from a treatment differs from a known standard, assessing whether student test scores exceed a benchmark, or testing if the proportion of success in a group differs from an expected rate, these methods help determine whether the observed values are statistically significant or simply due to chance.
+
+::: {#fig-test-chapter-1-mindmap}
+```{mermaid}
+mindmap
+  root((Frequentist
+  Hypothesis 
+  Testings
+  ))
+    Simulation Based<br/>Tests
+    Classical<br/>Tests
+      (Chapter 1: <br/>Tests for One<br/>Continuous<br/>Population Mean)
+        {{Unbounded<br/>Response}}
+          Known<br/>Population<br/>Variance
+            )One sample<br/>t test(
+          Unknown<br/>Population<br/>Variance
+            )One sample<br/>z test(
+        {{Proportion between<br/>0 and 1<br/>obtained from a <br/>Binary Response}}
+          )One sample<br/>z test(
+      (Chapter 2: <br/>Tests for Two<br/>Continuous<br/>Population Means)
+      (Chapter 3: <br/>ANOVA-related <br/>Tests for<br/>k Continuous<br/>Population Means)
+```
+
+A specific hypothesis testing mind map outlining the techniques explored in this chapter, which are classical tests for one continuous population mean.
+:::
 
 There are several statistical tests used to evaluate hypotheses about a single sample. The appropriate test depends on the type of variable (mean or proportion), sample size, and whether population parameters like variance are known. Key tests include:
 

@@ -1,0 +1,50 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DZWGQVJSHE');
+</script>
+
+# Introduction {.unnumbered}
+
+This is a mini-book on hypothesis testing in statistics. It covers the tests taught in DSCI 552 in the MDS program at UBC.
+
+-   Todolist: add more context and information here
+
+## The Test Mind Map
+
+::: {#fig-test-general-mindmap}
+```{mermaid}
+mindmap
+  root((Frequentist
+  Hypothesis 
+  Testings
+  ))
+    Simulation Based<br/>Tests
+    Classical<br/>Tests
+      (Chapter 1: <br/>Tests for One<br/>Continuous<br/>Population Mean)
+        {{Unbounded<br/>Response}}
+        {{Proportion between<br/>0 and 1<br/>obtained from a <br/>Binary Response}}
+      (Chapter 2: <br/>Tests for Two<br/>Continuous<br/>Population Means)
+        Two<br/>Independent<br/>Populations
+          {{Unbounded<br/>Responses}}
+          {{Proportions between<br/>0 and 1<br/>obtained from two <br/>Binary Responses}}
+        Two<br/>Related<br/>Populations or<br/>Measurements
+          {{Unbounded<br/>Responses}}
+      (Chapter 3: <br/>ANOVA related <br/>Tests for<br/>k Continuous<br/>Population Means)
+        {{Unbounded<br/>Responses}}
+```
+
+A general hypothesis testing mind map outlining all techniques explored in this book. Depending on the overall approach to be used, these techniques are divided into two broad categories: classical and simulation-based tests.
+:::
+
+## The Test Workflow
+
+::: {#fig-classical-hypothesis-testing-workflow}
+![](img/mini-test-book-hypothesis-testing-workflow.png){width="1500"}
+
+A classical-based hypothesis testing workflow structured in four substages: *general settings*, *hypotheses definitions*, *test flavour and components*, and *inferential conclusions*.
+:::
