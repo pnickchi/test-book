@@ -8,9 +8,19 @@
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 
+
+```{r, echo = FALSE}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+
 # Chapter 2: Tests for Two Samples {.unnumbered}
 
 This chapter introduces statistical tests designed to compare two samples which is a fundamental task in data analysis across many disciplines. Whether you're comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion among two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically significant or simply due to chance.
+
+This chapter covers two types of tests. First, we discuss tests for comparing the means of two samples, which are used to make inferences about population means. Second, we examine tests for comparing proportions between two samples.
 
 ## 1. Tests to compare the mean
 
@@ -23,19 +33,19 @@ The choice of test depends on the structure of your data. This chapter introduce
 
 ## Independent Samples
 
-Independent samples arise when the observations in one group do not influence or relate to the observations in the other. A classic example comes from educational research:
+Independent samples arise when the observations in one group do not influence or relate to the observations in the other. In statistical terms we call this two independent samples. A classic example comes from educational research:
 
 Suppose you're interested in whether a new method of teaching introductory physics improves student performance. To investigate this, you decide to test the method at two universities: the University of British Columbia (UBC) and Simon Fraser University (SFU). You apply the new teaching method at SFU and compare the results to students taught with the traditional method at UBC.
 
 In this scenario, students at UBC and SFU form two distinct, unrelated groups. Since the students are not paired or matched across schools, and each individual belongs to only one group, the samples are independent.
 
-Let us assume that each population has an unknown average physics score—denoted by:
+Let us assume that each population has an unknown average physics score denoted by:
 
 $$
     \mu_1 \quad \text{(mean for UBC)}, \quad \mu_2 \quad \text{(mean for SFU)}.
 $$
 
-Since we don’t have access to all students' grades, we take a random sample from each school. Suppose:
+Since we do not have access to all students' grades, we take a random sample from each school. Suppose:
 
 -   From UBC (Population 1), we obtain a sample of size $n$, denoted as: $$X_1, X_2, \ldots, X_n$$
 
@@ -51,7 +61,7 @@ $$H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2$$
 
 To test this, we use the **two-sample** t-test, which compares the sample means and incorporates variability within and between the samples. If we assume equal population variances, the test statistic is:
 
-$$t = \frac{\bar{X} - \bar{Y}}{s_p \sqrt{\frac{1}{n} + \frac{1}{m}}}$$
+$$t = \frac{(\bar{X} - \bar{Y})}{s_p \sqrt{\frac{1}{n} + \frac{1}{m}}}$$
 
 where:
 
@@ -60,33 +70,149 @@ where:
 -   $s_p = \sqrt{\frac{(n - 1)s_X^2 + (m - 1)s_Y^2}{n + m - 2}}$
 -   $s_X^2$ and $s_Y^2$ are the sample variances of the two groups.
 
-If the assumption of equal variances is questionable, we instead use Welch’s t-test, which adjusts the standard error and degrees of freedom accordingly.
+Under the assumption that null hypothesis is correct (i.e. $\mu_1=\mu_2$) then the test statistic defined above follows a t-distribution with $n+m-2$ degrees of freedom (which we denote it by $T_{n+m-2}$). Knowing the distribution of this statistic helps us to compute $\textit{p-value}$ of the test as follows:
 
-If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers), we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it.
+$$\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)$$
+**Note:** The probability is multiplied by two since we have a two sided hypothesis (alternative is $\mu_1 \neq \mu_2$). For a one sided test (when alternative hypothesis is $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) we do not need to multiply by two. 
 
-Now let us see how we can run the test on some example datasets in R!
+If the assumption of equal variances is questionable, we instead use Welch’s t-test, which adjusts the standard error and degrees of freedom accordingly. The Welch's test statistic is computed as: 
 
-### Example dataset in R
+$$t = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{s_X^2}{n} + \frac{s_Y^2}{m}}}$$
 
--   TBD
+Under the assumption that null hypothesis is correct, the test statistics defined above still follows a t-distribuion but with a different degrees of freedom. The degree of freedom when we do not make equal variance assumption is:
 
-### How to code in R?
+$$\nu = \frac{\left( \frac{s_1^2}{n} + \frac{s_2^2}{m} \right)^2}
+{\frac{\left( \frac{s_1^2}{n} \right)^2}{n - 1} + \frac{\left( \frac{s_2^2}{m} \right)^2}{m - 1}}$$
+
+Note that this degree of freedom is not necessaily an integer number (could be a real number). When we run t-test, we operate under the assumption that: 1) either the sample size is large enough (we are thinking about $n=30$ at least) so that central limit theorem assumptions work well, or 2) the distribution of our sample in each group is normal or symmetric enough. 
+
+If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers) or we have a very small sample size, we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it. You can read more about it LINK.
+
+Now let us see how to run the two-sample test on some example datasets in R. We will first describe the dataset we want to use, and then show how to run the test in R.
+
+
+### Example dataset
+
+In this example, we start with a dataset that records the time MDS students spend on course website of DSCI 554. You will encounter this dataset again in DSCI 554 when we discuss A/B/n testing. For now, here's what the dataset looks like:
 
 ```{r}
-# This is example for now. I will replace it later with a real dataset
-x <- rnorm(100)
-y <- rnorm(200, mean = 10)
-t.test(x, y)
+ABn_data <- read_csv('data/ABn_data.csv', show_col_types = FALSE)
+ABn_data <- ABn_data %>% mutate(Colour = as.factor(Colour), Font = as.factor(Font))
+ABn_data
 ```
+
+The columns in the dataset are as follows:
+
+- Font: A factor variable with three levels — small, medium, and large.
+
+- Button Colour: A factor variable with two levels — Red and Blue.
+
+- Duration: A continuous variable representing the duration of each visit, recorded in minutes.
+
+The main statistical question we are asking here is:
+
+**Is there a statistically significant difference in the mean visit duration between websites with red buttons and those with blue buttons?**
+
+This means we are interested in the duration time users spend on website in two different populations: red button design and blue button design. First we do some data selection to create two vector of numbers: one for the visit duration visits in website with red buttons and one for the duration of visits in website with blue buttons. The following code can take care of this. For Red group:
+
+```{r}
+duration_red <- ABn_data %>% filter(Colour == 'Red') %>% pull(Duration)
+duration_red 
+```
+
+and for Blue group:
+
+```{r}
+duration_blue <- ABn_data %>% filter(Colour == 'Blue') %>% pull(Duration)
+duration_blue
+```
+
+
+### How to run this test in R?
+
+In order to run this test, similar to what we learned in (LINK to chapter 1) we can use `t.test` function in R. The function can be used to perform one or two sample t-tests. The relevant arguments of the function are as follows:
+
+- `x` is (non-empty) numeric vector of data values.
+- `y` is also (non-empty) numeric vector of data values (can be `NULL` if you run a one sample test).
+- `var.equal` is a binary value (TRUE/FALSE) to indicate if R needs to assume equal variance or not.
+
+Therefore we can run the test for two different cases. 
+
+- Case 1: Under the assumption that variances between two populations are equal:
+
+```{r}
+t.test(x = duration_red, y = duration_blue, var.equal = TRUE)
+```
+
+
+- Case 2: Under the assumption that variances between two populations are **NOT** equal:
+
+```{r}
+t.test(x = duration_red, y = duration_blue, var.equal = FALSE)
+```
+
+
+In both outputs, we can see the following:
+
+- `t` is the test statistic.
+
+- `df` is the degrees of freedom for the test.
+
+`p-value` is the p-value of the test. Note that, by default, this is for a two-sided test. If you need to conduct a one-sided test, you can either divide the p-value by two or use the alternative argument in the t.test function.
+
+- `95 percent confidence interval` provides the 95% confidence interval for $\mu_1 - \mu_2$.
+
+- `sample estimates` gives the sample means for each group.
+
+**Note:** By default the value of `var.equal` is `FALSE`.
 
 ## Paired Samples
 
--   Description
+Paired samples arise when each observation in one group is matched or linked to an observation in the other group. This structure is typical in before-and-after studies, matched-subject designs, or repeated measures on the same individuals. A classic example comes from health sciences.
+
+Suppose you're investigating whether a new diet plan reduces blood pressure. You recruit a group of participants and record their blood pressure **before** starting the diet. **After** following the diet for two months, you measure their blood pressure again. In this scenario, each participant contributes two measurements: one before **the intervention** and one after. These measurements are not independent as they come from the same person. Therefore we treat them as paired.
+
+To formulate the problem and hypothesis, let us assume that each individual has two measurements:
+
+- Before the diet: $X_1, X_2, \ldots, X_n$
+
+- After the diet: $Y_1, Y_2, \ldots, Y_n$
+
+Note that in this case the sample size is the same (in both before and after diet sample we have $n$ observations). We call this a paired sample. Since the samples are paired, we define the difference for each individual as follows:
+
+$$D_i = Y_i - X_i \quad \textit{for} \quad i = 1,2, \ldots, n$$
+Each $D_i$ is the difference of blood pressure after and before using new diet. The main statistical question now is:
+
+**Is there a statistically significant difference in the mean blood pressure before and after the diet?**
+
+In other words, we test the following hypothesis:
+
+$$H_0: \mu_D = 0 \quad \text{versus} \quad H_A: \mu_D \ne 0$$
+Here the notation of $\mu_D$ is the population mean of the differences of $D_i$ which is an unknown parameter in the population. To test this hypothesis, we use the paired t-test, which is essentially a one-sample t-test on the differences $D_1, D_2, \ldots, D_n$. We test $\mu_D=0$ because if there is an actual effect of diet on blood pressure, we expect the null hypothesis to be rejected. 
+
+The test statistic for this hypothesis testing is:
+
+$$t = \frac{\bar{D}}{s_D / \sqrt{n}}$$
+
+where:
+
+- $\bar{D}$ is the sample mean of the differences, 
+- $s_D$ is the sample standard deviation of the differences,
+- $n$ is the number of pairs.
+
+The standard deviation of the differences is calculated as:
+
+$$s_D = \sqrt{ \frac{1}{n - 1} \sum_{i=1}^n (D_i - \bar{D})^2 }$$
+
+Under the null hypothesis, the test statistic follows a t-distribution with $n-1$ degrees of freedom. For this test, we can compute the $\textit{p-value}$ as:
+
+$$\textit{p-value} = 2 \times \Pr(T_{n - 1} \ge |t|)$$
+
 
 ### Example dataset in R
 
 -   TBD
 
-### How to code in R?
+### How to run the test in R?
 
 ## 2. Tests to compare the proportion
