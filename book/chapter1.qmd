@@ -36,16 +36,80 @@ mindmap
 A specific hypothesis testing mind map outlining the techniques explored in this chapter, which are classical tests for one continuous population mean.
 :::
 
-There are several statistical tests used to evaluate hypotheses about a single sample. The appropriate test depends on the type of variable (mean or proportion), sample size, and whether population parameters like variance are known. Key tests include:
+There are several statistical tests used to evaluate hypotheses about a single sample. The appropriate test depends on the type of variable (mean or proportion), sample size, and whether population parameters like variance are known. 
+
+We test whether a population mean equals a specific value. The right test depends on:
+
+- Type of response
+- Whether the population variance is known
+- Sample size
+
+In this chapter, we focus on statistical tests used to evaluate hypotheses about a **single population mean** or **proportion**, based on sample data. These tests help determine whether a sample provides sufficient evidence to conclude that the population mean (or proportion) differs from a specified value.
+
+We cover two cases for the mean — depending on whether the population variance is known or unknown — and one test for binary outcomes where we're testing a population proportion.
+
+---
+
+Key tests include:
 
 ## One-sample z-test for the mean
 
-Used when the population variance is known. This test compares the sample mean to a hypothesized population mean.
+Use this test when:
+- The population variance **σ² is known**, and
+- The sample comes from a **normally distributed population**, or the **sample size is large** (typically \( n \geq 30 \)).
+
+The test statistic is:
+
+\[
+z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}
+\]
+
+Where:
+- \( \bar{x} \) is the sample mean  
+- \( \mu_0 \) is the hypothesized population mean  
+- \( \sigma \) is the known population standard deviation  
+- \( n \) is the sample size
+
+We compare the calculated \( z \)-value to a standard normal distribution to compute a p-value or make a decision based on a critical value.
+
+---
 
 ## One-sample t-test for the mean
 
-Used when the population variance is unknown and the sample is either normally distributed or sufficiently large. It compares the sample mean to a hypothesized value under these more realistic conditions.
+Use this test when:
+- The population variance **is unknown**, and
+- The sample is either **normally distributed** or **large enough** to rely on the central limit theorem.
+
+The test statistic is:
+
+\[
+t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}
+\]
+
+Where:
+- \( s \) is the sample standard deviation (used instead of \( \sigma \))
+
+This statistic follows a **t-distribution** with \( n - 1 \) degrees of freedom. It is more appropriate for real-world scenarios where we rarely know the true population variance.
+
+---
 
 ## One-sample z-test for proportions
 
-Used to test whether the observed proportion in a sample differs significantly from a hypothesized population proportion.
+Use this test when:
+- The variable is **binary** (success/failure, yes/no, etc.), and
+- You want to test a **population proportion** \( p \), using a large enough sample.
+
+The test statistic is:
+
+\[
+z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}
+\]
+
+Where:
+- \( \hat{p} \) is the sample proportion  
+- \( p_0 \) is the hypothesized population proportion  
+- \( n \) is the sample size
+
+This test assumes \( np_0 \geq 5 \) and \( n(1 - p_0) \geq 5 \) to justify the normal approximation to the binomial distribution.
+
+---
