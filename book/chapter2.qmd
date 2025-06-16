@@ -18,6 +18,7 @@
 #| label: setup
 #| include: false
 library(tidyverse)
+library(ISLR)
 ```
 
 # Chapter 2: Tests for Two Continuous Population Mean {.unnumbered}
@@ -105,11 +106,70 @@ Under the assumption that null hypothesis is correct (i.e. $\mu_1=\mu_2$) then t
 
 $$\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)$$ **Note:** The probability is multiplied by two since we have a two sided hypothesis (alternative is $\mu_1 \neq \mu_2$). For a one sided test (when alternative hypothesis is $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) we do not need to multiply by two.
 
-Now let us see how to run the two-sample test on some example datasets in R. We will first describe the dataset we want to use, and then show how to run the test in R.
+Now let us see how to run the two-sample test on some example datasets in R. The following sections closely follow the test workflow.
+
+### Study design
+
+For this example, we will be using `Auto` dataset from `ISLR` package. This dataset contains gas mileage, horsepower, and other information for 392 vehicles. Some of variables of interest are: 1) `cylinders` an integer (numerical) value between 4 and 8 which indicates the number of cylinders of car, and 2) `horsepower` which shows engine horsepower. You may wondering if the average of horsepower in cars with 4 cylinders is statistically different than the means in cars with 5 cylinders?
 
 ### Data Collection and Wrangling
 
+We obtain the dataset which is available in `ISLR` package. First we created a new copy of this dataset to avoid touching the actual data. Also we filter rows to those cars with 4 or 8 cylinders.
+
+```{r}
+# Get a copy of dataset
+auto_data <- Auto
+
+# Filter rows
+auto_data <- auto_data %>% filter(cylinders %in% c(4,8) )
+```
+
+
+
+Finally, we randomly create test and train set from this dataset with a proportion of 25 vs 75 percent.  
+
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Splitting the dataset into training and testing sets
+train_indices <- sample(seq_len(nrow(auto_data)), size = 0.75 * nrow(auto_data))
+train_auto <- auto_data[train_indices, ]
+test_auto <- auto_data[-train_indices, ]
+```
+
+
 ### Explanatory Data Analysis
+
+Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA). This step is crucial, as it helps us gain a better understanding of the distribution of variables in our dataset. The `horsepower` variable in dataset is a numerical variable. The `cylinders` variable is an integer variable that helps to divide observations into two groups.
+
+In particular, we are interested in the distribution of `horsepower` in two different groups (cars with 4 cylinders vs cars with 5 cylinders). Using histogram for this variable is a good choice.
+
+```{r}
+ggplot(train_auto, aes(x = horsepower)) +
+  geom_histogram(fill = "steelblue", color = "white") +
+  facet_wrap(~ cylinders, nrow = 1) +
+  labs(title = "Side-by-side histogram of horsepower by number of cylinders",
+       x = "Horsepower",
+       y = "Count") +
+  theme_minimal()
+```
+
+We also look at some descriptive statistics of horsepower in both groups for better understanding of data. The descriptice statistics in cars with 4 cylinders:
+
+```{r}
+summary(train_auto %>% filter(cylinders == 4) %>% select(horsepower))
+```
+
+
+and with 8 cylinders:
+
+```{r}
+summary(train_auto %>% filter(cylinders == 8) %>% select(horsepower))
+```
+
+Looking at histogram and also summary statistics in different groups we can observe that 
+
 
 ### Testing Settings
 
