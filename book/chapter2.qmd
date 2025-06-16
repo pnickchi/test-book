@@ -1,6 +1,10 @@
 <!-- Google tag (gtag.js) -->
 
+```{=html}
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
+```
+
+```{=html}
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -8,6 +12,7 @@
 
   gtag('config', 'G-DZWGQVJSHE');
 </script>
+```
 
 ```{r, echo = FALSE}
 #| label: setup
@@ -15,7 +20,7 @@
 library(tidyverse)
 ```
 
-# Chapter 2: Tests for Two Samples {.unnumbered}
+# Chapter 2: Tests for Two Continuous Population Mean {.unnumbered}
 
 This chapter introduces statistical tests designed to compare two samples which is a fundamental task in data analysis across many disciplines. Whether you're comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion among two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically significant or simply due to chance.
 
@@ -50,20 +55,16 @@ mindmap
 A specific hypothesis testing mind map outlining the techniques explored in this chapter, which are classical tests for two continuous population means.
 :::
 
-This chapter covers two types of tests. First, we discuss tests for comparing the means of two samples, which are used to make inferences about population means. Second, we examine tests for comparing proportions between two samples.
-
-## 1. Tests to compare the mean
-
-Broadly speaking, there are two main types of tests to compare the means between two populations:
+In this chapter, we review tests for comparing two continuous population means under two conditions: when the populations are independent and when they are dependent. Throughout the sections below, we provide details about these tests and required formula for each case. Broadly speaking, there are two main types of tests to compare the means between two continuous populations:
 
 -   Independent samples, where the observations in one group are unrelated to those in the other, and
 -   Paired (or dependent) samples, where observations are naturally matched in some way, such as before-and-after measurements.
 
 The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R code examples using real or simulated datasets to help ground the concepts in practice.
 
-## Independent Samples
+## Two sample Student's t-test for Independent Samples
 
-Independent samples arise when the observations in one group do not influence or relate to the observations in the other. In statistical terms we call this two independent samples. A classic example comes from educational research:
+Independent samples arise when the observations in one group do not influence or relate to the observations in the other. In statistical terms we call this two independent samples. A classic example from educational research is described below:
 
 Suppose you're interested in whether a new method of teaching introductory physics improves student performance. To investigate this, you decide to test the method at two universities: the University of British Columbia (UBC) and Simon Fraser University (SFU). You apply the new teaching method at SFU and compare the results to students taught with the traditional method at UBC.
 
@@ -104,22 +105,25 @@ Under the assumption that null hypothesis is correct (i.e. $\mu_1=\mu_2$) then t
 
 $$\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)$$ **Note:** The probability is multiplied by two since we have a two sided hypothesis (alternative is $\mu_1 \neq \mu_2$). For a one sided test (when alternative hypothesis is $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) we do not need to multiply by two.
 
-If the assumption of equal variances is questionable, we instead use Welch’s t-test, which adjusts the standard error and degrees of freedom accordingly. The Welch's test statistic is computed as:
-
-$$t = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{s_X^2}{n} + \frac{s_Y^2}{m}}}$$
-
-Under the assumption that null hypothesis is correct, the test statistics defined above still follows a t-distribuion but with a different degrees of freedom. The degree of freedom when we do not make equal variance assumption is:
-
-$$\nu = \frac{\left( \frac{s_1^2}{n} + \frac{s_2^2}{m} \right)^2}
-{\frac{\left( \frac{s_1^2}{n} \right)^2}{n - 1} + \frac{\left( \frac{s_2^2}{m} \right)^2}{m - 1}}$$
-
-Note that this degree of freedom is not necessaily an integer number (could be a real number). When we run t-test, we operate under the assumption that: 1) either the sample size is large enough (we are thinking about $n=30$ at least) so that central limit theorem assumptions work well, or 2) the distribution of our sample in each group is normal or symmetric enough.
-
-If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers) or we have a very small sample size, we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it. You can read more about it LINK.
-
 Now let us see how to run the two-sample test on some example datasets in R. We will first describe the dataset we want to use, and then show how to run the test in R.
 
-### Example dataset
+### Data Collection and Wrangling
+
+### Explanatory Data Analysis
+
+### Testing Settings
+
+### Hypothesis Definitions
+
+### Test Flavour and Components
+
+### Inferential Conclusions
+
+### Storytelling
+
+
+
+Ignore the following content for now. Still editting
 
 In this example, we start with a dataset that records the time MDS students spend on course website of DSCI 554. You will encounter this dataset again in DSCI 554 when we discuss A/B/n testing. For now, here's what the dataset looks like:
 
@@ -191,6 +195,21 @@ In both outputs, we can see the following:
 
 **Note:** By default the value of `var.equal` is `FALSE`.
 
+## Two sample Welch's t-test for independent samples
+
+If the assumption of equal variances is questionable, we instead use Welch’s t-test, which adjusts the standard error and degrees of freedom accordingly. The Welch's test statistic is computed as:
+
+$$t = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{s_X^2}{n} + \frac{s_Y^2}{m}}}$$
+
+Under the assumption that null hypothesis is correct, the test statistics defined above still follows a t-distribuion but with a different degrees of freedom. The degree of freedom when we do not make equal variance assumption is:
+
+$$\nu = \frac{\left( \frac{s_1^2}{n} + \frac{s_2^2}{m} \right)^2}
+{\frac{\left( \frac{s_1^2}{n} \right)^2}{n - 1} + \frac{\left( \frac{s_2^2}{m} \right)^2}{m - 1}}$$
+
+Note that this degree of freedom is not necessaily an integer number (could be a real number). When we run t-test, we operate under the assumption that: 1) either the sample size is large enough (we are thinking about $n=30$ at least) so that central limit theorem assumptions work well, or 2) the distribution of our sample in each group is normal or symmetric enough.
+
+If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers) or we have a very small sample size, we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it. You can read more about it LINK.
+
 ## Paired Samples
 
 Paired samples arise when each observation in one group is matched or linked to an observation in the other group. This structure is typical in before-and-after studies, matched-subject designs, or repeated measures on the same individuals. A classic example comes from health sciences.
@@ -236,5 +255,3 @@ $$\textit{p-value} = 2 \times \Pr(T_{n - 1} \ge |t|)$$
 -   TBD
 
 ### How to run the test in R?
-
-## 2. Tests to compare the proportion
