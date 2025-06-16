@@ -1,10 +1,5 @@
 <!-- Google tag (gtag.js) -->
-
-```{=html}
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
-```
-
-```{=html}
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -12,7 +7,6 @@
 
   gtag('config', 'G-DZWGQVJSHE');
 </script>
-```
 
 # Preface {.unnumbered}
 
@@ -24,9 +18,14 @@ This is a mini book for hypothesis testing in statistics. This book covers the t
 
 ## G. Alexi Rodríguez-Arelis
 
-+--------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ![](img/photo-alexi.jpg) | > I'm an Assistant Professor of Teaching in the Department of Statistics and Master of Data Science at the University of British Columbia. Throughout my academic and professional journey, I've been involved in diverse fields, such as credit risk management, statistical consulting, and data science teaching. My doctoral research in statistics is primarily focused on computer experiments that emulate scientific and engineering systems via Gaussian stochastic processes (i.e., kriging regression). I'm incredibly passionate about teaching regression topics while combining statistical and machine learning contexts. |
-+--------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+<table>
+  <tbody>
+    <tr>
+    <td valign="bottom"><center><img src="img/photo-alexi.jpg" width=350 /></center></td>
+      <td> <blockquote> I'm an Assistant Professor of Teaching in the Department of Statistics and Master of Data Science at the University of British Columbia. Throughout my academic and professional journey, I've been involved in diverse fields, such as credit risk management, statistical consulting, and data science teaching. My doctoral research in statistics is primarily focused on computer experiments that emulate scientific and engineering systems via Gaussian stochastic processes (i.e., kriging regression). I'm incredibly passionate about teaching regression topics while combining statistical and machine learning contexts. </blockquote> </td>
+    </tr>
+  </tbody>
+</table>
 
 ## Kate Manskaia
 
@@ -36,4 +35,4 @@ This is a mini book for hypothesis testing in statistics. This book covers the t
 
 This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="img/by-nc-sa.png" alt="Creative Commons License" style="border-width:0" width="150"/></a>
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0"  width="150"  src="img/by-nc-sa.png" /></a>
