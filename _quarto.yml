@@ -79,3 +79,4 @@ format:
 
   pdf:
     documentclass: scrreprt
+    include-in-header: preamble.tex
