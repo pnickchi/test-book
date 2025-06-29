@@ -77,7 +77,41 @@ We compare the calculated ( z )-value to a standard normal distribution to compu
 
 ## One-sample t-test for the mean
 
-Use this test when: - The population variance **is unknown**, and - The sample is either **normally distributed** or **large enough** to rely on the central limit theorem.
+Use this test when:
+- The population variance **is unknown**, and
+- The sample is either **normally distributed** or **large enough** to rely on the central limit theorem.
+
+
+Imagine you want to assess whether a new method of teaching introductory physics improves student performance compared to the traditional method previously used. To explore this, you test the new method at the University of British Columbia (UBC) and compare the results to historical data from students who were taught using the traditional approach. This historical data serves as your **reference value**.
+
+Suppose the population has an unknown average physics score, denoted as:
+
+$$
+\mu \quad \text{(mean physics score at UBC)}
+$$
+
+Since we do not have access to the grades of all students, we take a **random sample** from the population. Let this sample consist of $n$ students, with observed scores:
+
+$$
+X_1, X_2, \dots, X_n
+$$
+
+The central question becomes:
+
+> **Is the mean physics score in our sample statistically different from a given reference value?**
+
+If, for example, the historical average physics score is known to be **75**, then our question becomes more specific:
+
+> **Is the mean physics score in the sample statistically different from 75?**
+
+### Hypotheses
+
+We can formally express this with the following hypotheses:
+
+- **Null hypothesis** $H_0$: $\mu = 75$
+- **Alternative hypothesis** $H_1$: $\mu \ne 75$
+
+Under the null hypothesis, we assume that the average score under the new method is equal to the historical average of 75. If the null is rejected, we conclude that there is a **statistically significant difference**, suggesting that the new method may lead to either **higher or lower** average performance.
 
 The test statistic is:
 
@@ -85,7 +119,12 @@ $$t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}$$
 
 Where: - ( s ) is the sample standard deviation (used instead of ( $\sigma$ ))
 
-This statistic follows a **t-distribution** with ( n - 1 ) degrees of freedom. It is more appropriate for real-world scenarios where we rarely know the true population variance.
+This statistic follows a **t-distribution** with ( n - 1 ) degrees of freedom. 
+
+
+
+
+## Study Design
 
 ------------------------------------------------------------------------
 
