@@ -1,10 +1,7 @@
 <!-- Google tag (gtag.js) -->
 
-```{=html}
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
-```
 
-```{=html}
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -12,9 +9,25 @@
 
   gtag('config', 'G-DZWGQVJSHE');
 </script>
-```
 
 # Chapter 1: Tests for One Continuous Population Mean {.unnumbered}
+
+```{r setup, include=FALSE}
+# Setting up Python dependencies
+library(reticulate)
+
+# Optional: check if modules are available
+if (!py_module_available("pandas")) stop("pandas not found")
+if (!py_module_available("seaborn")) stop("seaborn not found")
+if (!py_module_available("sklearn")) stop("scikit-learn not found")
+if (!py_module_available("statsmodels")) stop("statsmodels not found")
+
+# Import Python modules
+pandas <- import("pandas")
+seaborn <- import("seaborn")
+sklearn <- import("sklearn")
+statsmodels <- import("statsmodels")
+```
 
 This chapter introduces statistical tests designed to analyze a single sample, which is a fundamental task in data analysis across many disciplines. Whether you're evaluating whether the average recovery time from a treatment differs from a known standard, assessing whether student test scores exceed a benchmark, or testing if the proportion of success in a group differs from an expected rate, these methods help determine whether the observed values are statistically significant or simply due to chance.
 
@@ -134,11 +147,11 @@ The dataset spans three penguin species and includes continuous variables such a
 
 ---
 
-### Data Collection & Wrangling
+### Data Collection & Wrangling
 
-We obtain the dataset **Palmer Station Penguins** dataset collected by the 'LTER'
+We obtain the dataset **Palmer Station Penguins** dataset collected by the 'LTER'
 
-```{python eval=false}
+```{python}
 import seaborn as sns
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -149,7 +162,7 @@ penguins = sns.load_dataset("penguins")
 # Drop rows with missing values
 penguins_clean = penguins.dropna()
 
-# 80 / 20 train–test split
+# 80/20 train–test split
 train_set, test_set = train_test_split(
     penguins_clean, test_size=0.2, random_state=42
 )
@@ -193,6 +206,8 @@ plt.show()
 
 Now, we can perform one‑Sample t-Test
 ```{python}
+import scipy.stats as stats
+
 t_stat, p_value = stats.ttest_1samp(
     train_set["flipper_length_mm"], popmean=200
 )

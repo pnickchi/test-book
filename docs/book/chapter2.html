@@ -362,11 +362,11 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 </ul>
 <p>Under the assumption that null hypothesis is correct (i.e.&nbsp;<span class="math inline">\(\mu_1=\mu_2\)</span>) then the test statistic defined above follows a t-distribution with <span class="math inline">\(n+m-2\)</span> degrees of freedom (which we denote it by <span class="math inline">\(T_{n+m-2}\)</span>). Knowing the distribution of this statistic helps us to compute <span class="math inline">\(\textit{p-value}\)</span> of the test as follows:</p>
 <p><span class="math display">\[\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)\]</span> <strong>Note:</strong> The probability is multiplied by two since we have a two sided hypothesis (alternative is <span class="math inline">\(\mu_1 \neq \mu_2\)</span>). For a one sided test (when alternative hypothesis is <span class="math inline">\(\mu_1 &gt; \mu_2\)</span> or <span class="math inline">\(\mu_1 &lt; \mu_2\)</span>) we do not need to multiply by two.</p>
-<p>Now let us see how to run the two-sample test on some example datasets in R. The following sections closely follow the test workflow.</p>
+<p>Now let us see how to run the two-sample test on some example datasets in R. The following sections closely follow the test workflow from introduction section.</p>
 <section id="study-design" class="level3"><h3 class="anchored" data-anchor-id="study-design">Study design</h3>
 <p>For this example, we will be using <code>Auto</code> dataset from <code>ISLR</code> package. This dataset contains gas mileage, horsepower, and other information for 392 vehicles. Some of variables of interest are: 1) <code>cylinders</code> an integer (numerical) value between 4 and 8 which indicates the number of cylinders of car, and 2) <code>horsepower</code> which shows engine horsepower. You may wondering if the average of horsepower in cars with 4 cylinders is statistically different than the means in cars with 5 cylinders?</p>
 </section><section id="data-collection-and-wrangling" class="level3"><h3 class="anchored" data-anchor-id="data-collection-and-wrangling">Data Collection and Wrangling</h3>
-<p>We obtain the dataset which is available in <code>ISLR</code> package. First we created a new copy of this dataset to avoid touching the actual data. Also we filter rows to those cars with 4 or 8 cylinders.</p>
+<p>We obtain the dataset which is available in <code>ISLR</code> package. First we created a new copy of this dataset to avoid touching the actual data. Also we filter rows to those cars with 4 or 8 cylinders only.</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Get a copy of dataset</span></span>
 <span><span class="va">auto_data</span> <span class="op">&lt;-</span> <span class="va">Auto</span></span>
@@ -374,30 +374,27 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 <span><span class="co"># Filter rows</span></span>
 <span><span class="va">auto_data</span> <span class="op">&lt;-</span> <span class="va">auto_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cylinders</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">8</span><span class="op">)</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Finally, we randomly create test and train set from this dataset with a proportion of 25 vs 75 percent.</p>
+<p>Finally, we randomly create test and train set from this dataset. We use a proportion of 50-50 between train and test.</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Set seed for reproducibility</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Splitting the dataset into training and testing sets</span></span>
-<span><span class="va">train_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">auto_data</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">0.75</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">auto_data</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">train_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">auto_data</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">0.50</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">auto_data</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">train_auto</span> <span class="op">&lt;-</span> <span class="va">auto_data</span><span class="op">[</span><span class="va">train_indices</span>, <span class="op">]</span></span>
 <span><span class="va">test_auto</span> <span class="op">&lt;-</span> <span class="va">auto_data</span><span class="op">[</span><span class="op">-</span><span class="va">train_indices</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="explanatory-data-analysis" class="level3"><h3 class="anchored" data-anchor-id="explanatory-data-analysis">Explanatory Data Analysis</h3>
-<p>Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA). This step is crucial, as it helps us gain a better understanding of the distribution of variables in our dataset. The <code>horsepower</code> variable in dataset is a numerical variable. The <code>cylinders</code> variable is an integer variable that helps to divide observations into two groups.</p>
-<p>In particular, we are interested in the distribution of <code>horsepower</code> in two different groups (cars with 4 cylinders vs cars with 5 cylinders). Using histogram for this variable is a good choice.</p>
+<p>Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA) on train set. This step is crucial, as it helps us gain a better understanding of the distribution of variables in our dataset. The <code>horsepower</code> variable in dataset is a numerical variable. The <code>cylinders</code> variable is an integer variable that helps to divide observations into two groups.</p>
+<p>In particular, we are interested in the distribution of <code>horsepower</code> in two different groups (cars with 4 cylinders vs cars with 8 cylinders). Using a histogram for this variable is a good choice as we have a variable with numerical values.</p>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">train_auto</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">horsepower</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_histogram</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"steelblue"</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_histogram</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"steelblue"</span>, color <span class="op">=</span> <span class="st">"white"</span>, bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">cylinders</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Side-by-side histogram of horsepower by number of cylinders"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"Horsepower"</span>,</span>
 <span>       y <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="chapter2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
@@ -405,34 +402,36 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 </div>
 </div>
 </div>
-<p>We also look at some descriptive statistics of horsepower in both groups for better understanding of data. The descriptice statistics in cars with 4 cylinders:</p>
+<p>We also look at some descriptive statistics of horsepower in both groups for better understanding of data. The descriptive statistics in cars with 4 cylinders:</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_auto</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cylinders</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">horsepower</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_auto</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cylinders</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">horsepower</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   horsepower    
  Min.   : 46.00  
  1st Qu.: 68.00  
- Median : 78.00  
- Mean   : 78.47  
+ Median : 78.50  
+ Mean   : 78.33  
  3rd Qu.: 88.00  
- Max.   :115.00  </code></pre>
+ Max.   :113.00  </code></pre>
 </div>
 </div>
 <p>and with 8 cylinders:</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_auto</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cylinders</span> <span class="op">==</span> <span class="fl">8</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">horsepower</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_auto</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cylinders</span> <span class="op">==</span> <span class="fl">8</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">horsepower</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   horsepower   
- Min.   : 90.0  
- 1st Qu.:140.0  
- Median :150.0  
- Mean   :158.8  
- 3rd Qu.:175.0  
- Max.   :225.0  </code></pre>
+<pre><code>   horsepower 
+ Min.   :105  
+ 1st Qu.:140  
+ Median :150  
+ Mean   :160  
+ 3rd Qu.:175  
+ Max.   :225  </code></pre>
 </div>
 </div>
-<p>Looking at histogram and also summary statistics in different groups we can observe that</p>
-</section><section id="testing-settings" class="level3"><h3 class="anchored" data-anchor-id="testing-settings">Testing Settings</h3>
+<p>Looking at histogram and also summary statistics in different groups we can observe that:</p>
+<ol type="i">
+<li>the distribution of</li>
+</ol></section><section id="testing-settings" class="level3"><h3 class="anchored" data-anchor-id="testing-settings">Testing Settings</h3>
 </section><section id="hypothesis-definitions" class="level3"><h3 class="anchored" data-anchor-id="hypothesis-definitions">Hypothesis Definitions</h3>
 </section><section id="test-flavour-and-components" class="level3"><h3 class="anchored" data-anchor-id="test-flavour-and-components">Test Flavour and Components</h3>
 </section><section id="inferential-conclusions" class="level3"><h3 class="anchored" data-anchor-id="inferential-conclusions">Inferential Conclusions</h3>
@@ -440,7 +439,7 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 <p>Ignore the following content for now. Still editting</p>
 <p>In this example, we start with a dataset that records the time MDS students spend on course website of DSCI 554. You will encounter this dataset again in DSCI 554 when we discuss A/B/n testing. For now, here’s what the dataset looks like:</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ABn_data</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">'data/ABn_data.csv'</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ABn_data</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">'data/ABn_data.csv'</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">ABn_data</span> <span class="op">&lt;-</span> <span class="va">ABn_data</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>Colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">Colour</span><span class="op">)</span>, Font <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">Font</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">ABn_data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -470,7 +469,7 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 <p><strong>Is there a statistically significant difference in the mean visit duration between websites with red buttons and those with blue buttons?</strong></p>
 <p>This means we are interested in the duration time users spend on website in two different populations: red button design and blue button design. First we do some data selection to create two vector of numbers: one for the visit duration visits in website with red buttons and one for the duration of visits in website with blue buttons. The following code can take care of this. For Red group:</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">duration_red</span> <span class="op">&lt;-</span> <span class="va">ABn_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Colour</span> <span class="op">==</span> <span class="st">'Red'</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Duration</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">duration_red</span> <span class="op">&lt;-</span> <span class="va">ABn_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Colour</span> <span class="op">==</span> <span class="st">'Red'</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Duration</span><span class="op">)</span></span>
 <span><span class="va">duration_red</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  90  95 107  92  89  92  81  92  93  83  80  95  98  98 106  74  81  74  85
@@ -479,7 +478,7 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 </div>
 <p>and for Blue group:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">duration_blue</span> <span class="op">&lt;-</span> <span class="va">ABn_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Colour</span> <span class="op">==</span> <span class="st">'Blue'</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Duration</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">duration_blue</span> <span class="op">&lt;-</span> <span class="va">ABn_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Colour</span> <span class="op">==</span> <span class="st">'Blue'</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Duration</span><span class="op">)</span></span>
 <span><span class="va">duration_blue</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  80  87 100 121 110 119  78  98 122 102 109 105  99  94 123 136 133 132  60
@@ -501,7 +500,7 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 <li>Case 1: Under the assumption that variances between two populations are equal:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">duration_red</span>, y <span class="op">=</span> <span class="va">duration_blue</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">duration_red</span>, y <span class="op">=</span> <span class="va">duration_blue</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -520,7 +519,7 @@ mean of x mean of y
 <li>Case 2: Under the assumption that variances between two populations are <strong>NOT</strong> equal:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">duration_red</span>, y <span class="op">=</span> <span class="va">duration_blue</span>, var.equal <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">duration_red</span>, y <span class="op">=</span> <span class="va">duration_blue</span>, var.equal <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test

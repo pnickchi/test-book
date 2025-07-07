@@ -16,22 +16,25 @@
 
 # Preface {.unnumbered}
 
-This is a mini book for hypothesis testing in statistics. This book covers the tests from DSCI 552 in MDS program at UBC.
+> **Have you ever felt overwhelmed by the numerous fundamental hypothesis tests you need to learn in statistical inference courses?**
 
--   Todolist: add more context here
+We have experienced this sense of overwhelm throughout our academic journeys as well. However, we also understand that statistical inference is a **powerful tool** for gaining insights into complex populations across various fields of study. Whether analyzing electoral preferences in political science or assessing the effectiveness of innovative medical treatments in randomized clinical trials, the applications are extensive. Hence, in response to these challenges, we have created this mini-book as a handy resource to help structure and simplify the learning of different fundamental hypothesis tests. Our goal is to present these concepts in a **reader-friendly manner** while clearly explaining the necessary statistical jargon, making these inferential methods accessible to a broader audience.
+
+![Image by [*manfredsteger*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-e-learning-online-6230157/).](book/img/offer.png){width="500"}
+
+Note that, after conducting extensive research into the available educational literature, we discovered that there is no comprehensive resource that explains various inferential methods simultaneously using **two essential programming languages** in the field of data science: `R` and `Python`. Furthermore, we could not find reproducible and transparent tools that would enable learners to implement and adapt these methods in their own computational environments. Based on our teaching experience, these shortcomings hinder effective learning in the practice of statistical inference, especially given the numerous tests required to achieve mastery.
+
+To address this gap, we have developed a bilingual resource in both `R` and `Python`, which features a **common test workflow** consisting of eight distinct stages applicable to each hypothesis test: *study design*, *data collection and wrangling*, *exploratory data analysis*, *testing settings*, *hypothesis definitions*, *test flavors and components*, *inferential conclusions*, and *storytelling*. Additionally, all the tests we discuss are organized through different mind maps to help readers visualize their learning process. Finally, by offering this resource as an Open Educational Resource (OER) in Quarto via a GitHub repository, we aim to inspire and empower academic communities worldwide to share and adapt this knowledge to suit their specific needs.
+
 
 # The Authors {.unnumbered}
 
 ## G. Alexi Rodríguez-Arelis
 
-<table>
-  <tbody>
-    <tr>
-    <td valign="bottom"><center><img src="img/photo-alexi.jpg" width=350 /></center></td>
-      <td> <blockquote> I'm an Assistant Professor of Teaching in the Department of Statistics and Master of Data Science at the University of British Columbia. Throughout my academic and professional journey, I've been involved in diverse fields, such as credit risk management, statistical consulting, and data science teaching. My doctoral research in statistics is primarily focused on computer experiments that emulate scientific and engineering systems via Gaussian stochastic processes (i.e., kriging regression). I'm incredibly passionate about teaching regression topics while combining statistical and machine learning contexts. </blockquote> </td>
-    </tr>
-  </tbody>
-</table>
+<center><img src="img/photo-alexi.jpg" width=275 /></center>
+<br>
+
+> I'm an Assistant Professor of Teaching in the Department of Statistics and Master of Data Science at the University of British Columbia. Throughout my academic and professional journey, I've been involved in diverse fields, such as credit risk management, statistical consulting, and data science teaching. My doctoral research in statistics is primarily focused on computer experiments that emulate scientific and engineering systems via Gaussian stochastic processes (i.e., kriging regression). I'm incredibly passionate about teaching regression topics while combining statistical and machine learning contexts.
 
 ## Kate Manskaia
 

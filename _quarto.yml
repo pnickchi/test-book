@@ -18,7 +18,7 @@ book:
       - Payman Nickchi
       email: payman.nickchi@ubc.ca
   date: today
-  abstract: "TODO"
+  abstract: "This mini-book presents fundamental hypothesis tests in statistical inference using different mind maps while incorporating a common test workflow. We utilize `Python` and `R` in parallel to demonstrate the execution of these tests."
   keyword: statistical inference, statistical analysis, hypothesis testing, frequentist statistics
   url: https://pnickchi.github.io/test-book/
   sidebar: 
