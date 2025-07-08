@@ -9,3 +9,6 @@
 </script>
 
 # References {.unnumbered}
+
+::: {#refs}
+:::

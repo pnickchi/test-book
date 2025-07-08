@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -264,10 +284,20 @@ window.Quarto = {
 
   gtag('config', 'G-DZWGQVJSHE');
 </script>
-<p>This is a mini-book on hypothesis testing in statistics. It covers the tests taught in DSCI 552 in the MDS program at UBC.</p>
-<ul>
-<li>Todolist: add more context and information here</li>
-</ul>
+<blockquote class="blockquote">
+<p><strong>The most important maxim for data analysis to heed, and one which many statisticians seem to have shunned, is this: “Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise.”</strong></p>
+</blockquote>
+<p style="text-align: right;">
+<em>John W. Tukey</em> <span class="citation" data-cites="tukey1962">(<a href="references.html#ref-tukey1962" role="doc-biblioref">1962, 13</a>)</span>
+</p>
+<p>Data collection worldwide has proven to be a valuable tool for uncovering significant insights across various <strong>populations of interest</strong>. Whether it involves capturing political preferences in a specific demographic ahead of an upcoming election or assessing the effectiveness of an innovative medical treatment through a randomized clinical trial compared to a standard treatment, data plays a crucial role in enhancing our understanding. At times, this understanding can become quite complex, especially when attempting to untangle the relationships between different variables within a given population or even across two or more populations.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/question.png" class="img-fluid figure-img" width="300"></p>
+<figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/"><em>Manfred Stege</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-emotion-bored-6230197/"><em>Pixabay</em></a>.</figcaption>
+</figure>
+</div>
+<p>In a vast and diverse field like data science, it is essential to craft effective and transparent solutions that ensure proper data management. However, collecting data from entire populations—essentially conducting a full census—can often be unfeasible due to resource constraints, such as limited finances, workforce, or technical infrastructure. Despite these limitations, our primary goal remains to gain insights about any given population of interest, even when data is scarce. In this context, <strong>statistical inference</strong> serves as a powerful tool that enables us to derive insights, even with limited data.</p>
 <section id="the-test-mind-map" class="level2">
 <h2 class="anchored" data-anchor-id="the-test-mind-map">The Test Mind Map</h2>
 <div id="fig-test-general-mindmap" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -323,6 +353,11 @@ Figure&nbsp;2: A classical-based hypothesis testing workflow structured in four 
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-tukey1962" class="csl-entry" role="listitem">
+Tukey, John W. 1962. <span>“<span class="nocase">The Future of Data Analysis</span>.”</span> <em>The Annals of Mathematical Statistics</em> 33 (1): 1–67. <a href="https://doi.org/10.1214/aoms/1177704711">https://doi.org/10.1214/aoms/1177704711</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

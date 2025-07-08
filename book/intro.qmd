@@ -1,10 +1,7 @@
 <!-- Google tag (gtag.js) -->
 
-```{=html}
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
-```
 
-```{=html}
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -12,13 +9,20 @@
 
   gtag('config', 'G-DZWGQVJSHE');
 </script>
-```
 
 # Introduction {.unnumbered}
 
-This is a mini-book on hypothesis testing in statistics. It covers the tests taught in DSCI 552 in the MDS program at UBC.
+> **The most important maxim for data analysis to heed, and one which many statisticians seem to have shunned, is this: "Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise."**
 
--   Todolist: add more context and information here
+<p style="text-align: right;">*John W. Tukey* [-@tukey1962, p. 13]</p>
+
+Data collection worldwide has proven to be a valuable tool for uncovering significant insights across various **populations of interest**. Whether it involves capturing political preferences in a specific demographic ahead of an upcoming election or assessing the effectiveness of an innovative medical treatment through a randomized clinical trial compared to a standard treatment, data plays a crucial role in enhancing our understanding. At times, this understanding can become quite complex, especially when attempting to untangle the relationships between different variables within a given population or even across two or more populations.
+
+![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-emotion-bored-6230197/).](img/question.png){width="300"}
+
+
+In a vast and diverse field like data science, it is essential to craft effective and transparent solutions that ensure proper data management. However, collecting data from entire populations—essentially conducting a full census—can often be unfeasible due to resource constraints, such as limited finances, workforce, or technical infrastructure. Despite these limitations, our primary goal remains to gain insights about any given population of interest, even when data is scarce. In this context, **statistical inference** serves as a powerful tool that enables us to derive insights, even with limited data.
+
 
 ## The Test Mind Map
 

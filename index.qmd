@@ -26,7 +26,6 @@ Note that, after conducting extensive research into the available educational li
 
 To address this gap, we have developed a bilingual resource in both `R` and `Python`, which features a **common test workflow** consisting of eight distinct stages applicable to each hypothesis test: *study design*, *data collection and wrangling*, *exploratory data analysis*, *testing settings*, *hypothesis definitions*, *test flavors and components*, *inferential conclusions*, and *storytelling*. Additionally, all the tests we discuss are organized through different mind maps to help readers visualize their learning process. Finally, by offering this resource as an Open Educational Resource (OER) in Quarto via a GitHub repository, we aim to inspire and empower academic communities worldwide to share and adapt this knowledge to suit their specific needs.
 
-
 # The Authors {.unnumbered}
 
 ## G. Alexi Rodríguez-Arelis

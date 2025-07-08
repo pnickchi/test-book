@@ -84,7 +84,7 @@
     "href": "book/intro.html#the-test-workflow",
     "title": "Introduction",
     "section": "The Test Workflow",
-    "text": "The Test Workflow\n\n\n\n\n\n\nFigure 2: A classical-based hypothesis testing workflow structured in four substages: general settings, hypotheses definitions, test flavour and components, and inferential conclusions.",
+    "text": "The Test Workflow\n\n\n\n\n\n\nFigure 2: A classical-based hypothesis testing workflow structured in four substages: general settings, hypotheses definitions, test flavour and components, and inferential conclusions.\n\n\n\n\n\n\n\nTukey, John W. 1962. “The Future of Data Analysis.” The Annals of Mathematical Statistics 33 (1): 1–67. https://doi.org/10.1214/aoms/1177704711.",
     "crumbs": [
       "Introduction"
     ]
@@ -177,6 +177,16 @@
     "text": "mindmap\n  root((Frequentist\n  Hypothesis \n  Testings\n  ))\n    Simulation Based&lt;br/&gt;Tests\n    Classical&lt;br/&gt;Tests\n      (Chapter 1: &lt;br/&gt;Tests for One&lt;br/&gt;Continuous&lt;br/&gt;Population Mean)\n      (Chapter 2: &lt;br/&gt;Tests for Two&lt;br/&gt;Continuous&lt;br/&gt;Population Means)\n      (Chapter 3: &lt;br/&gt;ANOVA-related &lt;br/&gt;Tests for&lt;br/&gt;k Continuous&lt;br/&gt;Population Means)\n        {{Unbounded&lt;br/&gt;Responses}}\n          One&lt;br/&gt;Factor type&lt;br/&gt;Feature\n            )One way&lt;br/&gt;ANOVA(\n          Two&lt;br/&gt;Factor type&lt;br/&gt;Features\n            )Two way&lt;br/&gt;ANOVA(\n\n\n\n\n\n\n\n\nFigure 1: A specific hypothesis testing mind map outlining the techniques explored in this chapter, which include ANOVA-related tests for \\(k\\) population means.",
     "crumbs": [
       "Chapter 3: ANOVA-related Tests for $k$ Continuous Population Means"
+    ]
+  },
+  {
+    "objectID": "book/references.html",
+    "href": "book/references.html",
+    "title": "References",
+    "section": "",
+    "text": "Tukey, John W. 1962. “The Future of Data\nAnalysis.” The Annals of Mathematical Statistics\n33 (1): 1–67. https://doi.org/10.1214/aoms/1177704711.",
+    "crumbs": [
+      "References"
     ]
   }
 ]
