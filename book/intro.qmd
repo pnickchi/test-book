@@ -1,7 +1,5 @@
 <!-- Google tag (gtag.js) -->
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
-
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -10,7 +8,7 @@
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 
-# Introduction {.unnumbered}
+# Introduction
 
 > **The most important maxim for data analysis to heed, and one which many statisticians seem to have shunned, is this: "Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise."**
 
@@ -20,11 +18,86 @@ Data collection worldwide has proven to be a valuable tool for uncovering signif
 
 ![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-emotion-bored-6230197/).](img/question.png){width="300"}
 
+In a vast and diverse field like data science, it is crucial to craft effective and transparent solutions that facilitate proper data analysis. However, conducting a full census to collect data from entire populations can often be impractical due to resource limitations such as budget constraints, workforce shortages, or insufficient technical infrastructure. Despite these challenges, our primary objective remains to gain insights about any population of interest via some class of analysis, even when data availability is limited. In this regard, **statistical inference** is a powerful tool that allows us to draw insights even with limited data. That said, it is important to emphasize that the process of statistical inference begins with asking the **right questions**, even before data collection occurs.
 
-In a vast and diverse field like data science, it is essential to craft effective and transparent solutions that ensure proper data management. However, collecting data from entire populations—essentially conducting a full census—can often be unfeasible due to resource constraints, such as limited finances, workforce, or technical infrastructure. Despite these limitations, our primary goal remains to gain insights about any given population of interest, even when data is scarce. In this context, **statistical inference** serves as a powerful tool that enables us to derive insights, even with limited data.
+In light of this context, we need to establish the appropriate stages of the statistical inference process, along with a useful tool to help select the right hypothesis test based on our specific context, research questions, variable types, and parameters of interest. This is why this mini-book focuses on two key components:
+
+- **A test workflow:** This workflow will primarily guide us in formulating the right questions about our population(s) of interest, which will involve specific parameters. This process will generally proceed with data collection using a specific sampling method, followed by a thorough analysis that includes exploratory data analysis and the **most suitable** hypothesis testing based on our primary question(s). We will conclude the process by presenting a compelling storytelling to our stakeholders. @sec-test-workflow will elaborate further on this workflow.
+- **A series of test mind maps:** Since the test workflow ultimately involves selecting the most suitable hypothesis test, we require a form of guidance to choose these tests according to the inferential question(s) we want to address. Therefore, @sec-test-mind-map will introduce our core test mind map from @fig-test-general-mindmap, which will direct us to more detailed mind maps each time we introduce a new chapter.
+
+This mini-book on hypothesis testing is intended to serve as a **practical manual** rather than a traditional statistical textbook. Furthermore, it focuses on providing applied examples in each chapter without any additional exercises for the reader. We aim to explain the necessary mathematical formulas in straightforward language, avoiding formal proofs for these expressions. Additionally, we will establish conventions using admonitions to offer **key insights** and links to **supplementary and more in-depth material**.
+
+::: {.Heads-up}
+::::{.Heads-up-header}
+Heads-up!
+::::
+::::{.Heads-up-container}
+A key insight (or insights) related to a specific hypothesis test or a stage in the test workflow. The reader is advised to keep this heads-up in mind throughout the showcase of the corresponding example in any given chapter.
+::::
+:::
+
+::: {.Tip}
+::::{.Tip-header}
+Tip
+::::
+::::{.Tip-container}
+An idea or ideas that extend beyond the immediate discussion and can offer valuable context and insightful background. Whenever relevant, we will provide references for further reading to deepen understanding and enhance knowledge.
+::::
+:::
+
+## The Test Workflow {#sec-test-workflow}
+
+> **There is a single test workflow for many different flavours!**
+
+The statement above summarizes the essence of our testing workflow, which requires a detailed examination in this section. Primarily, it is crucial to understand that mastering all hypothesis tests involves more than just knowing their mathematical formulas or coding functions; it requires a disciplined and structured process. Whether we are evaluating evidence against a **null hypothesis**—the status quo of our population parameter(s) of interest—or reporting the uncertainty of an **estimated effect**, the workflow outlined by @fig-hypothesis-testing-workflow is intended to align your main inferential inquiries with the **most suitable test flavour**. Regardless of the flavour chosen, this workflow is designed to ensure that our conclusions are not only statistically valid but also based on clear and purposeful reasoning.
+
+![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-teaching-to-learn-wiki-3976301/).](img/board.png){width="475"}
+
+The workflow for hypothesis testing consists of eight stages, which will be discussed in detail in the following sections:
+
+1. **Study design:** This initial stage, referred to as the **main inferential inquiries**, outlines the primary questions we aim to answer through our analysis.
+2. **Data collection and wrangling:** The inquiries established in the first stage will guide the design of our data collection, utilizing a specific sampling scheme. Once the data is collected, it must be wrangled and split into two sets: **training** and **test**.
+3. **Exploratory data analysis:** In this stage, we classify variables to provide preliminary insights using descriptive statistics and visualizations via the training set.
+4. **Testing settings:** We must revisit the **significance level** used in our power analysis (i.e., the procedure used to obtain the minimum sample size $n$ of data points to be collected). Additionally, we need to list all modelling parameters that will be tested.
+5. **Hypothesis definitions:** With the modelling parameters to test, we need to define our hypotheses: the **null** hypothesis versus the **alternative** hypothesis. These should be framed in relation to the main inferential inquiries.
+6. **Test flavour and components:** At this stage, we choose the most appropriate test flavour. Depending on whether the test is classical or simulation-based, we will then identify the necessary components to compute the **critical** values or **$p$-values** (via the test set) for the next stage.
+7. **Inferential conclusions:** The goal of this stage is to determine whether we should reject the null hypothesis based on the critical values or $p$-values obtained.
+8. **Storytelling:** Finally, communicate the findings through a clear and engaging narrative that is accessible to your stakeholders.
+
+::: {#fig-hypothesis-testing-workflow}
+![](img/mini-test-book-hypothesis-testing-workflow.png){width="1500"}
+
+A hypothesis testing workflow structured in eight stages: *study design*, *data collection and wrangling*, *exploratory data analysis*, *testing settings*, *hypothesis definitions*, *test flavour and components*, *inferential conclusions*, and *storytelling*
+:::
+
+### Study Design {#sec-study-design}
+
+<!--
+Define the **right research question**, objectives of the inferential study, and the variables of interest to ensure the analysis is purpose-driven and aligned with the problem at hand. 
+-->
+
+### Data Collection and Wrangling {#sec-data-collection-wrangling}
 
 
-## The Test Mind Map
+### Exploratory Data Analysis {#sec-exploratory-data-analysis}
+
+
+### Testing Settings {#sec-testing-settings}
+
+
+### Hypothesis Definitions {#sec-hypothesis-definitions}
+
+
+### Test Flavour and Components {#sec-test-flavour-components}
+
+
+### Inferential Conclusions {#sec-inferential-conclusions}
+
+
+### Storytelling {#sec-storytelling}
+
+
+## The Test Mind Map {#sec-test-mind-map}
 
 ::: {#fig-test-general-mindmap}
 ```{mermaid}
@@ -51,10 +124,4 @@ mindmap
 A general hypothesis testing mind map outlining all techniques explored in this book. Depending on the overall approach to be used, these techniques are divided into two broad categories: classical and simulation-based tests.
 :::
 
-## The Test Workflow
 
-::: {#fig-classical-hypothesis-testing-workflow}
-![](img/mini-test-book-hypothesis-testing-workflow.png){width="1500"}
-
-A classical-based hypothesis testing workflow structured in four substages: *general settings*, *hypotheses definitions*, *test flavour and components*, and *inferential conclusions*.
-:::

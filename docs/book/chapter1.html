@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.53">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Chapter 1: Tests for One Continuous Population Mean – The Mini Test Book</title>
+<title>Chapter 1: Tests for One Continuous Population Mean – The Mini Test Book (in development)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">The Mini Test Book</span>
+    <span class="navbar-title">The Mini Test Book (in development)</span>
     </a>
   </div>
         <div class="quarto-navbar-tools tools-end">
@@ -201,7 +201,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book/intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -246,7 +246,6 @@ window.Quarto = {
   <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</a></li>
   </ul>
 </li>
-  <li><a href="#given-a-significance-level-of-0.05-if-the-p-value-is-less-than-0.05-we-reject-the-null-hypothesis-and-conclude-that-the-average-flipper-length-is-significantly-different-from-200-mm.-if-not-we-do-not-have-sufficient-evidence-to-say-it-differs." id="toc-given-a-significance-level-of-0.05-if-the-p-value-is-less-than-0.05-we-reject-the-null-hypothesis-and-conclude-that-the-average-flipper-length-is-significantly-different-from-200-mm.-if-not-we-do-not-have-sufficient-evidence-to-say-it-differs." class="nav-link" data-scroll-target="#given-a-significance-level-of-0.05-if-the-p-value-is-less-than-0.05-we-reject-the-null-hypothesis-and-conclude-that-the-average-flipper-length-is-significantly-different-from-200-mm.-if-not-we-do-not-have-sufficient-evidence-to-say-it-differs.">Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.</a></li>
   <li><a href="#one-sample-z-test-for-proportions" id="toc-one-sample-z-test-for-proportions" class="nav-link" data-scroll-target="#one-sample-z-test-for-proportions">One-sample z-test for proportions</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter1.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter1.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -450,8 +449,8 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 </div>
 </div>
 <p>A one-sample t-test was conducted to determine whether the average flipper length of penguins is significantly different from 200 mm. Based on a training sample, the test produced a t-statistic of t and a p-value of p.</p>
-</section></section><section id="given-a-significance-level-of-0.05-if-the-p-value-is-less-than-0.05-we-reject-the-null-hypothesis-and-conclude-that-the-average-flipper-length-is-significantly-different-from-200-mm.-if-not-we-do-not-have-sufficient-evidence-to-say-it-differs." class="level2"><h2 class="anchored" data-anchor-id="given-a-significance-level-of-0.05-if-the-p-value-is-less-than-0.05-we-reject-the-null-hypothesis-and-conclude-that-the-average-flipper-length-is-significantly-different-from-200-mm.-if-not-we-do-not-have-sufficient-evidence-to-say-it-differs.">Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.</h2>
-</section><section id="one-sample-z-test-for-proportions" class="level2"><h2 class="anchored" data-anchor-id="one-sample-z-test-for-proportions">One-sample z-test for proportions</h2>
+<p>Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.</p>
+</section></section><section id="one-sample-z-test-for-proportions" class="level2"><h2 class="anchored" data-anchor-id="one-sample-z-test-for-proportions">One-sample z-test for proportions</h2>
 <p>Use this test when: - The variable is <strong>binary</strong> (success/failure, yes/no, etc.), and - You want to test a <strong>population proportion</strong> ( p ), using a large enough sample.</p>
 <p>The test statistic is:</p>
 <p><span class="math display">\[z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}\]</span></p>
@@ -890,7 +889,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="../book/intro.html" class="pagination-link" aria-label="Introduction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

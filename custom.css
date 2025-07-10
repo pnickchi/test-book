@@ -79,14 +79,14 @@ tbody tr:hover {background: rgba(66, 165, 245, 0.2);}
 /* Heads-up */
 .Heads-up {
     margin: 0.5em 0;
-    border: 1px solid var(--blue-medium);
+    border: 1px solid var(--orange-dark);
     border-radius: 5px;
 }
 
 .Heads-up-header {
     padding: 10px 15px; /* Added more padding for the header */
     color: var(--white);
-    background-color: var(--blue-medium-light);
+    background-color: var(--orange-dark);
     border-top-right-radius: 5px;
     font-size: 0.8em;
     font-weight: bold;
@@ -96,8 +96,8 @@ tbody tr:hover {background: rgba(66, 165, 245, 0.2);}
     padding-left:  60px;
     padding-top:  5px;
     padding-bottom: 0.1em;
-    color: var(--white);
-    background-color: var(--blue-medium-light);
+    color: var(--orange-dark);
+    background-color: var(--yellow-light);
     border-top-right-radius: 5px;
     font-size: 1em;
     font-weight: bold;
@@ -111,7 +111,6 @@ tbody tr:hover {background: rgba(66, 165, 245, 0.2);}
 
 .Heads-up-container {
     padding: 15px 20px; /* Increased padding inside the container */
-    color: var(--blue-dark);
     color: var(--grey-medium);
     background-color: var(--white);
     border-bottom-right-radius: 5px;

@@ -216,7 +216,6 @@ print(f"t = {t_stat:.3f},  p = {p_value:.4f}")
 A one-sample t-test was conducted to determine whether the average flipper length of penguins is significantly different from 200 mm. Based on a training sample, the test produced a t-statistic of t  and a p-value of p.
 
 Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.
-------------------------------------------------------------------------
 
 ## One-sample z-test for proportions
 
