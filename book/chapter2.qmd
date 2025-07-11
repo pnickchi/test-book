@@ -61,7 +61,7 @@ In this chapter, we review tests for comparing two continuous population means u
 -   Independent samples, where the observations in one group are unrelated to those in the other, and
 -   Paired (or dependent) samples, where observations are naturally matched in some way, such as before-and-after measurements.
 
-The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R code examples using real or simulated datasets to help ground the concepts in practice.
+The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R/Python code examples using real or simulated datasets to help ground the concepts in practice. We also review the theoretical background and exmaple codes to test two proportions.
 
 ## Two sample Student's t-test for Independent Samples
 
@@ -91,30 +91,14 @@ In formal terms, we test the hypotheses:
 
 $$H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2$$
 
-To test this, we use the **two-sample** t-test, which compares the sample means and incorporates variability within and between the samples. If we assume equal population variances, the test statistic is:
-
-$$t = \frac{(\bar{X} - \bar{Y})}{s_p \sqrt{\frac{1}{n} + \frac{1}{m}}}$$
-
-where:
-
--   $\bar{X}$ and $\bar{Y}$ are the sample means for UBC and SFU, respectively,
--   $s_p$ is the \textbf{pooled standard deviation}, computed as:
--   $s_p = \sqrt{\frac{(n - 1)s_X^2 + (m - 1)s_Y^2}{n + m - 2}}$
--   $s_X^2$ and $s_Y^2$ are the sample variances of the two groups.
-
-Under the assumption that null hypothesis is correct (i.e. $\mu_1=\mu_2$) then the test statistic defined above follows a t-distribution with $n+m-2$ degrees of freedom (which we denote it by $T_{n+m-2}$). Knowing the distribution of this statistic helps us to compute $\textit{p-value}$ of the test as follows:
-
-$$\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)$$ **Note:** The probability is multiplied by two since we have a two sided hypothesis (alternative is $\mu_1 \neq \mu_2$). For a one sided test (when alternative hypothesis is $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) we do not need to multiply by two.
-
-Now let us see how to run the two-sample test on some example datasets in R. The following sections closely follow the test workflow from introduction section.
 
 ### Study design
 
-For this example, we will be using `Auto` dataset from `ISLR` package. This dataset contains gas mileage, horsepower, and other information for 392 vehicles. Some of variables of interest are: 1) `cylinders` an integer (numerical) value between 4 and 8 which indicates the number of cylinders of car, and 2) `horsepower` which shows engine horsepower. You may wondering if the average of horsepower in cars with 4 cylinders is statistically different than the means in cars with 5 cylinders?
+For this example, we will be using `Auto` dataset from `ISLR` package. This dataset contains gas mileage, horsepower, and other information for 392 vehicles. Some of variables of interest are: 1) `cylinders` an integer (numerical) value between 4 and 8 which indicates the number of cylinders of car, and 2) `horsepower` which shows engine horsepower. You may wondering if the mean of horsepower in cars with 4 cylinders is statistically different than the means in cars with 8 cylinders?
 
 ### Data Collection and Wrangling
 
-We obtain the dataset which is available in `ISLR` package. First we created a new copy of this dataset to avoid touching the actual data. Also we filter rows to those cars with 4 or 8 cylinders only.
+To answer this question, we obtain the dataset which is available in `ISLR` package. First we created a new copy of this dataset to avoid touching the actual data. Also we filter rows to those cars with 4 or 8 cylinders only.
 
 ```{r}
 # Get a copy of dataset
@@ -124,14 +108,13 @@ auto_data <- Auto
 auto_data <- auto_data %>% filter(cylinders %in% c(4,8) )
 ```
 
-
 Finally, we randomly create test and train set from this dataset. We use a proportion of 50-50 between train and test.   
 
 ```{r}
 # Set seed for reproducibility
 set.seed(123)
 
-# Splitting the dataset into training and testing sets
+# Splitting the dataset into train and test sets
 train_indices <- sample(seq_len(nrow(auto_data)), size = 0.50 * nrow(auto_data))
 train_auto <- auto_data[train_indices, ]
 test_auto <- auto_data[-train_indices, ]
@@ -159,68 +142,103 @@ We also look at some descriptive statistics of horsepower in both groups for bet
 ```{r}
 summary(train_auto %>% filter(cylinders == 4) %>% select(horsepower))
 ```
-
-
 and with 8 cylinders:
 
 ```{r}
 summary(train_auto %>% filter(cylinders == 8) %>% select(horsepower))
 ```
 
-Looking at histogram and also summary statistics in different groups we can observe that:
+Looking at summary statistics, there is a bit of overlap between distribution of `horsepower` among two groups but it does not seem to be much. Also there is a clear different in their mean and the following plot also confirms this:
 
-(i) the distribution of 
+
+```{r}
+ggplot(train_auto, aes(x = horsepower, color = factor(cylinders), fill = factor(cylinders))) +
+  geom_density(alpha = 0.4) +
+  labs(title = "Density plot of horsepower by number of cylinders",
+       x = "Horsepower",
+       y = "Density",
+       color = "Cylinders",
+       fill = "Cylinders") +
+  theme_minimal()
+```
 
 
 ### Testing Settings
 
+We use a significant level of $\alpha = 0.05$ to run the test. Considering the data we have is a sample from a population of cars we have the following: 
+
+- $\mu_{1}$ is the mean of horsepower for cars with 4 cylinders in the population. 
+- $\mu_{2}$ is the mean of horsepower for cars with 8 cylinders in the population. 
+
 ### Hypothesis Definitions
+
+We now define the null and alternative hypothesis. Recall the main inquiry we had: 
+
+**You may wondering if the average of horsepower in cars with 4 cylinders is statistically different than the means in cars with 8 cylinders?**
+
+This translates into the following null and alternative hypotheses:
+
+$$H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2}$$
+
+Note that the alternative hypothesis is two-sided, as our question does not favor either group and only asks whether the means are different (i.e., group one could be less than or greater than group two)
+
 
 ### Test Flavour and Components
 
+To test this hypothesis, we use the **two-sample student's t-test for independent samples**, which compares the sample means and incorporates variability within and between the samples. Note that in this case the samples are independent as clearly cars with 4 cylinders are independent from cars with 8 cylinders. The assumption in this test is that variances among two groups are equal meaning that if we look at the random variable of horsepower in both populations, the variance of this random variable is roughly equal in two groups. Note that we do not have access to population and this is rather an assumption that we make with consultation with experts or justifying it based on previous studies. Assuming equal population variances, the test statistic is:
+
+$$t = \frac{(\bar{X} - \bar{Y})}{s_p \sqrt{\frac{1}{n} + \frac{1}{m}}}$$
+
+where:
+
+-   $\bar{X}$ is the mean of horsepower for cars with 4 cylinders in the sample
+-   $\bar{Y}$ is the mean of horsepower for cars with 8 cylinders in the sample
+-   $s_p$ is the \textbf{pooled standard deviation}, computed as:
+-   $s_p = \sqrt{\frac{(n - 1)s_X^2 + (m - 1)s_Y^2}{n + m - 2}}$
+-   $s_X^2$ and $s_Y^2$ are the sample variances of the two groups.
+
+
+
 ### Inferential Conclusions
 
-### Storytelling
+Under the assumption that null hypothesis is correct (i.e. $\mu_1=\mu_2$) then the test statistic defined above follows a t-distribution with $n+m-2$ degrees of freedom (which we denote it by $T_{n+m-2}$). Knowing the distribution of this statistic helps us to compute $\textit{p-value}$ of the test as follows:
+
+$$\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)$$ 
+
+**Note:** The probability is multiplied by two since we have a two sided hypothesis (alternative is $\mu_1 \neq \mu_2$). For a one sided test (when alternative hypothesis is $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) we do not need to multiply by two.
+
+Now we compare the $\textit{p-value}$ to our significance level. If the $\textit{p-value}$ is less than the significance level, then we have evidence against the null hypothesis. The reasoning is as follows: we performed the calculation under the assumption that the null hypothesis is true. If it is true, then the test statistic we computed should follow a $t$-distribution with $n + m - 2$ degrees of freedom. If the p-value is smaller than our chosen significance level, this means it is unlikely that our observed result comes from a $t$-distribution with $n + m - 2$ degrees of freedom. In other words, it is unlikely that the null hypothesis is correct. 
+
+Note that our observation from the sample might still lead us to an incorrect conclusion (since there is variability among samples). Our tolerance for this type of error is determined by the significance level. If $\textit{p-value}$ is not less than significant level then we do not have any evidence to reject the null hypothesis. Now let us see how to run the two-sample test on in R and Python. Note that we use test data now as we have not seen it yet.
 
 
+### How to run the test in `R` and `Python`?
 
-Ignore the following content for now. Still editting
+::: {.panel-tabset}
 
-In this example, we start with a dataset that records the time MDS students spend on course website of DSCI 554. You will encounter this dataset again in DSCI 554 when we discuss A/B/n testing. For now, here's what the dataset looks like:
 
-```{r}
-ABn_data <- read_csv('data/ABn_data.csv', show_col_types = FALSE)
-ABn_data <- ABn_data %>% mutate(Colour = as.factor(Colour), Font = as.factor(Font))
-ABn_data
-```
-
-The columns in the dataset are as follows:
-
--   Font: A factor variable with three levels — small, medium, and large.
-
--   Button Colour: A factor variable with two levels — Red and Blue.
-
--   Duration: A continuous variable representing the duration of each visit, recorded in minutes.
-
-The main statistical question we are asking here is:
-
-**Is there a statistically significant difference in the mean visit duration between websites with red buttons and those with blue buttons?**
-
-This means we are interested in the duration time users spend on website in two different populations: red button design and blue button design. First we do some data selection to create two vector of numbers: one for the visit duration visits in website with red buttons and one for the duration of visits in website with blue buttons. The following code can take care of this. For Red group:
+### R Code - Option 1
 
 ```{r}
-duration_red <- ABn_data %>% filter(Colour == 'Red') %>% pull(Duration)
-duration_red 
+cylinders_4 <- test_auto %>% filter(cylinders == 4) %>% select(horsepower)
+cylinders_8 <- test_auto %>% filter(cylinders == 8) %>% select(horsepower)
+t.test(x = cylinders_8, y = cylinders_4, var.equal=TRUE)
 ```
 
-and for Blue group:
+### R Code - Option 2
 
 ```{r}
-duration_blue <- ABn_data %>% filter(Colour == 'Blue') %>% pull(Duration)
-duration_blue
+t.test(horsepower ~ cylinders, data = test_auto, var.equal=TRUE)
 ```
 
-### How to run this test in R?
+### Python Code
+
+```{python python.reticulate = FALSE}
+import os as os
+
+```
+:::
+
 
 In order to run this test, similar to what we learned in (LINK to chapter 1) we can use `t.test` function in R. The function can be used to perform one or two sample t-tests. The relevant arguments of the function are as follows:
 
@@ -228,19 +246,6 @@ In order to run this test, similar to what we learned in (LINK to chapter 1) we 
 -   `y` is also (non-empty) numeric vector of data values (can be `NULL` if you run a one sample test).
 -   `var.equal` is a binary value (TRUE/FALSE) to indicate if R needs to assume equal variance or not.
 
-Therefore we can run the test for two different cases.
-
--   Case 1: Under the assumption that variances between two populations are equal:
-
-```{r}
-t.test(x = duration_red, y = duration_blue, var.equal = TRUE)
-```
-
--   Case 2: Under the assumption that variances between two populations are **NOT** equal:
-
-```{r}
-t.test(x = duration_red, y = duration_blue, var.equal = FALSE)
-```
 
 In both outputs, we can see the following:
 
@@ -255,6 +260,13 @@ In both outputs, we can see the following:
 -   `sample estimates` gives the sample means for each group.
 
 **Note:** By default the value of `var.equal` is `FALSE`.
+
+
+### Storytelling
+
+
+
+
 
 ## Two sample Welch's t-test for independent samples
 
@@ -311,8 +323,3 @@ Under the null hypothesis, the test statistic follows a t-distribution with $n-1
 
 $$\textit{p-value} = 2 \times \Pr(T_{n - 1} \ge |t|)$$
 
-### Example dataset in R
-
--   TBD
-
-### How to run the test in R?
