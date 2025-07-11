@@ -77,7 +77,41 @@ We compare the calculated ( z )-value to a standard normal distribution to compu
 
 ## One-sample t-test for the mean
 
-Use this test when: - The population variance **is unknown**, and - The sample is either **normally distributed** or **large enough** to rely on the central limit theorem.
+Use this test when:
+- The population variance **is unknown**, and
+- The sample is either **normally distributed** or **large enough** to rely on the central limit theorem.
+
+
+Imagine you want to assess whether a new method of teaching introductory physics improves student performance compared to the traditional method previously used. To explore this, you test the new method at the University of British Columbia (UBC) and compare the results to historical data from students who were taught using the traditional approach. This historical data serves as your **reference value**.
+
+Suppose the population has an unknown average physics score, denoted as:
+
+$$
+\mu \quad \text{(mean physics score at UBC)}
+$$
+
+Since we do not have access to the grades of all students, we take a **random sample** from the population. Let this sample consist of $n$ students, with observed scores:
+
+$$
+X_1, X_2, \dots, X_n
+$$
+
+The central question becomes:
+
+> **Is the mean physics score in our sample statistically different from a given reference value?**
+
+If, for example, the historical average physics score is known to be **75**, then our question becomes more specific:
+
+> **Is the mean physics score in the sample statistically different from 75?**
+
+### Hypotheses
+
+We can formally express this with the following hypotheses:
+
+- **Null hypothesis** $H_0$: $\mu = 75$
+- **Alternative hypothesis** $H_1$: $\mu \ne 75$
+
+Under the null hypothesis, we assume that the average score under the new method is equal to the historical average of 75. If the null is rejected, we conclude that there is a **statistically significant difference**, suggesting that the new method may lead to either **higher or lower** average performance.
 
 The test statistic is:
 
@@ -85,8 +119,88 @@ $$t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}$$
 
 Where: - ( s ) is the sample standard deviation (used instead of ( $\sigma$ ))
 
-This statistic follows a **t-distribution** with ( n - 1 ) degrees of freedom. It is more appropriate for real-world scenarios where we rarely know the true population variance.
+This statistic follows a **t-distribution** with ( n - 1 ) degrees of freedom. 
 
+
+
+
+### Study Design
+
+In this example we use the **Palmer Station Penguins** dataset collected by the LTER in Antarctica (2007 – 2009).  
+The dataset spans three penguin species and includes continuous variables such as *flipper length*, *bill size*, and *body mass*.
+
+> **Research question:**  
+> *Is the average flipper length of penguins significantly different from 200 mm?*
+
+---
+
+### Data Collection & Wrangling
+
+We obtain the dataset **Palmer Station Penguins** dataset collected by the 'LTER'
+
+```{python eval=false}
+import seaborn as sns
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# Load dataset
+penguins = sns.load_dataset("penguins")
+
+# Drop rows with missing values
+penguins_clean = penguins.dropna()
+
+# 80 / 20 train–test split
+train_set, test_set = train_test_split(
+    penguins_clean, test_size=0.2, random_state=42
+)
+```
+
+### Exploratory Data Analysis (EDA)
+
+Before conducting the statistical test, we begin with an exploratory analysis to understand the distribution and characteristics of the flipper_length_mm variable.
+
+First, we examine summary statistics such as the mean, standard deviation, and quartiles. This helps us get a sense of the central tendency and spread of the data:
+
+```{python}
+print(train_set["flipper_length_mm"].describe())
+```
+
+Next, we visualize the distribution of flipper lengths using a histogram. This allows us to assess whether the data are approximately symmetric and whether any outliers are present:
+
+```{python}
+import matplotlib.pyplot as plt
+
+train_set["flipper_length_mm"].hist(edgecolor="black", color="skyblue")
+plt.title("Distribution of Flipper Length (mm)")
+plt.xlabel("Flipper Length (mm)")
+plt.ylabel("Frequency")
+plt.show()
+```
+
+To explore the relationship between flipper length and another continuous variable, we create a scatter plot of flipper length versus body mass. This helps us visually assess whether larger penguins tend to have longer flippers, and whether this relationship is linear or varies across ranges:
+
+```{python}
+plt.scatter(
+    train_set["body_mass_g"],
+    train_set["flipper_length_mm"],
+    alpha=0.6
+)
+plt.title("Body Mass vs. Flipper Length")
+plt.xlabel("Body Mass (g)")
+plt.ylabel("Flipper Length (mm)")
+plt.show()
+```
+
+Now, we can perform one‑Sample t-Test
+```{python}
+t_stat, p_value = stats.ttest_1samp(
+    train_set["flipper_length_mm"], popmean=200
+)
+print(f"t = {t_stat:.3f},  p = {p_value:.4f}")
+```
+A one-sample t-test was conducted to determine whether the average flipper length of penguins is significantly different from 200 mm. Based on a training sample, the test produced a t-statistic of t  and a p-value of p.
+
+Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.
 ------------------------------------------------------------------------
 
 ## One-sample z-test for proportions
