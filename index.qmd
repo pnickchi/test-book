@@ -27,7 +27,7 @@ To address this gap, we have developed a bilingual resource in both `R` and `Pyt
 <center><img src="img/photo-alexi.jpg" width=275 /></center>
 <br>
 
-> I'm an Assistant Professor of Teaching in the Department of Statistics and Master of Data Science at the University of British Columbia. Throughout my academic and professional journey, I've been involved in diverse fields, such as credit risk management, statistical consulting, and data science teaching. My doctoral research in statistics is primarily focused on computer experiments that emulate scientific and engineering systems via Gaussian stochastic processes (i.e., kriging regression). I'm incredibly passionate about teaching regression topics while combining statistical and machine learning contexts.
+> I'm an Assistant Professor of Teaching in the Department of Statistics and Master of Data Science at the University of British Columbia (UBC). Throughout my academic and professional journey, I've been involved in diverse fields, such as credit risk management, statistical consulting, and data science teaching. My doctoral research in statistics is primarily focused on computer experiments that emulate scientific and engineering systems via Gaussian stochastic processes (i.e., kriging regression). I'm incredibly passionate about teaching regression topics while combining statistical and machine learning contexts.
 
 ## Kate Manskaia
 

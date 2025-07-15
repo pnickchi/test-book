@@ -76,26 +76,36 @@ A hypothesis testing workflow structured in eight stages: *study design*, *data 
 Define the **right research question**, objectives of the inferential study, and the variables of interest to ensure the analysis is purpose-driven and aligned with the problem at hand. 
 -->
 
+![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/laptop-games-jigsaw-puzzle-puzzle-7426707/).](img/puzzle.png){width="300"}
+
 ### Data Collection and Wrangling {#sec-data-collection-wrangling}
 
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-pixel-social-network-3704049/).](img/paint.png){width="550"}
 
 ### Exploratory Data Analysis {#sec-exploratory-data-analysis}
 
+![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-lecture-lecturer-3976299/).](img/meeting-1.png){width="400"}
 
 ### Testing Settings {#sec-testing-settings}
 
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-blended-learning-6230153/).](img/blender.png){width="400"}
 
 ### Hypothesis Definitions {#sec-hypothesis-definitions}
 
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-protocol-exchange-3947913/).](img/test.png){width="420"}
 
 ### Test Flavour and Components {#sec-test-flavour-components}
 
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-pixel-college-3702064/).](img/plug.png){width="500"}
 
 ### Inferential Conclusions {#sec-inferential-conclusions}
+
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-pixel-digital-3704070/.](img/pinned-notes.png){width="500"}
 
 
 ### Storytelling {#sec-storytelling}
 
+![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-seminar-conference-3974170/).](img/meeting-2.png){width="500"}
 
 ## The Test Mind Map {#sec-test-mind-map}
 
@@ -108,16 +118,16 @@ mindmap
   ))
     Simulation Based<br/>Tests
     Classical<br/>Tests
-      (Chapter 1: <br/>Tests for One<br/>Continuous<br/>Population Mean)
+      (Chapter 2: <br/>Tests for One<br/>Continuous<br/>Population Mean)
         {{Unbounded<br/>Response}}
         {{Proportion between<br/>0 and 1<br/>obtained from a <br/>Binary Response}}
-      (Chapter 2: <br/>Tests for Two<br/>Continuous<br/>Population Means)
+      (Chapter 3: <br/>Tests for Two<br/>Continuous<br/>Population Means)
         Two<br/>Independent<br/>Populations
           {{Unbounded<br/>Responses}}
           {{Proportions between<br/>0 and 1<br/>obtained from two <br/>Binary Responses}}
         Two<br/>Related<br/>Populations or<br/>Measurements
           {{Unbounded<br/>Responses}}
-      (Chapter 3: <br/>ANOVA related <br/>Tests for<br/>k Continuous<br/>Population Means)
+      (Chapter 4: ANOVA related <br/>Tests for<br/>k Continuous<br/>Population Means)
         {{Unbounded<br/>Responses}}
 ```
 
