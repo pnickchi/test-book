@@ -527,3 +527,4 @@ $$\textit{p-value} = 2 \times \Pr(T_{n - 1} \ge |t|)$$
  When we run t-test, we operate under the assumption that: 1) either the sample size is large enough (we are thinking about $n=30$ at least) so that central limit theorem assumptions work well, or 2) the distribution of our sample in each group is normal or symmetric enough.
 
 If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers) or we have a very small sample size, we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it. You can read more about it LINK.
+

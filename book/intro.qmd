@@ -60,35 +60,127 @@ The workflow for hypothesis testing consists of eight stages, which will be disc
 3. **Exploratory data analysis:** In this stage, we classify variables to provide preliminary insights using descriptive statistics and visualizations via the training set.
 4. **Testing settings:** We must revisit the **significance level** used in our power analysis (i.e., the procedure used to obtain the minimum sample size $n$ of data points to be collected). Additionally, we need to list all modelling parameters that will be tested.
 5. **Hypothesis definitions:** With the modelling parameters to test, we need to define our hypotheses: the **null** hypothesis versus the **alternative** hypothesis. These should be framed in relation to the main inferential inquiries.
-6. **Test flavour and components:** At this stage, we choose the most appropriate test flavour. Depending on whether the test is classical or simulation-based, we will then identify the necessary components to compute the **critical** values or **$p$-values** (via the test set) for the next stage.
-7. **Inferential conclusions:** The goal of this stage is to determine whether we should reject the null hypothesis based on the critical values or $p$-values obtained.
+6. **Test flavour and components:** At this stage, we choose the most appropriate test flavour and indicate the respective **assumptions**. Depending on whether the test is classical or simulation-based, we will then identify the necessary components to compute the **critical** values or **$p$-values** (via the test set) for the next stage.
+7. **Inferential conclusions:** The goal of this stage is to determine whether we should reject the null hypothesis based on the critical values or $p$-values obtained. This stage also includes running the **model diagnostics** to check our corresponding assumptions.
 8. **Storytelling:** Finally, communicate the findings through a clear and engaging narrative that is accessible to your stakeholders.
 
 ::: {#fig-hypothesis-testing-workflow}
-![](img/mini-test-book-hypothesis-testing-workflow.png){width="1500"}
+![](img/hypothesis-testing-workflow.png){width="1500"}
 
-A hypothesis testing workflow structured in eight stages: *study design*, *data collection and wrangling*, *exploratory data analysis*, *testing settings*, *hypothesis definitions*, *test flavour and components*, *inferential conclusions*, and *storytelling*
+A hypothesis testing workflow structured in eight stages: *study design*, *data collection and wrangling*, *exploratory data analysis*, *testing settings*, *hypothesis definitions*, *test flavour and components*, *inferential conclusions*, and *storytelling*.
 :::
+
+
 
 ### Study Design {#sec-study-design}
 
-<!--
-Define the **right research question**, objectives of the inferential study, and the variables of interest to ensure the analysis is purpose-driven and aligned with the problem at hand. 
--->
+This is the initial stage of the hypothesis testing workflow, which involves what we refer to as **main inferential inquiries**. These inquiries are typically posed by stakeholders who wish to conduct a study to better understand a specific population of interest and its associated parameters. In practice, these parameters (such as a population mean or variance) are unknown but considered fixed. This approach, where population parameters are treated as fixed yet unknown, is known as the **frequentist paradigm**.
+
+::: {.Heads-up}
+::::{.Heads-up-header}
+Heads-up on the frequentist paradigm!
+::::
+::::{.Heads-up-container}
+In the frequentist paradigm, statistical inference relies on the concept that probabilities represent **long-run** relative frequencies of events observed through repeated experimentation or observation. In this approach, we estimate population parameters by examining the distribution of outcomes derived from multiple independent realizations of a random process. 
 
 ![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/laptop-games-jigsaw-puzzle-puzzle-7426707/).](img/puzzle.png){width="300"}
 
+Additionally, this paradigm assumes that the parameters governing a population are **fixed but unknown**. As a result, all randomness is attributed to the data-generating process, not to the parameters themselves.
+::::
+:::
+
+It is essential to clearly define the main inferential inquiries based on the following principles:
+
+- We need to consult stakeholders about what the study aims to understand regarding their population of interest before entering the second workflow stage, which involves data collection through sampling.
+- The main inferential inquiries should align with the stakeholders' research questions. These inquiries should be established at the beginning of this workflow stage and must be meaningful and comprehensive enough to guide the entire inferential investigation.
+
 ### Data Collection and Wrangling {#sec-data-collection-wrangling}
 
-![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-pixel-social-network-3704049/).](img/paint.png){width="550"}
+Once the inferential questions are defined, the next step is to collect and prepare the data for analysis. This stage encompasses sampling strategies to ensure the data is representative of the population and data wrangling to clean and structure the dataset appropriately. 
+
+::: {.Tip}
+::::{.Tip-header}
+Tip on sampling techniques!
+::::
+::::{.Tip-container}
+It is important to emphasize the need to choose the **most suitable sampling technique** based on the population's structure and the research questions guiding our main inferential inquiries. Making the right choice of sampling technique is essential for ensuring that our inferential results are accurate, precise, and generalizable to the population of interest. Here are some fundamental (though not exhaustive) sampling techniques:
+
+- **Simple random sampling:** Every individual in the population has an equal probability of being sampled. This is the most basic sampling technique and is probabilistically straightforward, but it may be too simplistic for complex populations in practice.
+- **Systematic sampling:** If we have a complete list of individuals in our population, we can sample at regular intervals after selecting a random starting point.
+- **Stratified sampling:** The population is divided into distinct groups called strata. These strata are defined in function of the characteristics of the individuals (e.g., age, income, education, etc.). Data is then sampled proportionally from each stratum or through optimal allocation.
+- **Cluster sampling:** The population is divided into groups known as clusters, such as households or geographic areas. A random sample is then collected from these clusters.
+
+During the stage of data collection and wrangling of our hypothesis workflow, it is crucial to dedicate adequate resources to plan and execute data collection using the most suitable sampling technique. Since the scope of this mini-book does not cover sampling in depth, we recommend reviewing the work by @lohr2021 for more detailed information on various sampling techniques. This resource includes handy practical examples on this vast field.
+::::
+:::
+
+When it comes to the wrangling aspect of this stage, once we have sampled our data, it is necessary to structure it in a suitable format (e.g., a proper data frame) using our chosen package, such as the `R` [{tidyverse}](https://www.tidyverse.org) [@tidyverse] or  `Python` [{pandas}](https://pypi.org/project/pandas/) [@pandas2024]. After we have wrangled our data, we need to split it into two sets:
+
+- **Training Set.** This set is used solely for exploratory data analysis (EDA) and allows us to gain graphical and descriptive insights into how the sample of individuals behaves concerning our main inferential inquiries.
+- **Test Set.** This set is reserved for input in our chosen hypothesis testing to be used.
+
+The data splitting is analogous to the standard practice in machine learning to split our data for model training and testing to prevent data leakage in **predictive inquiries**.
+
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-pixel-social-network-3704049/).](img/paint.png){width="525"}
+
+Nevertheless, you might wonder: 
+
+> **Why are we also doing this for an inferential inquiry?** 
+
+Statistically speaking, the practice of data splitting helps avoid what is known as **double dipping**. Double dipping occurs when the same data is used both for exploratory data analysis (EDA) to generate hypotheses and then again for formal statistical testing. Theoretically, and supported by numerical simulations, it has been shown that double-dipping **increases the probability of committing a Type I error**, which occurs when we incorrectly reject the null hypothesis $H_0$ while it is actually true for the population of interest.
+
+For example, consider a one-sample $t$-test in a double-dipping context. We might be tempted to formulate our null and alternative hypotheses based on our observed sample mean. For instance, we could state our hypotheses as follows: $\text{$H_0$: } \mu \geq 10$ (null hypothesis) versus $\text{$H_1$: } \mu < 10$ (alternative hypothesis), based on a sample mean of $\bar{x} = 9.5$. If we were to proceed with the statistical test using this same data, we would be falling into the double-dipping trap!
+
+::: {.Tip}
+::::{.Tip-header}
+Tip on a further double-dipping resource!
+::::
+::::{.Tip-container}
+Data splitting is generally not a common practice in statistical inference, despite its frequent use in machine learning. Hence, for more information on double-dipping in statistical inference, Chapter 6 from @reinhart2015 offers in-depth insights and practical examples.
+::::
+:::
 
 ### Exploratory Data Analysis {#sec-exploratory-data-analysis}
 
+Once the data is cleaned and structured, it is essential to develop a descriptive understanding of our variables of interest through EDA using the training set. The first step is to classify the variables (e.g., numerical, binary, categorical, ordinal, etc.), which will guide us in selecting the most appropriate descriptive statistics and visualizations to examine the relationships between these variables. For instance, we can explore the distribution of these variables and identify any outliers present in the training set. Note EDA is intended to uncover preliminary trends before conducting formal inferential analysis, and these findings should be communicated to our stakeholders during the final storytelling.
+
 ![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-lecture-lecturer-3976299/).](img/meeting-1.png){width="400"}
+
+Additionally, the classification of variables during EDA will provide valuable insights for formulating and setting up our hypotheses, while also helping us choose the **right test flavour**. The insights gained from EDA, along with the identified preliminary trends, will shape our expectations for the entire workflow and facilitate a more nuanced statistical interpretation of the main inferential inquiries. Furthermore, EDA aids in justifying our modelling assumptions later in the process. Finally, we must clarify that any insights gained from EDA cannot be generalized to the entire population; they pertain only to the sampled data within the training set.
 
 ### Testing Settings {#sec-testing-settings}
 
+This stage allows us to define all our population parameters based on the main inferential inquiries, along with the standards that will guide us through the subsequent stages of the workflow:
+
+1. We need to use the same significance level, denoted as $\alpha$, that was employed in the **power analysis** when planning data collection for our sampling technique. The significance level denotes the probability of committing Type I error as in @tbl-errors (i.e., the probability of encountering a **false positive**).
+2. Regarding the population parameters of interest, we should begin with a formal statistical definition using Greek letters (for further information, see @sec-greek-alphabet).
+
+|       | **$H_0$ is true** | **$H_0$ is false** |
+|:-----:|:-----:|:-----:|
+| **Reject $H_0$** | Type I error (*False positive*) | Correct |
+| **Fail to reject $H_0$** | Correct | Type II error (*False negative*) |
+
+: Types of inferential conclusions in a frequentist hypothesis testing. {#tbl-errors .hover}
+
+
+::: {.Heads-up}
+::::{.Heads-up-header}
+Heads-up on power analysis!
+::::
+::::{.Heads-up-container}
+In hypothesis testing, power analysis is a crucial preliminary step used to determine the minimum sample size $n$ necessary to detect a signal that allows us to reject the null hypothesis $H_0$ in favor of the alternative hypothesis $H_1$. This analysis ensures that our inferential process can effectively distinguish true population effects from random noise. Note that power analysis requires three key components as inputs:
+
+1. The significance level $\alpha$.
+2. The desired power $1 - \beta$ (which relates to correctly rejecting $H_0$ in favour of $H_1$, resulting in a **true positive** as in @tbl-errors).
+3. The effect size—a measure of the magnitude of the association (or causation) that the test is designed to detect.
+
+These three components allow power analysis to provide the minimum sample size $n$ needed to avoid an underpowered study (which occurs when there is a high probability of committing a Type II error as in @tbl-errors, denoted as $\beta$) or an overly large $n$ that could waste resources.
+::::
+:::
+
 ![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-blended-learning-6230153/).](img/blender.png){width="400"}
+
+To effectively communicate our insights to stakeholders via our final storytelling, it is necessary to translate all modelling parameters and hypotheses into clear, plain language for those who may not have a technical background. We should remember that $H_0$ must be stated in a way that indicates a **status quo** in any given parameter(s), meaning there is nothing noteworthy in the context of our inferential study. On the other hand, $H_1$ must imply a **departure from this status quo**, indicating that there is indeed something of interest to consider in our inferential analysis.
 
 ### Hypothesis Definitions {#sec-hypothesis-definitions}
 

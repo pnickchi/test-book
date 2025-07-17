@@ -1,0 +1,58 @@
+<!-- Google tag (gtag.js) -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DZWGQVJSHE');
+</script>
+
+# Greek Alphabet {#sec-greek-alphabet}
+
+In the context of hypothesis testing in statistics, mathematical notation serves an important purpose: it distinguishes between unknown **population parameters** and **sample-based estimates**. A key convention in this framework is the use of Greek letters to represent population parameters. For example, $\mu$ represents the population mean, $\sigma$ denotes the population standard deviation, and $\pi$ signifies the population proportion. In a frequentist framework, these letters indicate unknown and fixed parameters that characterize the entire population of interest. Since hypothesis testing primarily focuses on making inferential conclusions about these parameters, we will consistently use this notation throughout all chapters of this mini-book.
+
+::: {.Heads-up}
+::::{.Heads-up-header}
+Heads-up on the use of $\pi$!
+::::
+::::{.Heads-up-container}
+In this textbook, unless otherwise stated, the letter $\pi$ will represent a population parameter and not the mathematical constant $3.141592...$
+::::
+:::
+
+![Image by [*meineresterampe*](https://pixabay.com/users/meineresterampe-26089/) via [*Pixabay*](https://pixabay.com/photos/typewriter-old-retro-office-1899760/).](img/typewriter.jpg){width="500"}
+
+It is important to remember that each hypothesis test involves formulating **null** and **alternative hypotheses** regarding the population parameter(s) of interest. For instance, when inferring a population mean $\mu$, the null hypothesis in a two-sided one-sample $t$-test might indicate that this mean is equal to 100 (i.e., $\text{$H_0$: } \mu = 100$), while the alternative hypothesis will indicate that the mean is not equal to 100 (i.e., $\text{$H_1$: } \mu \neq 100$). Using Greek letters to define our hypotheses helps frame the entire test clearly and precisely. If at any point throughout the chapters this notation feels unfamiliar, we recommend consulting @tbl-greek-alphabet as a reference resource. Regular exposure to this notation will enhance your conceptual clarity when performing statistical inference.
+
+
+|  Name   | Uppercase  | Lowercase  |
+|:-------:|:----------:|:----------:|
+|  Alpha  | $\text{A}$ |  $\alpha$  |
+|  Beta   | $\text{B}$ |  $\beta$   |
+|  Gamma  |  $\Gamma$  |  $\gamma$  |
+|  Delta  |  $\Delta$  |  $\delta$  |
+| Epsilon | $\text{E}$ | $\epsilon$ |
+|  Zeta   | $\text{Z}$ |  $\zeta$   |
+|   Eta   | $\text{H}$ |   $\eta$   |
+|  Theta  |  $\Theta$  |  $\theta$  |
+|  Iota   | $\text{I}$ |  $\iota$   |
+|  Kappa  | $\text{K}$ |  $\kappa$  |
+| Lambda  | $\Lambda$  | $\lambda$  |
+|   Mu    | $\text{M}$ |   $\mu$    |
+|   Nu    | $\text{N}$ |   $\nu$    |
+|   Xi    |   $\Xi$    |   $\xi$    |
+|    O    | $\text{O}$ | $\text{o}$ |
+|   Pi    |   $\Pi$    |   $\pi$    |
+|   Rho   | $\text{P}$ |   $\rho$   |
+|  Sigma  |  $\Sigma$  |  $\sigma$  |
+|   Tau   | $\text{T}$ |   $\tau$   |
+| Upsilon | $\Upsilon$ | $\upsilon$ |
+|   Phi   |   $\Phi$   |   $\phi$   |
+|   Chi   | $\text{X}$ |   $\chi$   |
+|   Psi   |   $\Psi$   |   $\psi$   |
+|  Omega  |  $\Omega$  |  $\omega$  |
+
+: Greek alphabet composed of 24 letters, from *left* to *right* you can find the *name* of letter along with its corresponding *uppercase* and *lowercase* forms. {#tbl-greek-alphabet .striped .hover}
