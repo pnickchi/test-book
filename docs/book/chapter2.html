@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.53">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Chapter 2: Tests for Two Continuous Population Mean – The Mini Test Book (in development)</title>
+<title>3&nbsp; Tests for Two Continuous Population Mean – The Mini Test Book (in development)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,7 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../book/chapter3.html" rel="next">
+<link href="../book/chapter4-anova.html" rel="next">
 <link href="../book/chapter1.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -166,7 +166,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter2.html">Chapter 2: Tests for Two Continuous Population Mean</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter2.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tests for Two Continuous Population Mean</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -200,26 +200,26 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/intro.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/chapter1-intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book/chapter1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Chapter 1: Tests for One Continuous Population Mean</span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tests for One Continuous Population Mean</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book/chapter2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Chapter 2: Tests for Two Continuous Population Mean</span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tests for Two Continuous Population Mean</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/chapter3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Chapter 3: ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></a>
+  <a href="../book/chapter4-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -254,41 +254,41 @@ window.Quarto = {
    
   <ul>
 <li>
-<a href="#two-sample-students-t-test-for-independent-samples" id="toc-two-sample-students-t-test-for-independent-samples" class="nav-link active" data-scroll-target="#two-sample-students-t-test-for-independent-samples">Two sample Student’s t-test for Independent Samples</a>
+<a href="#two-sample-students-t-test-for-independent-samples" id="toc-two-sample-students-t-test-for-independent-samples" class="nav-link active" data-scroll-target="#two-sample-students-t-test-for-independent-samples"><span class="header-section-number">3.1</span> Two sample Student’s t-test for Independent Samples</a>
   <ul>
-<li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review">Review</a></li>
-  <li><a href="#study-design" id="toc-study-design" class="nav-link" data-scroll-target="#study-design">Study design</a></li>
-  <li><a href="#data-collection-and-wrangling" id="toc-data-collection-and-wrangling" class="nav-link" data-scroll-target="#data-collection-and-wrangling">Data Collection and Wrangling</a></li>
-  <li><a href="#explanatory-data-analysis" id="toc-explanatory-data-analysis" class="nav-link" data-scroll-target="#explanatory-data-analysis">Explanatory Data Analysis</a></li>
-  <li><a href="#testing-settings" id="toc-testing-settings" class="nav-link" data-scroll-target="#testing-settings">Testing Settings</a></li>
-  <li><a href="#hypothesis-definitions" id="toc-hypothesis-definitions" class="nav-link" data-scroll-target="#hypothesis-definitions">Hypothesis Definitions</a></li>
-  <li><a href="#test-flavour-and-components" id="toc-test-flavour-and-components" class="nav-link" data-scroll-target="#test-flavour-and-components">Test Flavour and Components</a></li>
-  <li><a href="#inferential-conclusions" id="toc-inferential-conclusions" class="nav-link" data-scroll-target="#inferential-conclusions">Inferential Conclusions</a></li>
-  <li><a href="#how-to-run-the-test-in-r-and-python" id="toc-how-to-run-the-test-in-r-and-python" class="nav-link" data-scroll-target="#how-to-run-the-test-in-r-and-python">How to run the test in <code>R</code> and <code>Python</code>?</a></li>
-  <li><a href="#storytelling" id="toc-storytelling" class="nav-link" data-scroll-target="#storytelling">Storytelling</a></li>
+<li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review"><span class="header-section-number">3.1.1</span> Review</a></li>
+  <li><a href="#study-design" id="toc-study-design" class="nav-link" data-scroll-target="#study-design"><span class="header-section-number">3.1.2</span> Study design</a></li>
+  <li><a href="#data-collection-and-wrangling" id="toc-data-collection-and-wrangling" class="nav-link" data-scroll-target="#data-collection-and-wrangling"><span class="header-section-number">3.1.3</span> Data Collection and Wrangling</a></li>
+  <li><a href="#explanatory-data-analysis" id="toc-explanatory-data-analysis" class="nav-link" data-scroll-target="#explanatory-data-analysis"><span class="header-section-number">3.1.4</span> Explanatory Data Analysis</a></li>
+  <li><a href="#testing-settings" id="toc-testing-settings" class="nav-link" data-scroll-target="#testing-settings"><span class="header-section-number">3.1.5</span> Testing Settings</a></li>
+  <li><a href="#hypothesis-definitions" id="toc-hypothesis-definitions" class="nav-link" data-scroll-target="#hypothesis-definitions"><span class="header-section-number">3.1.6</span> Hypothesis Definitions</a></li>
+  <li><a href="#test-flavour-and-components" id="toc-test-flavour-and-components" class="nav-link" data-scroll-target="#test-flavour-and-components"><span class="header-section-number">3.1.7</span> Test Flavour and Components</a></li>
+  <li><a href="#inferential-conclusions" id="toc-inferential-conclusions" class="nav-link" data-scroll-target="#inferential-conclusions"><span class="header-section-number">3.1.8</span> Inferential Conclusions</a></li>
+  <li><a href="#how-to-run-the-test-in-r-and-python" id="toc-how-to-run-the-test-in-r-and-python" class="nav-link" data-scroll-target="#how-to-run-the-test-in-r-and-python"><span class="header-section-number">3.1.9</span> How to run the test in <code>R</code> and <code>Python</code>?</a></li>
+  <li><a href="#storytelling" id="toc-storytelling" class="nav-link" data-scroll-target="#storytelling"><span class="header-section-number">3.1.10</span> Storytelling</a></li>
   </ul>
 </li>
   <li>
-<a href="#two-sample-welchs-t-test-for-independent-samples" id="toc-two-sample-welchs-t-test-for-independent-samples" class="nav-link" data-scroll-target="#two-sample-welchs-t-test-for-independent-samples">Two sample Welch’s t-test for independent samples</a>
+<a href="#two-sample-welchs-t-test-for-independent-samples" id="toc-two-sample-welchs-t-test-for-independent-samples" class="nav-link" data-scroll-target="#two-sample-welchs-t-test-for-independent-samples"><span class="header-section-number">3.2</span> Two sample Welch’s t-test for independent samples</a>
   <ul>
-<li><a href="#review-1" id="toc-review-1" class="nav-link" data-scroll-target="#review-1">Review</a></li>
-  <li><a href="#study-design-1" id="toc-study-design-1" class="nav-link" data-scroll-target="#study-design-1">Study Design</a></li>
-  <li><a href="#data-collection-and-wrangling-1" id="toc-data-collection-and-wrangling-1" class="nav-link" data-scroll-target="#data-collection-and-wrangling-1">Data Collection and Wrangling</a></li>
-  <li><a href="#explanatory-data-analysis-1" id="toc-explanatory-data-analysis-1" class="nav-link" data-scroll-target="#explanatory-data-analysis-1">Explanatory Data Analysis</a></li>
-  <li><a href="#testing-settings-1" id="toc-testing-settings-1" class="nav-link" data-scroll-target="#testing-settings-1">Testing Settings</a></li>
-  <li><a href="#hypothesis-definitions-1" id="toc-hypothesis-definitions-1" class="nav-link" data-scroll-target="#hypothesis-definitions-1">Hypothesis Definitions</a></li>
-  <li><a href="#test-flavour-and-components-1" id="toc-test-flavour-and-components-1" class="nav-link" data-scroll-target="#test-flavour-and-components-1">Test Flavour and Components</a></li>
-  <li><a href="#inferential-conclusions-1" id="toc-inferential-conclusions-1" class="nav-link" data-scroll-target="#inferential-conclusions-1">Inferential Conclusions</a></li>
-  <li><a href="#how-to-run-the-test-in-r-and-python-1" id="toc-how-to-run-the-test-in-r-and-python-1" class="nav-link" data-scroll-target="#how-to-run-the-test-in-r-and-python-1">How to run the test in <code>R</code> and <code>Python</code>?</a></li>
-  <li><a href="#storytelling-1" id="toc-storytelling-1" class="nav-link" data-scroll-target="#storytelling-1">Storytelling</a></li>
+<li><a href="#review-1" id="toc-review-1" class="nav-link" data-scroll-target="#review-1"><span class="header-section-number">3.2.1</span> Review</a></li>
+  <li><a href="#study-design-1" id="toc-study-design-1" class="nav-link" data-scroll-target="#study-design-1"><span class="header-section-number">3.2.2</span> Study Design</a></li>
+  <li><a href="#data-collection-and-wrangling-1" id="toc-data-collection-and-wrangling-1" class="nav-link" data-scroll-target="#data-collection-and-wrangling-1"><span class="header-section-number">3.2.3</span> Data Collection and Wrangling</a></li>
+  <li><a href="#explanatory-data-analysis-1" id="toc-explanatory-data-analysis-1" class="nav-link" data-scroll-target="#explanatory-data-analysis-1"><span class="header-section-number">3.2.4</span> Explanatory Data Analysis</a></li>
+  <li><a href="#testing-settings-1" id="toc-testing-settings-1" class="nav-link" data-scroll-target="#testing-settings-1"><span class="header-section-number">3.2.5</span> Testing Settings</a></li>
+  <li><a href="#hypothesis-definitions-1" id="toc-hypothesis-definitions-1" class="nav-link" data-scroll-target="#hypothesis-definitions-1"><span class="header-section-number">3.2.6</span> Hypothesis Definitions</a></li>
+  <li><a href="#test-flavour-and-components-1" id="toc-test-flavour-and-components-1" class="nav-link" data-scroll-target="#test-flavour-and-components-1"><span class="header-section-number">3.2.7</span> Test Flavour and Components</a></li>
+  <li><a href="#inferential-conclusions-1" id="toc-inferential-conclusions-1" class="nav-link" data-scroll-target="#inferential-conclusions-1"><span class="header-section-number">3.2.8</span> Inferential Conclusions</a></li>
+  <li><a href="#how-to-run-the-test-in-r-and-python-1" id="toc-how-to-run-the-test-in-r-and-python-1" class="nav-link" data-scroll-target="#how-to-run-the-test-in-r-and-python-1"><span class="header-section-number">3.2.9</span> How to run the test in <code>R</code> and <code>Python</code>?</a></li>
+  <li><a href="#storytelling-1" id="toc-storytelling-1" class="nav-link" data-scroll-target="#storytelling-1"><span class="header-section-number">3.2.10</span> Storytelling</a></li>
   </ul>
 </li>
-  <li><a href="#paired-samples" id="toc-paired-samples" class="nav-link" data-scroll-target="#paired-samples">Paired Samples</a></li>
+  <li><a href="#paired-samples" id="toc-paired-samples" class="nav-link" data-scroll-target="#paired-samples"><span class="header-section-number">3.3</span> Paired Samples</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter2.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter2.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">Chapter 2: Tests for Two Continuous Population Mean</h1>
+<h1 class="title"><span id="sec-two-continuous-means" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tests for Two Continuous Population Mean</span></span></h1>
 </div>
 
 
@@ -348,7 +348,7 @@ window.Quarto = {
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-test-chapter-2-mindmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques explored in this chapter, which are classical tests for two continuous population means.
+Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques explored in this chapter, which are classical tests for two continuous population means.
 </figcaption></figure>
 </div>
 <p>In this chapter, we review tests for comparing two continuous population means under two conditions: when the populations are independent and when they are dependent. Throughout the sections below, we provide details about these tests and required formula for each case. Broadly speaking, there are two main types of tests to compare the means between two continuous populations:</p>
@@ -357,8 +357,10 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 <li>Paired (or dependent) samples, where observations are naturally matched in some way, such as before-and-after measurements.</li>
 </ul>
 <p>The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R/Python code examples using real or simulated datasets to help ground the concepts in practice. We also review the theoretical background and exmaple codes to test two proportions.</p>
-<section id="two-sample-students-t-test-for-independent-samples" class="level2"><h2 class="anchored" data-anchor-id="two-sample-students-t-test-for-independent-samples">Two sample Student’s t-test for Independent Samples</h2>
-<section id="review" class="level3"><h3 class="anchored" data-anchor-id="review">Review</h3>
+<section id="two-sample-students-t-test-for-independent-samples" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="two-sample-students-t-test-for-independent-samples">
+<span class="header-section-number">3.1</span> Two sample Student’s t-test for Independent Samples</h2>
+<section id="review" class="level3" data-number="3.1.1"><h3 data-number="3.1.1" class="anchored" data-anchor-id="review">
+<span class="header-section-number">3.1.1</span> Review</h3>
 <p>In this section we talk about two sample student’s t-test for independent samples. Independent samples arise when the observations in one group do not influence or relate to the observations in the other. In statistical terms we call this two independent samples. A classic example from educational research is described below:</p>
 <p>Suppose you’re interested in whether a new method of teaching introductory physics improves student performance and learning experience. To investigate this, you decide to test the method at two universities: the University of British Columbia (UBC) and Simon Fraser University (SFU). You apply the new teaching method at SFU and compare the results to students taught with the traditional method at UBC.</p>
 <p>In this scenario, students at UBC and SFU form two distinct, unrelated groups. Since the students are not paired or matched across schools, and each individual belongs to only one group, the samples are independent. Note that the samples are drawn from two independent population: students at UBC and SFU, respectively.</p>
@@ -375,9 +377,11 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 <p><strong>Is there a statistically significant difference between the mean physics scores among two groups?</strong></p>
 <p>In formal terms, we test the hypotheses:</p>
 <p><span class="math display">\[H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2\]</span> Now that we reviewed the test concept, let’s try to understand it in a read dataset. The steps below follows closely with the roadmap that we introduced in [LINK HERE].</p>
-</section><section id="study-design" class="level3"><h3 class="anchored" data-anchor-id="study-design">Study design</h3>
+</section><section id="study-design" class="level3" data-number="3.1.2"><h3 data-number="3.1.2" class="anchored" data-anchor-id="study-design">
+<span class="header-section-number">3.1.2</span> Study design</h3>
 <p>For this example, we will be using <code>Auto</code> dataset from <code>ISLR</code> package. This dataset contains gas mileage, horsepower, and other information for 392 vehicles. Some of variables of interest are: 1) <code>cylinders</code> an integer (numerical) value between 4 and 8 which indicates the number of cylinders of car, and 2) <code>horsepower</code> which shows engine horsepower. You may wondering <strong>if the mean of horsepower in cars with 8 cylinders is statistically different than the means in cars with 4 cylinders?</strong></p>
-</section><section id="data-collection-and-wrangling" class="level3"><h3 class="anchored" data-anchor-id="data-collection-and-wrangling">Data Collection and Wrangling</h3>
+</section><section id="data-collection-and-wrangling" class="level3" data-number="3.1.3"><h3 data-number="3.1.3" class="anchored" data-anchor-id="data-collection-and-wrangling">
+<span class="header-section-number">3.1.3</span> Data Collection and Wrangling</h3>
 <p>To answer this question, we obtain the dataset which is available in <code>ISLR</code> package. Note that we consider this data a random sample from population of cars. First we creat a new copy of this dataset to avoid touching the actual data (this is optional). Also we filter rows to those cars with 4 or 8 cylinders only.</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Get a copy of dataset</span></span>
@@ -396,7 +400,8 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 <span><span class="va">train_auto</span> <span class="op">&lt;-</span> <span class="va">auto_data</span><span class="op">[</span><span class="va">train_indices</span>, <span class="op">]</span></span>
 <span><span class="va">test_auto</span> <span class="op">&lt;-</span> <span class="va">auto_data</span><span class="op">[</span><span class="op">-</span><span class="va">train_indices</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="explanatory-data-analysis" class="level3"><h3 class="anchored" data-anchor-id="explanatory-data-analysis">Explanatory Data Analysis</h3>
+</section><section id="explanatory-data-analysis" class="level3" data-number="3.1.4"><h3 data-number="3.1.4" class="anchored" data-anchor-id="explanatory-data-analysis">
+<span class="header-section-number">3.1.4</span> Explanatory Data Analysis</h3>
 <p>Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA) on train set. This step is crucial, as it helps us gain a better understanding of the distribution of variables in our dataset. The <code>horsepower</code> variable in dataset is a numerical variable. The <code>cylinders</code> variable is an integer variable that helps to divide observations into two groups.</p>
 <p>In particular, we are interested in the distribution of <code>horsepower</code> in two different groups (cars with 4 cylinders vs cars with 8 cylinders). Using a histogram for this variable is a good choice as we have a variable with numerical values.</p>
 <div class="cell">
@@ -457,20 +462,23 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 </div>
 </div>
 </div>
-</section><section id="testing-settings" class="level3"><h3 class="anchored" data-anchor-id="testing-settings">Testing Settings</h3>
+</section><section id="testing-settings" class="level3" data-number="3.1.5"><h3 data-number="3.1.5" class="anchored" data-anchor-id="testing-settings">
+<span class="header-section-number">3.1.5</span> Testing Settings</h3>
 <p>We use a significant level of <span class="math inline">\(\alpha = 0.05\)</span> to run the test. Considering the data we have is a sample from a population of cars we have the following:</p>
 <ul>
 <li>
 <span class="math inline">\(\mu_{1}\)</span> is the mean of horsepower for cars with 4 cylinders in the population.</li>
 <li>
 <span class="math inline">\(\mu_{2}\)</span> is the mean of horsepower for cars with 8 cylinders in the population.</li>
-</ul></section><section id="hypothesis-definitions" class="level3"><h3 class="anchored" data-anchor-id="hypothesis-definitions">Hypothesis Definitions</h3>
+</ul></section><section id="hypothesis-definitions" class="level3" data-number="3.1.6"><h3 data-number="3.1.6" class="anchored" data-anchor-id="hypothesis-definitions">
+<span class="header-section-number">3.1.6</span> Hypothesis Definitions</h3>
 <p>We now define the null and alternative hypothesis. Recall the main inquiry we had:</p>
 <p><strong>You may wondering if the average of horsepower in cars with 4 cylinders is statistically different than the means in cars with 8 cylinders?</strong></p>
 <p>This translates into the following null and alternative hypotheses:</p>
 <p><span class="math display">\[H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2}\]</span></p>
 <p>Note that the alternative hypothesis is two-sided, as our question does not favor either group and only asks whether the means are different (i.e., group one could be less than or greater than group two). Also the hypothesis tests the unknown parameters in the population which are <span class="math inline">\(\mu_{1}\)</span> and <span class="math inline">\(\mu_{2}\)</span>.</p>
-</section><section id="test-flavour-and-components" class="level3"><h3 class="anchored" data-anchor-id="test-flavour-and-components">Test Flavour and Components</h3>
+</section><section id="test-flavour-and-components" class="level3" data-number="3.1.7"><h3 data-number="3.1.7" class="anchored" data-anchor-id="test-flavour-and-components">
+<span class="header-section-number">3.1.7</span> Test Flavour and Components</h3>
 <p>To test this hypothesis, we use the <strong>two-sample student’s t-test for independent samples</strong>, which compares the sample means and incorporates variability within and between the samples. Note that in this case the samples are independent as clearly cars with 4 cylinders are independent from cars with 8 cylinders.</p>
 <p>The assumption in this test is that variances among two groups are equal meaning that if we look at the random variable of horsepower in both populations, the variance of this random variable is roughly equal in two groups (cars with 4 cylinders and cars with 8 cylinders). Note that we do not have access to population and this is rather an assumption that we make with consultation with experts or justifying it based on previous studies. We will introduce the test without equal variance assumption in the next section.</p>
 <p>Now we need to compute a test statistic from the sample. Assuming equal population variances, the test statistic is:</p>
@@ -488,7 +496,8 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 <span class="math inline">\(S_X^2\)</span> and <span class="math inline">\(S_Y^2\)</span> are the sample variances of the two groups.</li>
 </ul>
 <p>Note that all elements in this formula (statistic) are computed based on sample.</p>
-</section><section id="inferential-conclusions" class="level3"><h3 class="anchored" data-anchor-id="inferential-conclusions">Inferential Conclusions</h3>
+</section><section id="inferential-conclusions" class="level3" data-number="3.1.8"><h3 data-number="3.1.8" class="anchored" data-anchor-id="inferential-conclusions">
+<span class="header-section-number">3.1.8</span> Inferential Conclusions</h3>
 <p>As you can see, the test statistic computes the difference between <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> and scale it based on the variance of this difference. Now the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined (<span class="math inline">\(t\)</span>) and have a better understanding of what are typical values of this statistic. Note that <span class="math inline">\(t\)</span> itself is a random variable as it would change from sample to sample.</p>
 <p>We skipped the theory behind it but under the assumption that null hypothesis is correct (i.e.&nbsp;<span class="math inline">\(\mu_1=\mu_2\)</span>) then the test statistic defined above (<span class="math inline">\(t\)</span>) follows a t-distribution with <span class="math inline">\(n + m -2\)</span> degrees of freedom (which we denote it by <span class="math inline">\(T_{n+m-2}\)</span>). Knowing the distribution of this statistic helps us to compute <span class="math inline">\(\textit{p-value}\)</span> of the test as follows:</p>
 <p><span class="math display">\[\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)\]</span></p>
@@ -496,7 +505,8 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 <p><strong>Note:</strong> The probability is multiplied by two since we have a two sided hypothesis (alternative is <span class="math inline">\(\mu_1 \neq \mu_2\)</span>). For a one sided test (when alternative hypothesis is <span class="math inline">\(\mu_1 &gt; \mu_2\)</span> or <span class="math inline">\(\mu_1 &lt; \mu_2\)</span>) we do not need to multiply by two.</p>
 <p>Now we compare the <span class="math inline">\(\textit{p-value}\)</span> to our significance level. If the <span class="math inline">\(\textit{p-value}\)</span> is less than the significance level, then we have evidence against the null hypothesis. The reasoning is as follows: we performed the calculation under the assumption that the null hypothesis is true. If the null hypothesis is true, then the test statistic we computed should follow a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n + m - 2\)</span> degrees of freedom. If the p-value is smaller than our chosen significance level, this means it is unlikely that our observed result comes from a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n + m - 2\)</span> degrees of freedom. In other words, it is unlikely that the null hypothesis is correct.</p>
 <p>Note that our observation from the sample might still lead us to an incorrect conclusion (since there is variability among samples). Our tolerance for this type of error is determined by the significance level. If <span class="math inline">\(\textit{p-value}\)</span> is not less than significant level then we do not have any evidence to reject the null hypothesis. Now let us see how to run the two-sample test in R and Python. Note that for the purpose of hypothesis testing we now use test data to avoid double dipping.</p>
-</section><section id="how-to-run-the-test-in-r-and-python" class="level3"><h3 class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python">How to run the test in <code>R</code> and <code>Python</code>?</h3>
+</section><section id="how-to-run-the-test-in-r-and-python" class="level3" data-number="3.1.9"><h3 data-number="3.1.9" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python">
+<span class="header-section-number">3.1.9</span> How to run the test in <code>R</code> and <code>Python</code>?</h3>
 <p>The following lines of code in tabset show you how to run the test in <code>R</code> or <code>Python</code>. Note that there are two ways of running this test in <code>R</code> as shown below. They both give the same result and you are welcome to use either of them.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
@@ -576,15 +586,20 @@ mean in group 4 mean in group 8
 <li><p><code>sample estimates</code> gives the sample means for each group.</p></li>
 </ul>
 <p><strong>Note:</strong> By default the value of <code>var.equal</code> is <code>FALSE</code>. We manully set it to <code>TRUE</code> to implement equal variance assumption in our test.</p>
-</section><section id="storytelling" class="level3"><h3 class="anchored" data-anchor-id="storytelling">Storytelling</h3>
+</section><section id="storytelling" class="level3" data-number="3.1.10"><h3 data-number="3.1.10" class="anchored" data-anchor-id="storytelling">
+<span class="header-section-number">3.1.10</span> Storytelling</h3>
 <ul>
 <li>TBD</li>
-</ul></section></section><section id="two-sample-welchs-t-test-for-independent-samples" class="level2"><h2 class="anchored" data-anchor-id="two-sample-welchs-t-test-for-independent-samples">Two sample Welch’s t-test for independent samples</h2>
-<section id="review-1" class="level3"><h3 class="anchored" data-anchor-id="review-1">Review</h3>
+</ul></section></section><section id="two-sample-welchs-t-test-for-independent-samples" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="two-sample-welchs-t-test-for-independent-samples">
+<span class="header-section-number">3.2</span> Two sample Welch’s t-test for independent samples</h2>
+<section id="review-1" class="level3" data-number="3.2.1"><h3 data-number="3.2.1" class="anchored" data-anchor-id="review-1">
+<span class="header-section-number">3.2.1</span> Review</h3>
 <p>In this section we talk about two sample Welch’s t-test for independent samples. This test is very similar to two sample Student’s t-test for independent samples that we described with a caveat. The two samples are still independent but the only difference is the equal variance assumption. We use this test if we do not have any reason or evidence to believe that the variance of variable of interest is the same among two groups in the population.</p>
-</section><section id="study-design-1" class="level3"><h3 class="anchored" data-anchor-id="study-design-1">Study Design</h3>
+</section><section id="study-design-1" class="level3" data-number="3.2.2"><h3 data-number="3.2.2" class="anchored" data-anchor-id="study-design-1">
+<span class="header-section-number">3.2.2</span> Study Design</h3>
 <p>We will be using <code>Auto</code> dataset from <code>ISLR</code> package in this section too. Now the main statistical question of interest remains the same as before: <strong>You may wondering if the mean of horsepower in cars with 8 cylinders is statistically different than the means in cars with 4 cylinders?</strong> but we do <strong>not</strong> make an equal variance assumption anymore. Now we are applying a two sample Welch’s t-test for independent samples.</p>
-</section><section id="data-collection-and-wrangling-1" class="level3"><h3 class="anchored" data-anchor-id="data-collection-and-wrangling-1">Data Collection and Wrangling</h3>
+</section><section id="data-collection-and-wrangling-1" class="level3" data-number="3.2.3"><h3 data-number="3.2.3" class="anchored" data-anchor-id="data-collection-and-wrangling-1">
+<span class="header-section-number">3.2.3</span> Data Collection and Wrangling</h3>
 <p>To answer this question, we obtain the dataset which is available in <code>ISLR</code> package. The following codes are exactly the same as before and are shown here as a review.</p>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Get a copy of dataset</span></span>
@@ -603,7 +618,8 @@ mean in group 4 mean in group 8
 <span><span class="va">train_auto</span> <span class="op">&lt;-</span> <span class="va">auto_data</span><span class="op">[</span><span class="va">train_indices</span>, <span class="op">]</span></span>
 <span><span class="va">test_auto</span> <span class="op">&lt;-</span> <span class="va">auto_data</span><span class="op">[</span><span class="op">-</span><span class="va">train_indices</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="explanatory-data-analysis-1" class="level3"><h3 class="anchored" data-anchor-id="explanatory-data-analysis-1">Explanatory Data Analysis</h3>
+</section><section id="explanatory-data-analysis-1" class="level3" data-number="3.2.4"><h3 data-number="3.2.4" class="anchored" data-anchor-id="explanatory-data-analysis-1">
+<span class="header-section-number">3.2.4</span> Explanatory Data Analysis</h3>
 <p>Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA) on train set. Recall that the <code>cylinders</code> variable is an integer variable that helps to divide observations into two groups.</p>
 <p>We are still interested in the distribution of <code>horsepower</code> in two different groups (cars with 4 cylinders vs cars with 8 cylinders). Using a histogram for this variable is a good choice as we have a variable with numerical values.</p>
 <p>The following lines of code are the same as previous section as we are working on the same data. This is shown as a reminder.</p>
@@ -665,20 +681,23 @@ mean in group 4 mean in group 8
 </div>
 </div>
 </div>
-</section><section id="testing-settings-1" class="level3"><h3 class="anchored" data-anchor-id="testing-settings-1">Testing Settings</h3>
+</section><section id="testing-settings-1" class="level3" data-number="3.2.5"><h3 data-number="3.2.5" class="anchored" data-anchor-id="testing-settings-1">
+<span class="header-section-number">3.2.5</span> Testing Settings</h3>
 <p>We use a significant level of <span class="math inline">\(\alpha = 0.05\)</span> to run the test. Considering the data we have is a sample from a population of cars we have the following:</p>
 <ul>
 <li>
 <span class="math inline">\(\mu_{1}\)</span> is the mean of horsepower for cars with 4 cylinders in the population.</li>
 <li>
 <span class="math inline">\(\mu_{2}\)</span> is the mean of horsepower for cars with 8 cylinders in the population.</li>
-</ul></section><section id="hypothesis-definitions-1" class="level3"><h3 class="anchored" data-anchor-id="hypothesis-definitions-1">Hypothesis Definitions</h3>
+</ul></section><section id="hypothesis-definitions-1" class="level3" data-number="3.2.6"><h3 data-number="3.2.6" class="anchored" data-anchor-id="hypothesis-definitions-1">
+<span class="header-section-number">3.2.6</span> Hypothesis Definitions</h3>
 <p>We now define the null and alternative hypothesis. Recall the main inquiry we had:</p>
 <p><strong>You may wondering if the average of horsepower in cars with 4 cylinders is statistically different than the means in cars with 8 cylinders?</strong></p>
 <p>This translates into the following null and alternative hypotheses:</p>
 <p><span class="math display">\[H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2}\]</span></p>
 <p>Note that the alternative hypothesis is two-sided, as our question does not favor either group and only asks whether the means are different (i.e., group one could be less than or greater than group two). Also the hypothesis tests the unknown parameters in the population which are <span class="math inline">\(\mu_{1}\)</span> and <span class="math inline">\(\mu_{2}\)</span>.</p>
-</section><section id="test-flavour-and-components-1" class="level3"><h3 class="anchored" data-anchor-id="test-flavour-and-components-1">Test Flavour and Components</h3>
+</section><section id="test-flavour-and-components-1" class="level3" data-number="3.2.7"><h3 data-number="3.2.7" class="anchored" data-anchor-id="test-flavour-and-components-1">
+<span class="header-section-number">3.2.7</span> Test Flavour and Components</h3>
 <p>As noted before we use Welch’s t-test if the assumption of equal variances is questionable. This test adjusts the standard error and degrees of freedom (<code>df</code>) of the test accordingly. As a result the test statistic and <code>df</code> of the test are different. The Welch’s test statistic is computed as:</p>
 <p><span class="math display">\[t = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{S_X^2}{n} + \frac{S_Y^2}{m}}}\]</span></p>
 <p>where:</p>
@@ -693,12 +712,14 @@ mean in group 4 mean in group 8
 <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> are the sample sizes in two groups (not necessarily the same).</li>
 </ul>
 <p>Note that similar to before all elements in this formula (statistic) are computed based on sample.</p>
-</section><section id="inferential-conclusions-1" class="level3"><h3 class="anchored" data-anchor-id="inferential-conclusions-1">Inferential Conclusions</h3>
+</section><section id="inferential-conclusions-1" class="level3" data-number="3.2.8"><h3 data-number="3.2.8" class="anchored" data-anchor-id="inferential-conclusions-1">
+<span class="header-section-number">3.2.8</span> Inferential Conclusions</h3>
 <p>We skipped the theory behind it but under the assumption that null hypothesis is correct, the test statistic defined above still follows a t-distribution but with a different degrees of freedom. The degree of freedom when we do not make equal variance assumption is:</p>
 <p><span class="math display">\[\nu = \frac{\left( \frac{s_1^2}{n} + \frac{s_2^2}{m} \right)^2}
 {\frac{\left( \frac{s_1^2}{n} \right)^2}{n - 1} + \frac{\left( \frac{s_2^2}{m} \right)^2}{m - 1}}\]</span></p>
 <p>Note that this degree of freedom is not necessarily an integer number (could be a real number).</p>
-</section><section id="how-to-run-the-test-in-r-and-python-1" class="level3"><h3 class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python-1">How to run the test in <code>R</code> and <code>Python</code>?</h3>
+</section><section id="how-to-run-the-test-in-r-and-python-1" class="level3" data-number="3.2.9"><h3 data-number="3.2.9" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python-1">
+<span class="header-section-number">3.2.9</span> How to run the test in <code>R</code> and <code>Python</code>?</h3>
 <p>The following lines of code in tabset show you how to run the Welch’s test in <code>R</code> or <code>Python</code>. Note that there are two ways of running this test in <code>R</code> as shown below. They both give the same result and you are welcome to use either of them.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
@@ -778,11 +799,13 @@ mean in group 4 mean in group 8
 <li><p><code>sample estimates</code> gives the sample means for each group.</p></li>
 </ul>
 <p><strong>Note:</strong> By default the value of <code>var.equal</code> is <code>FALSE</code>. We manully set it to <code>FALSE</code> to implement the test without equal variance assumption.</p>
-</section><section id="storytelling-1" class="level3"><h3 class="anchored" data-anchor-id="storytelling-1">Storytelling</h3>
+</section><section id="storytelling-1" class="level3" data-number="3.2.10"><h3 data-number="3.2.10" class="anchored" data-anchor-id="storytelling-1">
+<span class="header-section-number">3.2.10</span> Storytelling</h3>
 <ul>
 <li><p>TBD</p></li>
 <li><p>All from here is under development</p></li>
-</ul></section></section><section id="paired-samples" class="level2"><h2 class="anchored" data-anchor-id="paired-samples">Paired Samples</h2>
+</ul></section></section><section id="paired-samples" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="paired-samples">
+<span class="header-section-number">3.3</span> Paired Samples</h2>
 <p>Paired samples arise when each observation in one group is matched or linked to an observation in the other group. This structure is typical in before-and-after studies, matched-subject designs, or repeated measures on the same individuals. A classic example comes from health sciences.</p>
 <p>Suppose you’re investigating whether a new diet plan reduces blood pressure. You recruit a group of participants and record their blood pressure <strong>before</strong> starting the diet. <strong>After</strong> following the diet for two months, you measure their blood pressure again. In this scenario, each participant contributes two measurements: one before <strong>the intervention</strong> and one after. These measurements are not independent as they come from the same person. Therefore we treat them as paired.</p>
 <p>To formulate the problem and hypothesis, let us assume that each individual has two measurements:</p>
@@ -1241,13 +1264,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="../book/chapter1.html" class="pagination-link" aria-label="Chapter 1: Tests for One Continuous Population Mean">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Chapter 1: Tests for One Continuous Population Mean</span>
+      <a href="../book/chapter1.html" class="pagination-link" aria-label="Tests for One Continuous Population Mean">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tests for One Continuous Population Mean</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../book/chapter3.html" class="pagination-link" aria-label="Chapter 3: ANOVA-related Tests for $k$ Continuous Population Means">
-        <span class="nav-page-text">Chapter 3: ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../book/chapter4-anova.html" class="pagination-link" aria-label="ANOVA-related Tests for $k$ Continuous Population Means">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

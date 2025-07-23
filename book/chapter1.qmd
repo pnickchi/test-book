@@ -10,7 +10,7 @@
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 
-# Chapter 1: Tests for One Continuous Population Mean {.unnumbered}
+# Tests for One Continuous Population Mean {#sec-one-continuous-mean}
 
 ```{r setup, include=FALSE}
 # Setting up Python dependencies

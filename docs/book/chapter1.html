@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.53">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Chapter 1: Tests for One Continuous Population Mean – The Mini Test Book (in development)</title>
+<title>2&nbsp; Tests for One Continuous Population Mean – The Mini Test Book (in development)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../book/chapter2.html" rel="next">
-<link href="../book/intro.html" rel="prev">
+<link href="../book/chapter1-intro.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -166,7 +166,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter1.html">Chapter 1: Tests for One Continuous Population Mean</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter1.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tests for One Continuous Population Mean</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -200,26 +200,26 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/intro.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/chapter1-intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book/chapter1.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Chapter 1: Tests for One Continuous Population Mean</span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tests for One Continuous Population Mean</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book/chapter2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Chapter 2: Tests for Two Continuous Population Mean</span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tests for Two Continuous Population Mean</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/chapter3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Chapter 3: ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></a>
+  <a href="../book/chapter4-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -253,22 +253,22 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">The tools</h2>
    
   <ul>
-<li><a href="#one-sample-z-test-for-the-mean" id="toc-one-sample-z-test-for-the-mean" class="nav-link active" data-scroll-target="#one-sample-z-test-for-the-mean">One-sample z-test for the mean</a></li>
+<li><a href="#one-sample-z-test-for-the-mean" id="toc-one-sample-z-test-for-the-mean" class="nav-link active" data-scroll-target="#one-sample-z-test-for-the-mean"><span class="header-section-number">2.1</span> One-sample z-test for the mean</a></li>
   <li>
-<a href="#one-sample-t-test-for-the-mean" id="toc-one-sample-t-test-for-the-mean" class="nav-link" data-scroll-target="#one-sample-t-test-for-the-mean">One-sample t-test for the mean</a>
+<a href="#one-sample-t-test-for-the-mean" id="toc-one-sample-t-test-for-the-mean" class="nav-link" data-scroll-target="#one-sample-t-test-for-the-mean"><span class="header-section-number">2.2</span> One-sample t-test for the mean</a>
   <ul>
-<li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses">Hypotheses</a></li>
-  <li><a href="#study-design" id="toc-study-design" class="nav-link" data-scroll-target="#study-design">Study Design</a></li>
-  <li><a href="#data-collection-wrangling" id="toc-data-collection-wrangling" class="nav-link" data-scroll-target="#data-collection-wrangling">Data Collection &amp; Wrangling</a></li>
-  <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</a></li>
+<li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">2.2.1</span> Hypotheses</a></li>
+  <li><a href="#study-design" id="toc-study-design" class="nav-link" data-scroll-target="#study-design"><span class="header-section-number">2.2.2</span> Study Design</a></li>
+  <li><a href="#data-collection-wrangling" id="toc-data-collection-wrangling" class="nav-link" data-scroll-target="#data-collection-wrangling"><span class="header-section-number">2.2.3</span> Data Collection &amp; Wrangling</a></li>
+  <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda"><span class="header-section-number">2.2.4</span> Exploratory Data Analysis (EDA)</a></li>
   </ul>
 </li>
-  <li><a href="#one-sample-z-test-for-proportions" id="toc-one-sample-z-test-for-proportions" class="nav-link" data-scroll-target="#one-sample-z-test-for-proportions">One-sample z-test for proportions</a></li>
+  <li><a href="#one-sample-z-test-for-proportions" id="toc-one-sample-z-test-for-proportions" class="nav-link" data-scroll-target="#one-sample-z-test-for-proportions"><span class="header-section-number">2.3</span> One-sample z-test for proportions</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter1.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter1.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">Chapter 1: Tests for One Continuous Population Mean</h1>
+<h1 class="title"><span id="sec-one-continuous-mean" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tests for One Continuous Population Mean</span></span></h1>
 </div>
 
 
@@ -321,7 +321,7 @@ window.Quarto = {
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-test-chapter-1-mindmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques explored in this chapter, which are classical tests for one continuous population mean.
+Figure&nbsp;2.1: A specific hypothesis testing mind map outlining the techniques explored in this chapter, which are classical tests for one continuous population mean.
 </figcaption></figure>
 </div>
 <p>There are several statistical tests used to evaluate hypotheses about a single sample. The appropriate test depends on the type of variable (mean or proportion), sample size, and whether population parameters like variance are known.</p>
@@ -335,7 +335,8 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 <p>We cover two cases for the mean — depending on whether the population variance is known or unknown — and one test for binary outcomes where we’re testing a population proportion.</p>
 <hr>
 <p>Key tests include:</p>
-<section id="one-sample-z-test-for-the-mean" class="level2"><h2 class="anchored" data-anchor-id="one-sample-z-test-for-the-mean">One-sample z-test for the mean</h2>
+<section id="one-sample-z-test-for-the-mean" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="one-sample-z-test-for-the-mean">
+<span class="header-section-number">2.1</span> One-sample z-test for the mean</h2>
 <p>Use this test when: - The population variance <strong>σ² is known</strong>, and - The sample comes from a <strong>normally distributed population</strong>, or the <strong>sample size is large</strong> (typically ( n )).</p>
 <p>The test statistic is:</p>
 <p><span class="math display">\[ z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}} \]</span></p>
@@ -344,7 +345,8 @@ Figure&nbsp;1: A specific hypothesis testing mind map outlining the techniques e
 - ( <span class="math inline">\(\sigma\)</span> ) is the known population standard deviation<br>
 - ( n ) is the sample size</p>
 <p>We compare the calculated ( z )-value to a standard normal distribution to compute a p-value or make a decision based on a critical value.</p>
-<hr></section><section id="one-sample-t-test-for-the-mean" class="level2"><h2 class="anchored" data-anchor-id="one-sample-t-test-for-the-mean">One-sample t-test for the mean</h2>
+<hr></section><section id="one-sample-t-test-for-the-mean" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="one-sample-t-test-for-the-mean">
+<span class="header-section-number">2.2</span> One-sample t-test for the mean</h2>
 <p>Use this test when: - The population variance <strong>is unknown</strong>, and - The sample is either <strong>normally distributed</strong> or <strong>large enough</strong> to rely on the central limit theorem.</p>
 <p>Imagine you want to assess whether a new method of teaching introductory physics improves student performance compared to the traditional method previously used. To explore this, you test the new method at the University of British Columbia (UBC) and compare the results to historical data from students who were taught using the traditional approach. This historical data serves as your <strong>reference value</strong>.</p>
 <p>Suppose the population has an unknown average physics score, denoted as:</p>
@@ -363,7 +365,8 @@ X_1, X_2, \dots, X_n
 <blockquote class="blockquote">
 <p><strong>Is the mean physics score in the sample statistically different from 75?</strong></p>
 </blockquote>
-<section id="hypotheses" class="level3"><h3 class="anchored" data-anchor-id="hypotheses">Hypotheses</h3>
+<section id="hypotheses" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="hypotheses">
+<span class="header-section-number">2.2.1</span> Hypotheses</h3>
 <p>We can formally express this with the following hypotheses:</p>
 <ul>
 <li>
@@ -378,13 +381,15 @@ X_1, X_2, \dots, X_n
 <p><span class="math display">\[t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}\]</span></p>
 <p>Where: - ( s ) is the sample standard deviation (used instead of ( <span class="math inline">\(\sigma\)</span> ))</p>
 <p>This statistic follows a <strong>t-distribution</strong> with ( n - 1 ) degrees of freedom.</p>
-</section><section id="study-design" class="level3"><h3 class="anchored" data-anchor-id="study-design">Study Design</h3>
+</section><section id="study-design" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="study-design">
+<span class="header-section-number">2.2.2</span> Study Design</h3>
 <p>In this example we use the <strong>Palmer Station Penguins</strong> dataset collected by the LTER in Antarctica (2007 – 2009).<br>
 The dataset spans three penguin species and includes continuous variables such as <em>flipper length</em>, <em>bill size</em>, and <em>body mass</em>.</p>
 <blockquote class="blockquote">
 <p><strong>Research question:</strong><br><em>Is the average flipper length of penguins significantly different from 200 mm?</em></p>
 </blockquote>
-<hr></section><section id="data-collection-wrangling" class="level3"><h3 class="anchored" data-anchor-id="data-collection-wrangling">Data Collection &amp; Wrangling</h3>
+<hr></section><section id="data-collection-wrangling" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="data-collection-wrangling">
+<span class="header-section-number">2.2.3</span> Data Collection &amp; Wrangling</h3>
 <p>We obtain the dataset <strong>Palmer Station Penguins</strong> dataset collected by the ‘LTER’</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -402,7 +407,8 @@ The dataset spans three penguin species and includes continuous variables such a
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    penguins_clean, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="exploratory-data-analysis-eda" class="level3"><h3 class="anchored" data-anchor-id="exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</h3>
+</section><section id="exploratory-data-analysis-eda" class="level3" data-number="2.2.4"><h3 data-number="2.2.4" class="anchored" data-anchor-id="exploratory-data-analysis-eda">
+<span class="header-section-number">2.2.4</span> Exploratory Data Analysis (EDA)</h3>
 <p>Before conducting the statistical test, we begin with an exploratory analysis to understand the distribution and characteristics of the flipper_length_mm variable.</p>
 <p>First, we examine summary statistics such as the mean, standard deviation, and quartiles. This helps us get a sense of the central tendency and spread of the data:</p>
 <div class="cell">
@@ -467,7 +473,8 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 </div>
 <p>A one-sample t-test was conducted to determine whether the average flipper length of penguins is significantly different from 200 mm. Based on a training sample, the test produced a t-statistic of t and a p-value of p.</p>
 <p>Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.</p>
-</section></section><section id="one-sample-z-test-for-proportions" class="level2"><h2 class="anchored" data-anchor-id="one-sample-z-test-for-proportions">One-sample z-test for proportions</h2>
+</section></section><section id="one-sample-z-test-for-proportions" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="one-sample-z-test-for-proportions">
+<span class="header-section-number">2.3</span> One-sample z-test for proportions</h2>
 <p>Use this test when: - The variable is <strong>binary</strong> (success/failure, yes/no, etc.), and - You want to test a <strong>population proportion</strong> ( p ), using a large enough sample.</p>
 <p>The test statistic is:</p>
 <p><span class="math display">\[z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}\]</span></p>
@@ -905,13 +912,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="../book/intro.html" class="pagination-link" aria-label="Introduction">
+      <a href="../book/chapter1-intro.html" class="pagination-link" aria-label="Introduction">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../book/chapter2.html" class="pagination-link" aria-label="Chapter 2: Tests for Two Continuous Population Mean">
-        <span class="nav-page-text">Chapter 2: Tests for Two Continuous Population Mean</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../book/chapter2.html" class="pagination-link" aria-label="Tests for Two Continuous Population Mean">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tests for Two Continuous Population Mean</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

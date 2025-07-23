@@ -8,7 +8,7 @@
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 
-# Chapter 3: ANOVA-related Tests for $k$ Continuous Population Means {.unnumbered}
+# ANOVA-related Tests for $k$ Continuous Population Means {#sec-anova}
 
 ::: {#fig-test-chapter-3-mindmap}
 ```{mermaid}

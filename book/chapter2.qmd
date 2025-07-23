@@ -21,7 +21,7 @@ library(tidyverse)
 library(ISLR)
 ```
 
-# Chapter 2: Tests for Two Continuous Population Mean {.unnumbered}
+# Tests for Two Continuous Population Mean {#sec-two-continuous-means}
 
 This chapter introduces statistical tests designed to compare two samples which is a fundamental task in data analysis across many disciplines. Whether you're comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion among two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically significant or simply due to chance.
 

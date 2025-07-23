@@ -42,10 +42,10 @@ book:
   chapters:
     - index.qmd
     - book/privacy-policy.qmd
-    - book/intro.qmd
+    - book/chapter1-intro.qmd
     - book/chapter1.qmd
     - book/chapter2.qmd
-    - book/chapter3.qmd
+    - book/chapter4-anova.qmd
     - book/references.qmd
     
   appendices:
