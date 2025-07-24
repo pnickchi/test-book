@@ -242,7 +242,7 @@ cylinders_4 <- test_auto %>% filter(cylinders == 4) %>% select(horsepower)
 cylinders_8 <- test_auto %>% filter(cylinders == 8) %>% select(horsepower)
 
 # Run the test
-t.test(x = cylinders_8, y = cylinders_4, var.equal = TRUE)
+t.test(x = cylinders_4, y = cylinders_8, var.equal = TRUE)
 ```
 
 ### R Code - Option 2
@@ -254,12 +254,26 @@ t.test(horsepower ~ cylinders, data = test_auto, var.equal=TRUE)
 
 ### Python Code
 
-```{python python.reticulate = FALSE}
-import os as os
+```{python python.reticulate = TRUE}
+from scipy import stats
 
+# Access test_auto dataframe from R environment within this Python code
+df = r.test_auto
+
+# Split data into groups
+cylinders_8 = df[df["cylinders"] == 8]["horsepower"]
+cylinders_4 = df[df["cylinders"] == 4]["horsepower"]
+
+# Run the test
+t_stat, p_val = stats.ttest_ind(cylinders_4, cylinders_8, equal_var = True)
+
+# Print t statistic value
+print(f"T-statistic: {t_stat}")
+
+# Print p-value of the test
+print(f"P-value: {p_val}")
 ```
 :::
-
 
 In order to run this test, similar to what we learned in (LINK to chapter 1) we can use `t.test` function in R. The function can be used to perform one or two sample t-tests. The relevant arguments of the function are as follows:
 
@@ -433,7 +447,7 @@ cylinders_4 <- test_auto %>% filter(cylinders == 4) %>% select(horsepower)
 cylinders_8 <- test_auto %>% filter(cylinders == 8) %>% select(horsepower)
 
 # Run the test
-t.test(x = cylinders_8, y = cylinders_4, var.equal = FALSE)
+t.test(x = cylinders_4, y = cylinders_8, var.equal = FALSE)
 ```
 
 ### R Code - Option 2
@@ -445,9 +459,24 @@ t.test(horsepower ~ cylinders, data = test_auto, var.equal = FALSE)
 
 ### Python Code
 
-```{python python.reticulate = FALSE}
-import os as os
+```{python python.reticulate = TRUE}
+from scipy import stats
 
+# Access test_auto dataframe from R environment within this Python code
+df = r.test_auto
+
+# Split data into groups
+cylinders_8 = df[df["cylinders"] == 8]["horsepower"]
+cylinders_4 = df[df["cylinders"] == 4]["horsepower"]
+
+# Run the test
+t_stat, p_val = stats.ttest_ind(cylinders_4, cylinders_8, equal_var = False)
+
+# Print t statistic value
+print(f"T-statistic: {t_stat}")
+
+# Print p-value of the test
+print(f"P-value: {p_val}")
 ```
 :::
 
