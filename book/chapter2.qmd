@@ -129,7 +129,7 @@ Once we have the data and it is split into training and test sets, the next step
 
 In particular, we are interested in the distribution of `horsepower` in two different groups (cars with 4 cylinders vs cars with 8 cylinders). Using a histogram for this variable is a good choice as we have a variable with numerical values.
 
-```{r}
+```{r echo=FALSE}
 ggplot(train_auto, aes(x = horsepower)) +
   geom_histogram(fill = "steelblue", color = "white", bins = 20) +
   facet_wrap(~ cylinders, nrow = 1) +
@@ -154,7 +154,7 @@ summary(train_auto %>% filter(cylinders == 8) %>% select(horsepower))
 Looking at summary statistics, there is a bit of overlap between distribution of `horsepower` among two groups but it does not seem to be much. In fact they seem to be quite separated. Also there is a clear different in their mean and the following plot also confirms this:
 
 
-```{r}
+```{r echo=FALSE}
 ggplot(train_auto, aes(x = horsepower, color = factor(cylinders), fill = factor(cylinders))) +
   geom_density(alpha = 0.4) +
   labs(title = "Density plot of horsepower by number of cylinders",
@@ -334,7 +334,7 @@ We are still interested in the distribution of `horsepower` in two different gro
 
 The following lines of code are the same as previous section as we are working on the same data. This is shown as a reminder.
 
-```{r}
+```{r echo=FALSE}
 ggplot(train_auto, aes(x = horsepower)) +
   geom_histogram(fill = "steelblue", color = "white", bins = 20) +
   facet_wrap(~ cylinders, nrow = 1) +
@@ -359,7 +359,7 @@ summary(train_auto %>% filter(cylinders == 8) %>% select(horsepower))
 Our conclusion remains the same. Looking at summary statistics, there is a bit of overlap between distribution of `horsepower` among two groups but it does not seem to be much. In fact they seem to be quite separated. Also there is a clear different in their mean and the following plot also confirms this:
 
 
-```{r}
+```{r echo=FALSE}
 ggplot(train_auto, aes(x = horsepower, color = factor(cylinders), fill = factor(cylinders))) +
   geom_density(alpha = 0.4) +
   labs(title = "Density plot of horsepower by number of cylinders",
