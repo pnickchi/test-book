@@ -525,7 +525,11 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 <p>Note that our observation from the sample might still lead us to an incorrect conclusion (since there is variability among samples). Our tolerance for this type of error is determined by the significance level. If <span class="math inline">\(\textit{p-value}\)</span> is not less than significant level then we do not have any evidence to reject the null hypothesis. Now let us see how to run the two-sample test in R and Python. Note that for the purpose of hypothesis testing we now use test data to avoid double dipping.</p>
 </section><section id="how-to-run-the-test-in-r-and-python" class="level3" data-number="3.1.9"><h3 data-number="3.1.9" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python">
 <span class="header-section-number">3.1.9</span> How to run the test in <code>R</code> and <code>Python</code>?</h3>
-<p>The following lines of code in tabset show you how to run the test in <code>R</code> or <code>Python</code>. Note that there are two ways of running this test in <code>R</code> as shown below. They both give the same result and you are welcome to use either of them.</p>
+<p>The following lines of code in tabset show you how to run the test in <code>R</code> or <code>Python</code>. Note that there are two ways of running this test in <code>R</code> as shown below. They both give the same result and you are welcome to use either of them. Here is a quick explanation from a coding perspective:</p>
+<ul>
+<li><p>In <strong>Option 1</strong>, we first select the cars with 4 or 8 cylinders and save them in a vector (<code>cylinders_4</code> and <code>cylinders_8</code>). We then use <code>t.test</code> function to run the test.</p></li>
+<li><p>In <strong>Option 2</strong>, we use a formula to tell <code>R</code> what is the variable that records the outcome of interest (in this example <code>horsepower</code> variable) and what is the grouping variable (in this example <code>cylinders</code>). This approach is more concise and easier to read, especially when working directly with a data frame. Note that we need to let <code>R</code> know where it can find <code>horsepower</code> and <code>cylinders</code> which we do by setting <code>data = test_auto</code>.</p></li>
+</ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R Code - Option 1</a></li>
@@ -752,7 +756,18 @@ mean in group 4 mean in group 8
 <p>Note that this degree of freedom is not necessarily an integer number (could be a real number).</p>
 </section><section id="how-to-run-the-test-in-r-and-python-1" class="level3" data-number="3.2.9"><h3 data-number="3.2.9" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python-1">
 <span class="header-section-number">3.2.9</span> How to run the test in <code>R</code> and <code>Python</code>?</h3>
-<p>The following lines of code in tabset show you how to run the Welch’s test in <code>R</code> or <code>Python</code>. Note that there are two ways of running this test in <code>R</code> as shown below. They both give the same result and you are welcome to use either of them.</p>
+<p>The following lines of code in tabset show you how to run the Welch’s test in <code>R</code> or <code>Python</code>.</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>A quick reminder!</p>
+</div>
+<div class="Heads-up-container">
+<ul>
+<li><p>In <strong>Option 1</strong>, we first select the cars with 4 or 8 cylinders and save them in a vector (<code>cylinders_4</code> and <code>cylinders_8</code>). We then use <code>t.test</code> function to run the test.</p></li>
+<li><p>In <strong>Option 2</strong>, we use a formula to tell <code>R</code> what is the variable that records the outcome of interest (in this example <code>horsepower</code> variable) and what is the grouping variable (in this example <code>cylinders</code>). This approach is more concise and easier to read, especially when working directly with a data frame. Note that we need to let <code>R</code> know where it can find <code>horsepower</code> and <code>cylinders</code> which we do by setting <code>data = test_auto</code>.</p></li>
+</ul>
+</div>
+</div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R Code - Option 1</a></li>

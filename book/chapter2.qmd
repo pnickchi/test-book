@@ -274,7 +274,11 @@ Note that our observation from the sample might still lead us to an incorrect co
 
 ### How to run the test in `R` and `Python`?
 
-The following lines of code in tabset show you how to run the test in `R` or `Python`. Note that there are two ways of running this test in `R` as shown below. They both give the same result and you are welcome to use either of them.
+The following lines of code in tabset show you how to run the test in `R` or `Python`. Note that there are two ways of running this test in `R` as shown below. They both give the same result and you are welcome to use either of them. Here is a quick explanation from a coding perspective:
+
+- In **Option 1**, we first select the cars with 4 or 8 cylinders and save them in a vector (`cylinders_4` and `cylinders_8`). We then use `t.test` function to run the test.
+
+- In **Option 2**, we use a formula to tell `R` what is the variable that records the outcome of interest (in this example `horsepower` variable) and what is the grouping variable (in this example `cylinders`). This approach is more concise and easier to read, especially when working directly with a data frame. Note that we need to let `R` know where it can find `horsepower` and `cylinders` which we do by setting `data = test_auto`.
 
 
 ::: {.panel-tabset}
@@ -496,7 +500,21 @@ Note that this degree of freedom is not necessarily an integer number (could be 
 
 ### How to run the test in `R` and `Python`?
 
-The following lines of code in tabset show you how to run the Welch's test in `R` or `Python`. Note that there are two ways of running this test in `R` as shown below. They both give the same result and you are welcome to use either of them.
+The following lines of code in tabset show you how to run the Welch's test in `R` or `Python`. 
+
+
+::::: Heads-up
+::: Heads-up-header
+A quick reminder!
+:::
+
+::: Heads-up-container
+- In **Option 1**, we first select the cars with 4 or 8 cylinders and save them in a vector (`cylinders_4` and `cylinders_8`). We then use `t.test` function to run the test.
+
+- In **Option 2**, we use a formula to tell `R` what is the variable that records the outcome of interest (in this example `horsepower` variable) and what is the grouping variable (in this example `cylinders`). This approach is more concise and easier to read, especially when working directly with a data frame. Note that we need to let `R` know where it can find `horsepower` and `cylinders` which we do by setting `data = test_auto`.
+:::
+:::::
+
 
 
 ::: {.panel-tabset}
