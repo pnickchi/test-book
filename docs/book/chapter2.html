@@ -632,9 +632,8 @@ mean in group 4 mean in group 8
 <p><strong>Note:</strong> By default the value of <code>var.equal</code> is <code>FALSE</code>. We manully set it to <code>TRUE</code> to implement equal variance assumption in our test.</p>
 </section><section id="storytelling" class="level3" data-number="3.1.10"><h3 data-number="3.1.10" class="anchored" data-anchor-id="storytelling">
 <span class="header-section-number">3.1.10</span> Storytelling</h3>
-<ul>
-<li>TBD</li>
-</ul></section></section><section id="two-sample-welchs-t-test-for-independent-samples" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="two-sample-welchs-t-test-for-independent-samples">
+<p>Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: <strong>Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?</strong> We observed that the <span class="math inline">\(p-\textit{value}\)</span> of the test was extremely small compared to the significance level <span class="math inline">\(\alpha = 0.05\)</span>. This provides evidence against the null hypothesis. In simple terms, this means: <em>There appears to be a noticeable difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.</em></p>
+</section></section><section id="two-sample-welchs-t-test-for-independent-samples" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="two-sample-welchs-t-test-for-independent-samples">
 <span class="header-section-number">3.2</span> Two sample Welch’s t-test for independent samples</h2>
 <section id="review-1" class="level3" data-number="3.2.1"><h3 data-number="3.2.1" class="anchored" data-anchor-id="review-1">
 <span class="header-section-number">3.2.1</span> Review</h3>
@@ -879,10 +878,8 @@ mean in group 4 mean in group 8
 <p><strong>Note:</strong> By default the value of <code>var.equal</code> is <code>FALSE</code>. We manully set it to <code>FALSE</code> to implement the test without equal variance assumption.</p>
 </section><section id="storytelling-1" class="level3" data-number="3.2.10"><h3 data-number="3.2.10" class="anchored" data-anchor-id="storytelling-1">
 <span class="header-section-number">3.2.10</span> Storytelling</h3>
-<ul>
-<li><p>TBD</p></li>
-<li><p>All from here is under development</p></li>
-</ul></section></section><section id="paired-samples" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="paired-samples">
+<p>Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: <strong>Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?</strong> We observed that the <span class="math inline">\(p-\textit{value}\)</span> of the test was extremely small compared to the significance level <span class="math inline">\(\alpha = 0.05\)</span>. This provides evidence against the null hypothesis. In simple terms, this means: <em>There appears to be a noticeable difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.</em></p>
+</section></section><section id="paired-samples" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="paired-samples">
 <span class="header-section-number">3.3</span> Paired Samples</h2>
 <p>Paired samples arise when each observation in one group is matched or linked to an observation in the other group. This structure is typical in before-and-after studies, matched-subject designs, or repeated measures on the same individuals. A classic example comes from health sciences.</p>
 <p>Suppose you’re investigating whether a new diet plan reduces blood pressure. You recruit a group of participants and record their blood pressure <strong>before</strong> starting the diet. <strong>After</strong> following the diet for two months, you measure their blood pressure again. In this scenario, each participant contributes two measurements: one before <strong>the intervention</strong> and one after. These measurements are not independent as they come from the same person. Therefore we treat them as paired.</p>

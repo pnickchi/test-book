@@ -356,7 +356,7 @@ In both outputs, we can see the following:
 
 ### Storytelling
 
-- TBD
+Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: **Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?** We observed that the $p-\textit{value}$ of the test was extremely small compared to the significance level $\alpha = 0.05$. This provides evidence against the null hypothesis. In simple terms, this means: *There appears to be a noticeable difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.*
 
 
 ## Two sample Welch's t-test for independent samples
@@ -611,11 +611,8 @@ In both outputs, we can see the following:
 
 ### Storytelling
 
-- TBD
+Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: **Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?** We observed that the $p-\textit{value}$ of the test was extremely small compared to the significance level $\alpha = 0.05$. This provides evidence against the null hypothesis. In simple terms, this means: *There appears to be a noticeable difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.*
 
-
-
-- All from here is under development
 
 ## Paired Samples
 
