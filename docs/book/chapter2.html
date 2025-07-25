@@ -467,7 +467,6 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 </section><section id="test-flavour-and-components" class="level3" data-number="3.1.7"><h3 data-number="3.1.7" class="anchored" data-anchor-id="test-flavour-and-components">
 <span class="header-section-number">3.1.7</span> Test Flavour and Components</h3>
 <p>To test this hypothesis, we use the <strong>two-sample student’s t-test for independent samples</strong>, which compares the sample means and incorporates variability within and between the samples. Note that in this case the samples are independent as clearly cars with 4 cylinders are independent from cars with 8 cylinders.</p>
-<p>The assumption in this test is that variances among two groups are equal meaning that if we look at the random variable of horsepower in both populations, the variance of this random variable is roughly equal in two groups (cars with 4 cylinders and cars with 8 cylinders). Note that we do not have access to population and this is rather an assumption that we make with consultation with experts or justifying it based on previous studies. We will introduce the test without equal variance assumption in the next section.</p>
 <p>Now we need to compute a test statistic from the sample. Assuming equal population variances, the test statistic is:</p>
 <p><span class="math display">\[t = \frac{(\bar{X} - \bar{Y})}{S_p \sqrt{\frac{1}{n} + \frac{1}{m}}}\]</span></p>
 <p>where:</p>
@@ -482,15 +481,47 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 <li>
 <span class="math inline">\(S_X^2\)</span> and <span class="math inline">\(S_Y^2\)</span> are the sample variances of the two groups.</li>
 </ul>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Heads-up!</p>
+</div>
+<div class="Heads-up-container">
 <p>Note that all elements in this formula (statistic) are computed based on sample.</p>
+</div>
+</div>
+<div class="Tip">
+<div class="Tip-header">
+<p>Tip:</p>
+</div>
+<div class="Tip-container">
+<p>The assumption in this test is that variances among two groups are equal meaning that if we look at the random variable of horsepower in both populations, the variance of this random variable is roughly equal in two groups (cars with 4 cylinders and cars with 8 cylinders).</p>
+<p>Note that we do not have access to population and this is rather an assumption that we make with consultation with experts or justifying it based on previous studies. We will introduce the test without equal variance assumption in the next section.</p>
+<p>There are some statistical methods designed to test if the variances of different groups are the same or not. Similar to any hypothesis testing, these tests work on a random sample from the population to run the test. Some of the tests are F-test for Equality of Variances, Levene’s Test, and Bartlett’s Test.</p>
+</div>
+</div>
 </section><section id="inferential-conclusions" class="level3" data-number="3.1.8"><h3 data-number="3.1.8" class="anchored" data-anchor-id="inferential-conclusions">
 <span class="header-section-number">3.1.8</span> Inferential Conclusions</h3>
-<p>As you can see, the test statistic computes the difference between <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> and scale it based on the variance of this difference. Now the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined (<span class="math inline">\(t\)</span>) and have a better understanding of what are typical values of this statistic. Note that <span class="math inline">\(t\)</span> itself is a random variable as it would change from sample to sample.</p>
-<p>We skipped the theory behind it but under the assumption that null hypothesis is correct (i.e.&nbsp;<span class="math inline">\(\mu_1=\mu_2\)</span>) then the test statistic defined above (<span class="math inline">\(t\)</span>) follows a t-distribution with <span class="math inline">\(n + m -2\)</span> degrees of freedom (which we denote it by <span class="math inline">\(T_{n+m-2}\)</span>). Knowing the distribution of this statistic helps us to compute <span class="math inline">\(\textit{p-value}\)</span> of the test as follows:</p>
+<p>As you can see, the test statistic computes the difference between <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> and scale it based on the variance of this difference. Now the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined (<span class="math inline">\(t\)</span>) and have a better understanding of what are typical values of this statistic. Knowing the distribution of this statistic helps us to compute <span class="math inline">\(\textit{p-value}\)</span> of the test as follows:</p>
 <p><span class="math display">\[\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)\]</span></p>
-<p>Looking at the formula, we can see that we are essentially calculating how much is it likely to see an observation as big as <span class="math inline">\(t\)</span> or as extreme as <span class="math inline">\(t\)</span> (which we computed from our sample). We come back to this point in the next paragraph.</p>
+<p>Looking at the formula, we can see that we are essentially calculating how much is it likely to see an observation as big as <span class="math inline">\(t\)</span> or as extreme as <span class="math inline">\(t\)</span> (which we computed from our sample).</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Heads-up!</p>
+</div>
+<div class="Heads-up-container">
+<p>Note that <span class="math inline">\(t\)</span> itself is a random variable as it would change from sample to sample.</p>
+</div>
+</div>
+<div class="Tip">
+<div class="Tip-header">
+<p>Tip:</p>
+</div>
+<div class="Tip-container">
+<p>We skipped the theory behind it but under the assumption that null hypothesis is correct (i.e.&nbsp;<span class="math inline">\(\mu_1=\mu_2\)</span>) then the test statistic defined above (<span class="math inline">\(t\)</span>) follows a t-distribution with <span class="math inline">\(n + m -2\)</span> degrees of freedom (which we denote it by <span class="math inline">\(T_{n+m-2}\)</span>).</p>
 <p><strong>Note:</strong> The probability is multiplied by two since we have a two sided hypothesis (alternative is <span class="math inline">\(\mu_1 \neq \mu_2\)</span>). For a one sided test (when alternative hypothesis is <span class="math inline">\(\mu_1 &gt; \mu_2\)</span> or <span class="math inline">\(\mu_1 &lt; \mu_2\)</span>) we do not need to multiply by two.</p>
 <p>Now we compare the <span class="math inline">\(\textit{p-value}\)</span> to our significance level. If the <span class="math inline">\(\textit{p-value}\)</span> is less than the significance level, then we have evidence against the null hypothesis. The reasoning is as follows: we performed the calculation under the assumption that the null hypothesis is true. If the null hypothesis is true, then the test statistic we computed should follow a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n + m - 2\)</span> degrees of freedom. If the p-value is smaller than our chosen significance level, this means it is unlikely that our observed result comes from a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n + m - 2\)</span> degrees of freedom. In other words, it is unlikely that the null hypothesis is correct.</p>
+</div>
+</div>
 <p>Note that our observation from the sample might still lead us to an incorrect conclusion (since there is variability among samples). Our tolerance for this type of error is determined by the significance level. If <span class="math inline">\(\textit{p-value}\)</span> is not less than significant level then we do not have any evidence to reject the null hypothesis. Now let us see how to run the two-sample test in R and Python. Note that for the purpose of hypothesis testing we now use test data to avoid double dipping.</p>
 </section><section id="how-to-run-the-test-in-r-and-python" class="level3" data-number="3.1.9"><h3 data-number="3.1.9" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python">
 <span class="header-section-number">3.1.9</span> How to run the test in <code>R</code> and <code>Python</code>?</h3>
@@ -705,7 +736,14 @@ mean in group 4 mean in group 8
 <li>
 <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> are the sample sizes in two groups (not necessarily the same).</li>
 </ul>
-<p>Note that similar to before all elements in this formula (statistic) are computed based on sample.</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Quick review!</p>
+</div>
+<div class="Heads-up-container">
+<p>Note that, as before, all elements in this formula (statistic) are computed based on the sample. Additionally, the assumption of unequal variance between two populations can be tested using a variety of statistical tests. We do not discuss these tests in this book as the focus of this book lies elsewhere.</p>
+</div>
+</div>
 </section><section id="inferential-conclusions-1" class="level3" data-number="3.2.8"><h3 data-number="3.2.8" class="anchored" data-anchor-id="inferential-conclusions-1">
 <span class="header-section-number">3.2.8</span> Inferential Conclusions</h3>
 <p>We skipped the theory behind it but under the assumption that null hypothesis is correct, the test statistic defined above still follows a t-distribution but with a different degrees of freedom. The degree of freedom when we do not make equal variance assumption is:</p>
