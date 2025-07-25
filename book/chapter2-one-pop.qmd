@@ -10,6 +10,7 @@
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 
+
 # Tests for One Continuous Population Mean {#sec-one-continuous-mean}
 
 ```{r setup, include=FALSE}
@@ -316,7 +317,6 @@ plt.ylabel("Flipper Length (mm)")
 plt.show()
 
 ```
-```
 
 
 ------------------------------------------------------------------------
@@ -410,6 +410,7 @@ plt.show()
 ### Performing the One-Sample z-Test
 Now we perform the z-test for one proportion.
 Assuming a historical reference proportion of 0.45 for Adelie penguins:
+
 ```{python}
 import numpy as np
 import scipy.stats as stats
@@ -423,7 +424,7 @@ se = np.sqrt(p0 * (1 - p0) / n)
 z_stat = (p_hat - p0) / se
 # Two-tailed p-value
 p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
-print(f"z = {z_stat:.3f}, p = {p_value:.4f}")```
+print(f"z = {z_stat:.3f}, p = {p_value:.4f}")
 ```
 
 A one-sample z-test for proportions was conducted to determine whether the proportion of female penguins differs significantly from 0.45. Based on the sample data, the test produced a z-statistic of z and a p-value of p.
