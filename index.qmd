@@ -29,7 +29,12 @@ To address this gap, we have developed a bilingual and frequentist resource in b
 
 > I'm an Assistant Professor of Teaching in the Department of Statistics and Master of Data Science at the University of British Columbia (UBC). Throughout my academic and professional journey, I've been involved in diverse fields, such as credit risk management, statistical consulting, and data science teaching. My doctoral research in statistics is primarily focused on computer experiments that emulate scientific and engineering systems via Gaussian stochastic processes (i.e., kriging regression). I'm incredibly passionate about teaching regression topics while combining statistical and machine learning contexts.
 
-## Kate Manskaia
+## Ekaterina (Kate) Manskaia 
+
+<center><img src="img/photo-kate.jpg" width=275 /></center>
+<br>
+
+> I’m a multidisciplinary professional with a blend of expertise in bioinformatics, computational chemistry, and business analysis. Currently, I’m pursuing a Doctoral degree in Bioinformatics at the University of British Columbia (UBC), where my research focuses on leveraging generative AI and machine learning to uncover new drug candidates for cancer and infectious diseases. I combine these technologies with biostatistical analysis to validate hypotheses and ensure meaningful insights. Alongside my research, I’ve led projects in computational chemistry, managed complex data systems, and mentored students in Python programming, machine learning, and data science. For the past few years, I’ve also been working as a Teaching Assistant in UBC’s Master of Data Science program.
 
 ## Payman Nickchi
 

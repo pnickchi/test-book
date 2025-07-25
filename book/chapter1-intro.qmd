@@ -10,6 +10,20 @@
 
 # Introduction {#sec-intro}
 
+::: {.LO}
+::::{.LO-header}
+Learning Objectives
+::::
+::::{.LO-container}
+By the end of this chapter, you will be able to:
+
+- Define **the two key components** to be applied in the execution of hypothesis testing throughout this mini-book: a test workflow and a series of hypothesis testing maps.
+- Explain how **the test workflow** can be applied in hypothesis testing.
+- Define key terms such as null hypothesis, alternative hypothesis, observed effect, test statistic, $p$-value, and statistical significance in the context of frequentist inference.
+- Describe how the initial test mind map acts as **the primary chapter structure** of this book and as a **toolbox**.
+::::
+:::
+
 > **The most important maxim for data analysis to heed, and one which many statisticians seem to have shunned, is this: "Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise."**
 
 <p style="text-align: right;">*John W. Tukey* [-@tukey1962, p. 13]</p>
