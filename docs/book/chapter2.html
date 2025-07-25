@@ -750,10 +750,19 @@ mean in group 4 mean in group 8
 </div>
 </section><section id="inferential-conclusions-1" class="level3" data-number="3.2.8"><h3 data-number="3.2.8" class="anchored" data-anchor-id="inferential-conclusions-1">
 <span class="header-section-number">3.2.8</span> Inferential Conclusions</h3>
-<p>We skipped the theory behind it but under the assumption that null hypothesis is correct, the test statistic defined above still follows a t-distribution but with a different degrees of freedom. The degree of freedom when we do not make equal variance assumption is:</p>
+<p>As you can see, the test statistic computes the difference between averages of two samples and adjusts it based on the variance of their differences. The only change from Student’s t-test is the variance that is being used in the denominator. Again the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined and have a better understanding of what are typical values of this statistic. Knowing the distribution of this statistic helps us to compute the <span class="math inline">\(p-value\)</span> of the test as follows:</p>
+<p><span class="math display">\[\textit{p-value} = 2 \times Pr(T_{\nu} \ge |t|)\]</span></p>
+<div class="Tip">
+<div class="Tip-header">
+<p>Tip on degrees of freedom!</p>
+</div>
+<div class="Tip-container">
+<p>The Greek sign <span class="math inline">\(\nu\)</span> is used here to show the degree of freedom of the t-distribution and is computed as</p>
 <p><span class="math display">\[\nu = \frac{\left( \frac{s_1^2}{n} + \frac{s_2^2}{m} \right)^2}
 {\frac{\left( \frac{s_1^2}{n} \right)^2}{n - 1} + \frac{\left( \frac{s_2^2}{m} \right)^2}{m - 1}}\]</span></p>
-<p>Note that this degree of freedom is not necessarily an integer number (could be a real number).</p>
+<p>We skipped the theory behind it but under the assumption that null hypothesis is correct, the test statistic defined above still follows a t-distribution but with a different degrees of freedom. Note that this degree of freedom is not necessarily an integer number (could be a real number).</p>
+</div>
+</div>
 </section><section id="how-to-run-the-test-in-r-and-python-1" class="level3" data-number="3.2.9"><h3 data-number="3.2.9" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python-1">
 <span class="header-section-number">3.2.9</span> How to run the test in <code>R</code> and <code>Python</code>?</h3>
 <p>The following lines of code in tabset show you how to run the Welch’s test in <code>R</code> or <code>Python</code>.</p>

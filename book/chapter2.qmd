@@ -490,12 +490,30 @@ Note that, as before, all elements in this formula (statistic) are computed base
 
 ### Inferential Conclusions
 
-We skipped the theory behind it but under the assumption that null hypothesis is correct, the test statistic defined above still follows a t-distribution but with a different degrees of freedom. The degree of freedom when we do not make equal variance assumption is:
+As you can see, the test statistic computes the difference between averages of two samples and adjusts it based on the variance of their differences. The only change from Student's t-test is the variance that is being used in the denominator. Again the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined and have a better understanding of what are typical values of this statistic. Knowing the distribution of this statistic helps us to compute the $p-value$ of the test as follows:
+
+$$\textit{p-value} = 2 \times Pr(T_{\nu} \ge |t|)$$ 
+
+
+
+::::: Tip
+::: Tip-header
+Tip on degrees of freedom!
+:::
+
+
+::: Tip-container
+The Greek sign $\nu$ is used here to show the degree of freedom of the t-distribution and is computed as
 
 $$\nu = \frac{\left( \frac{s_1^2}{n} + \frac{s_2^2}{m} \right)^2}
 {\frac{\left( \frac{s_1^2}{n} \right)^2}{n - 1} + \frac{\left( \frac{s_2^2}{m} \right)^2}{m - 1}}$$
 
-Note that this degree of freedom is not necessarily an integer number (could be a real number).
+We skipped the theory behind it but under the assumption that null hypothesis is correct, the test statistic defined above still follows a t-distribution but with a different degrees of freedom. Note that this degree of freedom is not necessarily an integer number (could be a real number).
+:::
+:::::
+
+
+
 
 
 ### How to run the test in `R` and `Python`?
