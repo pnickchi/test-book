@@ -58,22 +58,6 @@ We cover two cases for the mean — depending on whether the population variance
 
 Key tests include:
 
-## One-sample z-test for the mean
-
-Use this test when: - The population variance **σ² is known**, and - The sample comes from a **normally distributed population**, or the **sample size is large** (typically ( n \geq 30 )).
-
-The test statistic is:
-
-$$ z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}} $$
-
-Where: - ( $\bar{x}$ ) is the sample mean\
-- ( $\mu_0$ ) is the hypothesized population mean\
-- ( $\sigma$ ) is the known population standard deviation\
-- ( n ) is the sample size
-
-We compare the calculated ( z )-value to a standard normal distribution to compute a p-value or make a decision based on a critical value.
-
-------------------------------------------------------------------------
 
 ## One-sample t-test for the mean
 
@@ -203,6 +187,127 @@ A one-sample t-test was conducted to determine whether the average flipper lengt
 Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.
 ------------------------------------------------------------------------
 
+## One-sample z-test for the mean
+
+We use this test when: - The population variance **σ² is known**, and - The sample comes from a **normally distributed population**, or the **sample size is large** (typically ( n \geq 30 )).
+
+The test statistic is:
+
+$$ z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}} $$
+
+Where: - ( $\bar{x}$ ) is the sample mean\
+- ( $\mu_0$ ) is the hypothesized population mean\
+- ( $\sigma$ ) is the known population standard deviation\
+- ( n ) is the sample size
+
+We compare the calculated ( z )-value to a standard normal distribution to compute a p-value or make a decision based on a critical value.
+
+Let’s revisit the earlier scenario: you want to assess whether a new method of teaching introductory physics at the University of British Columbia (UBC) improves student performance compared to historical results.
+This time, assume that the population standard deviation is known from previous years of large-scale data collection. This allows us to use a z-test.
+Suppose the average physics score in the population is:
+$$
+
+μ(mean physics score at UBC)
+
+$$
+
+$$
+\mu \quad \text{(mean physics score at UBC)}
+$$
+And we collect a **random sample** of $n$ students, recording their scores:
+
+
+$$
+X1,X2,…,XnX_1, X_2, \dots, X_n
+$$
+
+The Key question becomes:
+
+> **Is the sample mean statistically different from a known reference value?**
+
+If, for example, the historical average physics score is known to be **75**, then our question becomes more specific:
+
+> **Is the mean physics score in the sample statistically different from 75?**
+
+### Hypotheses
+
+We can formally express this with the following hypotheses:
+
+- **Null hypothesis** $H_0$: $\mu = 75$
+- **Alternative hypothesis** $H_1$: $\mu \ne 75$
+
+Under the null hypothesis, we assume that the new teaching method does not significantly change the average score. If the null is rejected, we infer that the method may lead to **higher or lower** performance.
+
+The test statistic is:
+
+$$z=xˉ−μ0σ/nz = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}$$
+
+Where: 
+•	$\bar{x}$ is the sample mean
+
+•	$\mu_0$ is the reference value (e.g., 75)
+
+•	$\sigma$ is the known population standard deviation
+•	$n$ is the sample size
+
+This statistic follows a **standard normal distribution** ($\mathcal{N}(0, 1)$).. 
+
+
+
+### Study Design
+We again use the **Palmer Station Penguins** dataset collected by the LTER in Antarctica (2007 – 2009).  
+It includes measurements such as *flipper length*, *bill size*, and *body mass* across three penguin species.
+
+> **Research question:**  
+> *Is the average flipper length of penguins significantly different from 200 mm, assuming a known population standard deviation?*
+
+---
+
+### Data Collection & Wrangling
+
+```{python}
+import seaborn as sns
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# Load dataset
+penguins = sns.load_dataset("penguins")
+penguins_clean = penguins.dropna()
+train_set, test_set = train_test_split(
+    penguins_clean, test_size=0.2, random_state=42
+)
+```
+
+### Exploratory Data Analysis (EDA)
+
+```{python}
+print(train_set["flipper_length_mm"].describe())
+
+import matplotlib.pyplot as plt
+
+train_set["flipper_length_mm"].hist(edgecolor="black", color="skyblue")
+plt.title("Distribution of Flipper Length (mm)")
+plt.xlabel("Flipper Length (mm)")
+plt.ylabel("Frequency")
+plt.show()
+
+plt.scatter(
+    train_set["body_mass_g"],
+    train_set["flipper_length_mm"],
+    alpha=0.6
+)
+plt.title("Body Mass vs. Flipper Length")
+plt.xlabel("Body Mass (g)")
+plt.ylabel("Flipper Length (mm)")
+plt.show()
+
+```
+```
+
+
+------------------------------------------------------------------------
+
+
 ## One-sample z-test for proportions
 
 Use this test when: - The variable is **binary** (success/failure, yes/no, etc.), and - You want to test a **population proportion** ( p ), using a large enough sample.
@@ -215,6 +320,100 @@ Where: - ( $\hat{p}$ ) is the sample proportion\
 - ( $p_0$ ) is the hypothesized population proportion\
 - ( $n$ ) is the sample size
 
-This test assumes ( $np_0 \geq 5$ ) and ( $n(1 - p_0)$ $\geq$ 5 ) to justify the normal approximation to the binomial distribution.
+
+Just like the one-sample t-test is used to assess differences in means, the **one-sample z-test** is used when:
+•	You are working with **proportions** (e.g., fraction of penguins with a specific characteristic),
+•	The sample size is **sufficiently large** to justify using the normal approximation.
+This test is ideal for binary outcomes: for example, whether a penguin is **of the Adelie species or not**.
+Suppose you want to test whether the **proportion of Adelie penguins** in your sample differs from a historically established value.
+Let’s say historical records suggest that **45% of penguins** in a certain region were Adelie. You want to know whether the proportion in your current sample is **statistically different from 0.45**.
+
+The central question becomes:
+> ** Is the proportion of Adelie penguins in the sample different from 0.45??**
+We are again working with the **Palmer Station Penguins** dataset.
+
+### Hypotheses
+
+We can formally express this with the following hypotheses:
+
+- **Null hypothesis** $H_0$: $p = 0.45$
+- **Alternative hypothesis** $H_1$: $p \ne 0.45$
+Where:
+•	$p$ is the true proportion of Adelie penguins in the population.
+We will estimate $p$ using $\hat{p}$, the sample proportion of Adelie penguins. The test statistic is:
+
+$$z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}$$
+
+Where: - ( $\hat{p}$ ) is the sample proportion\
+- ( $p_0$ ) is the hypothesized population proportion\
+- ( $n$ ) is the sample size
+
+This follows a **standard normal distribution** ($z$-distribution) under the null hypothesis.
+
+
+### Study Design
+Once again, we turn to the **Palmer Station Penguins** dataset, which includes species information for each penguin observed.
+
+> **Research question:**  
+> * Is the proportion of Adelie penguins in the training dataset significantly different from 45%?**
+
+---
+
+### Data Collection & Wrangling
+We continue with the same cleaned and split dataset from the earlier section.
+
+```{python}
+# Add a binary column: 1 if Adelie, 0 otherwise
+train_set["is_adelie"] = (train_set["species"] == "Adelie").astype(int)
+# Total number of observations
+n = train_set.shape[0]
+# Number of Adelie penguins
+num_adelie = train_set["is_adelie"].sum() 
+# Sample proportion
+p_hat = num_adelie / n
+print(f"Sample size: {n}")
+print(f"Number of Adelie penguins: {num_adelie}")
+print(f"Sample proportion: {p_hat:.3f}")
+
+```
+
+
+### Exploratory Data Analysis (EDA)
+Let’s visualize the distribution of penguin species in our training sample.
+
+```{python}
+train_set["species"].value_counts().plot(
+kind="bar", color="orange", edgecolor="black"
+)
+plt.title("Penguin Species Count in Training Set")
+plt.ylabel("Count")
+plt.xlabel("Species")
+plt.xticks(rotation=0)
+plt.show()
+
+```
+
+### Performing the One-Sample z-Test
+Now we perform the z-test for one proportion.
+Assuming a historical reference proportion of 0.45 for Adelie penguins:
+```{python}
+import numpy as np
+import scipy.stats as stats
+# Reference proportion
+p0 = 0.45
+# Sample proportion
+p_hat = female_count / n
+# Standard error under H0
+se = np.sqrt(p0 * (1 - p0) / n)
+# z-statistic
+z_stat = (p_hat - p0) / se
+# Two-tailed p-value
+p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
+print(f"z = {z_stat:.3f}, p = {p_value:.4f}")```
+```
+
+A one-sample z-test for proportions was conducted to determine whether the proportion of female penguins differs significantly from 0.45. Based on the sample data, the test produced a z-statistic of z and a p-value of p.
+Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the proportion of female penguins is significantly different from 0.45. Otherwise, we do not have sufficient evidence to say it differs.
+
 
 ------------------------------------------------------------------------
