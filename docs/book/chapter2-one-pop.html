@@ -60,7 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../book/chapter2.html" rel="next">
+<link href="../book/chapter3-two-pop.html" rel="next">
 <link href="../book/chapter1-intro.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -166,7 +166,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter1.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tests for One Continuous Population Mean</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter2-one-pop.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tests for One Continuous Population Mean</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -206,19 +206,19 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/chapter1.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book/chapter2-one-pop.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tests for One Continuous Population Mean</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/chapter2.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/chapter3-two-pop.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tests for Two Continuous Population Mean</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/chapter4-anova.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/chapter4-ANOVA.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></span></a>
   </div>
 </li>
@@ -253,18 +253,35 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">The tools</h2>
    
   <ul>
-<li><a href="#one-sample-z-test-for-the-mean" id="toc-one-sample-z-test-for-the-mean" class="nav-link active" data-scroll-target="#one-sample-z-test-for-the-mean"><span class="header-section-number">2.1</span> One-sample z-test for the mean</a></li>
-  <li>
-<a href="#one-sample-t-test-for-the-mean" id="toc-one-sample-t-test-for-the-mean" class="nav-link" data-scroll-target="#one-sample-t-test-for-the-mean"><span class="header-section-number">2.2</span> One-sample t-test for the mean</a>
+<li>
+<a href="#one-sample-t-test-for-the-mean" id="toc-one-sample-t-test-for-the-mean" class="nav-link active" data-scroll-target="#one-sample-t-test-for-the-mean"><span class="header-section-number">2.1</span> One-sample t-test for the mean</a>
   <ul>
-<li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">2.2.1</span> Hypotheses</a></li>
-  <li><a href="#study-design" id="toc-study-design" class="nav-link" data-scroll-target="#study-design"><span class="header-section-number">2.2.2</span> Study Design</a></li>
-  <li><a href="#data-collection-wrangling" id="toc-data-collection-wrangling" class="nav-link" data-scroll-target="#data-collection-wrangling"><span class="header-section-number">2.2.3</span> Data Collection &amp; Wrangling</a></li>
-  <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda"><span class="header-section-number">2.2.4</span> Exploratory Data Analysis (EDA)</a></li>
+<li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">2.1.1</span> Hypotheses</a></li>
+  <li><a href="#study-design" id="toc-study-design" class="nav-link" data-scroll-target="#study-design"><span class="header-section-number">2.1.2</span> Study Design</a></li>
+  <li><a href="#data-collection-wrangling" id="toc-data-collection-wrangling" class="nav-link" data-scroll-target="#data-collection-wrangling"><span class="header-section-number">2.1.3</span> Data Collection &amp; Wrangling</a></li>
+  <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda"><span class="header-section-number">2.1.4</span> Exploratory Data Analysis (EDA)</a></li>
   </ul>
 </li>
-  <li><a href="#one-sample-z-test-for-proportions" id="toc-one-sample-z-test-for-proportions" class="nav-link" data-scroll-target="#one-sample-z-test-for-proportions"><span class="header-section-number">2.3</span> One-sample z-test for proportions</a></li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter1.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter1.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+  <li>
+<a href="#one-sample-z-test-for-the-mean" id="toc-one-sample-z-test-for-the-mean" class="nav-link" data-scroll-target="#one-sample-z-test-for-the-mean"><span class="header-section-number">2.2</span> One-sample z-test for the mean</a>
+  <ul>
+<li><a href="#hypotheses-1" id="toc-hypotheses-1" class="nav-link" data-scroll-target="#hypotheses-1"><span class="header-section-number">2.2.1</span> Hypotheses</a></li>
+  <li><a href="#study-design-1" id="toc-study-design-1" class="nav-link" data-scroll-target="#study-design-1"><span class="header-section-number">2.2.2</span> Study Design</a></li>
+  <li><a href="#data-collection-wrangling-1" id="toc-data-collection-wrangling-1" class="nav-link" data-scroll-target="#data-collection-wrangling-1"><span class="header-section-number">2.2.3</span> Data Collection &amp; Wrangling</a></li>
+  <li><a href="#exploratory-data-analysis-eda-1" id="toc-exploratory-data-analysis-eda-1" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda-1"><span class="header-section-number">2.2.4</span> Exploratory Data Analysis (EDA)</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#one-sample-z-test-for-proportions" id="toc-one-sample-z-test-for-proportions" class="nav-link" data-scroll-target="#one-sample-z-test-for-proportions"><span class="header-section-number">2.3</span> One-sample z-test for proportions</a>
+  <ul>
+<li><a href="#hypotheses-2" id="toc-hypotheses-2" class="nav-link" data-scroll-target="#hypotheses-2"><span class="header-section-number">2.3.1</span> Hypotheses</a></li>
+  <li><a href="#study-design-2" id="toc-study-design-2" class="nav-link" data-scroll-target="#study-design-2"><span class="header-section-number">2.3.2</span> Study Design</a></li>
+  <li><a href="#data-collection-wrangling-2" id="toc-data-collection-wrangling-2" class="nav-link" data-scroll-target="#data-collection-wrangling-2"><span class="header-section-number">2.3.3</span> Data Collection &amp; Wrangling</a></li>
+  <li><a href="#exploratory-data-analysis-eda-2" id="toc-exploratory-data-analysis-eda-2" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda-2"><span class="header-section-number">2.3.4</span> Exploratory Data Analysis (EDA)</a></li>
+  <li><a href="#performing-the-one-sample-z-test" id="toc-performing-the-one-sample-z-test" class="nav-link" data-scroll-target="#performing-the-one-sample-z-test"><span class="header-section-number">2.3.5</span> Performing the One-Sample z-Test</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter2-one-pop.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter2-one-pop.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -335,18 +352,8 @@ Figure&nbsp;2.1: A specific hypothesis testing mind map outlining the techniques
 <p>We cover two cases for the mean — depending on whether the population variance is known or unknown — and one test for binary outcomes where we’re testing a population proportion.</p>
 <hr>
 <p>Key tests include:</p>
-<section id="one-sample-z-test-for-the-mean" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="one-sample-z-test-for-the-mean">
-<span class="header-section-number">2.1</span> One-sample z-test for the mean</h2>
-<p>Use this test when: - The population variance <strong>σ² is known</strong>, and - The sample comes from a <strong>normally distributed population</strong>, or the <strong>sample size is large</strong> (typically ( n )).</p>
-<p>The test statistic is:</p>
-<p><span class="math display">\[ z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}} \]</span></p>
-<p>Where: - ( <span class="math inline">\(\bar{x}\)</span> ) is the sample mean<br>
-- ( <span class="math inline">\(\mu_0\)</span> ) is the hypothesized population mean<br>
-- ( <span class="math inline">\(\sigma\)</span> ) is the known population standard deviation<br>
-- ( n ) is the sample size</p>
-<p>We compare the calculated ( z )-value to a standard normal distribution to compute a p-value or make a decision based on a critical value.</p>
-<hr></section><section id="one-sample-t-test-for-the-mean" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="one-sample-t-test-for-the-mean">
-<span class="header-section-number">2.2</span> One-sample t-test for the mean</h2>
+<section id="one-sample-t-test-for-the-mean" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="one-sample-t-test-for-the-mean">
+<span class="header-section-number">2.1</span> One-sample t-test for the mean</h2>
 <p>Use this test when: - The population variance <strong>is unknown</strong>, and - The sample is either <strong>normally distributed</strong> or <strong>large enough</strong> to rely on the central limit theorem.</p>
 <p>Imagine you want to assess whether a new method of teaching introductory physics improves student performance compared to the traditional method previously used. To explore this, you test the new method at the University of British Columbia (UBC) and compare the results to historical data from students who were taught using the traditional approach. This historical data serves as your <strong>reference value</strong>.</p>
 <p>Suppose the population has an unknown average physics score, denoted as:</p>
@@ -365,8 +372,8 @@ X_1, X_2, \dots, X_n
 <blockquote class="blockquote">
 <p><strong>Is the mean physics score in the sample statistically different from 75?</strong></p>
 </blockquote>
-<section id="hypotheses" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="hypotheses">
-<span class="header-section-number">2.2.1</span> Hypotheses</h3>
+<section id="hypotheses" class="level3" data-number="2.1.1"><h3 data-number="2.1.1" class="anchored" data-anchor-id="hypotheses">
+<span class="header-section-number">2.1.1</span> Hypotheses</h3>
 <p>We can formally express this with the following hypotheses:</p>
 <ul>
 <li>
@@ -381,15 +388,15 @@ X_1, X_2, \dots, X_n
 <p><span class="math display">\[t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}\]</span></p>
 <p>Where: - ( s ) is the sample standard deviation (used instead of ( <span class="math inline">\(\sigma\)</span> ))</p>
 <p>This statistic follows a <strong>t-distribution</strong> with ( n - 1 ) degrees of freedom.</p>
-</section><section id="study-design" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="study-design">
-<span class="header-section-number">2.2.2</span> Study Design</h3>
+</section><section id="study-design" class="level3" data-number="2.1.2"><h3 data-number="2.1.2" class="anchored" data-anchor-id="study-design">
+<span class="header-section-number">2.1.2</span> Study Design</h3>
 <p>In this example we use the <strong>Palmer Station Penguins</strong> dataset collected by the LTER in Antarctica (2007 – 2009).<br>
 The dataset spans three penguin species and includes continuous variables such as <em>flipper length</em>, <em>bill size</em>, and <em>body mass</em>.</p>
 <blockquote class="blockquote">
 <p><strong>Research question:</strong><br><em>Is the average flipper length of penguins significantly different from 200 mm?</em></p>
 </blockquote>
-<hr></section><section id="data-collection-wrangling" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="data-collection-wrangling">
-<span class="header-section-number">2.2.3</span> Data Collection &amp; Wrangling</h3>
+<hr></section><section id="data-collection-wrangling" class="level3" data-number="2.1.3"><h3 data-number="2.1.3" class="anchored" data-anchor-id="data-collection-wrangling">
+<span class="header-section-number">2.1.3</span> Data Collection &amp; Wrangling</h3>
 <p>We obtain the dataset <strong>Palmer Station Penguins</strong> dataset collected by the ‘LTER’</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -407,8 +414,8 @@ The dataset spans three penguin species and includes continuous variables such a
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    penguins_clean, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="exploratory-data-analysis-eda" class="level3" data-number="2.2.4"><h3 data-number="2.2.4" class="anchored" data-anchor-id="exploratory-data-analysis-eda">
-<span class="header-section-number">2.2.4</span> Exploratory Data Analysis (EDA)</h3>
+</section><section id="exploratory-data-analysis-eda" class="level3" data-number="2.1.4"><h3 data-number="2.1.4" class="anchored" data-anchor-id="exploratory-data-analysis-eda">
+<span class="header-section-number">2.1.4</span> Exploratory Data Analysis (EDA)</h3>
 <p>Before conducting the statistical test, we begin with an exploratory analysis to understand the distribution and characteristics of the flipper_length_mm variable.</p>
 <p>First, we examine summary statistics such as the mean, standard deviation, and quartiles. This helps us get a sense of the central tendency and spread of the data:</p>
 <div class="cell">
@@ -436,7 +443,7 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="chapter1_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -454,7 +461,7 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="chapter1_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -473,7 +480,117 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 </div>
 <p>A one-sample t-test was conducted to determine whether the average flipper length of penguins is significantly different from 200 mm. Based on a training sample, the test produced a t-statistic of t and a p-value of p.</p>
 <p>Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.</p>
-</section></section><section id="one-sample-z-test-for-proportions" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="one-sample-z-test-for-proportions">
+</section></section><section id="one-sample-z-test-for-the-mean" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="one-sample-z-test-for-the-mean">
+<span class="header-section-number">2.2</span> One-sample z-test for the mean</h2>
+<p>We use this test when: - The population variance <strong>σ² is known</strong>, and - The sample comes from a <strong>normally distributed population</strong>, or the <strong>sample size is large</strong> (typically ( n )).</p>
+<p>The test statistic is:</p>
+<p><span class="math display">\[ z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}} \]</span></p>
+<p>Where: - ( <span class="math inline">\(\bar{x}\)</span> ) is the sample mean<br>
+- ( <span class="math inline">\(\mu_0\)</span> ) is the hypothesized population mean<br>
+- ( <span class="math inline">\(\sigma\)</span> ) is the known population standard deviation<br>
+- ( n ) is the sample size</p>
+<p>We compare the calculated ( z )-value to a standard normal distribution to compute a p-value or make a decision based on a critical value.</p>
+<p>Let’s revisit the earlier scenario: you want to assess whether a new method of teaching introductory physics at the University of British Columbia (UBC) improves student performance compared to historical results. This time, assume that the population standard deviation is known from previous years of large-scale data collection. This allows us to use a z-test. Suppose the average physics score in the population is: $$</p>
+<p>μ(mean physics score at UBC)</p>
+<p>$$</p>
+<p><span class="math display">\[
+\mu \quad \text{(mean physics score at UBC)}
+\]</span> And we collect a <strong>random sample</strong> of <span class="math inline">\(n\)</span> students, recording their scores:</p>
+<p><span class="math display">\[
+X1,X2,…,XnX_1, X_2, \dots, X_n
+\]</span></p>
+<p>The Key question becomes:</p>
+<blockquote class="blockquote">
+<p><strong>Is the sample mean statistically different from a known reference value?</strong></p>
+</blockquote>
+<p>If, for example, the historical average physics score is known to be <strong>75</strong>, then our question becomes more specific:</p>
+<blockquote class="blockquote">
+<p><strong>Is the mean physics score in the sample statistically different from 75?</strong></p>
+</blockquote>
+<section id="hypotheses-1" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="hypotheses-1">
+<span class="header-section-number">2.2.1</span> Hypotheses</h3>
+<p>We can formally express this with the following hypotheses:</p>
+<ul>
+<li>
+<strong>Null hypothesis</strong> <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu = 75\)</span>
+</li>
+<li>
+<strong>Alternative hypothesis</strong> <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu \ne 75\)</span>
+</li>
+</ul>
+<p>Under the null hypothesis, we assume that the new teaching method does not significantly change the average score. If the null is rejected, we infer that the method may lead to <strong>higher or lower</strong> performance.</p>
+<p>The test statistic is:</p>
+<p><span class="math display">\[z=xˉ−μ0σ/nz = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}\]</span></p>
+<p>Where: • <span class="math inline">\(\bar{x}\)</span> is the sample mean</p>
+<p>• <span class="math inline">\(\mu_0\)</span> is the reference value (e.g., 75)</p>
+<p>• <span class="math inline">\(\sigma\)</span> is the known population standard deviation • <span class="math inline">\(n\)</span> is the sample size</p>
+<p>This statistic follows a <strong>standard normal distribution</strong> (<span class="math inline">\(\mathcal{N}(0, 1)\)</span>)..</p>
+</section><section id="study-design-1" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="study-design-1">
+<span class="header-section-number">2.2.2</span> Study Design</h3>
+<p>We again use the <strong>Palmer Station Penguins</strong> dataset collected by the LTER in Antarctica (2007 – 2009).<br>
+It includes measurements such as <em>flipper length</em>, <em>bill size</em>, and <em>body mass</em> across three penguin species.</p>
+<blockquote class="blockquote">
+<p><strong>Research question:</strong><br><em>Is the average flipper length of penguins significantly different from 200 mm, assuming a known population standard deviation?</em></p>
+</blockquote>
+<hr></section><section id="data-collection-wrangling-1" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="data-collection-wrangling-1">
+<span class="header-section-number">2.2.3</span> Data Collection &amp; Wrangling</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load dataset</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="op">=</span> penguins.dropna()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>train_set, test_set <span class="op">=</span> train_test_split(</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    penguins_clean, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="exploratory-data-analysis-eda-1" class="level3" data-number="2.2.4"><h3 data-number="2.2.4" class="anchored" data-anchor-id="exploratory-data-analysis-eda-1">
+<span class="header-section-number">2.2.4</span> Exploratory Data Analysis (EDA)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train_set[<span class="st">"flipper_length_mm"</span>].describe())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>count    266.00000
+mean     201.00000
+std       13.91592
+min      172.00000
+25%      190.00000
+50%      197.00000
+75%      213.00000
+max      231.00000
+Name: flipper_length_mm, dtype: float64</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>train_set[<span class="st">"flipper_length_mm"</span>].hist(edgecolor<span class="op">=</span><span class="st">"black"</span>, color<span class="op">=</span><span class="st">"skyblue"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Flipper Length (mm)"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Flipper Length (mm)"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-8-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    train_set[<span class="st">"body_mass_g"</span>],</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    train_set[<span class="st">"flipper_length_mm"</span>],</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.6</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Body Mass vs. Flipper Length"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Body Mass (g)"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Flipper Length (mm)"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-8-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr></section></section><section id="one-sample-z-test-for-proportions" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="one-sample-z-test-for-proportions">
 <span class="header-section-number">2.3</span> One-sample z-test for proportions</h2>
 <p>Use this test when: - The variable is <strong>binary</strong> (success/failure, yes/no, etc.), and - You want to test a <strong>population proportion</strong> ( p ), using a large enough sample.</p>
 <p>The test statistic is:</p>
@@ -481,11 +598,103 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 <p>Where: - ( <span class="math inline">\(\hat{p}\)</span> ) is the sample proportion<br>
 - ( <span class="math inline">\(p_0\)</span> ) is the hypothesized population proportion<br>
 - ( <span class="math inline">\(n\)</span> ) is the sample size</p>
-<p>This test assumes ( <span class="math inline">\(np_0 \geq 5\)</span> ) and ( <span class="math inline">\(n(1 - p_0)\)</span> <span class="math inline">\(\geq\)</span> 5 ) to justify the normal approximation to the binomial distribution.</p>
+<p>Just like the one-sample t-test is used to assess differences in means, the <strong>one-sample z-test</strong> is used when: • You are working with <strong>proportions</strong> (e.g., fraction of penguins with a specific characteristic), • The sample size is <strong>sufficiently large</strong> to justify using the normal approximation. This test is ideal for binary outcomes: for example, whether a penguin is <strong>of the Adelie species or not</strong>. Suppose you want to test whether the <strong>proportion of Adelie penguins</strong> in your sample differs from a historically established value. Let’s say historical records suggest that <strong>45% of penguins</strong> in a certain region were Adelie. You want to know whether the proportion in your current sample is <strong>statistically different from 0.45</strong>.</p>
+<p>The central question becomes: &gt; ** Is the proportion of Adelie penguins in the sample different from 0.45?? <strong>We are again working with the</strong> Palmer Station Penguins** dataset.</p>
+<section id="hypotheses-2" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="hypotheses-2">
+<span class="header-section-number">2.3.1</span> Hypotheses</h3>
+<p>We can formally express this with the following hypotheses:</p>
+<ul>
+<li>
+<strong>Null hypothesis</strong> <span class="math inline">\(H_0\)</span>: <span class="math inline">\(p = 0.45\)</span>
+</li>
+<li>
+<strong>Alternative hypothesis</strong> <span class="math inline">\(H_1\)</span>: <span class="math inline">\(p \ne 0.45\)</span> Where: • <span class="math inline">\(p\)</span> is the true proportion of Adelie penguins in the population. We will estimate <span class="math inline">\(p\)</span> using <span class="math inline">\(\hat{p}\)</span>, the sample proportion of Adelie penguins. The test statistic is:</li>
+</ul>
+<p><span class="math display">\[z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}\]</span></p>
+<p>Where: - ( <span class="math inline">\(\hat{p}\)</span> ) is the sample proportion<br>
+- ( <span class="math inline">\(p_0\)</span> ) is the hypothesized population proportion<br>
+- ( <span class="math inline">\(n\)</span> ) is the sample size</p>
+<p>This follows a <strong>standard normal distribution</strong> (<span class="math inline">\(z\)</span>-distribution) under the null hypothesis.</p>
+</section><section id="study-design-2" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="study-design-2">
+<span class="header-section-number">2.3.2</span> Study Design</h3>
+<p>Once again, we turn to the <strong>Palmer Station Penguins</strong> dataset, which includes species information for each penguin observed.</p>
+<blockquote class="blockquote">
+<p><strong>Research question:</strong><br>
+* Is the proportion of Adelie penguins in the training dataset significantly different from 45%?**</p>
+</blockquote>
+<hr></section><section id="data-collection-wrangling-2" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="data-collection-wrangling-2">
+<span class="header-section-number">2.3.3</span> Data Collection &amp; Wrangling</h3>
+<p>We continue with the same cleaned and split dataset from the earlier section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a binary column: 1 if Adelie, 0 otherwise</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>train_set[<span class="st">"is_adelie"</span>] <span class="op">=</span> (train_set[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Total number of observations</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> train_set.shape[<span class="dv">0</span>]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of Adelie penguins</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>num_adelie <span class="op">=</span> train_set[<span class="st">"is_adelie"</span>].<span class="bu">sum</span>() </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample proportion</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> num_adelie <span class="op">/</span> n</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample size: </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sample size: 266</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of Adelie penguins: </span><span class="sc">{</span>num_adelie<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of Adelie penguins: 115</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample proportion: </span><span class="sc">{</span>p_hat<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sample proportion: 0.432</code></pre>
+</div>
+</div>
+</section><section id="exploratory-data-analysis-eda-2" class="level3" data-number="2.3.4"><h3 data-number="2.3.4" class="anchored" data-anchor-id="exploratory-data-analysis-eda-2">
+<span class="header-section-number">2.3.4</span> Exploratory Data Analysis (EDA)</h3>
+<p>Let’s visualize the distribution of penguin species in our training sample.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>train_set[<span class="st">"species"</span>].value_counts().plot(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>kind<span class="op">=</span><span class="st">"bar"</span>, color<span class="op">=</span><span class="st">"orange"</span>, edgecolor<span class="op">=</span><span class="st">"black"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Penguin Species Count in Training Set"</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Species"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(array([0, 1, 2]), [Text(0, 0, 'Adelie'), Text(1, 0, 'Gentoo'), Text(2, 0, 'Chinstrap')])</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-10-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="performing-the-one-sample-z-test" class="level3" data-number="2.3.5"><h3 data-number="2.3.5" class="anchored" data-anchor-id="performing-the-one-sample-z-test">
+<span class="header-section-number">2.3.5</span> Performing the One-Sample z-Test</h3>
+<p>Now we perform the z-test for one proportion. Assuming a historical reference proportion of 0.45 for Adelie penguins:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference proportion</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> <span class="fl">0.45</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample proportion</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> num_adelie <span class="op">/</span> n</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard error under H0</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>se <span class="op">=</span> np.sqrt(p0 <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p0) <span class="op">/</span> n)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># z-statistic</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>z_stat <span class="op">=</span> (p_hat <span class="op">-</span> p0) <span class="op">/</span> se</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed p-value</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"z = </span><span class="sc">{</span>z_stat<span class="sc">:.3f}</span><span class="ss">, p = </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>z = -0.579, p = 0.5624</code></pre>
+</div>
+</div>
+<p>A one-sample z-test for proportions was conducted to determine whether the proportion of female penguins differs significantly from 0.45. Based on the sample data, the test produced a z-statistic of z and a p-value of p.&nbsp;Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the proportion of female penguins is significantly different from 0.45. Otherwise, we do not have sufficient evidence to say it differs.</p>
 <hr>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -917,7 +1126,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../book/chapter2.html" class="pagination-link" aria-label="Tests for Two Continuous Population Mean">
+      <a href="../book/chapter3-two-pop.html" class="pagination-link" aria-label="Tests for Two Continuous Population Mean">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tests for Two Continuous Population Mean</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -929,7 +1138,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter1.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter1.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter2-one-pop.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter2-one-pop.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
