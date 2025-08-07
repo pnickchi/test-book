@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.53">
+<meta name="generator" content="quarto-1.6.42">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>3&nbsp; Tests for Two Continuous Population Mean – The Mini Test Book (in development)</title>
 <style>
@@ -67,10 +67,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-f664b88e837a53bca78c5b20234386e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -140,19 +140,19 @@ window.Quarto = {
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
 <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
               <i class="bi bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=%7Curl%7C">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
               <i class="bi bi-linkedin pe-1"></i>
             LinkedIn
             </a>
@@ -283,7 +283,13 @@ window.Quarto = {
   <li><a href="#storytelling-1" id="toc-storytelling-1" class="nav-link" data-scroll-target="#storytelling-1"><span class="header-section-number">3.2.10</span> Storytelling</a></li>
   </ul>
 </li>
-  <li><a href="#paired-samples" id="toc-paired-samples" class="nav-link" data-scroll-target="#paired-samples"><span class="header-section-number">3.3</span> Paired Samples</a></li>
+  <li>
+<a href="#two-sample-t-test-for-paired-samples" id="toc-two-sample-t-test-for-paired-samples" class="nav-link" data-scroll-target="#two-sample-t-test-for-paired-samples"><span class="header-section-number">3.3</span> Two sample t-test for Paired Samples</a>
+  <ul>
+<li><a href="#review-2" id="toc-review-2" class="nav-link" data-scroll-target="#review-2"><span class="header-section-number">3.3.1</span> Review</a></li>
+  <li><a href="#study-design-2" id="toc-study-design-2" class="nav-link" data-scroll-target="#study-design-2"><span class="header-section-number">3.3.2</span> Study Design</a></li>
+  </ul>
+</li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter3-two-pop.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter3-two-pop.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -877,20 +883,44 @@ mean in group 4 mean in group 8
 </section><section id="storytelling-1" class="level3" data-number="3.2.10"><h3 data-number="3.2.10" class="anchored" data-anchor-id="storytelling-1">
 <span class="header-section-number">3.2.10</span> Storytelling</h3>
 <p>Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: <strong>Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?</strong> We observed that the <span class="math inline">\(p-\textit{value}\)</span> of the test was extremely small compared to the significance level <span class="math inline">\(\alpha = 0.05\)</span>. This provides evidence against the null hypothesis. In simple terms, this means: <em>There appears to be a noticeable difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.</em></p>
-</section></section><section id="paired-samples" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="paired-samples">
-<span class="header-section-number">3.3</span> Paired Samples</h2>
+</section></section><section id="two-sample-t-test-for-paired-samples" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="two-sample-t-test-for-paired-samples">
+<span class="header-section-number">3.3</span> Two sample t-test for Paired Samples</h2>
+<section id="review-2" class="level3" data-number="3.3.1"><h3 data-number="3.3.1" class="anchored" data-anchor-id="review-2">
+<span class="header-section-number">3.3.1</span> Review</h3>
+<p>In this section, we discuss the two sample t-test for paired samples which is used when we have two sets of related observations. Unlike the two-sample t-tests for independent samples that we discussed so far (such as the Student’s or Welch’s t-test), the paired t-test is appropriate when the two samples are dependent. This means each observation in one sample can be naturally paired with an observation in the other. Examples of such are before-and-after measurements on the same subjects, or matched subjects across two different conditions. The key idea is that the test evaluates whether the mean difference between paired observations is significantly different from zero.</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>When to use this test!</p>
+</div>
+<div class="Heads-up-container">
+<p>We use the paired sample t-test when:</p>
+<ul>
+<li><p>The data consist of paired observations.</p></li>
+<li><p>The differences between pairs are approximately normally distributed or at least symmetric (especially important for small sample sizes).</p></li>
+<li><p>And the measurement scale is continuous.</p></li>
+</ul>
+</div>
+</div>
 <p>Paired samples arise when each observation in one group is matched or linked to an observation in the other group. This structure is typical in before-and-after studies, matched-subject designs, or repeated measures on the same individuals. A classic example comes from health sciences.</p>
-<p>Suppose you’re investigating whether a new diet plan reduces blood pressure. You recruit a group of participants and record their blood pressure <strong>before</strong> starting the diet. <strong>After</strong> following the diet for two months, you measure their blood pressure again. In this scenario, each participant contributes two measurements: one before <strong>the intervention</strong> and one after. These measurements are not independent as they come from the same person. Therefore we treat them as paired.</p>
+<p>Suppose you are investigating whether a new diet plan reduces blood pressure. You recruit a group of participants and record their blood pressure <strong>before</strong> starting the diet. <strong>After</strong> following the diet for two months, you measure their blood pressure again. In this scenario, each participant contributes two measurements: one before <strong>the intervention</strong> and one after. Note that these measurements are not independent as they come from the same person. Therefore we treat them as paired.</p>
 <p>To formulate the problem and hypothesis, let us assume that each individual has two measurements:</p>
 <ul>
 <li><p>Before the diet: <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span></p></li>
 <li><p>After the diet: <span class="math inline">\(Y_1, Y_2, \ldots, Y_n\)</span></p></li>
 </ul>
 <p>Note that in this case the sample size is the same (in both before and after diet sample we have <span class="math inline">\(n\)</span> observations). We call this a paired sample. Since the samples are paired, we define the difference for each individual as follows:</p>
-<p><span class="math display">\[D_i = Y_i - X_i \quad \textit{for} \quad i = 1,2, \ldots, n\]</span> Each <span class="math inline">\(D_i\)</span> is the difference of blood pressure after and before using new diet. The main statistical question now is:</p>
+<p><span class="math display">\[D_i = Y_i - X_i \quad \textit{for} \quad i = 1,2, \ldots, n\]</span> Each <span class="math inline">\(D_i\)</span> is the difference of blood pressure after and before using new diet for the <span class="math inline">\(i\)</span>-th person. Now the main statistical question is:</p>
 <p><strong>Is there a statistically significant difference in the mean blood pressure before and after the diet?</strong></p>
 <p>In other words, we test the following hypothesis:</p>
-<p><span class="math display">\[H_0: \mu_D = 0 \quad \text{versus} \quad H_A: \mu_D \ne 0\]</span> Here the notation of <span class="math inline">\(\mu_D\)</span> is the population mean of the differences of <span class="math inline">\(D_i\)</span> which is an unknown parameter in the population. To test this hypothesis, we use the paired t-test, which is essentially a one-sample t-test on the differences <span class="math inline">\(D_1, D_2, \ldots, D_n\)</span>. We test <span class="math inline">\(\mu_D=0\)</span> because if there is an actual effect of diet on blood pressure, we expect the null hypothesis to be rejected.</p>
+<p><span class="math display">\[H_0: \mu_D = 0 \quad \text{versus} \quad H_A: \mu_D \ne 0\]</span></p>
+<div class="Tip">
+<div class="Tip-header">
+<p>What is <span class="math inline">\(\mu_D\)</span> as a parameter here?</p>
+</div>
+<div class="Tip-container">
+<p>Here the notation of <span class="math inline">\(\mu_D\)</span> is the population mean of the differences of <span class="math inline">\(D_i\)</span> which is an unknown parameter in the population. To test this hypothesis, we use the paired t-test, which is essentially a one-sample t-test on the differences <span class="math inline">\(D_1, D_2, \ldots, D_n\)</span>. We test <span class="math inline">\(\mu_D=0\)</span> because if there is an actual effect of diet on blood pressure, we expect the null hypothesis to be rejected.</p>
+</div>
+</div>
 <p>The test statistic for this hypothesis testing is:</p>
 <p><span class="math display">\[t = \frac{\bar{D}}{s_D / \sqrt{n}}\]</span></p>
 <p>where:</p>
@@ -906,11 +936,25 @@ mean in group 4 mean in group 8
 <p><span class="math display">\[s_D = \sqrt{ \frac{1}{n - 1} \sum_{i=1}^n (D_i - \bar{D})^2 }\]</span></p>
 <p>Under the null hypothesis, the test statistic follows a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom. For this test, we can compute the <span class="math inline">\(\textit{p-value}\)</span> as:</p>
 <p><span class="math display">\[\textit{p-value} = 2 \times \Pr(T_{n - 1} \ge |t|)\]</span></p>
-<p>When we run t-test, we operate under the assumption that: 1) either the sample size is large enough (we are thinking about <span class="math inline">\(n=30\)</span> at least) so that central limit theorem assumptions work well, or 2) the distribution of our sample in each group is normal or symmetric enough.</p>
+<div class="Tip">
+<div class="Tip-header">
+<p>Remember!</p>
+</div>
+<div class="Tip-container">
+<p>When we run this test, we operate under the assumption that:</p>
+<ol type="1">
+<li><p>either the sample size is large enough (we are thinking about <span class="math inline">\(n=30\)</span> at least) so that central limit theorem assumptions work well, or</p></li>
+<li><p>the distribution of our sample in each group is normal or symmetric enough.</p></li>
+</ol>
 <p>If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers) or we have a very small sample size, we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it. You can read more about it LINK.</p>
+</div>
+</div>
+</section><section id="study-design-2" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="study-design-2">
+<span class="header-section-number">3.3.2</span> Study Design</h3>
+<p>We will be using <code>PrisonStress</code> dataset from <code>PairedData</code> package in this section</p>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -992,8 +1036,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1111,7 +1153,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
