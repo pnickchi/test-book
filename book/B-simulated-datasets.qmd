@@ -40,7 +40,7 @@ print_as_dt <- function(x){
 
 While we have made an effort to include real datasets wherever possible in this mini-book, we will utilize simulated data to demonstrate the application of the **test workflow** from @sec-intro for certain hypothesis testings. This simulation-based approach allows us to have suitable datasets to illustrate how each test's modelling assumptions must be satisfied to ensure that we deliver robust inferential conclusions to our stakeholders. Therefore, this appendix will explain the **generative modelling process** used to create these simulated datasets.
 
-![Image by [*manfredsteger*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-help-assistance-3974184/).](img/help.png){fig-align="center" width=100%}
+![Image by [*manfredsteger*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-help-assistance-3974184/).](img/help.png){fig-align="center" width=70%}
 
 ::::: Heads-up
 ::: Heads-up-header
@@ -57,7 +57,7 @@ For each of the datasets listed below, besides providing the simulation code, we
 
 This dataset is used in @sec-anova to elaborate on **analysis of variance (ANOVA)** and pertains to an experimental context. Suppose a data-driven marketing team at a well-known tech company, which operates a global online store, is conducting an A/B/n testing aimed at **increasing the customer conversion score (i.e., the outcome)**. In this experiment, the customer conversion score is defined as a unitless and standardized engagement index. This index combines various elements, such as clicks, time spent on the webpage, and the probability of making a purchase, with a baseline mean set at $50$. This score measures customer responsiveness on the online store: **the higher the score, the greater the customer responsiveness**.
 
-![Image by [*Pabitra Kaity*](https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6370790) via [*Pixabay*](https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/).](img/ads.png){fig-align="center" width=60%}
+![Image by [*Pabitra Kaity*](https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6370790) via [*Pixabay*](https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/).](img/ads.png){fig-align="center" width=50%}
 
 ### Generative Modelling Process
 

@@ -8,6 +8,8 @@
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 
+# ANOVA-related Tests for $k$ Continuous Population Means {#sec-anova}
+
 ```{r}
 #| include: false
 
@@ -36,8 +38,6 @@ print_as_dt <- function(x){
                 )
 }
 ```
-
-# ANOVA-related Tests for $k$ Continuous Population Means {#sec-anova}
 
 ::: {.LO}
 ::::{.LO-header}
@@ -105,7 +105,7 @@ Heads-up on the importance of ANOVA in data science!
 ::: Heads-up-container
 In modern data science, ANOVA remains significant, particularly in **A/B/n testing** (the generalization of **A/B testing** to multiple treatments). This approach allows for the simultaneous evaluation of various treatment variations or designs. ANOVA is valued for its interpretability and its flexibility in handling both **balanced** designs (where there is an equal number of replicates for each experimental treatment) and **unbalanced** designs (where there are unequal numbers of replicates). These strengths have solidified its role in both academic research and practical applications.
 
-![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-download-data-transfer-3947910/).](img/pulling.png){width=100%}
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-download-data-transfer-3947910/).](img/pulling.png){width=80%}
 :::
 :::::
 
@@ -124,13 +124,13 @@ Heads-up on confounding!
 ::: Heads-up-container
 In causal inference, confounding refers to the mixing of effects between the outcome of interest, denoted as $Y$, the randomized factor $X$ (which is a two-level factor in A/B testing, corresponding to treatment $A$ and treatment $B$), and a third, uncontrollable factor known as the confounder $C$. This confounder is associated with the factor $X$ and independently affects the outcome $Y$, as shown by @fig-confounding.
 
-![Diagram depicting confounding [@DSCI554].](img/confounding.png){fig-align="center" width=80% #fig-confounding}
+![Diagram depicting confounding [@DSCI554].](img/confounding.png){fig-align="center" width=70% #fig-confounding}
 :::
 :::::
 
 When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as **A/B/n testing**. In this case, the "*n*" does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments $A$ and $B$. With this clarification, we can now proceed with our simulated dataset.
 
-![Image by [*Pabitra Kaity*](https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6370790) via [*Pixabay*](https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/).](img/ads.png){fig-align="center" width=60%}
+![Image by [*Pabitra Kaity*](https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6370790) via [*Pixabay*](https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/).](img/ads.png){fig-align="center" width=50%}
 
 ```{r}
 #| label: tbl-ANOVA-ABn-data

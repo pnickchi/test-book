@@ -157,7 +157,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter4-ANOVA.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Setting up Python dependencies</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter4-ANOVA.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -210,7 +210,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book/chapter4-ANOVA.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Setting up Python dependencies</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -375,7 +375,7 @@ Figure&nbsp;4.1: A specific hypothesis testing mind map outlining the techniques
 <div class="Heads-up-container">
 <p>In modern data science, ANOVA remains significant, particularly in <strong>A/B/n testing</strong> (the generalization of <strong>A/B testing</strong> to multiple treatments). This approach allows for the simultaneous evaluation of various treatment variations or designs. ANOVA is valued for its interpretability and its flexibility in handling both <strong>balanced</strong> designs (where there is an equal number of replicates for each experimental treatment) and <strong>unbalanced</strong> designs (where there are unequal numbers of replicates). These strengths have solidified its role in both academic research and practical applications.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/pulling.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figure class="figure"><p><img src="img/pulling.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3699345"><em>Manfred Steger</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-download-data-transfer-3947910/"><em>Pixabay</em></a>.</figcaption></figure>
 </div>
 </div>
@@ -395,7 +395,7 @@ Figure&nbsp;4.1: A specific hypothesis testing mind map outlining the techniques
 <p>In causal inference, confounding refers to the mixing of effects between the outcome of interest, denoted as <span class="math inline">\(Y\)</span>, the randomized factor <span class="math inline">\(X\)</span> (which is a two-level factor in A/B testing, corresponding to treatment <span class="math inline">\(A\)</span> and treatment <span class="math inline">\(B\)</span>), and a third, uncontrollable factor known as the confounder <span class="math inline">\(C\)</span>. This confounder is associated with the factor <span class="math inline">\(X\)</span> and independently affects the outcome <span class="math inline">\(Y\)</span>, as shown by <a href="#fig-confounding" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>.</p>
 <div id="fig-confounding" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-confounding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="img/confounding.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+<img src="img/confounding.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confounding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4.2: Diagram depicting confounding <span class="citation" data-cites="DSCI554">(<a href="references.html#ref-DSCI554" role="doc-biblioref">Rodríguez-Arelis et al. 2024</a>)</span>.
@@ -405,7 +405,7 @@ Figure&nbsp;4.2: Diagram depicting confounding <span class="citation" data-cites
 </div>
 <p>When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as <strong>A/B/n testing</strong>. In this case, the “<em>n</em>” does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. With this clarification, we can now proceed with our simulated dataset.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/ads.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figure class="figure"><p><img src="img/ads.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption>Image by <a href="https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6370790"><em>Pabitra Kaity</em></a> via <a href="https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/"><em>Pixabay</em></a>.</figcaption></figure>
 </div>
 <div class="cell">

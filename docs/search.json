@@ -186,7 +186,7 @@
     "section": "",
     "text": "4.1 The ANOVA Dataset\nThe simulated dataset discussed in this chapter relates to an experimental context known as A/B/n testing, which is an expansion of traditional A/B testing as previously discussed. In a typical A/B testing, participants are randomly assigned to one of two strategies, referred to as treatments: treatment \\(A\\) (the control treatment) and treatment \\(B\\) (the experimental treatment). This approach enables us to infer causation concerning the following inquiry:\nIn an ANOVA setting, the outcome must be continuous. The primary goal of A/B testing is to determine whether there is a statistically significant difference between treatments \\(A\\) and \\(B\\) concerning the outcome. Additionally, because we are conducting a proper randomized experiment, we can infer causation (which goes further than mere association), as treatment randomization enables us to get rid of the effect of further confounders.\nWhen conducting experiments with more than two treatments in A/B testing, the experiment is referred to as A/B/n testing. In this case, the “n” does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments \\(A\\) and \\(B\\). With this clarification, we can now proceed with our simulated dataset.\nTable 4.1: First 100 rows of our A/B/n simulated data.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Setting up Python dependencies</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ANOVA-related Tests for $k$ Continuous Population Means</span>"
     ]
   },
   {
@@ -196,7 +196,7 @@
     "section": "",
     "text": "Will changing from treatment \\(A\\) to treatment \\(B\\) cause my outcome of interest, \\(Y\\), to increase (or decrease, if that is the case)?\n\n\n\n\nHeads-up on confounding!\n\n\nIn causal inference, confounding refers to the mixing of effects between the outcome of interest, denoted as \\(Y\\), the randomized factor \\(X\\) (which is a two-level factor in A/B testing, corresponding to treatment \\(A\\) and treatment \\(B\\)), and a third, uncontrollable factor known as the confounder \\(C\\). This confounder is associated with the factor \\(X\\) and independently affects the outcome \\(Y\\), as shown by Figure 4.2.\n\n\n\n\n\nFigure 4.2: Diagram depicting confounding (Rodríguez-Arelis et al. 2024).\n\n\n\n\n\n\n\nImage by Pabitra Kaity via Pixabay.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Setting up Python dependencies</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ANOVA-related Tests for $k$ Continuous Population Means</span>"
     ]
   },
   {
@@ -206,7 +206,7 @@
     "section": "\n4.2 One-way ANOVA",
     "text": "4.2 One-way ANOVA\n\n4.2.1 Study Design\n\n4.2.2 Data Collection and Wrangling\n\n4.2.3 Exploratory Data Analysis\n\n4.2.4 Testing Settings\n\n4.2.5 Hypothesis Definitions\n\n4.2.6 Test Flavour and Components\n\n4.2.7 Inferential Conclusions\n\n4.2.8 Storytelling",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Setting up Python dependencies</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ANOVA-related Tests for $k$ Continuous Population Means</span>"
     ]
   },
   {
@@ -216,7 +216,7 @@
     "section": "\n4.3 Two-way ANOVA",
     "text": "4.3 Two-way ANOVA\n\n4.3.1 Study Design\n\n4.3.2 Data Collection and Wrangling\n\n4.3.3 Exploratory Data Analysis\n\n4.3.4 Testing Settings\n\n4.3.5 Hypothesis Definitions\n\n4.3.6 Test Flavour and Components\n\n4.3.7 Inferential Conclusions\n\n4.3.8 Storytelling",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Setting up Python dependencies</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ANOVA-related Tests for $k$ Continuous Population Means</span>"
     ]
   },
   {
@@ -226,7 +226,7 @@
     "section": "\n4.4 Chapter Summary",
     "text": "4.4 Chapter Summary\n\n\n\n\nFisher, R. A. 1925. Statistical Methods for Research Workers. Edinburgh Oliver & Boyd.\n\n\nKennedy-Shaffer, Lee. 2024. “Teaching the Difficult Past of Statistics to Improve the Future.” Journal of Statistics and Data Science Education 32 (1): 108–19. https://doi.org/10.1080/26939169.2023.2224407.\n\n\nMacKenzie, D. A. 1981. Statistics in Britain, 1865-1930: The Social Construction of Scientific Knowledge. Edinburgh University Press.\n\n\nRodríguez-Arelis, G. Alexi, Daniel Chen, Benjamin Bloem-Redd, Tiffany Timbers, and Vincenzo Coia. 2024. “DSCI 554: Experimentation and Causal Inference.” https://ubc-mds.github.io/DSCI_554_exper-causal-inf/README.html.\n\n\nTabery, James, and Sahotra Sarkar. 2015. “R. A. Fisher, Lancelot Hogben, and the ‘Competition’ for the Chair of Social Biology at the London School of Economics in 1930: Correcting the Legend.” Notes and Records: The Royal Society Journal of the History of Science 69 (4): 437–46. https://doi.org/10.1098/rsnr.2014.0065.\n\n\nTarran, Brian. 2020. “Award ‘Retired’ Over R. A. Fisher’s Links to Eugenics.” Significance 17 (4): 2–3. https://doi.org/10.1111/1740-9713.01411.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Setting up Python dependencies</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ANOVA-related Tests for $k$ Continuous Population Means</span>"
     ]
   },
   {
