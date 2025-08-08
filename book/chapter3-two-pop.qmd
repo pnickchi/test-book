@@ -14,6 +14,7 @@
 </script>
 ```
 
+
 ```{r, echo = FALSE}
 #| label: setup
 #| include: false
@@ -23,7 +24,31 @@ library(ISLR2)
 library(BSDA)
 ```
 
+
 # Tests for Two Continuous Population Mean {#sec-two-continuous-means}
+
+::::: LO
+::: LO-header
+Learning Objectives
+:::
+
+::: LO-container
+
+By the end of this chapter, you should be able to:
+
+  - Formulate hypotheses to compare means or proportions in two population.
+  
+  - Choose and conduct appropriate two-sample `t-tests` or two-proportion `z-tests` based on study context and assumptions.
+  
+  - Differentiate between independent and paired samples, and choose the appropriate analysis method.
+  
+  - Perform two-sample and paired `t-tests` and `z-test` using both `R` and `Python`, and interpret the outputs.
+  
+  - Apply statistical reasoning to real-world data examples, including evaluating assumptions and limitations.
+  
+:::
+:::::
+
 
 This chapter introduces statistical tests designed to compare two samples which is a fundamental task in data analysis across many disciplines. Whether you're comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion among two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically significant or simply due to chance.
 
