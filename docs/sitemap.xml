@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://pnickchi.github.io/test-book/book/references.html</loc>
-    <lastmod>2025-08-08T19:29:33.730Z</lastmod>
+    <loc>https://pnickchi.github.io/test-book/index.html</loc>
+    <lastmod>2025-07-25T20:42:10.928Z</lastmod>
   </url>
   <url>
-    <loc>https://pnickchi.github.io/test-book/book/A-greek-alphabet.html</loc>
-    <lastmod>2025-08-08T19:29:33.673Z</lastmod>
+    <loc>https://pnickchi.github.io/test-book/book/privacy-policy.html</loc>
+    <lastmod>2025-07-24T22:40:18.788Z</lastmod>
   </url>
   <url>
-    <loc>https://pnickchi.github.io/test-book/book/B-simulated-datasets.html</loc>
-    <lastmod>2025-08-08T19:29:33.673Z</lastmod>
+    <loc>https://pnickchi.github.io/test-book/book/chapter1-intro.html</loc>
+    <lastmod>2025-08-08T20:28:46.456Z</lastmod>
   </url>
   <url>
-    <loc>https://pnickchi.github.io/test-book/book/chapter4-anova.html</loc>
-    <lastmod>2025-08-08T19:29:33.684Z</lastmod>
+    <loc>https://pnickchi.github.io/test-book/book/chapter2-one-pop.html</loc>
+    <lastmod>2025-07-29T22:18:12.531Z</lastmod>
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/chapter3-two-pop.html</loc>
-    <lastmod>2025-08-08T19:59:31.335Z</lastmod>
+    <lastmod>2025-08-08T20:51:04.768Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pnickchi.github.io/test-book/book/chapter4-anova.html</loc>
+    <lastmod>2025-08-08T20:28:46.458Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pnickchi.github.io/test-book/book/references.html</loc>
+    <lastmod>2025-07-24T22:40:18.789Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pnickchi.github.io/test-book/book/A-greek-alphabet.html</loc>
+    <lastmod>2025-08-08T20:28:46.456Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pnickchi.github.io/test-book/book/B-simulated-datasets.html</loc>
+    <lastmod>2025-08-08T20:28:46.456Z</lastmod>
   </url>
 </urlset>

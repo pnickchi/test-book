@@ -208,11 +208,9 @@ We now define the null and alternative hypothesis. Recall the main inquiry we ha
 
 This translates into the following null and alternative hypotheses:
 
-$$H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2}$$
+$$H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2}$${#eq-my-equation}
 
-Note that the alternative hypothesis is two-sided, as our question does not favor either group and only asks whether the means are different (i.e., group one could be less than or greater than group two). Also the hypothesis tests the unknown parameters in the population which are $\mu_{1}$ and $\mu_{2}$.
-
-
+Note that the alternative hypothesis is two-sided, as our question does not favor either group and only asks whether the means are different (i.e., group one could be less than or greater than group two). Also the hypothesis tests the unknown parameters in the population which are $\mu_{1}$ and $\mu_{2}$. @eq-my-equation
 
 ### Test Flavour and Components
 
