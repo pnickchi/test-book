@@ -45,7 +45,7 @@ book:
     - book/chapter1-intro.qmd
     - book/chapter2-one-pop.qmd
     - book/chapter3-two-pop.qmd
-    - book/chapter4-ANOVA.qmd
+    - book/chapter4-anova.qmd
     - book/references.qmd
     
   appendices:

@@ -157,7 +157,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter4-ANOVA.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter4-anova.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -209,7 +209,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/chapter4-ANOVA.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book/chapter4-anova.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></span></a>
   </div>
 </li>
@@ -278,7 +278,7 @@ window.Quarto = {
   </ul>
 </li>
   <li><a href="#sec-chapter-4-summary" id="toc-sec-chapter-4-summary" class="nav-link" data-scroll-target="#sec-chapter-4-summary"><span class="header-section-number">4.4</span> Chapter Summary</a></li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter4-ANOVA.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter4-ANOVA.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter4-anova.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter4-anova.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -310,7 +310,7 @@ window.Quarto = {
 <p>By the end of this chapter, you will be able to:</p>
 <ul>
 <li>Explain how analysis of variance (ANOVA) <strong>partitions</strong> total variation into <strong>between-group</strong> and <strong>within-group</strong> components.</li>
-<li>Interpret the meaning of the <strong><span class="math inline">\(F\)</span>-statistic</strong> and its role in testing mean differences across groups.</li>
+<li>Interpret the meaning of the <span class="math inline">\(F\)</span>-statistic and its role in testing mean differences across groups.</li>
 <li>Describe the difference between <strong>main effects</strong> and <strong>interaction effects</strong> in a two-way ANOVA.</li>
 <li>Identify potential <strong>interaction patterns</strong> via appropriate plotting when conducting a two-way ANOVA.</li>
 <li>Conduct one-way and two-way ANOVA in a <strong>reproducible manner</strong> using the hypothesis testing workflow via <code>R</code> and <code>Python</code>.</li>
@@ -364,8 +364,8 @@ Figure&nbsp;4.1: A specific hypothesis testing mind map outlining the techniques
 </div>
 <p>This chapter builds on the concepts introduced in the earlier works by <a href="chapter2-one-pop.html" class="quarto-xref"><span>Chapter 2</span></a> and <a href="chapter3-two-pop.html" class="quarto-xref"><span>Chapter 3</span></a>, which concentrated on hypothesis testing for one and two groups, respectively. While those chapters primarily addressed pairwise comparisons, we will now shift our focus multiple comparisons:</p>
 <ul>
-<li>The <strong>one-way ANOVA</strong>, discussed in <a href="#sec-one-way-ANOVA" class="quarto-xref"><span>Section 4.2</span></a>, will assume a <strong>single categorical factor with <span class="math inline">\(k\)</span> levels</strong>. This approach allows us to test whether at least one group mean is significantly different from the others.</li>
-<li>In contrast, the <strong>two-way ANOVA</strong>, from <a href="#sec-two-way-ANOVA" class="quarto-xref"><span>Section 4.3</span></a>, will incorporate an <strong>additional categorical factor with <span class="math inline">\(m\)</span> levels</strong>, permitting the analysis of both main effects and interaction effects. Interaction terms in ANOVA are especially useful for revealing cases where the effect of one factor depends on the level of another, a situation often encountered in complex experimental designs.</li>
+<li>The <strong>one-way ANOVA</strong>, discussed in <a href="#sec-one-way-ANOVA" class="quarto-xref"><span>Section 4.2</span></a>, will assume a <strong>single categorical factor with</strong> <span class="math inline">\(k\)</span> levels. This approach allows us to test whether at least one group mean is significantly different from the others.</li>
+<li>In contrast, the <strong>two-way ANOVA</strong>, from <a href="#sec-two-way-ANOVA" class="quarto-xref"><span>Section 4.3</span></a>, will incorporate an <strong>additional categorical factor with</strong> <span class="math inline">\(m\)</span> levels, permitting the analysis of both main effects and interaction effects. Interaction terms in ANOVA are especially useful for revealing cases where the effect of one factor depends on the level of another, a situation often encountered in complex experimental designs.</li>
 </ul>
 <p>As a side note, the workflow guiding this chapter, as referenced in <a href="chapter1-intro.html#fig-hypothesis-testing-workflow" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>, will provide a structured approach for applying both one-way and two-way ANOVA to the same A/B/n dataset (see <a href="#sec-ANOVA-dataset" class="quarto-xref"><span>Section 4.1</span></a>).</p>
 <div class="Heads-up">
@@ -384,7 +384,7 @@ Figure&nbsp;4.1: A specific hypothesis testing mind map outlining the techniques
 <span class="header-section-number">4.1</span> The ANOVA Dataset</h2>
 <p>The <strong>simulated dataset</strong> discussed in this chapter relates to an experimental context known as A/B/n testing, which is an expansion of traditional A/B testing as previously discussed. In a typical A/B testing, participants are randomly assigned to one of two strategies, referred to as treatments: treatment <span class="math inline">\(A\)</span> (the <strong>control treatment</strong>) and treatment <span class="math inline">\(B\)</span> (the <strong>experimental treatment</strong>). This approach enables us to infer <strong>causation</strong> concerning the following inquiry:</p>
 <blockquote class="blockquote">
-<p><strong>Will changing from treatment <span class="math inline">\(A\)</span> to treatment <span class="math inline">\(B\)</span> cause my outcome of interest, <span class="math inline">\(Y\)</span>, to increase (or decrease, if that is the case)?</strong></p>
+<p><strong>Will changing from treatment</strong> <span class="math inline">\(A\)</span> to treatment <span class="math inline">\(B\)</span> cause my outcome of interest, <span class="math inline">\(Y\)</span>, to increase (or decrease, if that is the case)?</p>
 </blockquote>
 <p>In an ANOVA setting, the outcome must be continuous. The primary goal of A/B testing is to determine whether there is a statistically significant difference between treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> concerning the outcome. Additionally, because we are conducting a proper randomized experiment, we can infer causation (which goes further than mere association), as treatment randomization enables us to get rid of the effect of further <strong>confounders</strong>.</p>
 <div class="Heads-up">
@@ -925,7 +925,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter4-ANOVA.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter4-ANOVA.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter4-anova.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter4-anova.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

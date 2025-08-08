@@ -241,7 +241,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/chapter4-ANOVA.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/chapter4-anova.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></span></a>
   </div>
 </li>
@@ -328,7 +328,7 @@ window.Quarto = {
 <p>For each of the datasets listed below, besides providing the simulation code, we will elaborate on the dataset context along with the relevant equations (if necessary) that generate this data.</p>
 <section id="anova-dataset" class="level2" data-number="B.1"><h2 data-number="B.1" class="anchored" data-anchor-id="anova-dataset">
 <span class="header-section-number">B.1</span> ANOVA Dataset</h2>
-<p>This dataset is used in <a href="chapter4-ANOVA.html" class="quarto-xref"><span>Chapter 4</span></a> to elaborate on <strong>analysis of variance (ANOVA)</strong> and pertains to an experimental context. Suppose a data-driven marketing team at a well-known tech company, which operates a global online store, is conducting an A/B/n testing aimed at <strong>increasing the customer conversion score (i.e., the outcome)</strong>. In this experiment, the customer conversion score is defined as a unitless and standardized engagement index. This index combines various elements, such as clicks, time spent on the webpage, and the probability of making a purchase, with a baseline mean set at <span class="math inline">\(50\)</span>. This score measures customer responsiveness on the online store: <strong>the higher the score, the greater the customer responsiveness</strong>.</p>
+<p>This dataset is used in <a href="chapter4-anova.html" class="quarto-xref"><span>Chapter 4</span></a> to elaborate on <strong>analysis of variance (ANOVA)</strong> and pertains to an experimental context. Suppose a data-driven marketing team at a well-known tech company, which operates a global online store, is conducting an A/B/n testing aimed at <strong>increasing the customer conversion score (i.e., the outcome)</strong>. In this experiment, the customer conversion score is defined as a unitless and standardized engagement index. This index combines various elements, such as clicks, time spent on the webpage, and the probability of making a purchase, with a baseline mean set at <span class="math inline">\(50\)</span>. This score measures customer responsiveness on the online store: <strong>the higher the score, the greater the customer responsiveness</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/ads.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption>Image by <a href="https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6370790"><em>Pabitra Kaity</em></a> via <a href="https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/"><em>Pixabay</em></a>.</figcaption></figure>
@@ -417,7 +417,7 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 <p><span class="math display">\[
 \sigma^2 = 16.
 \]</span></p>
-<p>The fixed-effect interaction arrangement above induces non-parallel trends in an interaction plot, as shown in <a href="chapter4-ANOVA.html" class="quarto-xref"><span>Chapter 4</span></a>, while preserving additive decomposition for interpretation and statistical testing.</p>
+<p>The fixed-effect interaction arrangement above induces non-parallel trends in an interaction plot, as shown in <a href="chapter4-anova.html" class="quarto-xref"><span>Chapter 4</span></a>, while preserving additive decomposition for interpretation and statistical testing.</p>
 </section><section id="code" class="level3" data-number="B.1.2"><h3 data-number="B.1.2" class="anchored" data-anchor-id="code">
 <span class="header-section-number">B.1.2</span> Code</h3>
 <p>Let us move to the corresponding code to simulate this data. Recall we are simulating <strong>200 customers for each one of the six treatments</strong>, which will give us an <strong>overall sample size of <span class="math inline">\(n = 1,200\)</span></strong>. Furthermore, note that <code>Python</code> additionally uses the <a href="https://pypi.org/project/numpy/">{numpy}</a> <span class="citation" data-cites="numpy">(<a href="references.html#ref-numpy" role="doc-biblioref">Harris et al. 2020</a>)</span> and <a href="https://pypi.org/project/pandas/">{pandas}</a> libraries. The final data frame will be stored in <code>ABn_customer_data</code> whose columns will be <code>webpage_design</code>, <code>discount_framing</code>, and <code>conversion_score</code>.</p>
