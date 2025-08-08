@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.53">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -57,10 +57,10 @@ div.csl-indent {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-f664b88e837a53bca78c5b20234386e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -335,7 +335,7 @@ window.Quarto = {
 <p><strong>The most important maxim for data analysis to heed, and one which many statisticians seem to have shunned, is this: “Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise.”</strong></p>
 </blockquote>
 <p style="text-align: right;">
-<em>John W. Tukey</em> <span class="citation" data-cites="tukey1962">(<a href="references.html#ref-tukey1962" role="doc-biblioref">1962, 13</a>)</span>
+<em>John W. Tukey</em> <span class="citation" data-cites="tukey1962">(<a href="#ref-tukey1962" role="doc-biblioref">1962, 13</a>)</span>
 </p>
 <p>Data collection worldwide has proven to be a valuable tool for uncovering significant insights across various <strong>populations of interest</strong>. Whether it involves capturing political preferences in a specific demographic ahead of an upcoming election or assessing the effectiveness of an innovative medical treatment through a randomized clinical trial compared to a standard treatment, data plays a crucial role in enhancing our understanding. At times, this understanding can become quite complex, especially when attempting to untangle the relationships between different variables within a given population or even across two or more populations.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -347,8 +347,8 @@ window.Quarto = {
 <p>In a vast and diverse field like data science, it is crucial to craft effective and transparent solutions that facilitate proper data analysis. However, conducting a full census to collect data from entire populations can often be impractical due to resource limitations such as budget constraints, workforce shortages, or insufficient technical infrastructure. Despite these challenges, our primary objective remains to gain insights about any population of interest via some class of analysis, even when data availability is limited. In this regard, <strong>statistical inference</strong> is a powerful tool that allows us to draw insights even with limited data. That said, it is important to emphasize that the process of statistical inference begins with asking the <strong>right questions</strong>, even before data collection occurs.</p>
 <p>In light of this context, we need to establish the appropriate stages of the statistical inference process, along with a useful tool to help select the right hypothesis test based on our specific context, research questions, variable types, and parameters of interest. This is why this mini-book focuses on two key components:</p>
 <ul>
-<li><strong>A test workflow:</strong> This workflow will primarily guide us in formulating the right questions about our population(s) of interest, which will involve specific parameters. This process will generally proceed with data collection using a specific sampling method, followed by a thorough analysis that includes exploratory data analysis and the <strong>most suitable</strong> hypothesis testing based on our primary question(s). We will conclude the process by presenting a compelling storytelling to our stakeholders. <a href="#sec-test-workflow" class="quarto-xref"><span>Section 1.1</span></a> will elaborate further on this workflow.</li>
-<li><strong>A series of test mind maps:</strong> Since the test workflow ultimately involves selecting the most suitable hypothesis test, we require a form of guidance to choose these tests according to the inferential question(s) we want to address. Therefore, <a href="#sec-test-mind-map" class="quarto-xref"><span>Section 1.2</span></a> will introduce our core test mind map from <a href="#fig-test-general-mindmap" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>, which will direct us to more detailed mind maps each time we introduce a new chapter.</li>
+<li><strong>A test workflow:</strong> This workflow will primarily guide us in formulating the right questions about our population(s) of interest, which will involve specific parameters. This process will generally proceed with data collection using a specific sampling method, followed by a thorough analysis that includes exploratory data analysis and the <strong>most suitable</strong> hypothesis testing based on our primary question(s). We will conclude the process by presenting a compelling storytelling to our stakeholders. <a href="#sec-test-workflow" class="quarto-xref"><span class="quarto-unresolved-ref">sec-test-workflow</span></a> will elaborate further on this workflow.</li>
+<li><strong>A series of test mind maps:</strong> Since the test workflow ultimately involves selecting the most suitable hypothesis test, we require a form of guidance to choose these tests according to the inferential question(s) we want to address. Therefore, <a href="#sec-test-mind-map" class="quarto-xref"><span class="quarto-unresolved-ref">sec-test-mind-map</span></a> will introduce our core test mind map from <a href="#fig-test-general-mindmap" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-test-general-mindmap</span></a>, which will direct us to more detailed mind maps each time we introduce a new chapter.</li>
 </ul>
 <p>This mini-book on hypothesis testing is intended to serve as a <strong>practical manual</strong> rather than a traditional statistical textbook. Furthermore, it focuses on providing applied examples in each chapter without any additional exercises for the reader. We aim to explain the necessary mathematical formulas in straightforward language, avoiding formal proofs for these expressions. Additionally, we will establish conventions using admonitions to offer <strong>key insights</strong> and links to <strong>supplementary and more in-depth material</strong>.</p>
 <div class="Heads-up">
@@ -372,7 +372,7 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p><strong>There is a single test workflow for many different flavours!</strong></p>
 </blockquote>
-<p>The statement above summarizes the essence of our testing workflow, which requires a detailed examination in this section. Primarily, it is crucial to understand that mastering all hypothesis tests involves more than just knowing their mathematical formulas or coding functions; it requires a disciplined and structured process. Whether we are evaluating evidence against a <strong>null hypothesis</strong>—the status quo of our population parameter(s) of interest—or reporting the uncertainty of an <strong>estimated effect</strong>, the workflow outlined by <a href="#fig-hypothesis-testing-workflow" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> is intended to align your main inferential inquiries with the <strong>most suitable test flavour</strong>. Regardless of the flavour chosen, this workflow is designed to ensure that our conclusions are not only statistically valid but also based on clear and purposeful reasoning.</p>
+<p>The statement above summarizes the essence of our testing workflow, which requires a detailed examination in this section. Primarily, it is crucial to understand that mastering all hypothesis tests involves more than just knowing their mathematical formulas or coding functions; it requires a disciplined and structured process. Whether we are evaluating evidence against a <strong>null hypothesis</strong>—the status quo of our population parameter(s) of interest—or reporting the uncertainty of an <strong>estimated effect</strong>, the workflow outlined by <a href="#fig-hypothesis-testing-workflow" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-hypothesis-testing-workflow</span></a> is intended to align your main inferential inquiries with the <strong>most suitable test flavour</strong>. Regardless of the flavour chosen, this workflow is designed to ensure that our conclusions are not only statistically valid but also based on clear and purposeful reasoning.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/board.png" class="img-fluid figure-img" width="475"></p>
@@ -439,10 +439,10 @@ Figure&nbsp;1.1: A hypothesis testing workflow structured in eight stages: <em>s
 <li><strong>Stratified sampling:</strong> The population is divided into distinct groups called strata. These strata are defined in function of the characteristics of the individuals (e.g., age, income, education, etc.). Data is then sampled proportionally from each stratum or through optimal allocation.</li>
 <li><strong>Cluster sampling:</strong> The population is divided into groups known as clusters, such as households or geographic areas. A random sample is then collected from these clusters.</li>
 </ul>
-<p>During the stage of data collection and wrangling of our hypothesis testing workflow, it is crucial to dedicate adequate resources to plan and execute data collection using the most suitable sampling technique. Since the scope of this mini-book does not cover sampling in depth, we recommend reviewing the work by <span class="citation" data-cites="lohr2021">Lohr (<a href="references.html#ref-lohr2021" role="doc-biblioref">2021</a>)</span> for more detailed information on various sampling techniques. This resource includes handy practical examples on this vast field.</p>
+<p>During the stage of data collection and wrangling of our hypothesis testing workflow, it is crucial to dedicate adequate resources to plan and execute data collection using the most suitable sampling technique. Since the scope of this mini-book does not cover sampling in depth, we recommend reviewing the work by <span class="citation" data-cites="lohr2021">Lohr (<a href="#ref-lohr2021" role="doc-biblioref">2021</a>)</span> for more detailed information on various sampling techniques. This resource includes handy practical examples on this vast field.</p>
 </div>
 </div>
-<p>When it comes to the wrangling aspect of this stage, once we have sampled our data, it is necessary to structure it in a suitable format (e.g., a proper data frame) using our chosen language, such as the <code>R</code> <a href="https://www.tidyverse.org">{tidyverse}</a> <span class="citation" data-cites="tidyverse">(<a href="references.html#ref-tidyverse" role="doc-biblioref">Wickham et al. 2019</a>)</span> or <code>Python</code> <a href="https://pypi.org/project/pandas/">{pandas}</a> <span class="citation" data-cites="pandas2024">(<a href="references.html#ref-pandas2024" role="doc-biblioref">The Pandas Development Team 2024</a>)</span>.</p>
+<p>When it comes to the wrangling aspect of this stage, once we have sampled our data, it is necessary to structure it in a suitable format (e.g., a proper data frame) using our chosen language, such as the <code>R</code> <a href="https://www.tidyverse.org">{tidyverse}</a> <span class="citation" data-cites="tidyverse">(<a href="#ref-tidyverse" role="doc-biblioref">Wickham et al. 2019</a>)</span> or <code>Python</code> <a href="https://pypi.org/project/pandas/">{pandas}</a> <span class="citation" data-cites="pandas2024">(<a href="#ref-pandas2024" role="doc-biblioref">The Pandas Development Team 2024</a>)</span>.</p>
 <div class="Heads-up">
 <div class="Heads-up-header">
 <p>Heads-up on coding tabs!</p>
@@ -484,7 +484,7 @@ Figure&nbsp;1.1: A hypothesis testing workflow structured in eight stages: <em>s
 <p>Tip on a further double-dipping resource!</p>
 </div>
 <div class="Tip-container">
-<p>Data splitting is generally not a common practice in statistical inference, despite its frequent use in machine learning. Hence, for more information on double-dipping in statistical inference, Chapter 6 from <span class="citation" data-cites="reinhart2015">Reinhart (<a href="references.html#ref-reinhart2015" role="doc-biblioref">2015</a>)</span> offers in-depth insights and practical examples.</p>
+<p>Data splitting is generally not a common practice in statistical inference, despite its frequent use in machine learning. Hence, for more information on double-dipping in statistical inference, Chapter 6 from <span class="citation" data-cites="reinhart2015">Reinhart (<a href="#ref-reinhart2015" role="doc-biblioref">2015</a>)</span> offers in-depth insights and practical examples.</p>
 </div>
 </div>
 </section>
@@ -503,8 +503,8 @@ Figure&nbsp;1.1: A hypothesis testing workflow structured in eight stages: <em>s
 <h3 data-number="1.1.4" class="anchored" data-anchor-id="sec-testing-settings"><span class="header-section-number">1.1.4</span> Testing Settings</h3>
 <p>This stage allows us to define all our population parameters based on the main inferential inquiries, along with the standards that will guide us through the subsequent stages of the workflow:</p>
 <ol type="1">
-<li>We need to use the same significance level, denoted as <span class="math inline">\(\alpha\)</span>, that was employed in the <strong>power analysis</strong> when planning data collection for our sampling technique. The significance level denotes the probability of committing Type I error as in <a href="#tbl-errors" class="quarto-xref">Table&nbsp;<span>1.1</span></a> (i.e., the probability of encountering a <strong>false positive</strong>).</li>
-<li>Regarding the population parameters of interest, we should begin with a formal statistical definition using Greek letters (for further information, see <a href="A-greek-alphabet.html" class="quarto-xref"><span>Appendix A</span></a>).</li>
+<li>We need to use the same significance level, denoted as <span class="math inline">\(\alpha\)</span>, that was employed in the <strong>power analysis</strong> when planning data collection for our sampling technique. The significance level denotes the probability of committing Type I error as in <a href="#tbl-errors" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-errors</span></a> (i.e., the probability of encountering a <strong>false positive</strong>).</li>
+<li>Regarding the population parameters of interest, we should begin with a formal statistical definition using Greek letters (for further information, see <a href="#sec-greek-alphabet" class="quarto-xref"><span class="quarto-unresolved-ref">sec-greek-alphabet</span></a>).</li>
 </ol>
 <div id="tbl-errors" class="hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -549,10 +549,10 @@ Table&nbsp;1.1: Types of inferential conclusions in a frequentist hypothesis tes
 <p>In hypothesis testing, power analysis is a crucial preliminary step used to determine the minimum sample size <span class="math inline">\(n\)</span> necessary to detect a signal that allows us to reject the null hypothesis <span class="math inline">\(H_0\)</span> in favour of the alternative hypothesis <span class="math inline">\(H_1\)</span>. This analysis ensures that our inferential process can effectively distinguish true population effects from random noise. Note that power analysis requires three key components as inputs:</p>
 <ol type="1">
 <li>The significance level <span class="math inline">\(\alpha\)</span>.</li>
-<li>The desired power <span class="math inline">\(1 - \beta\)</span> (which relates to correctly rejecting <span class="math inline">\(H_0\)</span> in favour of <span class="math inline">\(H_1\)</span>, resulting in a <strong>true positive</strong> as in <a href="#tbl-errors" class="quarto-xref">Table&nbsp;<span>1.1</span></a>).</li>
+<li>The desired power <span class="math inline">\(1 - \beta\)</span> (which relates to correctly rejecting <span class="math inline">\(H_0\)</span> in favour of <span class="math inline">\(H_1\)</span>, resulting in a <strong>true positive</strong> as in <a href="#tbl-errors" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-errors</span></a>).</li>
 <li>The effect size—a measure of the magnitude of the association (or causation) that the test is designed to detect.</li>
 </ol>
-<p>These three components allow power analysis to provide the minimum sample size <span class="math inline">\(n\)</span> needed to avoid an underpowered study (which occurs when there is a high probability of committing a Type II error as in <a href="#tbl-errors" class="quarto-xref">Table&nbsp;<span>1.1</span></a>, denoted as <span class="math inline">\(\beta\)</span>) or an overly large <span class="math inline">\(n\)</span> that could waste resources.</p>
+<p>These three components allow power analysis to provide the minimum sample size <span class="math inline">\(n\)</span> needed to avoid an underpowered study (which occurs when there is a high probability of committing a Type II error as in <a href="#tbl-errors" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-errors</span></a>, denoted as <span class="math inline">\(\beta\)</span>) or an overly large <span class="math inline">\(n\)</span> that could waste resources.</p>
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -642,11 +642,11 @@ Table&nbsp;1.1: Types of inferential conclusions in a frequentist hypothesis tes
 <figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3699345"><em>Manfred Steger</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-pixel-mindmap-3704048/"><em>Pixabay</em></a>.</figcaption>
 </figure>
 </div>
-<p><a href="#fig-test-general-mindmap" class="quarto-xref">Figure&nbsp;<span>1.2</span></a> outlines the conceptual and organizational structure of this mini-book through its corresponding chapters. This mind map for frequentist hypothesis testings is divided into two main branches: <strong>classical</strong> and <strong>simulation-based</strong> tests. The classical tests are further categorized based on the number of groups being compared (one, two, or <span class="math inline">\(k\)</span> groups), the nature of the variable of interest (unbounded continuous data or proportions derived from binary outcomes), and whether the measurements are independent or related:</p>
+<p><a href="#fig-test-general-mindmap" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-test-general-mindmap</span></a> outlines the conceptual and organizational structure of this mini-book through its corresponding chapters. This mind map for frequentist hypothesis testings is divided into two main branches: <strong>classical</strong> and <strong>simulation-based</strong> tests. The classical tests are further categorized based on the number of groups being compared (one, two, or <span class="math inline">\(k\)</span> groups), the nature of the variable of interest (unbounded continuous data or proportions derived from binary outcomes), and whether the measurements are independent or related:</p>
 <ul>
-<li><strong><a href="chapter2-one-pop.html" class="quarto-xref">Chapter&nbsp;<span>2</span></a></strong> focuses on hypothesis tests applied to a single population mean across two different types of responses. For unbounded responses, traditional tests such as the <strong>one-sample <span class="math inline">\(t\)</span>-test</strong> are introduced. For binary responses transformed into proportions (e.g., the fraction of success in a Bernoulli trial), the chapter covers tests for one population proportion, including the <strong><span class="math inline">\(z\)</span>-test for proportions</strong>.</li>
-<li><strong><a href="chapter3-two-pop.html" class="quarto-xref">Chapter&nbsp;<span>3</span></a></strong> extends the single-group approach to comparisons between two groups, concentrating on both independent and related populations. For two independent populations with unbounded responses, it discusses the <strong>two-sample <span class="math inline">\(t\)</span>-test</strong>. For binary outcomes between two groups, the chapter explains inference on two proportions using methods like the <strong><span class="math inline">\(z\)</span>-test for two proportions</strong>. It also addresses related populations (e.g., pre/post measurements or matched pairs) by introducing the <strong>paired-sample <span class="math inline">\(t\)</span>-test</strong>, highlighting how dependency affects the testing framework.</li>
-<li><strong><a href="chapter4-anova.html" class="quarto-xref">Chapter&nbsp;<span>4</span></a></strong> generalizes the two-group comparison to <span class="math inline">\(k\)</span> groups using <strong>analysis of variance (ANOVA)</strong> techniques. This chapter focuses on continuous, unbounded response variables and explains how ANOVA partitions total variation to detect mean differences across groups.</li>
+<li><strong><a href="#sec-one-continuous-mean" class="quarto-xref">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-one-continuous-mean</span></a></strong> focuses on hypothesis tests applied to a single population mean across two different types of responses. For unbounded responses, traditional tests such as the <strong>one-sample <span class="math inline">\(t\)</span>-test</strong> are introduced. For binary responses transformed into proportions (e.g., the fraction of success in a Bernoulli trial), the chapter covers tests for one population proportion, including the <strong><span class="math inline">\(z\)</span>-test for proportions</strong>.</li>
+<li><strong><a href="#sec-two-continuous-means" class="quarto-xref">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-two-continuous-means</span></a></strong> extends the single-group approach to comparisons between two groups, concentrating on both independent and related populations. For two independent populations with unbounded responses, it discusses the <strong>two-sample <span class="math inline">\(t\)</span>-test</strong>. For binary outcomes between two groups, the chapter explains inference on two proportions using methods like the <strong><span class="math inline">\(z\)</span>-test for two proportions</strong>. It also addresses related populations (e.g., pre/post measurements or matched pairs) by introducing the <strong>paired-sample <span class="math inline">\(t\)</span>-test</strong>, highlighting how dependency affects the testing framework.</li>
+<li><strong><a href="#sec-anova" class="quarto-xref">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-anova</span></a></strong> generalizes the two-group comparison to <span class="math inline">\(k\)</span> groups using <strong>analysis of variance (ANOVA)</strong> techniques. This chapter focuses on continuous, unbounded response variables and explains how ANOVA partitions total variation to detect mean differences across groups.</li>
 </ul>
 <div id="fig-test-general-mindmap" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -699,7 +699,7 @@ Figure&nbsp;1.2: A general hypothesis testing mind map outlining all techniques 
 <p>We also outline the practical components that structure formal hypothesis testing through a comprehensive workflow. This eight-stage framework encompasses everything from study design and data collection to communicating inferential conclusions. Each stage is briefly introduced as a foundation for the upcoming chapters, illustrating how test results are closely linked to modelling assumptions, data preparation strategies, and communication objectives.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-lohr2021" class="csl-entry" role="listitem">
 Lohr, S. L. 2021. <em>Sampling: Design and Analysis</em>. Chapman; Hall/CRC. https://doi.org/<a href="https://doi.org/10.1201/9780429298899">https://doi.org/10.1201/9780429298899</a>.
 </div>
@@ -801,8 +801,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -920,7 +918,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

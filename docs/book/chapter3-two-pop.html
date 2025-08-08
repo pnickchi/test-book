@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.53">
+<meta name="generator" content="quarto-1.6.42">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>3&nbsp; Tests for Two Continuous Population Mean – The Mini Test Book (in development)</title>
 <style>
@@ -67,10 +67,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-f664b88e837a53bca78c5b20234386e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -140,19 +140,19 @@ window.Quarto = {
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
 <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
               <i class="bi bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=%7Curl%7C">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
               <i class="bi bi-linkedin pe-1"></i>
             LinkedIn
             </a>
@@ -290,10 +290,40 @@ window.Quarto = {
   </ul>
 </li>
   <li>
-<a href="#two-sample-t-test-for-paired-samples" id="toc-two-sample-t-test-for-paired-samples" class="nav-link" data-scroll-target="#two-sample-t-test-for-paired-samples"><span class="header-section-number">3.3</span> Two sample t-test for Paired Samples</a>
+<a href="#two-sample-z-test-for-independent-samples" id="toc-two-sample-z-test-for-independent-samples" class="nav-link" data-scroll-target="#two-sample-z-test-for-independent-samples"><span class="header-section-number">3.3</span> Two sample z-test for Independent Samples</a>
   <ul>
 <li><a href="#review-2" id="toc-review-2" class="nav-link" data-scroll-target="#review-2"><span class="header-section-number">3.3.1</span> Review</a></li>
   <li><a href="#study-design-2" id="toc-study-design-2" class="nav-link" data-scroll-target="#study-design-2"><span class="header-section-number">3.3.2</span> Study Design</a></li>
+  <li><a href="#data-collection-and-wrangling-2" id="toc-data-collection-and-wrangling-2" class="nav-link" data-scroll-target="#data-collection-and-wrangling-2"><span class="header-section-number">3.3.3</span> Data Collection and Wrangling</a></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">3.3.4</span> Exploratory Data Analysis</a></li>
+  <li><a href="#testing-settings-2" id="toc-testing-settings-2" class="nav-link" data-scroll-target="#testing-settings-2"><span class="header-section-number">3.3.5</span> Testing Settings</a></li>
+  <li><a href="#hypothesis-definitions-2" id="toc-hypothesis-definitions-2" class="nav-link" data-scroll-target="#hypothesis-definitions-2"><span class="header-section-number">3.3.6</span> Hypothesis Definitions</a></li>
+  <li><a href="#test-flavour-and-components-2" id="toc-test-flavour-and-components-2" class="nav-link" data-scroll-target="#test-flavour-and-components-2"><span class="header-section-number">3.3.7</span> Test Flavour and Components</a></li>
+  <li><a href="#inferential-conclusions-2" id="toc-inferential-conclusions-2" class="nav-link" data-scroll-target="#inferential-conclusions-2"><span class="header-section-number">3.3.8</span> Inferential Conclusions</a></li>
+  <li><a href="#how-to-run-the-two-sample-z-test-in-r-and-python" id="toc-how-to-run-the-two-sample-z-test-in-r-and-python" class="nav-link" data-scroll-target="#how-to-run-the-two-sample-z-test-in-r-and-python"><span class="header-section-number">3.3.9</span> How to run the two-sample <code>z-test</code> in <code>R</code> and <code>Python</code></a></li>
+  <li><a href="#storytelling-2" id="toc-storytelling-2" class="nav-link" data-scroll-target="#storytelling-2"><span class="header-section-number">3.3.10</span> Storytelling</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#two-sample-t-test-for-paired-samples" id="toc-two-sample-t-test-for-paired-samples" class="nav-link" data-scroll-target="#two-sample-t-test-for-paired-samples"><span class="header-section-number">3.4</span> Two sample t-test for Paired Samples</a>
+  <ul>
+<li><a href="#review-3" id="toc-review-3" class="nav-link" data-scroll-target="#review-3"><span class="header-section-number">3.4.1</span> Review</a></li>
+  <li><a href="#study-design-3" id="toc-study-design-3" class="nav-link" data-scroll-target="#study-design-3"><span class="header-section-number">3.4.2</span> Study Design</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#tests-for-two-population-proportions" id="toc-tests-for-two-population-proportions" class="nav-link" data-scroll-target="#tests-for-two-population-proportions"><span class="header-section-number">3.5</span> Tests for Two Population Proportions</a>
+  <ul>
+<li><a href="#review-4" id="toc-review-4" class="nav-link" data-scroll-target="#review-4"><span class="header-section-number">3.5.1</span> Review</a></li>
+  <li><a href="#study-design-4" id="toc-study-design-4" class="nav-link" data-scroll-target="#study-design-4"><span class="header-section-number">3.5.2</span> Study Design</a></li>
+  <li><a href="#data-collection-and-wrangling-3" id="toc-data-collection-and-wrangling-3" class="nav-link" data-scroll-target="#data-collection-and-wrangling-3"><span class="header-section-number">3.5.3</span> Data Collection and Wrangling</a></li>
+  <li><a href="#exploratory-data-analysis-1" id="toc-exploratory-data-analysis-1" class="nav-link" data-scroll-target="#exploratory-data-analysis-1"><span class="header-section-number">3.5.4</span> Exploratory Data Analysis</a></li>
+  <li><a href="#testing-settings-3" id="toc-testing-settings-3" class="nav-link" data-scroll-target="#testing-settings-3"><span class="header-section-number">3.5.5</span> Testing Settings</a></li>
+  <li><a href="#hypothesis-definitions-3" id="toc-hypothesis-definitions-3" class="nav-link" data-scroll-target="#hypothesis-definitions-3"><span class="header-section-number">3.5.6</span> Hypothesis Definitions</a></li>
+  <li><a href="#test-flavour-and-components-3" id="toc-test-flavour-and-components-3" class="nav-link" data-scroll-target="#test-flavour-and-components-3"><span class="header-section-number">3.5.7</span> Test Flavour and Components</a></li>
+  <li><a href="#inferential-conclusions-3" id="toc-inferential-conclusions-3" class="nav-link" data-scroll-target="#inferential-conclusions-3"><span class="header-section-number">3.5.8</span> Inferential Conclusions</a></li>
+  <li><a href="#how-to-run-the-two-sample-z-test-in-r-and-python-1" id="toc-how-to-run-the-two-sample-z-test-in-r-and-python-1" class="nav-link" data-scroll-target="#how-to-run-the-two-sample-z-test-in-r-and-python-1"><span class="header-section-number">3.5.9</span> How to run the two-sample z-test in <code>R</code> and <code>Python</code></a></li>
+  <li><a href="#storytelling-3" id="toc-storytelling-3" class="nav-link" data-scroll-target="#storytelling-3"><span class="header-section-number">3.5.10</span> Storytelling</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter3-two-pop.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter3-two-pop.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -320,7 +350,22 @@ window.Quarto = {
   gtag('js', new Date());
 
   gtag('config', 'G-DZWGQVJSHE');
-</script><p>This chapter introduces statistical tests designed to compare two samples which is a fundamental task in data analysis across many disciplines. Whether you’re comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion among two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically significant or simply due to chance.</p>
+</script><div class="LO">
+<div class="LO-header">
+<p>Learning Objectives</p>
+</div>
+<div class="LO-container">
+<p>By the end of this chapter, you should be able to:</p>
+<ul>
+<li><p>Formulate hypotheses to compare means or proportions in two population.</p></li>
+<li><p>Choose and conduct appropriate two-sample <code>t-tests</code> or two-proportion <code>z-tests</code> based on study context and assumptions.</p></li>
+<li><p>Differentiate between independent and paired samples, and choose the appropriate analysis method.</p></li>
+<li><p>Perform two-sample and paired <code>t-tests</code> and <code>z-test</code> using both <code>R</code> and <code>Python</code>, and interpret the outputs.</p></li>
+<li><p>Apply statistical reasoning to real-world data examples, including evaluating assumptions and limitations.</p></li>
+</ul>
+</div>
+</div>
+<p>This chapter introduces statistical tests designed to compare two samples which is a fundamental task in data analysis across many disciplines. Whether you’re comparing average recovery times between two medical treatments, student test scores under different teaching methods, comparing the proportion among two samples, or reaction times under varying stress conditions, these methods help determine whether observed differences are statistically significant or simply due to chance.</p>
 <div id="fig-test-chapter-2-mindmap" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-test-chapter-2-mindmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell" data-layout-align="default">
@@ -368,7 +413,7 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 <li>Independent samples, where the observations in one group are unrelated to those in the other, and</li>
 <li>Paired (or dependent) samples, where observations are naturally matched in some way, such as before-and-after measurements.</li>
 </ul>
-<p>The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R/Python code examples using real or simulated datasets to help ground the concepts in practice. We also review the theoretical background and exmaple codes to test two proportions.</p>
+<p>The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R/Python code examples using real or simulated data sets to help ground the concepts in practice. We also review the theoretical background and exmaple codes to test two proportions.</p>
 <section id="two-sample-students-t-test-for-independent-samples" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="two-sample-students-t-test-for-independent-samples">
 <span class="header-section-number">3.1</span> Two sample Student’s t-test for Independent Samples</h2>
 <section id="review" class="level3" data-number="3.1.1"><h3 data-number="3.1.1" class="anchored" data-anchor-id="review">
@@ -388,33 +433,33 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 <p>Note that the sample sizes <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> do not necessarily have to be equal. Now, the central question becomes:</p>
 <p><strong>Is there a statistically significant difference between the mean physics scores among two groups?</strong></p>
 <p>In formal terms, we test the hypotheses:</p>
-<p><span class="math display">\[H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2\]</span> Now that we reviewed the test concept, let’s try to understand it in a read dataset. The steps below follows closely with the roadmap that we introduced in [LINK HERE].</p>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2\]</span> Now that we reviewed the test concept, let’s try to understand it in a read data set. The steps below follows closely with the roadmap that we introduced in [LINK HERE].</p>
 </section><section id="study-design" class="level3" data-number="3.1.2"><h3 data-number="3.1.2" class="anchored" data-anchor-id="study-design">
 <span class="header-section-number">3.1.2</span> Study design</h3>
-<p>For this example, we will be using <code>Auto</code> dataset from <code>ISLR</code> package. This dataset contains gas mileage, horsepower, and other information for 392 vehicles. Some of variables of interest are: 1) <code>cylinders</code> an integer (numerical) value between 4 and 8 which indicates the number of cylinders of car, and 2) <code>horsepower</code> which shows engine horsepower. You may wondering <strong>if the mean of horsepower in cars with 8 cylinders is statistically different than the means in cars with 4 cylinders?</strong></p>
+<p>For this example, we will be using <code>Auto</code> data set from <code>ISLR</code> package. This data set contains gas mileage, horsepower, and other information for 392 vehicles. Some of variables of interest are: 1) <code>cylinders</code> an integer (numerical) value between 4 and 8 which indicates the number of cylinders of car, and 2) <code>horsepower</code> which shows engine horsepower. You may wondering <strong>if the mean of horsepower in cars with 8 cylinders is statistically different than the means in cars with 4 cylinders?</strong></p>
 </section><section id="data-collection-and-wrangling" class="level3" data-number="3.1.3"><h3 data-number="3.1.3" class="anchored" data-anchor-id="data-collection-and-wrangling">
 <span class="header-section-number">3.1.3</span> Data Collection and Wrangling</h3>
-<p>To answer this question, we obtain the dataset which is available in <code>ISLR</code> package. Note that we consider this data a random sample from population of cars. First we creat a new copy of this dataset to avoid touching the actual data (this is optional). Also we filter rows to those cars with 4 or 8 cylinders only.</p>
+<p>To answer this question, we obtain the data set which is available in <code>ISLR</code> package. Note that we consider this data a random sample from population of cars. First we create a new copy of this data set to avoid touching the actual data (this is optional). Also we filter rows to those cars with 4 or 8 cylinders only.</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Get a copy of dataset</span></span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Get a copy of data set</span></span>
 <span><span class="va">auto_data</span> <span class="op">&lt;-</span> <span class="va">Auto</span></span>
 <span></span>
 <span><span class="co"># Filter rows to cars with 4 or 8 cylinders</span></span>
 <span><span class="va">auto_data</span> <span class="op">&lt;-</span> <span class="va">auto_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cylinders</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">8</span><span class="op">)</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Finally, we randomly create test and train set from this dataset. We use a proportion of 50-50 between train and test.</p>
+<p>Finally, we randomly create test and train set from this data set. We use a proportion of 50-50 between train and test.</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Set seed for reproducibility</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Splitting the dataset into train and test sets</span></span>
+<span><span class="co"># Splitting the data set into train and test sets</span></span>
 <span><span class="va">train_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">auto_data</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">0.50</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">auto_data</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">train_auto</span> <span class="op">&lt;-</span> <span class="va">auto_data</span><span class="op">[</span><span class="va">train_indices</span>, <span class="op">]</span></span>
 <span><span class="va">test_auto</span> <span class="op">&lt;-</span> <span class="va">auto_data</span><span class="op">[</span><span class="op">-</span><span class="va">train_indices</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="explanatory-data-analysis" class="level3" data-number="3.1.4"><h3 data-number="3.1.4" class="anchored" data-anchor-id="explanatory-data-analysis">
 <span class="header-section-number">3.1.4</span> Explanatory Data Analysis</h3>
-<p>Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA) on train set. This step is crucial, as it helps us gain a better understanding of the distribution of variables in our dataset. The <code>horsepower</code> variable in dataset is a numerical variable. The <code>cylinders</code> variable is an integer variable that helps to divide observations into two groups.</p>
+<p>Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA) on train set. This step is crucial, as it helps us gain a better understanding of the distribution of variables in our data set. The <code>horsepower</code> variable in data set is a numerical variable. The <code>cylinders</code> variable is an integer variable that helps to divide observations into two groups.</p>
 <p>In particular, we are interested in the distribution of <code>horsepower</code> in two different groups (cars with 4 cylinders vs cars with 8 cylinders). Using a histogram for this variable is a good choice as we have a variable with numerical values.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -478,8 +523,7 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 <span class="header-section-number">3.1.7</span> Test Flavour and Components</h3>
 <p>To test this hypothesis, we use the <strong>two-sample student’s t-test for independent samples</strong>, which compares the sample means and incorporates variability within and between the samples. Note that in this case the samples are independent as clearly cars with 4 cylinders are independent from cars with 8 cylinders.</p>
 <p>Now we need to compute a test statistic from the sample. Assuming equal population variances, the test statistic is:</p>
-<p><span class="math display">\[t = \frac{(\bar{X} - \bar{Y})}{S_p \sqrt{\frac{1}{n} + \frac{1}{m}}}\]</span></p>
-<p>where:</p>
+<p><span class="math display">\[t = \frac{(\bar{X} - \bar{Y})}{S_p \sqrt{\frac{1}{n} + \frac{1}{m}}}\]</span> where:</p>
 <ul>
 <li>
 <span class="math inline">\(\bar{X}\)</span> is the mean of horsepower for cars with 4 cylinders in the sample</li>
@@ -650,23 +694,23 @@ mean in group 4 mean in group 8
 <p>In this section we talk about two sample Welch’s t-test for independent samples. This test is very similar to two sample Student’s t-test for independent samples that we described with a caveat. The two samples are still independent but the only difference is the equal variance assumption. We use this test if we do not have any reason or evidence to believe that the variance of variable of interest is the same among two groups in the population.</p>
 </section><section id="study-design-1" class="level3" data-number="3.2.2"><h3 data-number="3.2.2" class="anchored" data-anchor-id="study-design-1">
 <span class="header-section-number">3.2.2</span> Study Design</h3>
-<p>We will be using <code>Auto</code> dataset from <code>ISLR</code> package in this section too. Now the main statistical question of interest remains the same as before: <strong>You may wondering if the mean of horsepower in cars with 8 cylinders is statistically different than the means in cars with 4 cylinders?</strong> but we do <strong>not</strong> make an equal variance assumption anymore. Now we are applying a two sample Welch’s t-test for independent samples.</p>
+<p>We will be using <code>Auto</code> data set from <code>ISLR</code> package in this section too. Now the main statistical question of interest remains the same as before: <strong>You may wondering if the mean of horsepower in cars with 8 cylinders is statistically different than the means in cars with 4 cylinders?</strong> but we do <strong>not</strong> make an equal variance assumption anymore. Now we are applying a two sample Welch’s t-test for independent samples.</p>
 </section><section id="data-collection-and-wrangling-1" class="level3" data-number="3.2.3"><h3 data-number="3.2.3" class="anchored" data-anchor-id="data-collection-and-wrangling-1">
 <span class="header-section-number">3.2.3</span> Data Collection and Wrangling</h3>
-<p>To answer this question, we obtain the dataset which is available in <code>ISLR</code> package. The following codes are exactly the same as before and are shown here as a review.</p>
+<p>To answer this question, we obtain the data set which is available in <code>ISLR</code> package. The following codes are exactly the same as before and are shown here as a review.</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Get a copy of dataset</span></span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Get a copy of data set</span></span>
 <span><span class="va">auto_data</span> <span class="op">&lt;-</span> <span class="va">Auto</span></span>
 <span></span>
 <span><span class="co"># Filter rows to cars with 4 or 8 cylinders</span></span>
 <span><span class="va">auto_data</span> <span class="op">&lt;-</span> <span class="va">auto_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cylinders</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">8</span><span class="op">)</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Finally, we randomly create test and train set from this dataset. We use a proportion of 50-50 between train and test.</p>
+<p>Finally, we randomly create test and train set from this data set. We use a proportion of 50-50 between train and test.</p>
 <div class="cell">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Set seed for reproducibility</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Splitting the dataset into train and test sets</span></span>
+<span><span class="co"># Splitting the data set into train and test sets</span></span>
 <span><span class="va">train_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">auto_data</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">0.50</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">auto_data</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">train_auto</span> <span class="op">&lt;-</span> <span class="va">auto_data</span><span class="op">[</span><span class="va">train_indices</span>, <span class="op">]</span></span>
 <span><span class="va">test_auto</span> <span class="op">&lt;-</span> <span class="va">auto_data</span><span class="op">[</span><span class="op">-</span><span class="va">train_indices</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -889,10 +933,289 @@ mean in group 4 mean in group 8
 </section><section id="storytelling-1" class="level3" data-number="3.2.10"><h3 data-number="3.2.10" class="anchored" data-anchor-id="storytelling-1">
 <span class="header-section-number">3.2.10</span> Storytelling</h3>
 <p>Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: <strong>Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?</strong> We observed that the <span class="math inline">\(p-\textit{value}\)</span> of the test was extremely small compared to the significance level <span class="math inline">\(\alpha = 0.05\)</span>. This provides evidence against the null hypothesis. In simple terms, this means: <em>There appears to be a noticeable difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.</em></p>
-</section></section><section id="two-sample-t-test-for-paired-samples" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="two-sample-t-test-for-paired-samples">
-<span class="header-section-number">3.3</span> Two sample t-test for Paired Samples</h2>
+</section></section><section id="two-sample-z-test-for-independent-samples" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="two-sample-z-test-for-independent-samples">
+<span class="header-section-number">3.3</span> Two sample z-test for Independent Samples</h2>
 <section id="review-2" class="level3" data-number="3.3.1"><h3 data-number="3.3.1" class="anchored" data-anchor-id="review-2">
 <span class="header-section-number">3.3.1</span> Review</h3>
+<p>In the tests we have seen so far, we estimated the variance of each group using the sample variance, i.e., <span class="math inline">\(S^2\)</span>. This approach is realistic, as in most cases we do not know the population variance of our variable of interest. However, if the population variance for each group is known, we can incorporate this information into our test.</p>
+<p>Suppose you are analyzing wage differences between high school and college graduates using a large labor market data set. A government labor agency previously conducted extensive research and reported that the true population variances of hourly wages for both groups should be as follows:</p>
+<ul>
+<li>Population variance of wages among <strong>high school graduates</strong>: <span class="math inline">\(\sigma_1^2 = 75\)</span>
+</li>
+<li>Population variance of wages among <strong>college graduates</strong>: <span class="math inline">\(\sigma_2^2 = 60\)</span>
+</li>
+</ul>
+<p>Note that this is the <strong>population</strong> variance and not the <strong>sample</strong>. You want to assess whether the average wage differs between the two groups. Since the population variances are known (e.g., from reliable historical studies or large scale sampling in previous studies), a <strong>two-sample z-test</strong> is appropriate for this case. We treat these groups as independent samples, since each person’s wage is recorded once and belongs to a distinct education level.</p>
+<p>Since we do not have access to the wages of all individuals in each education group, we take a random sample from each population. Suppose:</p>
+<ul>
+<li>From the population of high school graduates (Population 1), we obtain a sample of size <span class="math inline">\(n\)</span>, denoted as:</li>
+</ul>
+<p><span class="math display">\[X_1, X_2, \ldots, X_n\]</span></p>
+<ul>
+<li>From the population of college graduates (Population 2), we obtain a sample of size <span class="math inline">\(m\)</span>, denoted as:</li>
+</ul>
+<p><span class="math display">\[Y_1, Y_2, \ldots, Y_m\]</span> Note that the sample sizes <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> do not need to be equal. Also, we assume that the population variances are known and denoted as:</p>
+<ul>
+<li>
+<span class="math inline">\(\sigma_1^2\)</span>: the known population variance for high school graduates<br>
+</li>
+<li>
+<span class="math inline">\(\sigma_2^2\)</span>: the known population variance for college graduates</li>
+</ul>
+<p>Now, the central question becomes <strong>Is there a statistically significant difference between the mean wages of high school and college graduates?</strong> In formal terms, we test the hypotheses:</p>
+<p><span class="math display">\[
+H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2
+\]</span> where <span class="math inline">\(\mu_1\)</span> is the population mean of wage in high school graduates and <span class="math inline">\(\mu_2\)</span> is the population mean of wage in college graduates.</p>
+</section><section id="study-design-2" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="study-design-2">
+<span class="header-section-number">3.3.2</span> Study Design</h3>
+<p>For this example, we will be using the <code>Wage</code> data set from the <code>ISLR2</code> package. This data set contains information about wages and demographic characteristics for 3,000 workers in the Mid-Atlantic region of the United States. Some of the variables of interest are:</p>
+<ol type="1">
+<li><p><code>education</code>, a categorical variable that records the highest level of education completed by the individual (e.g., “HS Grad”, “College Grad”), and</p></li>
+<li><p><code>wage</code>, a continuous variable representing the individual’s hourly wage in USD.</p></li>
+</ol>
+<p>You may be wondering: <strong>Is the mean wage for college graduates statistically different from the mean wage for high school graduates?</strong></p>
+<p>To answer this question, we will compare the sample means of these two groups using a two-sample <code>z-test</code> under the assumption that the population variances are known. We use the <code>Wage</code> data set to extract wage data for two groups:</p>
+<ul>
+<li><p>High school graduates: <code>education == "HS Grad"</code></p></li>
+<li><p>College graduates: <code>education == "College Grad"</code></p></li>
+</ul></section><section id="data-collection-and-wrangling-2" class="level3" data-number="3.3.3"><h3 data-number="3.3.3" class="anchored" data-anchor-id="data-collection-and-wrangling-2">
+<span class="header-section-number">3.3.3</span> Data Collection and Wrangling</h3>
+<p>To answer this question, we obtain the data set which is available in the <code>ISLR2</code> package. Note that we consider this data a random sample from the population of working adults. First, we create a new copy of this data set to avoid modifying the original data (this step is optional). Then, we filter the rows to keep only individuals who are either high school graduates or college graduates.</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Get a copy of data set</span></span>
+<span><span class="va">wage_data</span> <span class="op">&lt;-</span> <span class="va">Wage</span></span>
+<span></span>
+<span><span class="co"># Filter rows to keep only HS Grad and College Grad</span></span>
+<span><span class="va">wage_data</span> <span class="op">&lt;-</span> <span class="va">wage_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2. HS Grad"</span>, <span class="st">"4. College Grad"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, we randomly split the data set into training and testing sets, using a 50-50 proportion between train and test. This allows us to conduct our test using a subset of the data while reserving the rest for potential follow-up analysis.</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Set seed for reproducibility</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Splitting the data set into train and test sets</span></span>
+<span><span class="va">train_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">wage_data</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">0.50</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">wage_data</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">train_wage</span> <span class="op">&lt;-</span> <span class="va">wage_data</span><span class="op">[</span><span class="va">train_indices</span>, <span class="op">]</span></span>
+<span><span class="va">test_wage</span> <span class="op">&lt;-</span> <span class="va">wage_data</span><span class="op">[</span><span class="op">-</span><span class="va">train_indices</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="exploratory-data-analysis" class="level3" data-number="3.3.4"><h3 data-number="3.3.4" class="anchored" data-anchor-id="exploratory-data-analysis">
+<span class="header-section-number">3.3.4</span> Exploratory Data Analysis</h3>
+<p>Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA) on the training set. This step is crucial, as it helps us gain a better understanding of the distribution of variables in our data set. The <code>wage</code> variable is a numerical variable that represents hourly earnings. The <code>education</code> variable is a categorical variable that helps us divide observations into two groups.</p>
+<p>In particular, we are interested in the distribution of <code>wage</code> in two different groups (high school graduates vs college graduates). Using a histogram for this variable is a good choice as it allows us to visually inspect how the wages vary within and between these two education levels.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chapter3-two-pop_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We also look at some descriptive statistics of wage in both groups for better understanding of the data. The descriptive statistics for high school graduates:</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_wage</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">"2. HS Grad"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      wage       
+ Min.   : 23.27  
+ 1st Qu.: 78.39  
+ Median : 94.07  
+ Mean   : 97.19  
+ 3rd Qu.:111.72  
+ Max.   :318.34  </code></pre>
+</div>
+</div>
+<p>and for college graduates:</p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_wage</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">"4. College Grad"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      wage       
+ Min.   : 40.41  
+ 1st Qu.: 97.49  
+ Median :118.88  
+ Mean   :122.83  
+ 3rd Qu.:141.78  
+ Max.   :277.80  </code></pre>
+</div>
+</div>
+<p>Looking at these summary statistics, we can see that the wage distributions for the two education groups have some overlap, and there does not appear to be a large difference in their centers. In fact, the mean wage for college graduates is only slightly higher, and this is not immediately obvious from the plots.</p>
+<p>There appears to be some observations with higher wage values in <code>College Grad</code> group compared to others. The following density plot provides additional visual support for this observation:</p>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Density plot of wage by education group</span></span>
+<span><span class="va">train_wage</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">wage</span>, fill <span class="op">=</span> <span class="va">education</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_density</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Wage Distribution by Education Level'</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">'Wage (USD/hour)'</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">'Density'</span>,</span>
+<span>       fill <span class="op">=</span> <span class="st">"Education"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chapter3-two-pop_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="testing-settings-2" class="level3" data-number="3.3.5"><h3 data-number="3.3.5" class="anchored" data-anchor-id="testing-settings-2">
+<span class="header-section-number">3.3.5</span> Testing Settings</h3>
+<p>We use a significance level of <span class="math inline">\(\alpha = 0.05\)</span> to conduct the hypothesis test. Since the data we have is a sample from a larger population of workers, we define the following population parameters:</p>
+<ul>
+<li>
+<span class="math inline">\(\mu_{1}\)</span> is the mean wage of individuals with a high school education in the population.<br>
+</li>
+<li>
+<span class="math inline">\(\mu_{2}\)</span> is the mean wage of individuals with a college education in the population.</li>
+</ul>
+<p>Our goal is to test whether the population mean wage differs between these two educational groups.</p>
+</section><section id="hypothesis-definitions-2" class="level3" data-number="3.3.6"><h3 data-number="3.3.6" class="anchored" data-anchor-id="hypothesis-definitions-2">
+<span class="header-section-number">3.3.6</span> Hypothesis Definitions</h3>
+<p>We now define the null and alternative hypothesis. Recall the main inquiry we had:</p>
+<p><strong>Is the mean wage for college graduates statistically different from the mean wage for high school graduates?</strong></p>
+<p>This translates into the following null and alternative hypotheses:</p>
+<p><span class="math display">\[H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2}\]</span></p>
+</section><section id="test-flavour-and-components-2" class="level3" data-number="3.3.7"><h3 data-number="3.3.7" class="anchored" data-anchor-id="test-flavour-and-components-2">
+<span class="header-section-number">3.3.7</span> Test Flavour and Components</h3>
+<p>To test this hypothesis, we use the <strong>two-sample z-test for independent samples</strong> with known population variances, which compares the sample means and incorporates the known variability within each population. Note that the samples are independent. The test statistic for this test is computed as:</p>
+<p><span class="math display">\[
+z = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{m}}}
+\]</span></p>
+<p>where:</p>
+<ul>
+<li>
+<span class="math inline">\(\bar{X}\)</span> is the mean wage of individuals with a high school education in the sample.</li>
+<li>
+<span class="math inline">\(\bar{Y}\)</span> is the mean wage of individuals with a college education in the sample.</li>
+<li>
+<span class="math inline">\(\sigma_1^2\)</span> and <span class="math inline">\(\sigma_2^2\)</span> are the <strong>known population variances</strong> of the two groups</li>
+<li>
+<span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> are the sample sizes of the two groups</li>
+</ul>
+<p>Because population variances are known, the standard error of the difference in sample means is computed directly from the population variances, avoiding the need to estimate variance from the samples.</p>
+</section><section id="inferential-conclusions-2" class="level3" data-number="3.3.8"><h3 data-number="3.3.8" class="anchored" data-anchor-id="inferential-conclusions-2">
+<span class="header-section-number">3.3.8</span> Inferential Conclusions</h3>
+<p>As you can see, the test statistic computes the difference between <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> and scales it based on the known variance of this difference. Now the question is whether this difference is significant or not? To answer this, we need to understand the behavior of the statistic we defined (<span class="math inline">\(z\)</span>) and what typical values it can take.</p>
+<p>As we shown before, knowing the distribution of this statistic allows us to compute the <span class="math inline">\(\textit{p-value}\)</span> of the test as follows:</p>
+<p><span class="math display">\[
+\textit{p-value} = 2 \times Pr(|Z| \ge |z|)
+\]</span></p>
+<p>Looking at the formula, we are essentially calculating how likely it is to observe a value as extreme as <span class="math inline">\(z\)</span> under the null hypothesis.</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Heads-up!</p>
+</div>
+<div class="Heads-up-container">
+<p>Note that <span class="math inline">\(z\)</span> itself is a random variable that would vary from sample to sample.</p>
+</div>
+</div>
+<div class="Tip">
+<div class="Tip-header">
+<p>Tip:</p>
+</div>
+<div class="Tip-container">
+<p>Under the assumption that the null hypothesis is correct (i.e., <span class="math inline">\(\mu_1 = \mu_2\)</span>), the test statistic <span class="math inline">\(z\)</span> follows the <strong>standard normal distribution</strong> that textbooks usually denote it by <span class="math inline">\(N(0,1)\)</span>. The first element is mean (0) and the second one is the standard deviation (1).</p>
+<p><strong>Note:</strong> The probability is multiplied by two because we are conducting a two-sided test (alternative hypothesis: <span class="math inline">\(\mu_1 \neq \mu_2\)</span>). For a one-sided test (e.g., <span class="math inline">\(\mu_1 &gt; \mu_2\)</span> or <span class="math inline">\(\mu_1 &lt; \mu_2\)</span>) this multiplication is not needed.</p>
+<p>We compare the <span class="math inline">\(\textit{p-value}\)</span> to our significance level <span class="math inline">\(\alpha\)</span>. If the <span class="math inline">\(\textit{p-value}\)</span> is less than <span class="math inline">\(\alpha\)</span>, then we have evidence against the null hypothesis. The reasoning is: assuming the null hypothesis is true, the test statistic should follow a standard normal distribution. A very small p-value means our observed <span class="math inline">\(z\)</span> is unlikely under this distribution, and so it is unlikely the null hypothesis is correct.</p>
+</div>
+</div>
+</section><section id="how-to-run-the-two-sample-z-test-in-r-and-python" class="level3" data-number="3.3.9"><h3 data-number="3.3.9" class="anchored" data-anchor-id="how-to-run-the-two-sample-z-test-in-r-and-python">
+<span class="header-section-number">3.3.9</span> How to run the two-sample <code>z-test</code> in <code>R</code> and <code>Python</code>
+</h3>
+<p>The following examples show how to implement the two-sample <code>z-test</code> for independent samples with <strong>known population variances</strong> in both <code>R</code> and <code>Python</code> using the <code>Wage</code> data set.</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Important reminder!</p>
+</div>
+<div class="Heads-up-container">
+<ul>
+<li><p>Note that we know the <strong>population variances</strong> <span class="math inline">\(\sigma_1^2 = 75\)</span> for high school graduates and <span class="math inline">\(\sigma_2^2 = 60\)</span> for college graduates from previous studies.</p></li>
+<li><p>The test statistic <span class="math inline">\(z\)</span> is calculated by <code>z.test</code> function from <code>BSDA</code> package which have a similar input and output to <code>t.test</code> function.</p></li>
+</ul>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R Code</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Python Code</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Filter test_wage data to create two groups: High school graduates and college graduates</span></span>
+<span><span class="va">hs_wages</span> <span class="op">&lt;-</span> <span class="va">test_wage</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">"2. HS Grad"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span></span>
+<span><span class="va">col_wages</span> <span class="op">&lt;-</span> <span class="va">test_wage</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">"4. College Grad"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Set the known population variances</span></span>
+<span><span class="va">sigma2_hs</span> <span class="op">&lt;-</span> <span class="fl">75</span></span>
+<span><span class="va">sigma2_col</span> <span class="op">&lt;-</span> <span class="fl">60</span></span>
+<span></span>
+<span><span class="co"># Run two-sample z-test with known variances using z.test function from BSDA package</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">z.test</span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">hs_wages</span>,</span>
+<span>  y <span class="op">=</span> <span class="va">col_wages</span>,</span>
+<span>  sigma.x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">sigma2_hs</span><span class="op">)</span>,  <span class="co"># standard deviation for group 1</span></span>
+<span>  sigma.y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">sigma2_col</span><span class="op">)</span>, <span class="co"># standard deviation for group 2</span></span>
+<span>  alternative <span class="op">=</span> <span class="st">"two.sided"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Print results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two-sample z-Test
+
+data:  hs_wages and col_wages
+z = -55.239, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -32.72362 -30.48102
+sample estimates:
+mean of x mean of y 
+ 94.29543 125.89775 </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read data set</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'data/test_wage.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>In order to run the two-sample z-test with known population variances, we use the <code>z.test</code> function from the <code>BSDA</code> package in <code>R</code>. This function is designed to handle one and two sample <code>z-tests</code> when population standard deviations are known. The key arguments of <code>z.test</code> for a two-sample test are:</p>
+<ul>
+<li>
+<code>x</code>: a numeric vector of data values for group 1.</li>
+<li>
+<code>y</code>: a numeric vector of data values for group 2.</li>
+<li>
+<code>sigma_x</code>: the known population <strong>standard deviation</strong> for group 1.</li>
+<li>
+<code>sigma_y</code>: the known population <strong>standard deviation</strong> for group 2.</li>
+<li>
+<code>alternative</code>: specifies the alternative hypothesis; <code>"two.sided"</code> by default for a two-sided test.</li>
+</ul>
+<p><strong>Note</strong>: <code>sigma_x</code> and <code>sigma_y</code> expects the standard deviation of each group and <strong>not</strong> the variance. As a result in the <code>R</code> code in tabset we passed <code>sqrt(sigma2_hs)</code> and <code>sqrt(sigma2_col)</code>.</p>
+<p>When you run the test, the output includes:</p>
+<ul>
+<li>
+<code>statistic</code>: the calculated z test statistic.</li>
+<li>
+<code>p.value</code>: the p-value for the test based on the standard normal distribution.</li>
+<li>
+<code>conf.int</code>: the confidence interval for the difference in means <span class="math inline">\(\mu_1 - \mu_2\)</span>.</li>
+<li>
+<code>estimate</code>: the sample means for each group.</li>
+</ul>
+<p><strong>Note:</strong> The <code>z.test</code> function assumes that the population standard deviations are known and uses them directly to compute the test statistic and confidence interval. This differs from tests that estimate variance from the samples, such as <code>t-tests</code> that we have been studying so far.</p>
+</section><section id="storytelling-2" class="level3" data-number="3.3.10"><h3 data-number="3.3.10" class="anchored" data-anchor-id="storytelling-2">
+<span class="header-section-number">3.3.10</span> Storytelling</h3>
+</section></section><section id="two-sample-t-test-for-paired-samples" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="two-sample-t-test-for-paired-samples">
+<span class="header-section-number">3.4</span> Two sample t-test for Paired Samples</h2>
+<section id="review-3" class="level3" data-number="3.4.1"><h3 data-number="3.4.1" class="anchored" data-anchor-id="review-3">
+<span class="header-section-number">3.4.1</span> Review</h3>
 <p>In this section, we discuss the two sample t-test for paired samples which is used when we have two sets of related observations. Unlike the two-sample t-tests for independent samples that we discussed so far (such as the Student’s or Welch’s t-test), the paired t-test is appropriate when the two samples are dependent. This means each observation in one sample can be naturally paired with an observation in the other. Examples of such are before-and-after measurements on the same subjects, or matched subjects across two different conditions. The key idea is that the test evaluates whether the mean difference between paired observations is significantly different from zero.</p>
 <div class="Heads-up">
 <div class="Heads-up-header">
@@ -955,9 +1278,32 @@ mean in group 4 mean in group 8
 <p>If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers) or we have a very small sample size, we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it. You can read more about it LINK.</p>
 </div>
 </div>
-</section><section id="study-design-2" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="study-design-2">
-<span class="header-section-number">3.3.2</span> Study Design</h3>
-<p>We will be using <code>PrisonStress</code> dataset from <code>PairedData</code> package in this section</p>
+</section><section id="study-design-3" class="level3" data-number="3.4.2"><h3 data-number="3.4.2" class="anchored" data-anchor-id="study-design-3">
+<span class="header-section-number">3.4.2</span> Study Design</h3>
+<p>We will be using <code>PrisonStress</code> data set from <code>PairedData</code> package in this section</p>
+</section></section><section id="tests-for-two-population-proportions" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="tests-for-two-population-proportions">
+<span class="header-section-number">3.5</span> Tests for Two Population Proportions</h2>
+<section id="review-4" class="level3" data-number="3.5.1"><h3 data-number="3.5.1" class="anchored" data-anchor-id="review-4">
+<span class="header-section-number">3.5.1</span> Review</h3>
+</section><section id="study-design-4" class="level3" data-number="3.5.2"><h3 data-number="3.5.2" class="anchored" data-anchor-id="study-design-4">
+<span class="header-section-number">3.5.2</span> Study Design</h3>
+</section><section id="data-collection-and-wrangling-3" class="level3" data-number="3.5.3"><h3 data-number="3.5.3" class="anchored" data-anchor-id="data-collection-and-wrangling-3">
+<span class="header-section-number">3.5.3</span> Data Collection and Wrangling</h3>
+</section><section id="exploratory-data-analysis-1" class="level3" data-number="3.5.4"><h3 data-number="3.5.4" class="anchored" data-anchor-id="exploratory-data-analysis-1">
+<span class="header-section-number">3.5.4</span> Exploratory Data Analysis</h3>
+</section><section id="testing-settings-3" class="level3" data-number="3.5.5"><h3 data-number="3.5.5" class="anchored" data-anchor-id="testing-settings-3">
+<span class="header-section-number">3.5.5</span> Testing Settings</h3>
+</section><section id="hypothesis-definitions-3" class="level3" data-number="3.5.6"><h3 data-number="3.5.6" class="anchored" data-anchor-id="hypothesis-definitions-3">
+<span class="header-section-number">3.5.6</span> Hypothesis Definitions</h3>
+</section><section id="test-flavour-and-components-3" class="level3" data-number="3.5.7"><h3 data-number="3.5.7" class="anchored" data-anchor-id="test-flavour-and-components-3">
+<span class="header-section-number">3.5.7</span> Test Flavour and Components</h3>
+</section><section id="inferential-conclusions-3" class="level3" data-number="3.5.8"><h3 data-number="3.5.8" class="anchored" data-anchor-id="inferential-conclusions-3">
+<span class="header-section-number">3.5.8</span> Inferential Conclusions</h3>
+</section><section id="how-to-run-the-two-sample-z-test-in-r-and-python-1" class="level3" data-number="3.5.9"><h3 data-number="3.5.9" class="anchored" data-anchor-id="how-to-run-the-two-sample-z-test-in-r-and-python-1">
+<span class="header-section-number">3.5.9</span> How to run the two-sample z-test in <code>R</code> and <code>Python</code>
+</h3>
+</section><section id="storytelling-3" class="level3" data-number="3.5.10"><h3 data-number="3.5.10" class="anchored" data-anchor-id="storytelling-3">
+<span class="header-section-number">3.5.10</span> Storytelling</h3>
 
 
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
@@ -1042,8 +1388,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1161,7 +1505,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

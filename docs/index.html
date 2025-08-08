@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.53">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
 <meta name="author" content="">
 <meta name="author" content="">
-<meta name="dcterms.date" content="2025-08-07">
+<meta name="dcterms.date" content="2025-08-08">
 
 <title>The Mini Test Book (in development)</title>
 <style>
@@ -60,10 +60,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f664b88e837a53bca78c5b20234386e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -306,7 +306,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 7, 2025</p>
+      <p class="date">August 8, 2025</p>
     </div>
   </div>
   
@@ -345,7 +345,7 @@ window.Quarto = {
 <figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/"><em>manfredsteger</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-e-learning-online-6230157/"><em>Pixabay</em></a>.</figcaption>
 </figure>
 </div>
-<p>Note that, after conducting extensive research into the available educational literature, we discovered that there is no comprehensive and <strong>frequentist</strong> resource that explains various inferential methods simultaneously using <strong>two essential programming languages</strong> in the field of data science: <code>R</code> <span class="citation" data-cites="r2024">(<a href="book/references.html#ref-r2024" role="doc-biblioref">R Core Team 2024</a>)</span> and <code>Python</code><span class="citation" data-cites="python">(<a href="book/references.html#ref-python" role="doc-biblioref">Van Rossum and Drake 2009</a>)</span>. Furthermore, we could not find reproducible and transparent tools that would enable learners to implement and adapt these methods in their own computational environments. Based on our teaching experience, these shortcomings hinder effective learning in the practice of statistical inference, especially given the numerous tests required to achieve mastery.</p>
+<p>Note that, after conducting extensive research into the available educational literature, we discovered that there is no comprehensive and <strong>frequentist</strong> resource that explains various inferential methods simultaneously using <strong>two essential programming languages</strong> in the field of data science: <code>R</code> <span class="citation" data-cites="r2024">(<a href="#ref-r2024" role="doc-biblioref">R Core Team 2024</a>)</span> and <code>Python</code><span class="citation" data-cites="python">(<a href="#ref-python" role="doc-biblioref">Van Rossum and Drake 2009</a>)</span>. Furthermore, we could not find reproducible and transparent tools that would enable learners to implement and adapt these methods in their own computational environments. Based on our teaching experience, these shortcomings hinder effective learning in the practice of statistical inference, especially given the numerous tests required to achieve mastery.</p>
 <p>To address this gap, we have developed a bilingual and frequentist resource in both <code>R</code> and <code>Python</code>, which features a <strong>common test workflow</strong> consisting of eight distinct stages applicable to each hypothesis test: <em>study design</em>, <em>data collection and wrangling</em>, <em>exploratory data analysis</em>, <em>testing settings</em>, <em>hypothesis definitions</em>, <em>test flavour and components</em>, <em>inferential conclusions</em>, and <em>storytelling</em>. Additionally, all the tests we discuss are organized through different mind maps to help readers visualize their learning process. Finally, by offering this mini-book as an Open Educational Resource (OER) in Quarto via a GitHub repository, we aim to inspire and empower academic communities worldwide to share and adapt this knowledge to suit their specific needs.</p>
 </section>
 <section id="the-authors" class="level1 unnumbered">
@@ -387,7 +387,7 @@ window.Quarto = {
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" width="150" src="img/by-nc-sa.png"></a></p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-r2024" class="csl-entry" role="listitem">
 R Core Team. 2024. <span>“R: A Language and Environment for Statistical Computing.”</span> Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
 </div>
@@ -480,8 +480,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -599,7 +597,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
