@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
-
+<meta name="generator" content="quarto-1.5.53">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>4&nbsp; ANOVA-related Tests for k Continuous Population Means – The Mini Test Book (in development)</title>
 <style>
 code{white-space: pre-wrap;}
@@ -20,8 +17,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
-
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
@@ -37,11 +53,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f664b88e837a53bca78c5b20234386e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -67,16 +82,14 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<style>html{ scroll-behavior: smooth; }</style>
-<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
+}</script><style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script><script src="../site_libs/quarto-diagram/mermaid-init.js"></script><link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+<link href="../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="../site_libs/datatables-binding-0.33/datatables.js"></script><script src="../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><link href="../site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="../site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="../site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="../site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="../site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -101,17 +114,12 @@ const typesetMath = (el) => {
 window.Quarto = {
   typesetMath
 };
-</script>
-
-<link rel="stylesheet" href="../custom.css">
+</script><link rel="stylesheet" href="../custom.css">
 </head>
-
 <body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">The Mini Test Book (in development)</span>
@@ -122,52 +130,45 @@ window.Quarto = {
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
-          <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
+<li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
               <i class="bi bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
               <i class="bi bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=%7Curl%7C">
               <i class="bi bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
       </ul>
-    </div>
+</div>
 </div>
           <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
-    </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter4-ANOVA.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/chapter4-ANOVA.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Setting up Python dependencies</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../img/toolkit.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
+      <img src="../img/toolkit.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
@@ -176,7 +177,7 @@ window.Quarto = {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
@@ -209,7 +210,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book/chapter4-ANOVA.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Setting up Python dependencies</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -226,28 +227,61 @@ window.Quarto = {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book/A-greek-alphabet.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Greek Alphabet</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book/B-simulated-datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Simulated Datasets</span></span></a>
+  </div>
+</li>
       </ul>
-  </li>
+</li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">The tools</h2>
+   
+  <ul>
+<li><a href="#sec-ANOVA-dataset" id="toc-sec-ANOVA-dataset" class="nav-link active" data-scroll-target="#sec-ANOVA-dataset"><span class="header-section-number">4.1</span> The ANOVA Dataset</a></li>
+  <li>
+<a href="#sec-one-way-ANOVA" id="toc-sec-one-way-ANOVA" class="nav-link" data-scroll-target="#sec-one-way-ANOVA"><span class="header-section-number">4.2</span> One-way ANOVA</a>
+  <ul>
+<li><a href="#sec-one-way-ANOVA-study-design" id="toc-sec-one-way-ANOVA-study-design" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-study-design"><span class="header-section-number">4.2.1</span> Study Design</a></li>
+  <li><a href="#sec-one-way-ANOVA-data-collection-wrangling" id="toc-sec-one-way-ANOVA-data-collection-wrangling" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-data-collection-wrangling"><span class="header-section-number">4.2.2</span> Data Collection and Wrangling</a></li>
+  <li><a href="#sec-one-way-ANOVA-EDA" id="toc-sec-one-way-ANOVA-EDA" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-EDA"><span class="header-section-number">4.2.3</span> Exploratory Data Analysis</a></li>
+  <li><a href="#sec-one-way-ANOVA-testing-settings" id="toc-sec-one-way-ANOVA-testing-settings" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-testing-settings"><span class="header-section-number">4.2.4</span> Testing Settings</a></li>
+  <li><a href="#sec-one-way-ANOVA-hypothesis-definitions" id="toc-sec-one-way-ANOVA-hypothesis-definitions" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-hypothesis-definitions"><span class="header-section-number">4.2.5</span> Hypothesis Definitions</a></li>
+  <li><a href="#sec-one-way-ANOVA-test-flavour" id="toc-sec-one-way-ANOVA-test-flavour" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-test-flavour"><span class="header-section-number">4.2.6</span> Test Flavour and Components</a></li>
+  <li><a href="#sec-one-way-ANOVA-inferential-conclusions" id="toc-sec-one-way-ANOVA-inferential-conclusions" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-inferential-conclusions"><span class="header-section-number">4.2.7</span> Inferential Conclusions</a></li>
+  <li><a href="#sec-one-way-ANOVA-storytelling" id="toc-sec-one-way-ANOVA-storytelling" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-storytelling"><span class="header-section-number">4.2.8</span> Storytelling</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sec-two-way-ANOVA" id="toc-sec-two-way-ANOVA" class="nav-link" data-scroll-target="#sec-two-way-ANOVA"><span class="header-section-number">4.3</span> Two-way ANOVA</a>
+  <ul>
+<li><a href="#sec-two-way-ANOVA-study-design" id="toc-sec-two-way-ANOVA-study-design" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-study-design"><span class="header-section-number">4.3.1</span> Study Design</a></li>
+  <li><a href="#sec-two-way-ANOVA-data-collection-wrangling" id="toc-sec-two-way-ANOVA-data-collection-wrangling" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-data-collection-wrangling"><span class="header-section-number">4.3.2</span> Data Collection and Wrangling</a></li>
+  <li><a href="#sec-two-way-ANOVA-EDA" id="toc-sec-two-way-ANOVA-EDA" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-EDA"><span class="header-section-number">4.3.3</span> Exploratory Data Analysis</a></li>
+  <li><a href="#sec-two-way-ANOVA-testing-settings" id="toc-sec-two-way-ANOVA-testing-settings" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-testing-settings"><span class="header-section-number">4.3.4</span> Testing Settings</a></li>
+  <li><a href="#sec-two-way-ANOVA-hypothesis-definitions" id="toc-sec-two-way-ANOVA-hypothesis-definitions" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-hypothesis-definitions"><span class="header-section-number">4.3.5</span> Hypothesis Definitions</a></li>
+  <li><a href="#sec-two-way-ANOVA-test-flavour" id="toc-sec-two-way-ANOVA-test-flavour" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-test-flavour"><span class="header-section-number">4.3.6</span> Test Flavour and Components</a></li>
+  <li><a href="#sec-two-way-ANOVA-inferential-conclusions" id="toc-sec-two-way-ANOVA-inferential-conclusions" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-inferential-conclusions"><span class="header-section-number">4.3.7</span> Inferential Conclusions</a></li>
+  <li><a href="#sec-two-way-ANOVA-storytelling" id="toc-sec-two-way-ANOVA-storytelling" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-storytelling"><span class="header-section-number">4.3.8</span> Storytelling</a></li>
+  </ul>
+</li>
+  <li><a href="#sec-chapter-4-summary" id="toc-sec-chapter-4-summary" class="nav-link" data-scroll-target="#sec-chapter-4-summary"><span class="header-section-number">4.4</span> Chapter Summary</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter4-ANOVA.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter4-ANOVA.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title"><span id="sec-anova" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></span></h1>
 </div>
 
@@ -262,25 +296,36 @@ window.Quarto = {
   
 
 
-</header>
-
-
-<!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
-<script>
+</header><!-- Google tag (gtag.js) --><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-DZWGQVJSHE');
-</script>
+</script><div class="LO">
+<div class="LO-header">
+<p>Learning Objectives</p>
+</div>
+<div class="LO-container">
+<p>By the end of this chapter, you will be able to:</p>
+<ul>
+<li>Explain how analysis of variance (ANOVA) <strong>partitions</strong> total variation into <strong>between-group</strong> and <strong>within-group</strong> components.</li>
+<li>Interpret the meaning of the <strong><span class="math inline">\(F\)</span>-statistic</strong> and its role in testing mean differences across groups.</li>
+<li>Describe the difference between <strong>main effects</strong> and <strong>interaction effects</strong> in a two-way ANOVA.</li>
+<li>Identify potential <strong>interaction patterns</strong> via appropriate plotting when conducting a two-way ANOVA.</li>
+<li>Conduct one-way and two-way ANOVA in a <strong>reproducible manner</strong> using the hypothesis testing workflow via <code>R</code> and <code>Python</code>.</li>
+<li>Identify the assumptions underlying one-way and two-way ANOVA, including <strong>independence</strong>, <strong>normality</strong>, and <strong>homoscedasticity</strong>.</li>
+<li>Evaluate <strong>model diagnostics</strong> to assess whether ANOVA assumptions are met.</li>
+</ul>
+</div>
+</div>
+<p>It is time to expand our hypothesis testing framework from comparing two population means to a generalized approach for <span class="math inline">\(k\)</span> population means by exploring <strong>analysis of variance (ANOVA)</strong>. ANOVA is a foundational test in frequentist statistics designed to compare means across multiple populations under specific distributional assumptions, which we will examine in this chapter. Originally formalized by Ronald A. Fisher <span class="citation" data-cites="fisher1925">(<a href="references.html#ref-fisher1925" role="doc-biblioref">Fisher 1925</a>)</span>, ANOVA extends the concept of the two-sample <span class="math inline">\(t\)</span>-test by partitioning the total variability of our outcome of interest into components attributable to <strong>main effects</strong>, <strong>interactions</strong>, and <strong>random error</strong>. This partitioning enables us to determine whether observed differences in groups are improbable to appear under the null hypothesis, which states that all groups share the same population mean.</p>
 <div id="fig-test-chapter-3-mindmap" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-test-chapter-3-mindmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-test-chapter-3-mindmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
-<p></p><figure class="figure"><p></p>
+<p></p><figure class="figure"></figure><p></p>
 <div>
 <pre class="mermaid mermaid-js">mindmap
   root((Frequentist
@@ -299,21 +344,144 @@ window.Quarto = {
             )Two way&lt;br/&gt;ANOVA(
 </pre>
 </div>
-<p></p></figure><p></p>
+<p></p>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-test-chapter-3-mindmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4.1: A specific hypothesis testing mind map outlining the techniques explored in this chapter, which include ANOVA-related tests for <span class="math inline">\(k\)</span> population means.
-</figcaption>
+</figcaption></figure>
+</div>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Heads-up on some historical background in statistics!</p>
+</div>
+<div class="Heads-up-container">
+<p>While Ronald A. Fisher (1890–1962) is rightly recognized as a significant figure in modern statistics for developing key concepts such as ANOVA, it is imperative to recognize the broader context of his legacy. Beyond his pioneering contributions to statistics, Fisher was also a prominent advocate of eugenics, a movement that promoted pseudoscientific ideas about human heredity and social hierarchy. His involvement with the eugenics community is well documented <span class="citation" data-cites="mackenzie1981">(<a href="references.html#ref-mackenzie1981" role="doc-biblioref">MacKenzie 1981</a>)</span>. These views have been called out by certain members of the scientific community <span class="citation" data-cites="tarran2020">(<a href="references.html#ref-tarran2020" role="doc-biblioref">Tarran 2020</a>)</span>. That said, we (the authors of this mini-book) consider that students and scholars need to distinguish Fisher’s statistical insights from the unethical ideologies he supported, while also acknowledging the social responsibility to critique the historical misuse of science.</p>
+<p>Fisher’s statistical work remains central to frequentist inference. However, educators and researchers must confront the historical connection between statistical innovation and eugenic thinking in early 20th-century science <span class="citation" data-cites="tabery2015">(<a href="references.html#ref-tabery2015" role="doc-biblioref">Tabery and Sarkar 2015</a>)</span>. By explicitly addressing this context, we can acknowledge the rigour of Fisher’s methodological contributions while rejecting the discriminatory worldviews he promoted. This approach aligns with contemporary efforts to ensure that teaching statistics is grounded not only in subject matter accuracy but also in ethical reflection and historical accountability <span class="citation" data-cites="kennedyshaffer02024">(<a href="references.html#ref-kennedyshaffer02024" role="doc-biblioref">Kennedy-Shaffer 2024</a>)</span>.</p>
+</div>
+</div>
+<p>This chapter builds on the concepts introduced in the earlier works by <a href="chapter2-one-pop.html" class="quarto-xref"><span>Chapter 2</span></a> and <a href="chapter3-two-pop.html" class="quarto-xref"><span>Chapter 3</span></a>, which concentrated on hypothesis testing for one and two groups, respectively. While those chapters primarily addressed pairwise comparisons, we will now shift our focus multiple comparisons:</p>
+<ul>
+<li>The <strong>one-way ANOVA</strong>, discussed in <a href="#sec-one-way-ANOVA" class="quarto-xref"><span>Section 4.2</span></a>, will assume a <strong>single categorical factor with <span class="math inline">\(k\)</span> levels</strong>. This approach allows us to test whether at least one group mean is significantly different from the others.</li>
+<li>In contrast, the <strong>two-way ANOVA</strong>, from <a href="#sec-two-way-ANOVA" class="quarto-xref"><span>Section 4.3</span></a>, will incorporate an <strong>additional categorical factor with <span class="math inline">\(m\)</span> levels</strong>, permitting the analysis of both main effects and interaction effects. Interaction terms in ANOVA are especially useful for revealing cases where the effect of one factor depends on the level of another, a situation often encountered in complex experimental designs.</li>
+</ul>
+<p>As a side note, the workflow guiding this chapter, as referenced in <a href="chapter1-intro.html#fig-hypothesis-testing-workflow" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>, will provide a structured approach for applying both one-way and two-way ANOVA to the same A/B/n dataset (see <a href="#sec-ANOVA-dataset" class="quarto-xref"><span>Section 4.1</span></a>).</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Heads-up on the importance of ANOVA in data science!</p>
+</div>
+<div class="Heads-up-container">
+<p>In modern data science, ANOVA remains significant, particularly in <strong>A/B/n testing</strong> (the generalization of <strong>A/B testing</strong> to multiple treatments). This approach allows for the simultaneous evaluation of various treatment variations or designs. ANOVA is valued for its interpretability and its flexibility in handling both <strong>balanced</strong> designs (where there is an equal number of replicates for each experimental treatment) and <strong>unbalanced</strong> designs (where there are unequal numbers of replicates). These strengths have solidified its role in both academic research and practical applications.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/pulling.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3699345"><em>Manfred Steger</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-download-data-transfer-3947910/"><em>Pixabay</em></a>.</figcaption></figure>
+</div>
+</div>
+</div>
+<section id="sec-ANOVA-dataset" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="sec-ANOVA-dataset">
+<span class="header-section-number">4.1</span> The ANOVA Dataset</h2>
+<p>The <strong>simulated dataset</strong> discussed in this chapter relates to an experimental context known as A/B/n testing, which is an expansion of traditional A/B testing as previously discussed. In a typical A/B testing, participants are randomly assigned to one of two strategies, referred to as treatments: treatment <span class="math inline">\(A\)</span> (the <strong>control treatment</strong>) and treatment <span class="math inline">\(B\)</span> (the <strong>experimental treatment</strong>). This approach enables us to infer <strong>causation</strong> concerning the following inquiry:</p>
+<blockquote class="blockquote">
+<p><strong>Will changing from treatment <span class="math inline">\(A\)</span> to treatment <span class="math inline">\(B\)</span> cause my outcome of interest, <span class="math inline">\(Y\)</span>, to increase (or decrease, if that is the case)?</strong></p>
+</blockquote>
+<p>In an ANOVA setting, the outcome must be continuous. The primary goal of A/B testing is to determine whether there is a statistically significant difference between treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> concerning the outcome. Additionally, because we are conducting a proper randomized experiment, we can infer causation (which goes further than mere association), as treatment randomization enables us to get rid of the effect of further <strong>confounders</strong>.</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Heads-up on confounding!</p>
+</div>
+<div class="Heads-up-container">
+<p>In causal inference, confounding refers to the mixing of effects between the outcome of interest, denoted as <span class="math inline">\(Y\)</span>, the randomized factor <span class="math inline">\(X\)</span> (which is a two-level factor in A/B testing, corresponding to treatment <span class="math inline">\(A\)</span> and treatment <span class="math inline">\(B\)</span>), and a third, uncontrollable factor known as the confounder <span class="math inline">\(C\)</span>. This confounder is associated with the factor <span class="math inline">\(X\)</span> and independently affects the outcome <span class="math inline">\(Y\)</span>, as shown by <a href="#fig-confounding" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>.</p>
+<div id="fig-confounding" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-confounding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/confounding.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confounding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: Diagram depicting confounding <span class="citation" data-cites="DSCI554">(<a href="references.html#ref-DSCI554" role="doc-biblioref">Rodríguez-Arelis et al. 2024</a>)</span>.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as <strong>A/B/n testing</strong>. In this case, the “<em>n</em>” does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. With this clarification, we can now proceed with our simulated dataset.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/ads.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>Image by <a href="https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6370790"><em>Pabitra Kaity</em></a> via <a href="https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/"><em>Pixabay</em></a>.</figcaption></figure>
+</div>
+<div class="cell">
+<div id="tbl-ANOVA-ABn-data" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ANOVA-ABn-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: First 100 rows of our A/B/n simulated data.
+</figcaption><div aria-describedby="tbl-ANOVA-ABn-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-7916708a81fa2d585810" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7916708a81fa2d585810">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[32.76,34.08,41.23,35.28,35.52,41.86,36.84,29.94,32.25,33.22,39.9,36.44,36.6,35.44,32.78,42.15,36.99,27.13,37.81,33.11,30.73,34.13,30.9,32.08,32.5,28.25,38.35,35.61,30.45,40.02,36.71,33.82,38.58,38.51,38.29,37.75,37.22,34.75,33.78,33.48,32.22,34.17,29.94,43.68,39.83,30.51,33.39,33.13,38.12,34.67,36.01,34.89,34.83,40.47,34.1,41.07,28.8,37.34,35.5,35.86,36.52,32.99,33.67,30.93,30.71,36.21,36.79,35.21,38.69,43.2,33.04,25.76,39.02,32.16,32.25,39.1,33.86,30.12,35.73,34.44,35.02,36.54,33.52,37.58,34.12,36.33,39.39,36.74,33.7,39.6,38.97,37.19,35.95,32.49,40.44,32.6,43.75,41.13,34.06,30.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 </figure>
 </div>
+</div>
+</section><section id="sec-one-way-ANOVA" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="sec-one-way-ANOVA">
+<span class="header-section-number">4.2</span> One-way ANOVA</h2>
+<section id="sec-one-way-ANOVA-study-design" class="level3" data-number="4.2.1"><h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-one-way-ANOVA-study-design">
+<span class="header-section-number">4.2.1</span> Study Design</h3>
+</section><section id="sec-one-way-ANOVA-data-collection-wrangling" class="level3" data-number="4.2.2"><h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-one-way-ANOVA-data-collection-wrangling">
+<span class="header-section-number">4.2.2</span> Data Collection and Wrangling</h3>
+</section><section id="sec-one-way-ANOVA-EDA" class="level3" data-number="4.2.3"><h3 data-number="4.2.3" class="anchored" data-anchor-id="sec-one-way-ANOVA-EDA">
+<span class="header-section-number">4.2.3</span> Exploratory Data Analysis</h3>
+</section><section id="sec-one-way-ANOVA-testing-settings" class="level3" data-number="4.2.4"><h3 data-number="4.2.4" class="anchored" data-anchor-id="sec-one-way-ANOVA-testing-settings">
+<span class="header-section-number">4.2.4</span> Testing Settings</h3>
+</section><section id="sec-one-way-ANOVA-hypothesis-definitions" class="level3" data-number="4.2.5"><h3 data-number="4.2.5" class="anchored" data-anchor-id="sec-one-way-ANOVA-hypothesis-definitions">
+<span class="header-section-number">4.2.5</span> Hypothesis Definitions</h3>
+</section><section id="sec-one-way-ANOVA-test-flavour" class="level3" data-number="4.2.6"><h3 data-number="4.2.6" class="anchored" data-anchor-id="sec-one-way-ANOVA-test-flavour">
+<span class="header-section-number">4.2.6</span> Test Flavour and Components</h3>
+</section><section id="sec-one-way-ANOVA-inferential-conclusions" class="level3" data-number="4.2.7"><h3 data-number="4.2.7" class="anchored" data-anchor-id="sec-one-way-ANOVA-inferential-conclusions">
+<span class="header-section-number">4.2.7</span> Inferential Conclusions</h3>
+</section><section id="sec-one-way-ANOVA-storytelling" class="level3" data-number="4.2.8"><h3 data-number="4.2.8" class="anchored" data-anchor-id="sec-one-way-ANOVA-storytelling">
+<span class="header-section-number">4.2.8</span> Storytelling</h3>
+</section></section><section id="sec-two-way-ANOVA" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="sec-two-way-ANOVA">
+<span class="header-section-number">4.3</span> Two-way ANOVA</h2>
+<section id="sec-two-way-ANOVA-study-design" class="level3" data-number="4.3.1"><h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-two-way-ANOVA-study-design">
+<span class="header-section-number">4.3.1</span> Study Design</h3>
+</section><section id="sec-two-way-ANOVA-data-collection-wrangling" class="level3" data-number="4.3.2"><h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-two-way-ANOVA-data-collection-wrangling">
+<span class="header-section-number">4.3.2</span> Data Collection and Wrangling</h3>
+</section><section id="sec-two-way-ANOVA-EDA" class="level3" data-number="4.3.3"><h3 data-number="4.3.3" class="anchored" data-anchor-id="sec-two-way-ANOVA-EDA">
+<span class="header-section-number">4.3.3</span> Exploratory Data Analysis</h3>
+</section><section id="sec-two-way-ANOVA-testing-settings" class="level3" data-number="4.3.4"><h3 data-number="4.3.4" class="anchored" data-anchor-id="sec-two-way-ANOVA-testing-settings">
+<span class="header-section-number">4.3.4</span> Testing Settings</h3>
+</section><section id="sec-two-way-ANOVA-hypothesis-definitions" class="level3" data-number="4.3.5"><h3 data-number="4.3.5" class="anchored" data-anchor-id="sec-two-way-ANOVA-hypothesis-definitions">
+<span class="header-section-number">4.3.5</span> Hypothesis Definitions</h3>
+</section><section id="sec-two-way-ANOVA-test-flavour" class="level3" data-number="4.3.6"><h3 data-number="4.3.6" class="anchored" data-anchor-id="sec-two-way-ANOVA-test-flavour">
+<span class="header-section-number">4.3.6</span> Test Flavour and Components</h3>
+</section><section id="sec-two-way-ANOVA-inferential-conclusions" class="level3" data-number="4.3.7"><h3 data-number="4.3.7" class="anchored" data-anchor-id="sec-two-way-ANOVA-inferential-conclusions">
+<span class="header-section-number">4.3.7</span> Inferential Conclusions</h3>
+</section><section id="sec-two-way-ANOVA-storytelling" class="level3" data-number="4.3.8"><h3 data-number="4.3.8" class="anchored" data-anchor-id="sec-two-way-ANOVA-storytelling">
+<span class="header-section-number">4.3.8</span> Storytelling</h3>
+</section></section><section id="sec-chapter-4-summary" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="sec-chapter-4-summary">
+<span class="header-section-number">4.4</span> Chapter Summary</h2>
 
 
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-fisher1925" class="csl-entry" role="listitem">
+Fisher, R. A. 1925. <em>Statistical Methods for Research Workers</em>. Edinburgh Oliver &amp; Boyd.
+</div>
+<div id="ref-kennedyshaffer02024" class="csl-entry" role="listitem">
+Kennedy-Shaffer, Lee. 2024. <span>“Teaching the Difficult Past of Statistics to Improve the Future.”</span> <em>Journal of Statistics and Data Science Education</em> 32 (1): 108–19. <a href="https://doi.org/10.1080/26939169.2023.2224407">https://doi.org/10.1080/26939169.2023.2224407</a>.
+</div>
+<div id="ref-mackenzie1981" class="csl-entry" role="listitem">
+MacKenzie, D. A. 1981. <em>Statistics in Britain, 1865-1930: The Social Construction of Scientific Knowledge</em>. Edinburgh University Press.
+</div>
+<div id="ref-DSCI554" class="csl-entry" role="listitem">
+Rodríguez-Arelis, G. Alexi, Daniel Chen, Benjamin Bloem-Redd, Tiffany Timbers, and Vincenzo Coia. 2024. <span>“DSCI 554: Experimentation and Causal Inference.”</span> <a href="https://ubc-mds.github.io/DSCI_554_exper-causal-inf/README.html" class="uri">https://ubc-mds.github.io/DSCI_554_exper-causal-inf/README.html</a>.
+</div>
+<div id="ref-tabery2015" class="csl-entry" role="listitem">
+Tabery, James, and Sahotra Sarkar. 2015. <span>“R. A. Fisher, Lancelot Hogben, and the <span>‘Competition’</span> for the Chair of Social Biology at the London School of Economics in 1930: Correcting the Legend.”</span> <em>Notes and Records: The Royal Society Journal of the History of Science</em> 69 (4): 437–46. <a href="https://doi.org/10.1098/rsnr.2014.0065">https://doi.org/10.1098/rsnr.2014.0065</a>.
+</div>
+<div id="ref-tarran2020" class="csl-entry" role="listitem">
+Tarran, Brian. 2020. <span>“<span class="nocase">Award <span>‘Retired’</span> Over R. A. Fisher’s Links to Eugenics</span>.”</span> <em>Significance</em> 17 (4): 2–3. <a href="https://doi.org/10.1111/1740-9713.01411">https://doi.org/10.1111/1740-9713.01411</a>.
+</div>
+</div>
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -395,6 +563,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -512,6 +682,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -736,9 +907,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="../book/chapter3-two-pop.html" class="pagination-link" aria-label="Tests for Two Continuous Population Mean">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tests for Two Continuous Population Mean</span></span>
       </a>          
@@ -750,22 +919,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
-<p>Copyright 2025; G. Alexi Rodríguez-Arelis, Kate Manskaia, and Payman Nickchi<br>
-<a href="https://www.flaticon.com/free-icon/toolkit_4229807?term=tool+box&amp;page=1&amp;position=24&amp;origin=tag&amp;related_id=4229807" title="toolkit icons">Toolkit icon created by Freepik - Flaticon</a></p>
+<p>Copyright 2025; G. Alexi Rodríguez-Arelis, Kate Manskaia, and Payman Nickchi<br><a href="https://www.flaticon.com/free-icon/toolkit_4229807?term=tool+box&amp;page=1&amp;position=24&amp;origin=tag&amp;related_id=4229807" title="toolkit icons">Toolkit icon created by Freepik - Flaticon</a></p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter4-ANOVA.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter4-ANOVA.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter4-ANOVA.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter4-ANOVA.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
-
-
 
 
 <script src="../site_libs/quarto-html/zenscroll-min.js"></script>

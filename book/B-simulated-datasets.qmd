@@ -1,0 +1,353 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DZWGQVJSHE');
+</script>
+
+# Simulated Datasets {#sec-simulated-datasets}
+
+```{r}
+#| include: false
+
+library(reticulate)
+library(DT)
+
+# Setting up Python dependencies
+py_require("pandas")
+py_require("numpy")
+pandas <- import("pandas")
+numpy <- import("numpy")
+
+options(htmlwidgets.TOJSON_ARGS = list(na = 'string')) 
+
+print_as_dt <- function(x){
+  DT::datatable(x,
+                rownames = FALSE,
+                options = list(
+                  dom = 'ltipr', 
+                  autoWidth = TRUE,
+                  columnDefs = list(
+                    list(className = 'dt-left', targets = "_all"),
+                    list(width = '200px', targets = "_all")
+                    )
+                  )
+                )
+}
+```
+
+While we have made an effort to include real datasets wherever possible in this mini-book, we will utilize simulated data to demonstrate the application of the **test workflow** from @sec-intro for certain hypothesis testings. This simulation-based approach allows us to have suitable datasets to illustrate how each test's modelling assumptions must be satisfied to ensure that we deliver robust inferential conclusions to our stakeholders. Therefore, this appendix will explain the **generative modelling process** used to create these simulated datasets.
+
+![Image by [*manfredsteger*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-help-assistance-3974184/).](img/help.png){fig-align="center" width=100%}
+
+::::: Heads-up
+::: Heads-up-header
+Heads-up on the language chosen to simulate the datasets in the mini-book's main chapters!
+:::
+::: Heads-up-container
+To maintain a bilingual approach using both `R` and `Python`, we will provide the code for generating the datasets in both languages within this appendix. However, **in the main chapters**, we will rely on the data points from the `R`-generated set while conducting the inferential analysis using both programming languages. This decision is made because there is a discrepancy between the datasets simulated by the two languages, even when using the **same simulation seed**, due to their **distinct pseudo-random number generators**.
+:::
+:::::
+
+For each of the datasets listed below, besides providing the simulation code, we will elaborate on the dataset context along with the relevant equations (if necessary) that generate this data.
+
+## ANOVA Dataset
+
+This dataset is used in @sec-anova to elaborate on **analysis of variance (ANOVA)** and pertains to an experimental context. Suppose a data-driven marketing team at a well-known tech company, which operates a global online store, is conducting an A/B/n testing aimed at **increasing the customer conversion score (i.e., the outcome)**. In this experiment, the customer conversion score is defined as a unitless and standardized engagement index. This index combines various elements, such as clicks, time spent on the webpage, and the probability of making a purchase, with a baseline mean set at $50$. This score measures customer responsiveness on the online store: **the higher the score, the greater the customer responsiveness**.
+
+![Image by [*Pabitra Kaity*](https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6370790) via [*Pixabay*](https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/).](img/ads.png){fig-align="center" width=60%}
+
+### Generative Modelling Process
+
+The experiment has the following **controllable factors** by the experimenter:
+
+- **Webpage design:** Three different layouts $D_1$ (the current layout), $D_2$ (a new layout), and $D_3$ (another new layout). This makes a three-level factor.
+- **Discount framing:** $\text{Low}$ (i.e., "*Save 10% today*") or $\text{High}$ (i.e., "*Save up to 40% today*"). This makes a two-level factor.
+
+This study will be a **full factorial experiment** characterized by the following elements:
+
+- Two factors: **webpage design** and **discount framing**.
+- There are $3 \times 2 = 6$ treatments (i.e., six different combinations of all the factor levels), which classifies this study as A/B/n testing.
+- We will simulate 200 customers (i.e., **replicates**) per treatment in our final dataset.
+- The outcome variable $Y$ is the customer conversion score, which has been previously explained.
+
+Our data structure will be an **additive model** conceptually depicted as:
+
+$$
+\begin{align*}
+\text{Outcome} &= \text{First Main Effect} + \text{Second Main Effect} \\
+& \qquad \text{Interaction Effect} + \text{Random Error}.
+\end{align*}
+$${#eq-ANOVA-conceptual-model-app}
+
+Then, for the data generation process, let $Y_{i,j,k}$ represent the customer conversion score for the $k$th replicate of the treatment related to the $i$th webpage design and the $j$th discount framing levels. @eq-ANOVA-conceptual-model-app is translated as:
+
+$$
+Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
+$${#eq-ANOVA-math-model-app}
+
+where
+
+- $\alpha_i$ is the fixed first main effect corresponding to the $i$th level of webpage design for $i = D_1, D_2, D_3$;
+- $\beta_j$ is the second fixed main effect corresponding to the $j$th level of discount framing for $j = \text{Low}, \text{High}$;
+- $(\alpha \beta)_{i,j}$ is the fixed interaction effect between the $i$th and $j$th levels of webpage design and discount framing respectively, and
+- $\varepsilon_{i,j,k}$ is the random error associated to each $Y_{i,j,k}$.
+
+::::: Heads-up
+::: Heads-up-header
+Heads-up on the mathematical representation of the interaction term!
+:::
+::: Heads-up-container
+The $(\alpha \beta)_{i,j}$ in @eq-ANOVA-math-model-app **does not** indicate that the main effects are multiplying each other. Mathematically, it is just another additive term on the right-hand side of the equation.
+:::
+:::::
+
+In this case, @eq-ANOVA-math-model-app is breaking down the outcome on the right-hand side into four additive components, which form the basis on how ANOVA models the data. With the exception of the random error $\varepsilon_{i,j,k}$, the other three terms are assumed to be fixed within the data-generating process, given that we are using a **frequentist approach**. Since $\varepsilon_{i,j,k}$ is random, we will assume that it follows a Normal distribution with a mean of $0$ and a variance of $\sigma^2$ (which is another fixed parameter in the simulation):
+
+$$
+\varepsilon_{i,j,k} \sim \text{Normal}(0, \sigma^2).
+$$
+In terms of our simulation, imagine you have a population of customers with the following fixed parameters:
+
+- A vector of webpage design effects (i.e., the first main effect) 
+
+$$\boldsymbol{\alpha} = 
+\begin{bmatrix} \alpha_{D_1} \\ \alpha_{D_2} \\ \alpha_{D_3} \end{bmatrix} =
+\begin{bmatrix} 40 \\ 50 \\ 70 \end{bmatrix}.$$
+
+- A vector of discount framing effects (i.e., the second main effect)
+
+$$\boldsymbol{\beta} = 
+\begin{bmatrix} \alpha_{\text{Low}} \\ \alpha_{\text{High}} \end{bmatrix} = 
+\begin{bmatrix} -5 \\ 12 \end{bmatrix}.$$
+
+- A matrix of interaction effects, whose rows correspond to the levels of webpage design and columns to the levels of discount framing,
+
+$$
+\boldsymbol{(\alpha \beta)} = 
+\begin{bmatrix}
+(\alpha \beta)_{D_1,\text{Low}} & (\alpha \beta)_{D_1,\text{High}} \\
+(\alpha \beta)_{D_2,\text{Low}} & (\alpha \beta)_{D_2,\text{High}} \\
+(\alpha \beta)_{D_3,\text{Low}} & (\alpha \beta)_{D_3,\text{High}}
+\end{bmatrix} =
+\begin{bmatrix}
+0 & 5 \\
+-8 & 0 \\
+11 & -13
+\end{bmatrix}.
+$$
+
+- An overall variance 
+
+$$
+\sigma^2 = 16.
+$$
+
+The fixed-effect interaction arrangement above induces non-parallel trends in an interaction plot, as shown in @sec-anova, while preserving additive decomposition for interpretation and statistical testing.
+
+### Code
+
+Let us move to the corresponding code to simulate this data. Recall we are simulating **200 customers for each one of the six treatments**, which will give us an **overall sample size of $n = 1,200$**. Furthermore, note that `Python` additionally uses the [{numpy}](https://pypi.org/project/numpy/) [@numpy] and [{pandas}](https://pypi.org/project/pandas/) libraries. The final data frame will be stored in `ABn_customer_data` whose columns will be `webpage_design`, `discount_framing`, and `conversion_score`.
+
+::: {.panel-tabset}
+
+## **`R` Code**
+
+``` {.r}
+set.seed(123)  # Seed for reproducibility
+
+# Factor levels and sampled customers per treatment
+webpage_design_levels <- c("D1", "D2", "D3")
+discount_framing_levels <- c("Low", "High")
+n_per_treatment <- 200
+
+# Population fixed additive parameters
+alpha <- c(40, 50, 70)
+beta <- c(-5, 12)
+interaction <- matrix(
+  c(
+    0, 5,
+    -8, 0,
+    11, -13
+  ),
+  nrow = 3, byrow = TRUE
+)
+
+# Simulating data
+data_list <- list()
+for (i in 1:3) {
+  for (j in 1:2) {
+    mean_ij <- alpha[i] + beta[j] + interaction[i, j]
+    y <- rnorm(n_per_treatment, mean = mean_ij, sd = sqrt(16))     # sigma^2 = 16
+    df_ij <- data.frame(
+      webpage_design = as.factor(webpage_design_levels[i]),
+      discount_framing = as.factor(discount_framing_levels[j]),
+      conversion_score = round(y, 2)
+    )
+    data_list[[length(data_list) + 1]] <- df_ij
+  }
+}
+ABn_customer_data <- do.call(rbind, data_list)
+
+# Showing the first 100 customers of the A/B/n testing
+head(ABn_customer_data, n = 100)
+```
+
+## **`Python` Code**
+
+``` {.python}
+# Importing libraries
+import numpy as np
+import pandas as pd
+
+# Set seed for reproducibility
+np.random.seed(123)
+
+# Factor levels and sampled customers per treatment
+webpage_design_levels = ["D1", "D2", "D3"]
+discount_framing_levels = ["Low", "High"]
+n_per_treatment = 200
+
+# Population fixed additive parameters
+alpha = [40, 50, 70]          
+beta = [-5, 12]              
+interaction = np.array([
+    [0, 5],
+    [-8, 0],
+    [11, -13]
+])
+
+# Simulating data
+data_list = []
+
+for i in range(3):  
+    for j in range(2):  
+        mean_ij = alpha[i] + beta[j] + interaction[i, j]
+        y = np.random.normal(loc=mean_ij, scale=np.sqrt(16), size = n_per_treatment)      # sigma^2 = 16
+        y_rounded = np.round(y, 2) 
+        
+        df_ij = pd.DataFrame({
+            'webpage_design': [webpage_design_levels[i]] * n_per_treatment,
+            'discount_framing': [discount_framing_levels[j]] * n_per_treatment,
+            'conversion_score': y_rounded
+        })
+        
+        data_list.append(df_ij)
+
+# Concatenate all groups into one DataFrame
+ABn_customer_data = pd.concat(data_list, ignore_index = True)
+
+# Showing the first 100 customers of the A/B/n testing
+print(ABn_customer_data.head(100))
+```
+
+:::
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| echo: false
+#| message: false
+
+set.seed(123)  # Seed for reproducibility
+
+# Factor levels and sampled customers per treatment
+webpage_design_levels <- c("D1", "D2", "D3")
+discount_framing_levels <- c("Low", "High")
+n_per_treatment <- 200
+
+# Population fixed additive parameters
+alpha <- c(40, 50, 70)
+beta <- c(-5, 12)
+interaction <- matrix(
+  c(
+    0, 5,
+    -8, 0,
+    11, -13
+  ),
+  nrow = 3, byrow = TRUE
+)
+
+# Simulating data
+data_list <- list()
+for (i in 1:3) {
+  for (j in 1:2) {
+    mean_ij <- alpha[i] + beta[j] + interaction[i, j]
+    y <- rnorm(n_per_treatment, mean = mean_ij, sd = sqrt(16))     # sigma^2 = 16
+    df_ij <- data.frame(
+      webpage_design = as.factor(webpage_design_levels[i]),
+      discount_framing = as.factor(discount_framing_levels[j]),
+      conversion_score = round(y, 2)
+    )
+    data_list[[length(data_list) + 1]] <- df_ij
+  }
+}
+ABn_customer_data <- do.call(rbind, data_list)
+
+# Showing the first 100 customers of the A/B/n testing
+head(ABn_customer_data, n = 100) |> 
+  print_as_dt()
+```
+
+## **`Python` Output**
+
+```{python}
+#| echo: false
+#| message: false
+
+# Importing libraries
+import numpy as np
+import pandas as pd
+
+# Set seed for reproducibility
+np.random.seed(123)
+
+# Factor levels and sampled customers per treatment
+webpage_design_levels = ["D1", "D2", "D3"]
+discount_framing_levels = ["Low", "High"]
+n_per_treatment = 200
+
+# Population fixed additive parameters
+alpha = [40, 50, 70]          
+beta = [-5, 12]              
+interaction = np.array([
+    [0, 5],
+    [-8, 0],
+    [11, -13]
+])
+
+# Simulating data
+data_list = []
+
+for i in range(3):  
+    for j in range(2):  
+        mean_ij = alpha[i] + beta[j] + interaction[i, j]
+        y = np.random.normal(loc=mean_ij, scale=np.sqrt(16), size = n_per_treatment)      # sigma^2 = 16
+        y_rounded = np.round(y, 2)
+        
+        df_ij = pd.DataFrame({
+            'webpage_design': [webpage_design_levels[i]] * n_per_treatment,
+            'discount_framing': [discount_framing_levels[j]] * n_per_treatment,
+            'conversion_score': y_rounded
+        })
+        
+        data_list.append(df_ij)
+
+# Concatenate all groups into one DataFrame
+ABn_customer_data = pd.concat(data_list, ignore_index = True)
+```
+
+```{r}
+#| echo: false
+
+# Showing the first 100 customers of the A/B/n testing
+print_as_dt(head(py$ABn_customer_data, 100))
+```
+
+:::
+
+

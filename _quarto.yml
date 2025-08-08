@@ -50,6 +50,7 @@ book:
     
   appendices:
     - book/A-greek-alphabet.qmd
+    - book/B-simulated-datasets.qmd
 
 bibliography: book/references.bib
 

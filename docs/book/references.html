@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.5.53">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -56,10 +56,10 @@ div.csl-indent {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f664b88e837a53bca78c5b20234386e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -89,35 +89,6 @@ div.csl-indent {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../custom.css">
 </head>
@@ -225,7 +196,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book/chapter4-ANOVA.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Setting up Python dependencies</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -247,6 +218,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../book/A-greek-alphabet.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Greek Alphabet</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book/B-simulated-datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Simulated Datasets</span></span></a>
   </div>
 </li>
       </ul>
@@ -291,9 +268,28 @@ window.Quarto = {
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-fisher1925" class="csl-entry" role="listitem">
+Fisher, R. A. 1925. <em>Statistical Methods for Research Workers</em>.
+Edinburgh Oliver &amp; Boyd.
+</div>
+<div id="ref-numpy" class="csl-entry" role="listitem">
+Harris, Charles R., K. Jarrod Millman, Stéfan J. van der Walt, Ralf
+Gommers, Pauli Virtanen, David Cournapeau, Eric Wieser, et al. 2020.
+<span>“Array Programming with <span>NumPy</span>.”</span>
+<em>Nature</em> 585 (7825): 357–62. <a href="https://doi.org/10.1038/s41586-020-2649-2">https://doi.org/10.1038/s41586-020-2649-2</a>.
+</div>
+<div id="ref-kennedyshaffer02024" class="csl-entry" role="listitem">
+Kennedy-Shaffer, Lee. 2024. <span>“Teaching the Difficult Past of
+Statistics to Improve the Future.”</span> <em>Journal of Statistics and
+Data Science Education</em> 32 (1): 108–19. <a href="https://doi.org/10.1080/26939169.2023.2224407">https://doi.org/10.1080/26939169.2023.2224407</a>.
+</div>
 <div id="ref-lohr2021" class="csl-entry" role="listitem">
 Lohr, S. L. 2021. <em>Sampling: Design and Analysis</em>. Chapman;
 Hall/CRC. https://doi.org/<a href="https://doi.org/10.1201/9780429298899">https://doi.org/10.1201/9780429298899</a>.
+</div>
+<div id="ref-mackenzie1981" class="csl-entry" role="listitem">
+MacKenzie, D. A. 1981. <em>Statistics in Britain, 1865-1930: The Social
+Construction of Scientific Knowledge</em>. Edinburgh University Press.
 </div>
 <div id="ref-r2024" class="csl-entry" role="listitem">
 R Core Team. 2024. <span>“R: A Language and Environment for Statistical
@@ -303,6 +299,23 @@ Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
 <div id="ref-reinhart2015" class="csl-entry" role="listitem">
 Reinhart, Alex. 2015. <em>Statistics Done Wrong: The Woefully Complete
 Guide</em>. 1st ed. San Francisco, CA: No Starch Press. <a href="https://www.statisticsdonewrong.com/index.html">https://www.statisticsdonewrong.com/index.html</a>.
+</div>
+<div id="ref-DSCI554" class="csl-entry" role="listitem">
+Rodríguez-Arelis, G. Alexi, Daniel Chen, Benjamin Bloem-Redd, Tiffany
+Timbers, and Vincenzo Coia. 2024. <span>“DSCI 554: Experimentation and
+Causal Inference.”</span> <a href="https://ubc-mds.github.io/DSCI_554_exper-causal-inf/README.html" class="uri">https://ubc-mds.github.io/DSCI_554_exper-causal-inf/README.html</a>.
+</div>
+<div id="ref-tabery2015" class="csl-entry" role="listitem">
+Tabery, James, and Sahotra Sarkar. 2015. <span>“R. A. Fisher, Lancelot
+Hogben, and the <span>‘Competition’</span> for the Chair of Social
+Biology at the London School of Economics in 1930: Correcting the
+Legend.”</span> <em>Notes and Records: The Royal Society Journal of the
+History of Science</em> 69 (4): 437–46. <a href="https://doi.org/10.1098/rsnr.2014.0065">https://doi.org/10.1098/rsnr.2014.0065</a>.
+</div>
+<div id="ref-tarran2020" class="csl-entry" role="listitem">
+Tarran, Brian. 2020. <span>“<span class="nocase">Award
+<span>‘Retired’</span> Over R. A. Fisher’s Links to
+Eugenics</span>.”</span> <em>Significance</em> 17 (4): 2–3. <a href="https://doi.org/10.1111/1740-9713.01411">https://doi.org/10.1111/1740-9713.01411</a>.
 </div>
 <div id="ref-pandas2024" class="csl-entry" role="listitem">
 The Pandas Development Team. 2024. <span>“Pandas-Dev/Pandas:
@@ -410,6 +423,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -527,6 +542,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -754,8 +770,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../book/chapter4-ANOVA.html" class="pagination-link" aria-label="ANOVA-related Tests for $k$ Continuous Population Means">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">ANOVA-related Tests for <span class="math inline">\(k\)</span> Continuous Population Means</span></span>
+      <a href="../book/chapter4-ANOVA.html" class="pagination-link" aria-label="Setting up Python dependencies">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Setting up Python dependencies</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

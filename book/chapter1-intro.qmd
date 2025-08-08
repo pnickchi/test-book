@@ -4,7 +4,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 
@@ -45,7 +44,6 @@ This mini-book on hypothesis testing is intended to serve as a **practical manua
 ::: Heads-up-header
 Heads-up!
 :::
-
 ::: Heads-up-container
 A key insight (or insights) related to a specific hypothesis test or a stage in the test workflow. The reader is advised to keep this heads-up in mind throughout the showcase of the corresponding example in any given chapter.
 :::
@@ -55,7 +53,6 @@ A key insight (or insights) related to a specific hypothesis test or a stage in 
 ::: Tip-header
 Tip
 :::
-
 ::: Tip-container
 An idea or ideas that extend beyond the immediate discussion and can offer valuable context and insightful background. Whenever relevant, we will provide references for further reading to deepen understanding and enhance knowledge.
 :::
@@ -94,7 +91,6 @@ This is the initial stage of the hypothesis testing workflow, which involves wha
 ::: Heads-up-header
 Heads-up on the frequentist paradigm!
 :::
-
 ::: Heads-up-container
 In the frequentist paradigm, statistical inference relies on the concept that probabilities represent **long-run** relative frequencies of events observed through repeated experimentation or observation. In this approach, we estimate population parameters by examining the distribution of outcomes derived from multiple independent realizations of a random process.
 
@@ -117,7 +113,6 @@ Once the inferential questions are defined, the next step is to collect and prep
 ::: Tip-header
 Tip on sampling techniques!
 :::
-
 ::: Tip-container
 It is important to emphasize the need to choose the **most suitable sampling technique** based on the population's structure and the research questions guiding our main inferential inquiries. Making the right choice of sampling technique is essential for ensuring that our inferential results are accurate, precise, and generalizable to the population of interest. Here are some fundamental (though not exhaustive) sampling techniques:
 
@@ -161,14 +156,18 @@ Nevertheless, you might wonder:
 
 Statistically speaking, the practice of data splitting helps avoid what is known as **double dipping**. Double dipping occurs when the same data is used both for EDA to generate hypotheses and then again for formal statistical testing. Supported by numerical simulations, it can be demonstrated that double-dipping **increases the probability of committing a Type I error**, which occurs when we incorrectly reject the null hypothesis $H_0$ while it is actually true for the population of interest.
 
+For example, consider a one-sample $t$-test in a double-dipping context. We might be tempted to formulate our null and alternative hypotheses based on our observed sample mean. For instance, we could state our hypotheses as follows: 
 
-For example, consider a one-sample $t$-test in a double-dipping context. We might be tempted to formulate our null and alternative hypotheses based on our observed sample mean. For instance, we could state our hypotheses as follows: $\text{$H_0$: } \mu \geq 10$ (null hypothesis) versus $\text{$H_1$: } \mu < 10$ (alternative hypothesis), based on a sample mean of $\bar{x} = 9.5$. If we were to proceed with the statistical test using this same data, we would be falling into the double-dipping trap!
+$$\text{$H_0$: } \mu \geq 10$$ 
+
+versus 
+
+$$\text{$H_1$: } \mu < 10,$$ based on a sample mean of $\bar{x} = 9.5$. If we were to proceed with the statistical test using this same data, we would be falling into the double-dipping trap!
 
 ::::: Tip
 ::: Tip-header
 Tip on a further double-dipping resource!
 :::
-
 ::: Tip-container
 Data splitting is generally not a common practice in statistical inference, despite its frequent use in machine learning. Hence, for more information on double-dipping in statistical inference, Chapter 6 from @reinhart2015 offers in-depth insights and practical examples.
 :::
@@ -200,7 +199,6 @@ This stage allows us to define all our population parameters based on the main i
 ::: Heads-up-header
 Heads-up on power analysis!
 :::
-
 ::: Heads-up-container
 In hypothesis testing, power analysis is a crucial preliminary step used to determine the minimum sample size $n$ necessary to detect a signal that allows us to reject the null hypothesis $H_0$ in favour of the alternative hypothesis $H_1$. This analysis ensures that our inferential process can effectively distinguish true population effects from random noise. Note that power analysis requires three key components as inputs:
 
@@ -243,7 +241,6 @@ This stage involves converting the test components obtained from the previous st
 ::: Heads-up-header
 Heads-up on the practical use of critical and $p$-values!
 :::
-
 ::: Heads-up-container
 Note that the interpretation of critical and $p$-values must go beyond binary decision-making (statistically speaking); it should also involve the direction, magnitude, and practical implications of the estimated effects, especially in applied contexts. Therefore, we must pay attention not only to statistical significance but also to whether the observed differences or associations are substantively significant in an applied context. This refers to **practical significance**.
 
@@ -269,7 +266,6 @@ It is important to clarify the difference between statistical significance and p
 ::: Heads-up-header
 Heads-up on uncertainty quantification!
 :::
-
 ::: Heads-up-container
 When presenting our findings to stakeholders, it is essential to include uncertainty quantification as a key component of our storytelling. This process incorporates the uncertainty associated with our point estimates of observed effects, as these estimates are derived from random sampling of our population of interest. We express this uncertainty through **confidence intervals**, which show a range of plausible values where our model parameters may lie (or may not!). The information conveyed by these intervals includes:
 
