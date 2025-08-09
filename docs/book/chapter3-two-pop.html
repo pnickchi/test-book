@@ -262,7 +262,7 @@ window.Quarto = {
    
   <ul>
 <li>
-<a href="#two-sample-students-t-test-for-independent-samples" id="toc-two-sample-students-t-test-for-independent-samples" class="nav-link active" data-scroll-target="#two-sample-students-t-test-for-independent-samples"><span class="header-section-number">3.1</span> Two sample Student’s t-test for Independent Samples</a>
+<a href="#subsec-two-sample-t-test-ind-samples" id="toc-subsec-two-sample-t-test-ind-samples" class="nav-link active" data-scroll-target="#subsec-two-sample-t-test-ind-samples"><span class="header-section-number">3.1</span> Two sample Student’s t-test for Independent Samples</a>
   <ul>
 <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review"><span class="header-section-number">3.1.1</span> Review</a></li>
   <li><a href="#study-design" id="toc-study-design" class="nav-link" data-scroll-target="#study-design"><span class="header-section-number">3.1.2</span> Study design</a></li>
@@ -415,8 +415,8 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 <li>Independent samples, where the observations in one group are unrelated to those in the other, and</li>
 <li>Paired (or dependent) samples, where observations are naturally matched in some way, such as before-and-after measurements.</li>
 </ul>
-<p>The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R/Python code examples using real or simulated data sets to help ground the concepts in practice. We also review the theoretical background and exmaple codes to test two proportions.</p>
-<section id="two-sample-students-t-test-for-independent-samples" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="two-sample-students-t-test-for-independent-samples">
+<p>The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R/Python code examples using real or simulated data sets to help ground the concepts in practice. We also review the theoretical background and example codes to test for proportions in two populations.</p>
+<section id="subsec-two-sample-t-test-ind-samples" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="subsec-two-sample-t-test-ind-samples">
 <span class="header-section-number">3.1</span> Two sample Student’s t-test for Independent Samples</h2>
 <section id="review" class="level3" data-number="3.1.1"><h3 data-number="3.1.1" class="anchored" data-anchor-id="review">
 <span class="header-section-number">3.1.1</span> Review</h3>
@@ -435,7 +435,7 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 <p>Note that the sample sizes <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> do not necessarily have to be equal. Now, the central question becomes:</p>
 <p><strong>Is there a statistically significant difference between the mean physics scores among two groups?</strong></p>
 <p>In formal terms, we test the hypotheses:</p>
-<p><span class="math display">\[H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2\]</span> Now that we reviewed the test concept, let’s try to understand it in a read data set. The steps below follows closely with the roadmap that we introduced in [LINK HERE].</p>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2\]</span> Now that we reviewed the test concept, let’s try to understand it in a read data set. The steps below follows closely with the roadmap that we introduced in <a href="chapter1-intro.html" class="quarto-xref"><span>Chapter 1</span></a>.</p>
 </section><section id="study-design" class="level3" data-number="3.1.2"><h3 data-number="3.1.2" class="anchored" data-anchor-id="study-design">
 <span class="header-section-number">3.1.2</span> Study design</h3>
 <p>For this example, we will be using <code>Auto</code> data set from <code>ISLR</code> package. This data set contains gas mileage, horsepower, and other information for 392 vehicles. Some of variables of interest are: 1) <code>cylinders</code> an integer (numerical) value between 4 and 8 which indicates the number of cylinders of car, and 2) <code>horsepower</code> which shows engine horsepower. You may wondering <strong>if the mean of horsepower in cars with 8 cylinders is statistically different than the means in cars with 4 cylinders?</strong></p>
@@ -465,9 +465,13 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 <p>In particular, we are interested in the distribution of <code>horsepower</code> in two different groups (cars with 4 cylinders vs cars with 8 cylinders). Using a histogram for this variable is a good choice as we have a variable with numerical values.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chapter3-two-pop_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div id="fig-histogram-horspower-by-cylinders" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-histogram-horspower-by-cylinders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter3-two-pop_files/figure-html/fig-histogram-horspower-by-cylinders-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-histogram-horspower-by-cylinders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: Side-by-side histogram of horsepower by number of cylinders for train data.
+</figcaption></figure>
 </div>
 </div>
 </div>
@@ -500,9 +504,13 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 <p>Looking at summary statistics, there is a bit of overlap between distribution of <code>horsepower</code> among two groups but it does not seem to be much. In fact they seem to be quite separated. Also there is a clear different in their mean and the following plot also confirms this:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chapter3-two-pop_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div id="fig-density-plot-horspower-by-cylinders" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-density-plot-horspower-by-cylinders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter3-two-pop_files/figure-html/fig-density-plot-horspower-by-cylinders-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-density-plot-horspower-by-cylinders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: Density plot of horsepower by number of cylinders.
+</figcaption></figure>
 </div>
 </div>
 </div>
@@ -519,47 +527,66 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 <p>We now define the null and alternative hypothesis. Recall the main inquiry we had:</p>
 <p><strong>You may wondering if the average of horsepower in cars with 4 cylinders is statistically different than the means in cars with 8 cylinders?</strong></p>
 <p>This translates into the following null and alternative hypotheses:</p>
-<p><span id="eq-my-equation"><span class="math display">\[H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2} \tag{3.1}\]</span></span></p>
-<p>Note that the alternative hypothesis is two-sided, as our question does not favor either group and only asks whether the means are different (i.e., group one could be less than or greater than group two). Also the hypothesis tests the unknown parameters in the population which are <span class="math inline">\(\mu_{1}\)</span> and <span class="math inline">\(\mu_{2}\)</span>. <a href="#eq-my-equation" class="quarto-xref">Equation&nbsp;<span>3.1</span></a></p>
+<p><span class="math display">\[H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2}\]</span></p>
+<p>Note that the alternative hypothesis is two-sided, as our question does not favor either group and only asks whether the means are different (i.e., group one could be less than or greater than group two). Also the hypothesis tests the unknown parameters in the population which are <span class="math inline">\(\mu_{1}\)</span> and <span class="math inline">\(\mu_{2}\)</span>.</p>
 </section><section id="test-flavour-and-components" class="level3" data-number="3.1.7"><h3 data-number="3.1.7" class="anchored" data-anchor-id="test-flavour-and-components">
 <span class="header-section-number">3.1.7</span> Test Flavour and Components</h3>
 <p>To test this hypothesis, we use the <strong>two-sample student’s t-test for independent samples</strong>, which compares the sample means and incorporates variability within and between the samples. Note that in this case the samples are independent as clearly cars with 4 cylinders are independent from cars with 8 cylinders.</p>
 <p>Now we need to compute a test statistic from the sample. Assuming equal population variances, the test statistic is:</p>
-<p><span class="math display">\[t = \frac{(\bar{X} - \bar{Y})}{S_p \sqrt{\frac{1}{n} + \frac{1}{m}}}\]</span> where:</p>
+<p><span id="eq-t-statistic-unq-var"><span class="math display">\[t = \frac{(\bar{X} - \bar{Y})}{ \sqrt{ S^{2}_p (\frac{1}{n} + \frac{1}{m}})} \tag{3.1}\]</span></span> where:</p>
 <ul>
 <li>
 <span class="math inline">\(\bar{X}\)</span> is the mean of horsepower for cars with 4 cylinders in the sample</li>
 <li>
 <span class="math inline">\(\bar{Y}\)</span> is the mean of horsepower for cars with 8 cylinders in the sample</li>
 <li>
-<span class="math inline">\(S_p\)</span> is the , computed as:</li>
-<li><span class="math inline">\(S_p = \sqrt{\frac{(n - 1)S_X^2 + (m - 1)S_Y^2}{n + m - 2}}\)</span></li>
+<span class="math inline">\(S^{2}_p\)</span> is the <span class="math inline">\(\textbf{pooled sample variane}\)</span> and is computed as: <span id="eq-pooled-sample-variance"><span class="math display">\[S^{2}_p = \frac{(n - 1)S_X^2 + (m - 1)S_Y^2}{n + m - 2} \tag{3.2}\]</span></span>
+</li>
 <li>
 <span class="math inline">\(S_X^2\)</span> and <span class="math inline">\(S_Y^2\)</span> are the sample variances of the two groups.</li>
 </ul>
+<p><br></p>
 <div class="Heads-up">
 <div class="Heads-up-header">
 <p>Heads-up!</p>
 </div>
 <div class="Heads-up-container">
-<p>Note that all elements in this formula (statistic) are computed based on sample.</p>
+<ul>
+<li><p>Note that all elements in <a href="#eq-t-statistic-unq-var" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> which is our statistic are computed based on sample.</p></li>
+<li><p>You can think of pooled sample variance defined in <a href="#eq-pooled-sample-variance" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> as a weighted average of sample variances of <span class="math inline">\(S_X^2\)</span> and <span class="math inline">\(S_Y^2\)</span>.</p></li>
+<li><p><strong>Why it is a weighted average?</strong></p></li>
+<li><p>The <strong>weights</strong> are <span class="math inline">\(\frac{(n - 1)}{n + m - 2}\)</span> and <span class="math inline">\(\frac{(m - 1)}{n + m - 2}\)</span>. These weights reflect how much <em>information</em> each sample’s variance provides — larger samples get more weight. You can see it better if you write it explicitly:</p></li>
+</ul>
+<p><span class="math display">\[
+S_p^{2}
+= \frac{(n - 1)}{n + m - 2} \, S_X^2 + \frac{(m - 1)}{n + m - 2} \, S_Y^2
+\]</span></p>
+<ul>
+<li>You can see it is literally a weighted mean where weights sum to one:</li>
+</ul>
+<p><span class="math display">\[
+\frac{n-1}{n+m-2} + \frac{m-1}{n+m-2} = 1
+\]</span></p>
 </div>
 </div>
+<p><br></p>
 <div class="Tip">
 <div class="Tip-header">
-<p>Tip:</p>
+<p>Tip: Equal variance assumption!</p>
 </div>
 <div class="Tip-container">
-<p>The assumption in this test is that variances among two groups are equal meaning that if we look at the random variable of horsepower in both populations, the variance of this random variable is roughly equal in two groups (cars with 4 cylinders and cars with 8 cylinders).</p>
-<p>Note that we do not have access to population and this is rather an assumption that we make with consultation with experts or justifying it based on previous studies. We will introduce the test without equal variance assumption in the next section.</p>
-<p>There are some statistical methods designed to test if the variances of different groups are the same or not. Similar to any hypothesis testing, these tests work on a random sample from the population to run the test. Some of the tests are F-test for Equality of Variances, Levene’s Test, and Bartlett’s Test.</p>
+<ul>
+<li><p>The assumption in this test is that variances among two groups are equal meaning that if we look at the random variable of horsepower in both populations, the variance of this random variable is roughly equal in two groups (cars with 4 cylinders and cars with 8 cylinders).</p></li>
+<li><p>Note that we do not have access to population and this is rather an assumption that we make with consultation with experts or justifying it based on previous studies. We will introduce the test without equal variance assumption in the next section.</p></li>
+<li><p>There are some statistical methods designed to test if the variances of different groups are the same or not. Similar to any hypothesis testing, these tests work on a random sample from the population to run the test. Some of the tests are <em>F-test for Equality of Variances</em>, <em>Levene’s Test</em>, and <em>Bartlett’s Test</em>.</p></li>
+<li><p>Describing these tests is not the focus of this book. You can read more about them HERE/LINK</p></li>
+</ul>
 </div>
 </div>
 </section><section id="inferential-conclusions" class="level3" data-number="3.1.8"><h3 data-number="3.1.8" class="anchored" data-anchor-id="inferential-conclusions">
 <span class="header-section-number">3.1.8</span> Inferential Conclusions</h3>
-<p>As you can see, the test statistic computes the difference between <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> and scale it based on the variance of this difference. Now the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined (<span class="math inline">\(t\)</span>) and have a better understanding of what are typical values of this statistic. Knowing the distribution of this statistic helps us to compute <span class="math inline">\(\textit{p-value}\)</span> of the test as follows:</p>
-<p><span class="math display">\[\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)\]</span></p>
-<p>Looking at the formula, we can see that we are essentially calculating how much is it likely to see an observation as big as <span class="math inline">\(t\)</span> or as extreme as <span class="math inline">\(t\)</span> (which we computed from our sample).</p>
+<p>As you can see, the test statistic defined in <a href="#eq-t-statistic-unq-var" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> computes the difference between <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> and scale it based on the standard deviation of this difference. Now the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined in <a href="#eq-t-statistic-unq-var" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> (and denoted by <span class="math inline">\(t\)</span>) and have a better understanding of what are typical values of this statistic.</p>
+<p><br></p>
 <div class="Heads-up">
 <div class="Heads-up-header">
 <p>Heads-up!</p>
@@ -568,23 +595,32 @@ Figure&nbsp;3.1: A specific hypothesis testing mind map outlining the techniques
 <p>Note that <span class="math inline">\(t\)</span> itself is a random variable as it would change from sample to sample.</p>
 </div>
 </div>
+<p><br></p>
+<p>Knowing the distribution of this statistic helps us to compute <span class="math inline">\(\textit{p-value}\)</span> of the test as follows:</p>
+<p><span class="math display">\[\textit{p-value} = 2 \times Pr(T_{(n+m-2)} \ge |t|)\]</span></p>
+<p>Looking at the formula, we can see that we are essentially calculating how much is it likely to see an observation as big as <span class="math inline">\(t\)</span> or as extreme as <span class="math inline">\(t\)</span> (which we computed from our sample) under a t-distribution with a certain degrees of freedom (df) which we are denoting by <span class="math inline">\(T_{(n+m-2)}\)</span>.</p>
+<p><br></p>
 <div class="Tip">
 <div class="Tip-header">
 <p>Tip:</p>
 </div>
 <div class="Tip-container">
-<p>We skipped the theory behind it but under the assumption that null hypothesis is correct (i.e.&nbsp;<span class="math inline">\(\mu_1=\mu_2\)</span>) then the test statistic defined above (<span class="math inline">\(t\)</span>) follows a t-distribution with <span class="math inline">\(n + m -2\)</span> degrees of freedom (which we denote it by <span class="math inline">\(T_{n+m-2}\)</span>).</p>
-<p><strong>Note:</strong> The probability is multiplied by two since we have a two sided hypothesis (alternative is <span class="math inline">\(\mu_1 \neq \mu_2\)</span>). For a one sided test (when alternative hypothesis is <span class="math inline">\(\mu_1 &gt; \mu_2\)</span> or <span class="math inline">\(\mu_1 &lt; \mu_2\)</span>) we do not need to multiply by two.</p>
-<p>Now we compare the <span class="math inline">\(\textit{p-value}\)</span> to our significance level. If the <span class="math inline">\(\textit{p-value}\)</span> is less than the significance level, then we have evidence against the null hypothesis. The reasoning is as follows: we performed the calculation under the assumption that the null hypothesis is true. If the null hypothesis is true, then the test statistic we computed should follow a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n + m - 2\)</span> degrees of freedom. If the p-value is smaller than our chosen significance level, this means it is unlikely that our observed result comes from a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n + m - 2\)</span> degrees of freedom. In other words, it is unlikely that the null hypothesis is correct.</p>
+<ul>
+<li><p>We skipped the theory behind it but under the assumption that null hypothesis is correct (i.e.&nbsp;<span class="math inline">\(\mu_1=\mu_2\)</span>) then the test statistic defined in <a href="#eq-t-statistic-unq-var" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> (<span class="math inline">\(t\)</span>) follows a t-distribution with <span class="math inline">\(n + m -2\)</span> degrees of freedom. We denoted this distribution by <span class="math inline">\(T_{(n+m-2)}\)</span>.</p></li>
+<li><p><strong>Note:</strong> The probability is multiplied by two since we have a two sided hypothesis (alternative is <span class="math inline">\(\mu_1 \neq \mu_2\)</span>). For a one sided test (when alternative hypothesis is <span class="math inline">\(\mu_1 &gt; \mu_2\)</span> or <span class="math inline">\(\mu_1 &lt; \mu_2\)</span>) we do not need to multiply by two.</p></li>
+<li><p>Now we compare the <span class="math inline">\(\textit{p-value}\)</span> to our significance level. If the <span class="math inline">\(\textit{p-value}\)</span> is less than the significance level, then we have evidence against the null hypothesis. The reasoning is as follows: we performed the calculation under the assumption that the null hypothesis is true. If the null hypothesis is true, then the test statistic we computed should follow a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n + m - 2\)</span> degrees of freedom. If the p-value is smaller than our chosen significance level, this means it is unlikely that our observed result comes from a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n + m - 2\)</span> degrees of freedom. In other words, it is unlikely that the null hypothesis is correct.</p></li>
+</ul>
 </div>
 </div>
-<p>Note that our observation from the sample might still lead us to an incorrect conclusion (since there is variability among samples). Our tolerance for this type of error is determined by the significance level. If <span class="math inline">\(\textit{p-value}\)</span> is not less than significant level then we do not have any evidence to reject the null hypothesis. Now let us see how to run the two-sample test in R and Python. Note that for the purpose of hypothesis testing we now use test data to avoid double dipping.</p>
+<p><br></p>
+<p>Note that our observation from the sample might still lead us to an incorrect conclusion (since there is variability among samples). Our tolerance for this type of error is determined by the significance level. If <span class="math inline">\(\textit{p-value}\)</span> <strong>is not less than</strong> significant level then we do not have any evidence to reject the null hypothesis. Otherwise (if <span class="math inline">\(\textit{p-value}\)</span> <strong>is less than</strong> significant level) we do have evidence against the null hypothesis</p>
+<p>Now let us see how to run the two-sample test in <code>R</code> and <code>Python</code> using some read data. Note that we already used train data for EDA purposes. For the purpose of hypothesis testing now we use test data to avoid double dipping.</p>
 </section><section id="how-to-run-the-test-in-r-and-python" class="level3" data-number="3.1.9"><h3 data-number="3.1.9" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python">
 <span class="header-section-number">3.1.9</span> How to run the test in <code>R</code> and <code>Python</code>?</h3>
-<p>The following lines of code in tabset show you how to run the test in <code>R</code> or <code>Python</code>. Note that there are two ways of running this test in <code>R</code> as shown below. They both give the same result and you are welcome to use either of them. Here is a quick explanation from a coding perspective:</p>
+<p>The following lines of code in tabset show you how to run the test in <code>R</code> or <code>Python</code>. Note that generally there are two ways of running this test in <code>R</code> as shown below (there might be other ways but we focus on these two for now). They both give the same result and you are welcome to use either of them. Here is a quick explanation from a coding perspective:</p>
 <ul>
-<li><p>In <strong>Option 1</strong>, we first select the cars with 4 or 8 cylinders and save them in a vector (<code>cylinders_4</code> and <code>cylinders_8</code>). We then use <code>t.test</code> function to run the test.</p></li>
-<li><p>In <strong>Option 2</strong>, we use a formula to tell <code>R</code> what is the variable that records the outcome of interest (in this example <code>horsepower</code> variable) and what is the grouping variable (in this example <code>cylinders</code>). This approach is more concise and easier to read, especially when working directly with a data frame. Note that we need to let <code>R</code> know where it can find <code>horsepower</code> and <code>cylinders</code> which we do by setting <code>data = test_auto</code>.</p></li>
+<li><p>In <strong>Option 1</strong>, we first select the cars with 4 or 8 cylinders and save each of them in a vector (<code>cylinders_4</code> and <code>cylinders_8</code>). We then use <code>t.test</code> function to run the test. Note that we pass them as <code>x = cylinders_4</code> for first group and <code>y = cylinders_8</code> for the second group.</p></li>
+<li><p>In <strong>Option 2</strong>, we use a formula to tell <code>R</code> what is the variable that records the outcome of interest (in this example <code>horsepower</code> variable) and what is the grouping variable (in this example <code>cylinders</code>). This approach is more concise and easier to read, especially when working directly with a data frame. Note that we need to let <code>R</code> know where it can find <code>horsepower</code> and <code>cylinders</code> which we do by setting <code>data = test_auto</code>. Using <code>horsepower ~ cylinders</code> essentially tells <code>R</code> that my varriable of interest for <code>t.test</code> is in <code>horsepower</code> and the grouping variable (4 or 8 cylinders) is in <code>cylinders</code>. Note that the order matters and you can not write it as <code>cylinders ~ horsepower</code>.</p></li>
 </ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
@@ -666,29 +702,37 @@ mean in group 4 mean in group 8
 </div>
 </div>
 </div>
-<p>In order to run this test, similar to what we learned in (LINK to chapter 1) we can use <code>t.test</code> function in R. The function can be used to perform one or two sample t-tests. The relevant arguments of the function are as follows:</p>
+<p><strong>Details about <code>R</code> code and output</strong></p>
+<p>In order to run this test in <code>R</code>, similar to what we learned in <a href="chapter2-one-pop.html" class="quarto-xref"><span>Chapter 2</span></a> we can use <code>t.test</code> function in R. The function can be used to perform one or two sample t-tests. The relevant arguments of the function are as follows:</p>
 <ul>
 <li>
 <code>x</code> is (non-empty) numeric vector of data values.</li>
 <li>
 <code>y</code> is also (non-empty) numeric vector of data values (can be <code>NULL</code> if you run a one sample test).</li>
 <li>
-<code>var.equal</code> is a binary value (TRUE/FALSE) to indicate if R needs to assume equal variance or not.</li>
+<code>var.equal</code> is a binary value (TRUE/FALSE) to indicate if <code>R</code> needs to assume equal variance between population of two groups or not. By default the value of <code>var.equal</code> is <code>FALSE</code>. We manually set it to <code>TRUE</code> to implement equal variance assumption in our test.</li>
 </ul>
-<p>In both outputs, we can see the following:</p>
+<p>Using <em>Option 1</em> or <em>Option 2</em> for <code>R</code>, in both outputs we can see the following elements:</p>
 <ul>
-<li><p><code>t</code> is the test statistic.</p></li>
-<li><p><code>df</code> is the degrees of freedom for the test.</p></li>
+<li><p><code>t</code> is the test statistic defined in <a href="#eq-t-statistic-unq-var" class="quarto-xref">Equation&nbsp;<span>3.1</span></a></p></li>
+<li><p><code>df</code> is the degrees of freedom for the test. You can manually calculate and confirm/see that it equals <span class="math inline">\(n+m-2\)</span>.</p></li>
+<li><p><code>p-value</code> is the <span class="math inline">\(\textit{p-value}\)</span> of the test. Note that, by default, this is for a two-sided test. If you need to conduct a one-sided test, you can either divide the p-value by two or use the <code>alternative</code> argument in the <code>t.test</code> function. You can read more about it in help documentation of <code>t.test</code> function (type and run help(t.test) in <code>R</code> console and look for <code>alternative</code> argument.)</p></li>
+<li><p><code>95 percent confidence interval</code> provides the 95% confidence interval for the parameter of <span class="math inline">\(\mu_1 - \mu_2\)</span>. You can control the level of your confidence interval by setting <code>conf.level</code> to other values between 0 and 1. By default it is set to <code>conf.level = 0.95</code>.</p></li>
+<li><p><code>sample estimates</code> gives the sample means for each group, i.e.&nbsp;<span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span>.</p></li>
 </ul>
-<p><code>p-value</code> is the p-value of the test. Note that, by default, this is for a two-sided test. If you need to conduct a one-sided test, you can either divide the p-value by two or use the alternative argument in the t.test function.</p>
+<p><strong>Details about <code>Python</code> code and output</strong></p>
+<p>In this example, we perform the test in <code>Python</code>. We use <code>pandas</code> package to read data in <code>Python</code> and <code>scipy</code> for running the test. Here is a breakdown of key points:</p>
 <ul>
-<li><p><code>95 percent confidence interval</code> provides the 95% confidence interval for the parameter of <span class="math inline">\(\mu_1 - \mu_2\)</span>.</p></li>
-<li><p><code>sample estimates</code> gives the sample means for each group.</p></li>
-</ul>
-<p><strong>Note:</strong> By default the value of <code>var.equal</code> is <code>FALSE</code>. We manully set it to <code>TRUE</code> to implement equal variance assumption in our test.</p>
-</section><section id="storytelling" class="level3" data-number="3.1.10"><h3 data-number="3.1.10" class="anchored" data-anchor-id="storytelling">
+<li><p><code>cylinders_4</code> and <code>cylinders_8</code> are <code>pandas</code> objects containing the horsepower values for cars with 4 and 8 cylinders, respectively.</p></li>
+<li><p>The function <code>stats.ttest_ind</code> computes the <code>t-test</code> for the means of two independent samples.</p></li>
+<li><p>The argument <code>equal_var=True</code> tells <code>Python</code> to assume equal population variances (similar to setting <code>var.equal = TRUE</code> in <code>t.test</code> function <code>R</code>).</p></li>
+<li><p>The function returns two values: <code>t_stat</code> which is the computed t-statistic and <code>p_val</code> which is the <span class="math inline">\(\textit{p-value}\)</span> of the test. By default, <code>ttest_ind</code> performs a two-sided test. For a one-sided test, you would need to adjust the <span class="math inline">\(\textit{p-value}\)</span> accordingly (e.g., divide by two if the t-statistic is in the direction of interest).</p></li>
+<li><p>This <code>Python</code> approach is directly comparable to using <code>t.test</code> in <code>R</code>, with the main conceptual difference being how arguments are named and handled.</p></li>
+</ul></section><section id="storytelling" class="level3" data-number="3.1.10"><h3 data-number="3.1.10" class="anchored" data-anchor-id="storytelling">
 <span class="header-section-number">3.1.10</span> Storytelling</h3>
-<p>Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: <strong>Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?</strong> We observed that the <span class="math inline">\(p-\textit{value}\)</span> of the test was extremely small compared to the significance level <span class="math inline">\(\alpha = 0.05\)</span>. This provides evidence against the null hypothesis. In simple terms, this means: <em>There appears to be a noticeable difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.</em></p>
+<p>Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: <strong>Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?</strong></p>
+<p>We observed that the <span class="math inline">\(p-\textit{value}\)</span> of the test was extremely small compared to the significance level <span class="math inline">\(\alpha = 0.05\)</span>. This provides strong evidence against the null hypothesis. In simple terms, this means: <em>There is a meaningful difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.</em></p>
+<p>So, if you are shopping for a car with more horsepower, it looks like going for one with 8 cylinders might be the way to go — assuming you don’t mind the extra fuel costs of course!!</p>
 </section></section><section id="two-sample-welchs-t-test-for-independent-samples" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="two-sample-welchs-t-test-for-independent-samples">
 <span class="header-section-number">3.2</span> Two sample Welch’s t-test for independent samples</h2>
 <section id="review-1" class="level3" data-number="3.2.1"><h3 data-number="3.2.1" class="anchored" data-anchor-id="review-1">

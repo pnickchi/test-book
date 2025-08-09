@@ -88,9 +88,9 @@ In this chapter, we review tests for comparing two continuous population means u
 -   Independent samples, where the observations in one group are unrelated to those in the other, and
 -   Paired (or dependent) samples, where observations are naturally matched in some way, such as before-and-after measurements.
 
-The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R/Python code examples using real or simulated data sets to help ground the concepts in practice. We also review the theoretical background and exmaple codes to test two proportions.
+The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R/Python code examples using real or simulated data sets to help ground the concepts in practice. We also review the theoretical background and example codes to test for proportions in two populations.
 
-## Two sample Student's t-test for Independent Samples
+## Two sample Student's t-test for Independent Samples {#subsec-two-sample-t-test-ind-samples}
 
 ### Review
 
@@ -119,7 +119,7 @@ Note that the sample sizes $n$ and $m$ do not necessarily have to be equal. Now,
 In formal terms, we test the hypotheses:
 
 $$H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2$$
-Now that we reviewed the test concept, let's try to understand it in a read data set. The steps below follows closely with the roadmap that we introduced in [LINK HERE].
+Now that we reviewed the test concept, let's try to understand it in a read data set. The steps below follows closely with the roadmap that we introduced in @sec-intro.
 
 ### Study design
 
@@ -157,13 +157,25 @@ Once we have the data and it is split into training and test sets, the next step
 In particular, we are interested in the distribution of `horsepower` in two different groups (cars with 4 cylinders vs cars with 8 cylinders). Using a histogram for this variable is a good choice as we have a variable with numerical values.
 
 ```{r echo=FALSE}
+#| label: fig-histogram-horspower-by-cylinders
+#| fig-cap: "Side-by-side histogram of horsepower by number of cylinders for train data."
+#| warning: false
+#| echo: false
+#| fig.height: 8
+#| fig.width: 14
 ggplot(train_auto, aes(x = horsepower)) +
   geom_histogram(fill = "steelblue", color = "white", bins = 20) +
   facet_wrap(~ cylinders, nrow = 1) +
-  labs(title = "Side-by-side histogram of horsepower by number of cylinders",
+  labs(title = "",
        x = "Horsepower",
        y = "Count") +
-  theme_minimal()
+  theme_bw() +
+  theme(
+    axis.text = element_text(size = 15.5),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20, vjust = 0.5),
+    strip.text = element_text(size = 20)
+  )
 ```
 
 We also look at some descriptive statistics of horsepower in both groups for better understanding of data. The descriptive statistics in cars with 4 cylinders:
@@ -182,14 +194,26 @@ Looking at summary statistics, there is a bit of overlap between distribution of
 
 
 ```{r echo=FALSE}
+#| label: fig-density-plot-horspower-by-cylinders
+#| fig-cap: "Density plot of horsepower by number of cylinders."
+#| warning: false
+#| echo: false
+#| fig.height: 8
+#| fig.width: 14
 ggplot(train_auto, aes(x = horsepower, color = factor(cylinders), fill = factor(cylinders))) +
   geom_density(alpha = 0.4) +
-  labs(title = "Density plot of horsepower by number of cylinders",
+  labs(title = "",
        x = "Horsepower",
        y = "Density",
        color = "Cylinders",
        fill = "Cylinders") +
-  theme_minimal()
+  theme_bw() +
+  theme(
+    axis.text = element_text(size = 15.5),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20, vjust = 0.5),
+    strip.text = element_text(size = 20)
+  )
 ```
 
 
@@ -208,9 +232,9 @@ We now define the null and alternative hypothesis. Recall the main inquiry we ha
 
 This translates into the following null and alternative hypotheses:
 
-$$H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2}$${#eq-my-equation}
+$$H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2}$$
 
-Note that the alternative hypothesis is two-sided, as our question does not favor either group and only asks whether the means are different (i.e., group one could be less than or greater than group two). Also the hypothesis tests the unknown parameters in the population which are $\mu_{1}$ and $\mu_{2}$. @eq-my-equation
+Note that the alternative hypothesis is two-sided, as our question does not favor either group and only asks whether the means are different (i.e., group one could be less than or greater than group two). Also the hypothesis tests the unknown parameters in the population which are $\mu_{1}$ and $\mu_{2}$.
 
 ### Test Flavour and Components
 
@@ -218,15 +242,16 @@ To test this hypothesis, we use the **two-sample student's t-test for independen
 
 Now we need to compute a test statistic from the sample. Assuming equal population variances, the test statistic is:
 
-$$t = \frac{(\bar{X} - \bar{Y})}{S_p \sqrt{\frac{1}{n} + \frac{1}{m}}}$$
+$$t = \frac{(\bar{X} - \bar{Y})}{ \sqrt{ S^{2}_p (\frac{1}{n} + \frac{1}{m}})}$${#eq-t-statistic-unq-var}
 where:
 
 -   $\bar{X}$ is the mean of horsepower for cars with 4 cylinders in the sample
 -   $\bar{Y}$ is the mean of horsepower for cars with 8 cylinders in the sample
--   $S_p$ is the \textbf{pooled standard deviation}, computed as:
-  +   $S_p = \sqrt{\frac{(n - 1)S_X^2 + (m - 1)S_Y^2}{n + m - 2}}$
+-   $S^{2}_p$ is the $\textbf{pooled sample variane}$ and is computed as: 
+$$S^{2}_p = \frac{(n - 1)S_X^2 + (m - 1)S_Y^2}{n + m - 2}$${#eq-pooled-sample-variance}
 -   $S_X^2$ and $S_Y^2$ are the sample variances of the two groups.
 
+<br>
 
 ::::: Heads-up
 ::: Heads-up-header
@@ -234,23 +259,49 @@ Heads-up!
 :::
 
 ::: Heads-up-container
-Note that all elements in this formula (statistic) are computed based on sample.
+
+- Note that all elements in @eq-t-statistic-unq-var which is our statistic are computed based on sample.
+
+- You can think of pooled sample variance defined in @eq-pooled-sample-variance as a weighted average of sample variances of $S_X^2$ and $S_Y^2$. 
+
+- **Why it is a weighted average?**    
+
+- The **weights** are $\frac{(n - 1)}{n + m - 2}$ and $\frac{(m - 1)}{n + m - 2}$. These weights reflect how much *information* each sample’s variance provides — larger samples get more weight. You can see it better if you write it explicitly:
+
+$$
+S_p^{2} 
+= \frac{(n - 1)}{n + m - 2} \, S_X^2 + \frac{(m - 1)}{n + m - 2} \, S_Y^2
+$$
+
+- You can see it is literally a weighted mean where weights sum to one:
+
+$$
+\frac{n-1}{n+m-2} + \frac{m-1}{n+m-2} = 1
+$$
+
 :::
 :::::
 
 
+<br>
+
+
 ::::: Tip
 ::: Tip-header
-Tip:
+Tip: Equal variance assumption!
 :::
 
 
 ::: Tip-container
-The assumption in this test is that variances among two groups are equal meaning that if we look at the random variable of horsepower in both populations, the variance of this random variable is roughly equal in two groups (cars with 4 cylinders and cars with 8 cylinders). 
 
-Note that we do not have access to population and this is rather an assumption that we make with consultation with experts or justifying it based on previous studies. We will introduce the test without equal variance assumption in the next section.
+- The assumption in this test is that variances among two groups are equal meaning that if we look at the random variable of horsepower in both populations, the variance of this random variable is roughly equal in two groups (cars with 4 cylinders and cars with 8 cylinders). 
 
-There are some statistical methods designed to test if the variances of different groups are the same or not. Similar to any hypothesis testing, these tests work on a random sample from the population to run the test. Some of the tests are F-test for Equality of Variances, Levene’s Test, and Bartlett’s Test. 
+- Note that we do not have access to population and this is rather an assumption that we make with consultation with experts or justifying it based on previous studies. We will introduce the test without equal variance assumption in the next section.
+
+- There are some statistical methods designed to test if the variances of different groups are the same or not. Similar to any hypothesis testing, these tests work on a random sample from the population to run the test. Some of the tests are *F-test for Equality of Variances*, *Levene’s Test*, and *Bartlett’s Test*. 
+
+- Describing these tests is not the focus of this book. You can read more about them HERE/LINK
+
 :::
 :::::
 
@@ -258,12 +309,9 @@ There are some statistical methods designed to test if the variances of differen
 
 ### Inferential Conclusions
 
-As you can see, the test statistic computes the difference between $\bar{X}$ and $\bar{Y}$ and scale it based on the variance of this difference. Now the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined ($t$) and have a better understanding of what are typical values of this statistic. Knowing the distribution of this statistic helps us to compute $\textit{p-value}$ of the test as follows:
+As you can see, the test statistic defined in @eq-t-statistic-unq-var computes the difference between $\bar{X}$ and $\bar{Y}$ and scale it based on the standard deviation of this difference. Now the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined in @eq-t-statistic-unq-var (and denoted by $t$) and have a better understanding of what are typical values of this statistic. 
 
-$$\textit{p-value} = 2 \times Pr(T_{n+m-2} \ge |t|)$$ 
-
-Looking at the formula, we can see that we are essentially calculating how much is it likely to see an observation as big as $t$ or as extreme as $t$ (which we computed from our sample).
-
+<br>
 
 ::::: Heads-up
 ::: Heads-up-header
@@ -276,34 +324,46 @@ Note that $t$ itself is a random variable as it would change from sample to samp
 :::::
 
 
+<br>
+
+Knowing the distribution of this statistic helps us to compute $\textit{p-value}$ of the test as follows:
+
+$$\textit{p-value} = 2 \times Pr(T_{(n+m-2)} \ge |t|)$$ 
+
+Looking at the formula, we can see that we are essentially calculating how much is it likely to see an observation as big as $t$ or as extreme as $t$ (which we computed from our sample) under a t-distribution with a certain degrees of freedom (df) which we are denoting by $T_{(n+m-2)}$. 
+
+<br>
+
 ::::: Tip
 ::: Tip-header
 Tip:
 :::
 
 ::: Tip-container
-We skipped the theory behind it but under the assumption that null hypothesis is correct (i.e. $\mu_1=\mu_2$) then the test statistic defined above ($t$) follows a t-distribution with $n + m -2$ degrees of freedom (which we denote it by $T_{n+m-2}$). 
 
-**Note:** The probability is multiplied by two since we have a two sided hypothesis (alternative is $\mu_1 \neq \mu_2$). For a one sided test (when alternative hypothesis is $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) we do not need to multiply by two.
+- We skipped the theory behind it but under the assumption that null hypothesis is correct (i.e. $\mu_1=\mu_2$) then the test statistic defined in @eq-t-statistic-unq-var ($t$) follows a t-distribution with $n + m -2$ degrees of freedom. We denoted this distribution by $T_{(n+m-2)}$.
 
-Now we compare the $\textit{p-value}$ to our significance level. If the $\textit{p-value}$ is less than the significance level, then we have evidence against the null hypothesis. The reasoning is as follows: we performed the calculation under the assumption that the null hypothesis is true. If the null hypothesis is true, then the test statistic we computed should follow a $t$-distribution with $n + m - 2$ degrees of freedom. If the p-value is smaller than our chosen significance level, this means it is unlikely that our observed result comes from a $t$-distribution with $n + m - 2$ degrees of freedom. In other words, it is unlikely that the null hypothesis is correct. 
+- **Note:** The probability is multiplied by two since we have a two sided hypothesis (alternative is $\mu_1 \neq \mu_2$). For a one sided test (when alternative hypothesis is $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) we do not need to multiply by two.
+
+- Now we compare the $\textit{p-value}$ to our significance level. If the $\textit{p-value}$ is less than the significance level, then we have evidence against the null hypothesis. The reasoning is as follows: we performed the calculation under the assumption that the null hypothesis is true. If the null hypothesis is true, then the test statistic we computed should follow a $t$-distribution with $n + m - 2$ degrees of freedom. If the p-value is smaller than our chosen significance level, this means it is unlikely that our observed result comes from a $t$-distribution with $n + m - 2$ degrees of freedom. In other words, it is unlikely that the null hypothesis is correct. 
+
 :::
 :::::
 
+<br>
 
+Note that our observation from the sample might still lead us to an incorrect conclusion (since there is variability among samples). Our tolerance for this type of error is determined by the significance level. If $\textit{p-value}$ **is not less than** significant level then we do not have any evidence to reject the null hypothesis. Otherwise (if $\textit{p-value}$ **is less than** significant level) we do have evidence against the null hypothesis
 
-
-Note that our observation from the sample might still lead us to an incorrect conclusion (since there is variability among samples). Our tolerance for this type of error is determined by the significance level. If $\textit{p-value}$ is not less than significant level then we do not have any evidence to reject the null hypothesis. Now let us see how to run the two-sample test in R and Python. Note that for the purpose of hypothesis testing we now use test data to avoid double dipping.
+Now let us see how to run the two-sample test in `R` and `Python` using some read data. Note that we already used train data for EDA purposes. For the purpose of hypothesis testing now we use test data to avoid double dipping.
 
 
 ### How to run the test in `R` and `Python`?
 
-The following lines of code in tabset show you how to run the test in `R` or `Python`. Note that there are two ways of running this test in `R` as shown below. They both give the same result and you are welcome to use either of them. Here is a quick explanation from a coding perspective:
+The following lines of code in tabset show you how to run the test in `R` or `Python`. Note that generally there are two ways of running this test in `R` as shown below (there might be other ways but we focus on these two for now). They both give the same result and you are welcome to use either of them. Here is a quick explanation from a coding perspective:
 
-- In **Option 1**, we first select the cars with 4 or 8 cylinders and save them in a vector (`cylinders_4` and `cylinders_8`). We then use `t.test` function to run the test.
+- In **Option 1**, we first select the cars with 4 or 8 cylinders and save each of them in a vector (`cylinders_4` and `cylinders_8`). We then use `t.test` function to run the test. Note that we pass them as `x = cylinders_4` for first group and `y = cylinders_8` for the second group.
 
-- In **Option 2**, we use a formula to tell `R` what is the variable that records the outcome of interest (in this example `horsepower` variable) and what is the grouping variable (in this example `cylinders`). This approach is more concise and easier to read, especially when working directly with a data frame. Note that we need to let `R` know where it can find `horsepower` and `cylinders` which we do by setting `data = test_auto`.
-
+- In **Option 2**, we use a formula to tell `R` what is the variable that records the outcome of interest (in this example `horsepower` variable) and what is the grouping variable (in this example `cylinders`). This approach is more concise and easier to read, especially when working directly with a data frame. Note that we need to let `R` know where it can find `horsepower` and `cylinders` which we do by setting `data = test_auto`. Using `horsepower ~ cylinders` essentially tells `R` that my varriable of interest for `t.test` is in `horsepower` and the grouping variable (4 or 8 cylinders) is in `cylinders`. Note that the order matters and you can not write it as `cylinders ~ horsepower`.
 
 ::: {.panel-tabset}
 
@@ -356,35 +416,53 @@ print(f"P-value: {p_val}")
 ```
 :::
 
-In order to run this test, similar to what we learned in (LINK to chapter 1) we can use `t.test` function in R. The function can be used to perform one or two sample t-tests. The relevant arguments of the function are as follows:
+**Details about `R` code and output**
+
+In order to run this test in `R`, similar to what we learned in @sec-one-continuous-mean we can use `t.test` function in R. The function can be used to perform one or two sample t-tests. The relevant arguments of the function are as follows:
 
 -   `x` is (non-empty) numeric vector of data values.
 -   `y` is also (non-empty) numeric vector of data values (can be `NULL` if you run a one sample test).
--   `var.equal` is a binary value (TRUE/FALSE) to indicate if R needs to assume equal variance or not.
+-   `var.equal` is a binary value (TRUE/FALSE) to indicate if `R` needs to assume equal variance between population of two groups or not. By default the value of `var.equal` is `FALSE`. We manually set it to `TRUE` to implement equal variance assumption in our test.
 
 
-In both outputs, we can see the following:
+Using *Option 1* or *Option 2* for `R`, in both outputs we can see the following elements:
 
--   `t` is the test statistic.
+-   `t` is the test statistic defined in @eq-t-statistic-unq-var
 
--   `df` is the degrees of freedom for the test.
+-   `df` is the degrees of freedom for the test. You can manually calculate and confirm/see that it equals $n+m-2$.
 
-`p-value` is the p-value of the test. Note that, by default, this is for a two-sided test. If you need to conduct a one-sided test, you can either divide the p-value by two or use the alternative argument in the t.test function.
+-   `p-value` is the $\textit{p-value}$ of the test. Note that, by default, this is for a two-sided test. If you need to conduct a one-sided test, you can either divide the p-value by two or use the `alternative` argument in the `t.test` function. You can read more about it in help documentation of `t.test` function (type and run help(t.test) in `R` console and look for `alternative` argument.)
 
--   `95 percent confidence interval` provides the 95% confidence interval for the parameter of $\mu_1 - \mu_2$.
+-   `95 percent confidence interval` provides the 95% confidence interval for the parameter of $\mu_1 - \mu_2$. You can control the level of your confidence interval by setting `conf.level` to other values between 0 and 1. By default it is set to `conf.level = 0.95`.
 
--   `sample estimates` gives the sample means for each group.
+-   `sample estimates` gives the sample means for each group, i.e. $\bar{X}$ and $\bar{Y}$.
 
-**Note:** By default the value of `var.equal` is `FALSE`. We manully set it to `TRUE` to implement equal variance assumption in our test.
+
+**Details about `Python` code and output**
+
+In this example, we perform the test in `Python`. We use `pandas` package to read data in `Python` and `scipy` for running the test. Here is a breakdown of key points:
+
+- `cylinders_4` and `cylinders_8` are `pandas` objects containing the horsepower values for cars with 4 and 8 cylinders, respectively.
+
+- The function `stats.ttest_ind` computes the `t-test` for the means of two independent samples.
+
+- The argument `equal_var=True` tells `Python` to assume equal population variances (similar to setting `var.equal = TRUE` in `t.test` function `R`).
+
+- The function returns two values: `t_stat` which is the computed t-statistic and `p_val` which is the $\textit{p-value}$ of the test. By default, `ttest_ind` performs a two-sided test. For a one-sided test, you would need to adjust the $\textit{p-value}$ accordingly (e.g., divide by two if the t-statistic is in the direction of interest). 
+
+- This `Python` approach is directly comparable to using `t.test` in `R`, with the main conceptual difference being how arguments are named and handled.
 
 
 ### Storytelling
 
-Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: **Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?** We observed that the $p-\textit{value}$ of the test was extremely small compared to the significance level $\alpha = 0.05$. This provides evidence against the null hypothesis. In simple terms, this means: *There appears to be a noticeable difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.*
+Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: **Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?** 
+
+We observed that the $p-\textit{value}$ of the test was extremely small compared to the significance level $\alpha = 0.05$. This provides strong evidence against the null hypothesis. In simple terms, this means: *There is a meaningful difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.*
+
+So, if you are shopping for a car with more horsepower, it looks like going for one with 8 cylinders might be the way to go — assuming you don't mind the extra fuel costs of course!!
 
 
 ## Two sample Welch's t-test for independent samples
-
 
 ### Review
 
