@@ -90,7 +90,7 @@ In this chapter, we review tests for comparing two continuous population means u
 
 The choice of test depends on the structure of your data. This chapter introduces both types of comparisons, beginning with independent samples. Each section includes definitions, theoretical background, and R/Python code examples using real or simulated data sets to help ground the concepts in practice. We also review the theoretical background and example codes to test for proportions in two populations.
 
-## Two sample Student's t-test for Independent Samples {#subsec-two-sample-t-test-ind-samples}
+## Two sample Student's t-test for Independent Samples {#sec-t-test-ind-samples}
 
 ### Review
 
@@ -242,7 +242,7 @@ To test this hypothesis, we use the **two-sample student's t-test for independen
 
 Now we need to compute a test statistic from the sample. Assuming equal population variances, the test statistic is:
 
-$$t = \frac{(\bar{X} - \bar{Y})}{ \sqrt{ S^{2}_p (\frac{1}{n} + \frac{1}{m}})}$${#eq-t-statistic-unq-var}
+$$t = \frac{(\bar{X} - \bar{Y})}{ \sqrt{ S^{2}_p (\frac{1}{n} + \frac{1}{m}})}$${#eq-t-statistic-equal-var}
 where:
 
 -   $\bar{X}$ is the mean of horsepower for cars with 4 cylinders in the sample
@@ -260,7 +260,7 @@ Heads-up!
 
 ::: Heads-up-container
 
-- Note that all elements in @eq-t-statistic-unq-var which is our statistic are computed based on sample.
+- Note that all elements in @eq-t-statistic-equal-var which is our statistic are computed based on sample.
 
 - You can think of pooled sample variance defined in @eq-pooled-sample-variance as a weighted average of sample variances of $S_X^2$ and $S_Y^2$. 
 
@@ -309,7 +309,7 @@ Tip: Equal variance assumption!
 
 ### Inferential Conclusions
 
-As you can see, the test statistic defined in @eq-t-statistic-unq-var computes the difference between $\bar{X}$ and $\bar{Y}$ and scale it based on the standard deviation of this difference. Now the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined in @eq-t-statistic-unq-var (and denoted by $t$) and have a better understanding of what are typical values of this statistic. 
+As you can see, the test statistic defined in @eq-t-statistic-equal-var computes the difference between $\bar{X}$ and $\bar{Y}$ and scale it based on the standard deviation of this difference. Now the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined in @eq-t-statistic-equal-var (and denoted by $t$) and have a better understanding of what are typical values of this statistic. 
 
 <br>
 
@@ -341,7 +341,7 @@ Tip:
 
 ::: Tip-container
 
-- We skipped the theory behind it but under the assumption that null hypothesis is correct (i.e. $\mu_1=\mu_2$) then the test statistic defined in @eq-t-statistic-unq-var ($t$) follows a t-distribution with $n + m -2$ degrees of freedom. We denoted this distribution by $T_{(n+m-2)}$.
+- We skipped the theory behind it but under the assumption that null hypothesis is correct (i.e. $\mu_1=\mu_2$) then the test statistic defined in @eq-t-statistic-equal-var ($t$) follows a t-distribution with $n + m -2$ degrees of freedom. We denoted this distribution by $T_{(n+m-2)}$.
 
 - **Note:** The probability is multiplied by two since we have a two sided hypothesis (alternative is $\mu_1 \neq \mu_2$). For a one sided test (when alternative hypothesis is $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) we do not need to multiply by two.
 
@@ -427,7 +427,7 @@ In order to run this test in `R`, similar to what we learned in @sec-one-continu
 
 Using *Option 1* or *Option 2* for `R`, in both outputs we can see the following elements:
 
--   `t` is the test statistic defined in @eq-t-statistic-unq-var
+-   `t` is the test statistic defined in @eq-t-statistic-equal-var
 
 -   `df` is the degrees of freedom for the test. You can manually calculate and confirm/see that it equals $n+m-2$.
 
@@ -462,23 +462,25 @@ We observed that the $p-\textit{value}$ of the test was extremely small compared
 So, if you are shopping for a car with more horsepower, it looks like going for one with 8 cylinders might be the way to go — assuming you don't mind the extra fuel costs of course!!
 
 
-## Two sample Welch's t-test for independent samples
+## Two sample Welch's t-test for independent samples {#sec-welch-t-test-ind-samples}
 
 ### Review
 
-In this section we talk about two sample Welch's t-test for independent samples. This test is very similar to two sample Student's t-test for independent samples that we described with a caveat. The two samples are still independent but the only difference is the equal variance assumption. We use this test if we do not have any reason or evidence to believe that the variance of variable of interest is the same among two groups in the population.
+In this section, we discuss the two-sample Welch’s t-test for independent samples. This test is similar to the two-sample Student’s t-test we described earlier in [Section @sec-t-test-ind-samples], with one important difference: it **does not** assume equal variances between the two groups. We use the Welch’s t-test when we have no reason or evidence to believe that the variable of interest has the same variance in both population groups.
 
 
 ### Study Design
 
-We will be using `Auto` data set from `ISLR` package in this section too. Now the main statistical question of interest remains the same as before: **You may wondering if the mean of horsepower in cars with 8 cylinders is statistically different than the means in cars with 4 cylinders?** but we do **not** make an equal variance assumption anymore. Now we are applying a two sample Welch's t-test for independent samples.
+We will be using `Auto` data set from `ISLR` package in this section too. Now the main statistical question of interest remains the same as before: **You may wondering if the mean of horsepower in cars with 8 cylinders is statistically different than the means in cars with 4 cylinders?** but we do **not** make an equal variance assumption anymore.   
+
+In this context, unequal variances mean that the spread or variability of horsepower values could differ between the two groups, so we allow each group to have its own variance estimate. Now we are applying a two sample Welch's t-test for independent samples.
 
 
 ### Data Collection and Wrangling
 
-To answer this question, we obtain the data set which is available in `ISLR` package. The following codes are exactly the same as before and are shown here as a review.
+To answer the question, we obtain the data set which is available in `ISLR` package. The following codes are exactly the same as described in `Data Collection and Wrangling` of [@sec-t-test-ind-samples] and are shown here as a review. Essentially the data sets (train and test) that we use in this section are the same as previous example.
 
-```{r}
+```{r eval=FALSE}
 # Get a copy of data set
 auto_data <- Auto
 
@@ -486,9 +488,8 @@ auto_data <- Auto
 auto_data <- auto_data %>% filter(cylinders %in% c(4,8) )
 ```
 
-Finally, we randomly create test and train set from this data set. We use a proportion of 50-50 between train and test.   
 
-```{r}
+```{r eval=FALSE}
 # Set seed for reproducibility
 set.seed(123)
 
@@ -503,21 +504,33 @@ test_auto <- auto_data[-train_indices, ]
 
 Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA) on train set. Recall that the `cylinders` variable is an integer variable that helps to divide observations into two groups.
 
-We are still interested in the distribution of `horsepower` in two different groups (cars with 4 cylinders vs cars with 8 cylinders). Using a histogram for this variable is a good choice as we have a variable with numerical values.
+We are still interested in the distribution of `horsepower` in two different groups (cars with 4 cylinders vs cars with 8 cylinders). Using a histogram for this variable is a good choice as we have a variable with numerical values. The following plot is the same as before and we are showing it here as a review.
 
-The following lines of code are the same as previous section as we are working on the same data. This is shown as a reminder.
 
 ```{r echo=FALSE}
+#| label: fig-histogram-horspower-by-cylinders-v2
+#| fig-cap: "Side-by-side histogram of horsepower by number of cylinders for train data."
+#| warning: false
+#| echo: false
+#| fig.height: 8
+#| fig.width: 14
 ggplot(train_auto, aes(x = horsepower)) +
   geom_histogram(fill = "steelblue", color = "white", bins = 20) +
   facet_wrap(~ cylinders, nrow = 1) +
-  labs(title = "Side-by-side histogram of horsepower by number of cylinders",
+  labs(title = "",
        x = "Horsepower",
        y = "Count") +
-  theme_minimal()
+  theme_bw() +
+  theme(
+    axis.text = element_text(size = 15.5),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20, vjust = 0.5),
+    strip.text = element_text(size = 20)
+  )
 ```
 
-We also look at some descriptive statistics of horsepower in both groups for better understanding of data. The descriptive statistics in cars with 4 cylinders:
+
+The descriptive statistics in cars with 4 cylinders:
 
 ```{r}
 summary(train_auto %>% filter(cylinders == 4) %>% select(horsepower))
@@ -531,21 +544,32 @@ summary(train_auto %>% filter(cylinders == 8) %>% select(horsepower))
 
 Our conclusion remains the same. Looking at summary statistics, there is a bit of overlap between distribution of `horsepower` among two groups but it does not seem to be much. In fact they seem to be quite separated. Also there is a clear different in their mean and the following plot also confirms this:
 
-
 ```{r echo=FALSE}
+#| label: fig-density-plot-horspower-by-cylinders-v2
+#| fig-cap: "Density plot of horsepower by number of cylinders."
+#| warning: false
+#| echo: false
+#| fig.height: 8
+#| fig.width: 14
 ggplot(train_auto, aes(x = horsepower, color = factor(cylinders), fill = factor(cylinders))) +
   geom_density(alpha = 0.4) +
-  labs(title = "Density plot of horsepower by number of cylinders",
+  labs(title = "",
        x = "Horsepower",
        y = "Density",
        color = "Cylinders",
        fill = "Cylinders") +
-  theme_minimal()
+  theme_bw() +
+  theme(
+    axis.text = element_text(size = 15.5),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20, vjust = 0.5),
+    strip.text = element_text(size = 20)
+  )
 ```
 
 ### Testing Settings
 
-We use a significant level of $\alpha = 0.05$ to run the test. Considering the data we have is a sample from a population of cars we have the following: 
+We use a significant level of $\alpha = 0.05$ to run the test. Considering the data we have is a sample from a population of cars we have the following parameters of interset in our population: 
 
 - $\mu_{1}$ is the mean of horsepower for cars with 4 cylinders in the population. 
 - $\mu_{2}$ is the mean of horsepower for cars with 8 cylinders in the population. 
@@ -565,9 +589,9 @@ Note that the alternative hypothesis is two-sided, as our question does not favo
 
 ### Test Flavour and Components
 
-As noted before we use Welch’s t-test if the assumption of equal variances is questionable. This test adjusts the standard error and degrees of freedom (`df`) of the test accordingly. As a result the test statistic and `df` of the test are different. The Welch's test statistic is computed as:
+As noted before we use Welch’s t-test if the assumption of equal variances is questionable. This test adjusts the standard error and degrees of freedom (`df`) of the test accordingly. As a result the test statistic and `df` of the test are different than what we described in [Section @sec-t-test-ind-samples]. The Welch's test statistic is computed as:
 
-$$t = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{S_X^2}{n} + \frac{S_Y^2}{m}}}$$
+$$t = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{S_X^2}{n} + \frac{S_Y^2}{m}}}$${#eq-t-statistic-unequal-var}
 
 where:
 
@@ -583,16 +607,18 @@ Quick review!
 :::
 
 ::: Heads-up-container
-Note that, as before, all elements in this formula (statistic) are computed based on the sample. Additionally, the assumption of unequal variance between two populations can be tested using a variety of statistical tests. We do not discuss these tests in this book as the focus of this book lies elsewhere.
+- Note that, as before, all elements in @eq-t-statistic-unequal-var (statistic) are computed based on the sample.
+- Additionally, the assumption of unequal variance between two populations can be tested using a variety of statistical tests. 
+- We do not discuss these tests in this book as the focus of this book lies elsewhere. If you are interested to read more about it, refer to REF.
 :::
 :::::
 
 
-
-
 ### Inferential Conclusions
 
-As you can see, the test statistic computes the difference between averages of two samples and adjusts it based on the variance of their differences. The only change from Student's t-test is the variance that is being used in the denominator. Again the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined and have a better understanding of what are typical values of this statistic. Knowing the distribution of this statistic helps us to compute the $p-value$ of the test as follows:
+As you can see, the test statistic in @eq-t-statistic-unequal-var computes the difference between averages of two samples and adjusts it based on the standard deviation of their differences. The only change from Student's t-test is the standard deviation that is being used in the denominator. Again the question is whether this difference is significant or not? 
+
+In order to answer this question we need to know the behavior of statistic that we defined in @eq-t-statistic-unequal-var and have a better understanding of what are typical values of this statistic. Knowing the distribution of this statistic helps us to compute the $\textit{p-value}$ of the test as follows:
 
 $$\textit{p-value} = 2 \times Pr(T_{\nu} \ge |t|)$$ 
 
@@ -605,12 +631,19 @@ Tip on degrees of freedom!
 
 
 ::: Tip-container
-The Greek sign $\nu$ is used here to show the degree of freedom of the t-distribution and is computed as
+
+- We skipped the theory behind it but under the assumption that null hypothesis is correct, it can be shown that the test statistic defined in @eq-t-statistic-unequal-var still follows a t-distribution but with a different degrees of freedom (`df`). 
+
+- Note that this degree of freedom is not necessarily an integer number (could be a real number).
+
+- The Greek sign $\nu$ is used here to show the degree of freedom of t-distribution shown in $T_{\nu}$. 
+
+- The degree of freedom is computed as
 
 $$\nu = \frac{\left( \frac{s_1^2}{n} + \frac{s_2^2}{m} \right)^2}
 {\frac{\left( \frac{s_1^2}{n} \right)^2}{n - 1} + \frac{\left( \frac{s_2^2}{m} \right)^2}{m - 1}}$$
 
-We skipped the theory behind it but under the assumption that null hypothesis is correct, the test statistic defined above still follows a t-distribution but with a different degrees of freedom. Note that this degree of freedom is not necessarily an integer number (could be a real number).
+
 :::
 :::::
 
@@ -628,7 +661,11 @@ A quick reminder!
 ::: Heads-up-container
 - In **Option 1**, we first select the cars with 4 or 8 cylinders and save them in a vector (`cylinders_4` and `cylinders_8`). We then use `t.test` function to run the test.
 
-- In **Option 2**, we use a formula to tell `R` what is the variable that records the outcome of interest (in this example `horsepower` variable) and what is the grouping variable (in this example `cylinders`). This approach is more concise and easier to read, especially when working directly with a data frame. Note that we need to let `R` know where it can find `horsepower` and `cylinders` which we do by setting `data = test_auto`.
+- In **Option 2**, we use a formula to tell `R` what is the variable that records the outcome of interest (in this example `horsepower` variable) and what is the grouping variable (in this example `cylinders`). 
+
+- Using **Option 2** is more concise and easier to read, especially when working directly with a data frame. 
+
+- Note that we need to let `R` know where it can find `horsepower` and `cylinders` which we do by setting `data = test_auto`.
 :::
 :::::
 
@@ -660,6 +697,7 @@ t.test(horsepower ~ cylinders, data = test_auto, var.equal = FALSE)
 ```{r echo=FALSE}
 #| label: save_data_auto
 #| include: false
+#  Save test_auto dataframe as a csv file so that we can load it in Python
 write.csv(x = test_auto, file = 'data/test_auto.csv')
 ```
 
@@ -688,32 +726,50 @@ print(f"P-value: {p_val}")
 ```
 :::
 
-In order to run this test, similar to what we learned in (LINK to chapter 1) we can use `t.test` function in R. The function can be used to perform one or two sample t-tests. The relevant arguments of the function are as follows:
+**Details about `R` code and output**
+
+In order to run this test in `R`, similar to what we learned in @sec-one-continuous-mean we can use `t.test` function in R. The function can be used to perform one or two sample t-tests. The relevant arguments of the function are as follows:
 
 -   `x` is (non-empty) numeric vector of data values.
 -   `y` is also (non-empty) numeric vector of data values (can be `NULL` if you run a one sample test).
--   `var.equal` is a binary value (TRUE/FALSE) to indicate if R needs to assume equal variance or not.
+-   `var.equal` is a binary value (TRUE/FALSE) to indicate if `R` needs to assume equal variance between population of two groups or not. By default the value of `var.equal` is `FALSE` and we manually set it to `FALSE` to make it clear to the reader that we are making an unequal variance assumption in our test.
 
 
-In both outputs, we can see the following:
+Using **Option 1** or **Option 2** for `R`, in both outputs we can see the following elements:
 
--   `t` is the test statistic.
+-   `t` is the test statistic defined in @eq-t-statistic-unequal-var
 
--   `df` is the degrees of freedom for the test.
+-   `df` is the degrees of freedom for the test. You can manually calculate and confirm/see that it equals $\nu$ that we defined in @eq-t-statistic-unequal-var.
 
-`p-value` is the p-value of the test. Note that, by default, this is for a two-sided test. If you need to conduct a one-sided test, you can either divide the p-value by two or use the alternative argument in the t.test function.
+-   `p-value` is the $\textit{p-value}$ of the test. Note that, by default, this is for a two-sided test. If you need to conduct a one-sided test, you can either divide the p-value by two or use the `alternative` argument in the `t.test` function. You can read more about it in help documentation of `t.test` function (type and run help(t.test) in `R` console and look for `alternative` argument.)
 
--   `95 percent confidence interval` provides the 95% confidence interval for the parameter of $\mu_1 - \mu_2$.
+-   `95 percent confidence interval` provides the 95% confidence interval for the parameter of $\mu_1 - \mu_2$. You can control the level of your confidence interval by setting `conf.level` to other values between 0 and 1. By default it is set to `conf.level = 0.95`.
 
--   `sample estimates` gives the sample means for each group.
+-   `sample estimates` gives the sample means for each group, i.e. $\bar{X}$ and $\bar{Y}$.
 
-**Note:** By default the value of `var.equal` is `FALSE`. We manully set it to `FALSE` to implement the test without equal variance assumption.
 
+**Details about `Python` code and output**
+
+In this example, we perform the test in `Python`. We use `pandas` package to read data in `Python` and `scipy` for running the test. Here is a breakdown of key points:
+
+- `cylinders_4` and `cylinders_8` are `pandas` objects containing the horsepower values for cars with 4 and 8 cylinders, respectively.
+
+- The function `stats.ttest_ind` computes the `t-test` for the means of two independent samples.
+
+- The argument `equal_var=False` tells `Python` to assume unequal population variances (similar to setting `var.equal = FALSE` in `t.test` function `R`).
+
+- The function returns two values: `t_stat` which is the computed t-statistic and `p_val` which is the $\textit{p-value}$ of the test. By default, `ttest_ind` performs a two-sided test. For a one-sided test, you would need to adjust the $\textit{p-value}$ accordingly (e.g., divide by two if the t-statistic is in the direction of interest). 
+
+- This `Python` approach is directly comparable to using `t.test` in `R`, with the main conceptual difference being how arguments are named and handled.
 
 
 ### Storytelling
 
-Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: **Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?** We observed that the $p-\textit{value}$ of the test was extremely small compared to the significance level $\alpha = 0.05$. This provides evidence against the null hypothesis. In simple terms, this means: *There appears to be a noticeable difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.*
+Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: **Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?** 
+
+We observed that the $p-\textit{value}$ of the test was extremely small compared to the significance level $\alpha = 0.05$. This provides strong evidence against the null hypothesis. In simple terms, this means: *There is a meaningful difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.*
+
+So, if you are shopping for a car with more horsepower, it looks like going for one with 8 cylinders might be the way to go — assuming you don't mind the extra fuel costs of course!!
 
 
 ## Two sample z-test for Independent Samples
