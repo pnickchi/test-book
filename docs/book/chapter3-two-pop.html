@@ -290,7 +290,7 @@ window.Quarto = {
   </ul>
 </li>
   <li>
-<a href="#two-sample-z-test-for-independent-samples" id="toc-two-sample-z-test-for-independent-samples" class="nav-link" data-scroll-target="#two-sample-z-test-for-independent-samples"><span class="header-section-number">3.3</span> Two sample z-test for Independent Samples</a>
+<a href="#sec-z-test-ind-samples" id="toc-sec-z-test-ind-samples" class="nav-link" data-scroll-target="#sec-z-test-ind-samples"><span class="header-section-number">3.3</span> Two sample z-test for Independent Samples</a>
   <ul>
 <li><a href="#review-2" id="toc-review-2" class="nav-link" data-scroll-target="#review-2"><span class="header-section-number">3.3.1</span> Review</a></li>
   <li><a href="#study-design-2" id="toc-study-design-2" class="nav-link" data-scroll-target="#study-design-2"><span class="header-section-number">3.3.2</span> Study Design</a></li>
@@ -1003,39 +1003,31 @@ mean in group 4 mean in group 8
 <p>Finally, based on the sample we have and the analysis we conducted, we can draw a conclusion about our initial question: <strong>Is the mean horsepower of cars with 8 cylinders statistically different from that of cars with 4 cylinders?</strong></p>
 <p>We observed that the <span class="math inline">\(p-\textit{value}\)</span> of the test was extremely small compared to the significance level <span class="math inline">\(\alpha = 0.05\)</span>. This provides strong evidence against the null hypothesis. In simple terms, this means: <em>There is a meaningful difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.</em></p>
 <p>So, if you are shopping for a car with more horsepower, it looks like going for one with 8 cylinders might be the way to go — assuming you don’t mind the extra fuel costs of course!!</p>
-</section></section><section id="two-sample-z-test-for-independent-samples" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="two-sample-z-test-for-independent-samples">
+</section></section><section id="sec-z-test-ind-samples" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="sec-z-test-ind-samples">
 <span class="header-section-number">3.3</span> Two sample z-test for Independent Samples</h2>
 <section id="review-2" class="level3" data-number="3.3.1"><h3 data-number="3.3.1" class="anchored" data-anchor-id="review-2">
 <span class="header-section-number">3.3.1</span> Review</h3>
-<p>In the tests we have seen so far, we estimated the variance of each group using the sample variance, i.e., <span class="math inline">\(S^2\)</span>. This approach is realistic, as in most cases we do not know the population variance of our variable of interest. However, if the population variance for each group is known, we can incorporate this information into our test.</p>
-<p>Suppose you are analyzing wage differences between high school and college graduates using a large labor market data set. A government labor agency previously conducted extensive research and reported that the true population variances of hourly wages for both groups should be as follows:</p>
+<p>In the tests we have seen so far in <a href="#sec-t-test-ind-samples" class="quarto-xref">Section&nbsp;<span>3.1</span></a> and <a href="#sec-welch-t-test-ind-samples" class="quarto-xref">Section&nbsp;<span>3.2</span></a>, we estimated the variance of each group using the sample variance. For example see <span class="math inline">\(S^2_{X}\)</span> or <span class="math inline">\(S^2_{Y}\)</span> defined in formula <a href="#eq-t-statistic-unequal-var" class="quarto-xref">Equation&nbsp;<span>3.3</span></a>. This approach is realistic, as in most cases we do not know the population variance of our variable of interest and it is being estimated by sample variance. However, if the population variance for each group is known we can incorporate this information into our test.</p>
+<p>For example, suppose you are analyzing wage differences between high school and college graduates using a large labor market data set. A government labor agency previously conducted extensive research and reported that the true population variances of hourly wages for both groups (based on some historical data) should be as follows:</p>
 <ul>
 <li>Population variance of wages among <strong>high school graduates</strong>: <span class="math inline">\(\sigma_1^2 = 75\)</span>
 </li>
 <li>Population variance of wages among <strong>college graduates</strong>: <span class="math inline">\(\sigma_2^2 = 60\)</span>
 </li>
 </ul>
-<p>Note that this is the <strong>population</strong> variance and not the <strong>sample</strong>. You want to assess whether the average wage differs between the two groups. Since the population variances are known (e.g., from reliable historical studies or large scale sampling in previous studies), a <strong>two-sample z-test</strong> is appropriate for this case. We treat these groups as independent samples, since each person’s wage is recorded once and belongs to a distinct education level.</p>
+<p>Note that this is the <strong>population</strong> variance and not the <strong>sample</strong>. You want to assess whether the average wage differs between the two groups. Since the population variances are known (e.g., from reliable historical studies or large scale sampling in previous studies), a <strong>two-sample z-test</strong> is appropriate instead of a t-test. We treat these groups as independent samples since each person’s wage is recorded once and belongs to a distinct education level.</p>
 <p>Since we do not have access to the wages of all individuals in each education group, we take a random sample from each population. Suppose:</p>
 <ul>
-<li>From the population of high school graduates (Population 1), we obtain a sample of size <span class="math inline">\(n\)</span>, denoted as:</li>
+<li>From the population of <strong>high school graduates</strong> (Population 1), we obtain a sample of size <span class="math inline">\(n\)</span>, denoted as:</li>
 </ul>
 <p><span class="math display">\[X_1, X_2, \ldots, X_n\]</span></p>
 <ul>
-<li>From the population of college graduates (Population 2), we obtain a sample of size <span class="math inline">\(m\)</span>, denoted as:</li>
+<li>From the population of <strong>college graduates</strong> (Population 2), we obtain a sample of size <span class="math inline">\(m\)</span>, denoted as:</li>
 </ul>
-<p><span class="math display">\[Y_1, Y_2, \ldots, Y_m\]</span> Note that the sample sizes <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> do not need to be equal. Also, we assume that the population variances are known and denoted as:</p>
-<ul>
-<li>
-<span class="math inline">\(\sigma_1^2\)</span>: the known population variance for high school graduates<br>
-</li>
-<li>
-<span class="math inline">\(\sigma_2^2\)</span>: the known population variance for college graduates</li>
-</ul>
-<p>Now, the central question becomes <strong>Is there a statistically significant difference between the mean wages of high school and college graduates?</strong> In formal terms, we test the hypotheses:</p>
+<p><span class="math display">\[Y_1, Y_2, \ldots, Y_m\]</span> Note that the sample sizes <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> do not need to be equal. Now, the central question becomes <strong>Is there a statistically significant difference between the mean wages of high school and college graduates?</strong> In formal terms, we test the hypotheses:</p>
 <p><span class="math display">\[
 H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2
-\]</span> where <span class="math inline">\(\mu_1\)</span> is the population mean of wage in high school graduates and <span class="math inline">\(\mu_2\)</span> is the population mean of wage in college graduates.</p>
+\]</span> where <span class="math inline">\(\mu_1\)</span> is the population mean of wage in <strong>high school graduates</strong> and <span class="math inline">\(\mu_2\)</span> is the population mean of wage in <strong>college graduates</strong>.</p>
 </section><section id="study-design-2" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="study-design-2">
 <span class="header-section-number">3.3.2</span> Study Design</h3>
 <p>For this example, we will be using the <code>Wage</code> data set from the <code>ISLR2</code> package. This data set contains information about wages and demographic characteristics for 3,000 workers in the Mid-Atlantic region of the United States. Some of the variables of interest are:</p>
@@ -1055,10 +1047,17 @@ H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Get a copy of data set</span></span>
 <span><span class="va">wage_data</span> <span class="op">&lt;-</span> <span class="va">Wage</span></span>
 <span></span>
-<span><span class="co"># Filter rows to keep only HS Grad and College Grad</span></span>
-<span><span class="va">wage_data</span> <span class="op">&lt;-</span> <span class="va">wage_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2. HS Grad"</span>, <span class="st">"4. College Grad"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co"># Filter rows to keep only HS Grad and College Grad </span></span>
+<span><span class="co"># and then rename the levels to:</span></span>
+<span><span class="co"># - HS Grad --&gt; High school graduate</span></span>
+<span><span class="co"># - College Grad --&gt; College graduate</span></span>
+<span><span class="va">wage_data</span> <span class="op">&lt;-</span> <span class="va">wage_data</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'2. HS Grad'</span>, <span class="st">'4. College Grad'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>education <span class="op">=</span> <span class="fu">recode</span><span class="op">(</span><span class="va">education</span>,</span>
+<span>                            <span class="st">'2. HS Grad'</span> <span class="op">=</span> <span class="st">'High school graduate'</span>,</span>
+<span>                            <span class="st">'4. College Grad'</span> <span class="op">=</span> <span class="st">'College graduate'</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Finally, we randomly split the data set into training and testing sets, using a 50-50 proportion between train and test. This allows us to conduct our test using a subset of the data while reserving the rest for potential follow-up analysis.</p>
+<p>Finally, we randomly split the <code>wage_data</code> data set into training and testing sets, using a 50-50 proportion between train and test. This allows us to conduct our test using a subset of the data (train) while reserving the rest (test) for potential follow-up analysis.</p>
 <div class="cell">
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Set seed for reproducibility</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
@@ -1070,19 +1069,25 @@ H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2
 </div>
 </section><section id="exploratory-data-analysis" class="level3" data-number="3.3.4"><h3 data-number="3.3.4" class="anchored" data-anchor-id="exploratory-data-analysis">
 <span class="header-section-number">3.3.4</span> Exploratory Data Analysis</h3>
-<p>Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA) on the training set. This step is crucial, as it helps us gain a better understanding of the distribution of variables in our data set. The <code>wage</code> variable is a numerical variable that represents hourly earnings. The <code>education</code> variable is a categorical variable that helps us divide observations into two groups.</p>
-<p>In particular, we are interested in the distribution of <code>wage</code> in two different groups (high school graduates vs college graduates). Using a histogram for this variable is a good choice as it allows us to visually inspect how the wages vary within and between these two education levels.</p>
+<p>Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA) on the training set. The <code>wage</code> variable is a numerical variable that represents hourly earnings. The <code>education</code> variable is a categorical variable that helps us divide observations into two groups.</p>
+<p>In particular, we are interested in the distribution of <code>wage</code> in two different groups (<strong>high school graduates</strong> vs <strong>college graduates</strong>). Using a histogram for this variable is a good choice as it allows us to visually inspect how the wages vary within and between these two education levels.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chapter3-two-pop_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div id="fig-histogram-wage-by-education" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-histogram-wage-by-education-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter3-two-pop_files/figure-html/fig-histogram-wage-by-education-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-histogram-wage-by-education-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.6: Side-by-side histogram of wage by education level
+</figcaption></figure>
 </div>
 </div>
 </div>
-<p>We also look at some descriptive statistics of wage in both groups for better understanding of the data. The descriptive statistics for high school graduates:</p>
+<p>We also look at some descriptive statistics of <code>wage</code> in both groups for better understanding of the data. The descriptive statistics for high school graduates:</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_wage</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">"2. HS Grad"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_wage</span> <span class="op">%&gt;%</span> </span>
+<span>          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">'High school graduate'</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>          <span class="fu">select</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      wage       
  Min.   : 23.27  
@@ -1095,7 +1100,9 @@ H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2
 </div>
 <p>and for college graduates:</p>
 <div class="cell">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_wage</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">"4. College Grad"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_wage</span> <span class="op">%&gt;%</span> </span>
+<span>          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">'College graduate'</span><span class="op">)</span> </span>
+<span>        <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      wage       
  Min.   : 40.41  
@@ -1107,21 +1114,16 @@ H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2
 </div>
 </div>
 <p>Looking at these summary statistics, we can see that the wage distributions for the two education groups have some overlap, and there does not appear to be a large difference in their centers. In fact, the mean wage for college graduates is only slightly higher, and this is not immediately obvious from the plots.</p>
-<p>There appears to be some observations with higher wage values in <code>College Grad</code> group compared to others. The following density plot provides additional visual support for this observation:</p>
+<p>There appears to be some observations with higher wage values in <code>College Grad</code> group compared to <code>High School Graduate</code>. The following density plot provides additional visual support for this observation:</p>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Density plot of wage by education group</span></span>
-<span><span class="va">train_wage</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">wage</span>, fill <span class="op">=</span> <span class="va">education</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_density</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Wage Distribution by Education Level'</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">'Wage (USD/hour)'</span>,</span>
-<span>       y <span class="op">=</span> <span class="st">'Density'</span>,</span>
-<span>       fill <span class="op">=</span> <span class="st">"Education"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chapter3-two-pop_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div id="fig-density-plot-wage-by-education" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-density-plot-wage-by-education-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter3-two-pop_files/figure-html/fig-density-plot-wage-by-education-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-density-plot-wage-by-education-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.7: Density plot of wage by education level.
+</figcaption></figure>
 </div>
 </div>
 </div>
@@ -1130,10 +1132,10 @@ H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2
 <p>We use a significance level of <span class="math inline">\(\alpha = 0.05\)</span> to conduct the hypothesis test. Since the data we have is a sample from a larger population of workers, we define the following population parameters:</p>
 <ul>
 <li>
-<span class="math inline">\(\mu_{1}\)</span> is the mean wage of individuals with a high school education in the population.<br>
+<span class="math inline">\(\mu_{1}\)</span> is the mean wage of individuals with a <strong>high school education</strong> in the population.<br>
 </li>
 <li>
-<span class="math inline">\(\mu_{2}\)</span> is the mean wage of individuals with a college education in the population.</li>
+<span class="math inline">\(\mu_{2}\)</span> is the mean wage of individuals with a <strong>college education</strong> in the population.</li>
 </ul>
 <p>Our goal is to test whether the population mean wage differs between these two educational groups.</p>
 </section><section id="hypothesis-definitions-2" class="level3" data-number="3.3.6"><h3 data-number="3.3.6" class="anchored" data-anchor-id="hypothesis-definitions-2">
@@ -1145,9 +1147,7 @@ H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2
 </section><section id="test-flavour-and-components-2" class="level3" data-number="3.3.7"><h3 data-number="3.3.7" class="anchored" data-anchor-id="test-flavour-and-components-2">
 <span class="header-section-number">3.3.7</span> Test Flavour and Components</h3>
 <p>To test this hypothesis, we use the <strong>two-sample z-test for independent samples</strong> with known population variances, which compares the sample means and incorporates the known variability within each population. Note that the samples are independent. The test statistic for this test is computed as:</p>
-<p><span class="math display">\[
-z = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{m}}}
-\]</span></p>
+<p><span id="eq-z-statistic"><span class="math display">\[z = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{m}}} \tag{3.4}\]</span></span></p>
 <p>where:</p>
 <ul>
 <li>
@@ -1160,47 +1160,50 @@ z = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{m}}}
 <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> are the sample sizes of the two groups</li>
 </ul>
 <p>Because population variances are known, the standard error of the difference in sample means is computed directly from the population variances, avoiding the need to estimate variance from the samples.</p>
-</section><section id="inferential-conclusions-2" class="level3" data-number="3.3.8"><h3 data-number="3.3.8" class="anchored" data-anchor-id="inferential-conclusions-2">
-<span class="header-section-number">3.3.8</span> Inferential Conclusions</h3>
-<p>As you can see, the test statistic computes the difference between <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> and scales it based on the known variance of this difference. Now the question is whether this difference is significant or not? To answer this, we need to understand the behavior of the statistic we defined (<span class="math inline">\(z\)</span>) and what typical values it can take.</p>
-<p>As we shown before, knowing the distribution of this statistic allows us to compute the <span class="math inline">\(\textit{p-value}\)</span> of the test as follows:</p>
-<p><span class="math display">\[
-\textit{p-value} = 2 \times Pr(|Z| \ge |z|)
-\]</span></p>
-<p>Looking at the formula, we are essentially calculating how likely it is to observe a value as extreme as <span class="math inline">\(z\)</span> under the null hypothesis.</p>
 <div class="Heads-up">
 <div class="Heads-up-header">
 <p>Heads-up!</p>
 </div>
 <div class="Heads-up-container">
-<p>Note that <span class="math inline">\(z\)</span> itself is a random variable that would vary from sample to sample.</p>
+<p>Note that <span class="math inline">\(z\)</span> defined in <a href="#eq-z-statistic" class="quarto-xref">Equation&nbsp;<span>3.4</span></a> itself is a random variable meaning that it would vary from sample to sample.</p>
 </div>
 </div>
+</section><section id="inferential-conclusions-2" class="level3" data-number="3.3.8"><h3 data-number="3.3.8" class="anchored" data-anchor-id="inferential-conclusions-2">
+<span class="header-section-number">3.3.8</span> Inferential Conclusions</h3>
+<p>As you can see, the test statistic defined in <a href="#eq-z-statistic" class="quarto-xref">Equation&nbsp;<span>3.4</span></a> computes the difference between <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> and scales it based on the known variance of this difference (or more precisely standard deviation of the difference!). Now the question is whether this difference is significant or not? To answer this, we need to understand the behavior of the statistic we defined in <a href="#eq-z-statistic" class="quarto-xref">Equation&nbsp;<span>3.4</span></a> (<span class="math inline">\(z\)</span>) and what typical values it can take.</p>
+<p>As we shown before, knowing the distribution of this statistic allows us to compute the <span class="math inline">\(\textit{p-value}\)</span> of the test as follows:</p>
+<p><span id="eq-z-test-pvalue"><span class="math display">\[\textit{p-value} = 2 \times Pr(Z \ge |z|) \tag{3.5}\]</span></span></p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Upper case <span class="math inline">\(Z\)</span> vs lower case <span class="math inline">\(z\)</span>!</p>
+</div>
+<div class="Heads-up-container">
+<ul>
+<li>The lower case <span class="math inline">\(z\)</span> in <a href="#eq-z-test-pvalue" class="quarto-xref">Equation&nbsp;<span>3.5</span></a> is the statistic computed from the sample (<a href="#eq-z-statistic" class="quarto-xref">Equation&nbsp;<span>3.4</span></a>).</li>
+<li>The upper case <span class="math inline">\(Z\)</span> though is a notation to use for random variable.</li>
+<li>This random variable follows a Normal distribution with mean zero and standard deviation of one.</li>
+<li>Looking at the formula in <a href="#eq-z-test-pvalue" class="quarto-xref">Equation&nbsp;<span>3.5</span></a>, we are essentially calculating how likely it is to observe a value as extreme as <span class="math inline">\(z\)</span> under the null hypothesis - a Normal distribution with mean zero and standard deviation of one.</li>
+</ul>
+</div>
+</div>
+<p><br></p>
 <div class="Tip">
 <div class="Tip-header">
-<p>Tip:</p>
+<p>Interpreting the Test Statistic and p-value!</p>
 </div>
 <div class="Tip-container">
-<p>Under the assumption that the null hypothesis is correct (i.e., <span class="math inline">\(\mu_1 = \mu_2\)</span>), the test statistic <span class="math inline">\(z\)</span> follows the <strong>standard normal distribution</strong> that textbooks usually denote it by <span class="math inline">\(N(0,1)\)</span>. The first element is mean (0) and the second one is the standard deviation (1).</p>
-<p><strong>Note:</strong> The probability is multiplied by two because we are conducting a two-sided test (alternative hypothesis: <span class="math inline">\(\mu_1 \neq \mu_2\)</span>). For a one-sided test (e.g., <span class="math inline">\(\mu_1 &gt; \mu_2\)</span> or <span class="math inline">\(\mu_1 &lt; \mu_2\)</span>) this multiplication is not needed.</p>
-<p>We compare the <span class="math inline">\(\textit{p-value}\)</span> to our significance level <span class="math inline">\(\alpha\)</span>. If the <span class="math inline">\(\textit{p-value}\)</span> is less than <span class="math inline">\(\alpha\)</span>, then we have evidence against the null hypothesis. The reasoning is: assuming the null hypothesis is true, the test statistic should follow a standard normal distribution. A very small p-value means our observed <span class="math inline">\(z\)</span> is unlikely under this distribution, and so it is unlikely the null hypothesis is correct.</p>
+<ul>
+<li><p>Under the assumption that the null hypothesis is correct (i.e., <span class="math inline">\(\mu_1 = \mu_2\)</span>), the test statistic <span class="math inline">\(z\)</span> follows the <strong>standard normal distribution</strong> that textbooks usually denote it by <span class="math inline">\(N(0,1)\)</span>. The first element is mean (0) and the second one is the standard deviation (1).</p></li>
+<li><p><strong>Note:</strong> The probability is multiplied by two because we are conducting a two-sided test (alternative hypothesis: <span class="math inline">\(\mu_1 \neq \mu_2\)</span>). For a one-sided test (e.g., <span class="math inline">\(\mu_1 &gt; \mu_2\)</span> or <span class="math inline">\(\mu_1 &lt; \mu_2\)</span>) this multiplication is not needed.</p></li>
+<li><p>We compare the <span class="math inline">\(\textit{p-value}\)</span> to our significance level <span class="math inline">\(\alpha\)</span>. If the <span class="math inline">\(\textit{p-value}\)</span> is less than <span class="math inline">\(\alpha\)</span>, then we have evidence against the null hypothesis.</p></li>
+<li><p>The reasoning is: assuming the null hypothesis is true, the test statistic should follow a standard normal distribution. A very small <span class="math inline">\(\textit{p-value}\)</span> means our observed <span class="math inline">\(z\)</span> is unlikely under this distribution, and so it is unlikely the null hypothesis is correct.</p></li>
+</ul>
 </div>
 </div>
 </section><section id="how-to-run-the-two-sample-z-test-in-r-and-python" class="level3" data-number="3.3.9"><h3 data-number="3.3.9" class="anchored" data-anchor-id="how-to-run-the-two-sample-z-test-in-r-and-python">
 <span class="header-section-number">3.3.9</span> How to run the two-sample <code>z-test</code> in <code>R</code> and <code>Python</code>
 </h3>
-<p>The following examples show how to implement the two-sample <code>z-test</code> for independent samples with <strong>known population variances</strong> in both <code>R</code> and <code>Python</code> using the <code>Wage</code> data set.</p>
-<div class="Heads-up">
-<div class="Heads-up-header">
-<p>Important reminder!</p>
-</div>
-<div class="Heads-up-container">
-<ul>
-<li><p>Note that we know the <strong>population variances</strong> <span class="math inline">\(\sigma_1^2 = 75\)</span> for high school graduates and <span class="math inline">\(\sigma_2^2 = 60\)</span> for college graduates from previous studies.</p></li>
-<li><p>The test statistic <span class="math inline">\(z\)</span> is calculated by <code>z.test</code> function from <code>BSDA</code> package which have a similar input and output to <code>t.test</code> function.</p></li>
-</ul>
-</div>
-</div>
+<p>The following examples show how to implement the two-sample <code>z-test</code> for independent samples with <strong>known population variances</strong> in both <code>R</code> and <code>Python</code> using the <code>Wage</code> data set. Note that we know the <strong>population variances</strong> <span class="math inline">\(\sigma_1^2 = 75\)</span> for high school graduates and <span class="math inline">\(\sigma_2^2 = 60\)</span> for college graduates.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R Code</a></li>
@@ -1209,15 +1212,21 @@ z = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{m}}}
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Filter test_wage data to create two groups: High school graduates and college graduates</span></span>
-<span><span class="va">hs_wages</span> <span class="op">&lt;-</span> <span class="va">test_wage</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">"2. HS Grad"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span></span>
-<span><span class="va">col_wages</span> <span class="op">&lt;-</span> <span class="va">test_wage</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">"4. College Grad"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Filter test_wage data to create two groups: </span></span>
+<span><span class="co"># High school graduates and college graduates</span></span>
+<span><span class="va">hs_wages</span> <span class="op">&lt;-</span> <span class="va">test_wage</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">'High school graduate'</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">pull</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">col_wages</span> <span class="op">&lt;-</span> <span class="va">test_wage</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op">==</span> <span class="st">'College graduate'</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">pull</span><span class="op">(</span><span class="va">wage</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Set the known population variances</span></span>
 <span><span class="va">sigma2_hs</span> <span class="op">&lt;-</span> <span class="fl">75</span></span>
 <span><span class="va">sigma2_col</span> <span class="op">&lt;-</span> <span class="fl">60</span></span>
 <span></span>
-<span><span class="co"># Run two-sample z-test with known variances using z.test function from BSDA package</span></span>
+<span><span class="co"># Run two-sample z-test with known variances</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">z.test</span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">hs_wages</span>,</span>
 <span>  y <span class="op">=</span> <span class="va">col_wages</span>,</span>
@@ -1245,16 +1254,53 @@ mean of x mean of y
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read data set</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'data/test_wage.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Read data set</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'data/test_wage.csv'</span>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract wages for high school graduates and college graduates</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>hs_wages <span class="op">=</span> df.loc[df[<span class="st">'education'</span>] <span class="op">==</span> <span class="st">'High school graduate'</span>, <span class="st">'wage'</span>].to_numpy()</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>col_wages <span class="op">=</span> df.loc[df[<span class="st">'education'</span>] <span class="op">==</span> <span class="st">'College graduate'</span>, <span class="st">'wage'</span>].to_numpy()</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample sizes</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>n1 <span class="op">=</span> <span class="bu">len</span>(hs_wages)</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>n2 <span class="op">=</span> <span class="bu">len</span>(col_wages)</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample means</span></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>mean1 <span class="op">=</span> np.mean(hs_wages)</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>mean2 <span class="op">=</span> np.mean(col_wages)</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard deviations (square root of known variances)</span></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>sigma1 <span class="op">=</span> np.sqrt(<span class="dv">75</span>)</span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="op">=</span> np.sqrt(<span class="dv">60</span>)</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate standard error using known population std dev</span></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>se <span class="op">=</span> np.sqrt( (sigma1<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> n1) <span class="op">+</span> (sigma2<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> n2) )</span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate z-statistic</span></span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>z_stat <span class="op">=</span> (mean1 <span class="op">-</span> mean2) <span class="op">/</span> se</span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-sided p-value</span></span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> norm.cdf(<span class="op">-</span><span class="bu">abs</span>(z_stat))</span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Print z-statistic and p-value</span></span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Z-statistic: </span><span class="sc">{</span>z_stat<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Z-statistic: -55.23877690006868</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"P-value: </span><span class="sc">{</span>p_value<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P-value: 0.0</code></pre>
 </div>
 </div>
 </div>
 </div>
-<p>In order to run the two-sample z-test with known population variances, we use the <code>z.test</code> function from the <code>BSDA</code> package in <code>R</code>. This function is designed to handle one and two sample <code>z-tests</code> when population standard deviations are known. The key arguments of <code>z.test</code> for a two-sample test are:</p>
+</div>
+<p>In order to run the two-sample z-test with known population variances, we use the <code>z.test</code> function from the <code>BSDA</code> package in <code>R</code> which have a similar input and output to <code>t.test</code> function. This function is designed to handle one and two sample <code>z-tests</code> when population standard deviations are known. The key arguments of <code>z.test</code> for a two-sample test are:</p>
 <ul>
 <li>
 <code>x</code>: a numeric vector of data values for group 1.</li>
@@ -1271,17 +1317,18 @@ mean of x mean of y
 <p>When you run the test, the output includes:</p>
 <ul>
 <li>
-<code>statistic</code>: the calculated z test statistic.</li>
+<code>statistic</code>: the calculated <span class="math inline">\(z\)</span> test statistic defined in <a href="#eq-z-statistic" class="quarto-xref">Equation&nbsp;<span>3.4</span></a>.</li>
 <li>
-<code>p.value</code>: the p-value for the test based on the standard normal distribution.</li>
+<code>p.value</code>: the p-value for the test based on the standard normal distribution, defined in <a href="#eq-z-test-pvalue" class="quarto-xref">Equation&nbsp;<span>3.5</span></a>.</li>
 <li>
 <code>conf.int</code>: the confidence interval for the difference in means <span class="math inline">\(\mu_1 - \mu_2\)</span>.</li>
 <li>
 <code>estimate</code>: the sample means for each group.</li>
 </ul>
-<p><strong>Note:</strong> The <code>z.test</code> function assumes that the population standard deviations are known and uses them directly to compute the test statistic and confidence interval. This differs from tests that estimate variance from the samples, such as <code>t-tests</code> that we have been studying so far.</p>
+<p><strong>Note:</strong> The <code>z.test</code> function assumes that the population standard deviations are known and uses them directly to compute the test statistic and confidence interval. This differs from tests that estimate variance from the samples such as <code>t-tests</code> that we discussed in <a href="#sec-t-test-ind-samples" class="quarto-xref">Section&nbsp;<span>3.1</span></a> and <a href="#sec-welch-t-test-ind-samples" class="quarto-xref">Section&nbsp;<span>3.2</span></a>.</p>
 </section><section id="storytelling-2" class="level3" data-number="3.3.10"><h3 data-number="3.3.10" class="anchored" data-anchor-id="storytelling-2">
 <span class="header-section-number">3.3.10</span> Storytelling</h3>
+<p>In summary, these results tell us that the observed difference in wages is highly unlikely to have occurred by random chance if the true means were equal. Therefore, we conclude that college graduates earn significantly more than high school graduates on average.</p>
 </section></section><section id="two-sample-t-test-for-paired-samples" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="two-sample-t-test-for-paired-samples">
 <span class="header-section-number">3.4</span> Two sample t-test for Paired Samples</h2>
 <section id="review-3" class="level3" data-number="3.4.1"><h3 data-number="3.4.1" class="anchored" data-anchor-id="review-3">

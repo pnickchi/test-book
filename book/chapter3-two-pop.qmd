@@ -772,39 +772,34 @@ We observed that the $p-\textit{value}$ of the test was extremely small compared
 So, if you are shopping for a car with more horsepower, it looks like going for one with 8 cylinders might be the way to go — assuming you don't mind the extra fuel costs of course!!
 
 
-## Two sample z-test for Independent Samples
+## Two sample z-test for Independent Samples {#sec-z-test-ind-samples}
 
 ### Review
 
-In the tests we have seen so far, we estimated the variance of each group using the sample variance, i.e., $S^2$. This approach is realistic, as in most cases we do not know the population variance of our variable of interest. However, if the population variance for each group is known, we can incorporate this information into our test.
+In the tests we have seen so far in [Section @sec-t-test-ind-samples] and [Section @sec-welch-t-test-ind-samples], we estimated the variance of each group using the sample variance. For example see $S^2_{X}$ or $S^2_{Y}$ defined in formula @eq-t-statistic-unequal-var. This approach is realistic, as in most cases we do not know the population variance of our variable of interest and it is being estimated by sample variance. However, if the population variance for each group is known we can incorporate this information into our test.
 
-Suppose you are analyzing wage differences between high school and college graduates using a large labor market data set. A government labor agency previously conducted extensive research and reported that the true population variances of hourly wages for both groups should be as follows:
+For example, suppose you are analyzing wage differences between high school and college graduates using a large labor market data set. A government labor agency previously conducted extensive research and reported that the true population variances of hourly wages for both groups (based on some historical data) should be as follows:
 
   - Population variance of wages among **high school graduates**: $\sigma_1^2 = 75$
   - Population variance of wages among **college graduates**: $\sigma_2^2 = 60$
 
-Note that this is the **population** variance and not the **sample**. You want to assess whether the average wage differs between the two groups. Since the population variances are known (e.g., from reliable historical studies or large scale sampling in previous studies), a **two-sample z-test** is appropriate for this case. We treat these groups as independent samples, since each person's wage is recorded once and belongs to a distinct education level.
+Note that this is the **population** variance and not the **sample**. You want to assess whether the average wage differs between the two groups. Since the population variances are known (e.g., from reliable historical studies or large scale sampling in previous studies), a **two-sample z-test** is appropriate instead of a t-test. We treat these groups as independent samples since each person's wage is recorded once and belongs to a distinct education level.
 
 Since we do not have access to the wages of all individuals in each education group, we take a random sample from each population. Suppose:
 
-- From the population of high school graduates (Population 1), we obtain a sample of size $n$, denoted as:
+- From the population of **high school graduates** (Population 1), we obtain a sample of size $n$, denoted as:
 
 $$X_1, X_2, \ldots, X_n$$
 
-- From the population of college graduates (Population 2), we obtain a sample of size $m$, denoted as:  
+- From the population of **college graduates** (Population 2), we obtain a sample of size $m$, denoted as:  
 
 $$Y_1, Y_2, \ldots, Y_m$$
-Note that the sample sizes $n$ and $m$ do not need to be equal. Also, we assume that the population variances are known and denoted as:
-
-  - $\sigma_1^2$: the known population variance for high school graduates  
-  - $\sigma_2^2$: the known population variance for college graduates
-
-Now, the central question becomes **Is there a statistically significant difference between the mean wages of high school and college graduates?** In formal terms, we test the hypotheses:
+Note that the sample sizes $n$ and $m$ do not need to be equal. Now, the central question becomes **Is there a statistically significant difference between the mean wages of high school and college graduates?** In formal terms, we test the hypotheses:
 
 $$
 H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2
 $$
-where $\mu_1$ is the population mean of wage in high school graduates and $\mu_2$ is the population mean of wage in college graduates. 
+where $\mu_1$ is the population mean of wage in **high school graduates** and $\mu_2$ is the population mean of wage in **college graduates**. 
 
 
 ### Study Design
@@ -832,11 +827,18 @@ To answer this question, we obtain the data set which is available in the `ISLR2
 # Get a copy of data set
 wage_data <- Wage
 
-# Filter rows to keep only HS Grad and College Grad
-wage_data <- wage_data %>% filter(education %in% c("2. HS Grad", "4. College Grad"))
+# Filter rows to keep only HS Grad and College Grad 
+# and then rename the levels to:
+# - HS Grad --> High school graduate
+# - College Grad --> College graduate
+wage_data <- wage_data %>% 
+  filter(education %in% c('2. HS Grad', '4. College Grad')) %>%
+  mutate(education = recode(education,
+                            '2. HS Grad' = 'High school graduate',
+                            '4. College Grad' = 'College graduate'))
 ```
 
-Finally, we randomly split the data set into training and testing sets, using a 50-50 proportion between train and test. This allows us to conduct our test using a subset of the data while reserving the rest for potential follow-up analysis.
+Finally, we randomly split the `wage_data` data set into training and testing sets, using a 50-50 proportion between train and test. This allows us to conduct our test using a subset of the data (train) while reserving the rest (test) for potential follow-up analysis.
 
 ```{r}
 # Set seed for reproducibility
@@ -851,55 +853,82 @@ test_wage <- wage_data[-train_indices, ]
 
 ### Exploratory Data Analysis
 
-Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA) on the training set. This step is crucial, as it helps us gain a better understanding of the distribution of variables in our data set. The `wage` variable is a numerical variable that represents hourly earnings. The `education` variable is a categorical variable that helps us divide observations into two groups.
+Once we have the data and it is split into training and test sets, the next step is to begin exploratory data analysis (EDA) on the training set. The `wage` variable is a numerical variable that represents hourly earnings. The `education` variable is a categorical variable that helps us divide observations into two groups.
 
-In particular, we are interested in the distribution of `wage` in two different groups (high school graduates vs college graduates). Using a histogram for this variable is a good choice as it allows us to visually inspect how the wages vary within and between these two education levels.
+In particular, we are interested in the distribution of `wage` in two different groups (**high school graduates** vs **college graduates**). Using a histogram for this variable is a good choice as it allows us to visually inspect how the wages vary within and between these two education levels.
+
 
 ```{r echo=FALSE}
+#| label: fig-histogram-wage-by-education
+#| fig-cap: "Side-by-side histogram of wage by education level"
+#| warning: false
+#| echo: false
+#| fig.height: 8
+#| fig.width: 14
 ggplot(train_wage, aes(x = wage)) +
   geom_histogram(fill = 'steelblue', color = 'white', bins = 25) +
   facet_wrap(~ education, nrow = 1) +
-  labs(title = 'Side-by-side histogram of wage by education level',
+  labs(title = '',
        x = 'Wage (USD/hour)',
        y = 'Count') +
-  theme_minimal()
+  theme(
+    axis.text = element_text(size = 15.5),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20, vjust = 0.5),
+    strip.text = element_text(size = 20)
+  )
 ```
 
-We also look at some descriptive statistics of wage in both groups for better understanding of the data. The descriptive statistics for high school graduates:
+
+We also look at some descriptive statistics of `wage` in both groups for better understanding of the data. The descriptive statistics for high school graduates:
 
 
 ```{r}
-summary(train_wage %>% filter(education == "2. HS Grad") %>% select(wage))
+summary(train_wage %>% 
+          filter(education == 'High school graduate') %>% 
+          select(wage))
 ```
 
 and for college graduates:
 
 ```{r}
-summary(train_wage %>% filter(education == "4. College Grad") %>% select(wage))
+summary(train_wage %>% 
+          filter(education == 'College graduate') 
+        %>% select(wage))
 ```
 
 Looking at these summary statistics, we can see that the wage distributions for the two education groups have some overlap, and there does not appear to be a large difference in their centers. In fact, the mean wage for college graduates is only slightly higher, and this is not immediately obvious from the plots. 
 
-There appears to be some observations with higher wage values in `College Grad` group compared to others. The following density plot provides additional visual support for this observation:
+There appears to be some observations with higher wage values in `College Grad` group compared to `High School Graduate`. The following density plot provides additional visual support for this observation:
 
-```{r}
-# Density plot of wage by education group
-train_wage %>%
-  ggplot(aes(x = wage, fill = education)) +
+```{r echo=FALSE}
+#| label: fig-density-plot-wage-by-education
+#| fig-cap: "Density plot of wage by education level."
+#| warning: false
+#| echo: false
+#| fig.height: 8
+#| fig.width: 14
+ggplot(train_wage, aes(x = wage, fill = education)) +
   geom_density(alpha = 0.5) +
   labs(title = 'Wage Distribution by Education Level',
        x = 'Wage (USD/hour)',
        y = 'Density',
        fill = "Education") +
-  theme_minimal()
+  theme(
+    axis.text = element_text(size = 15.5),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20, vjust = 0.5),
+    strip.text = element_text(size = 20)
+  )
 ```
+
 
 ### Testing Settings
 
 We use a significance level of $\alpha = 0.05$ to conduct the hypothesis test. Since the data we have is a sample from a larger population of workers, we define the following population parameters:
 
-- $\mu_{1}$ is the mean wage of individuals with a high school education in the population.  
-- $\mu_{2}$ is the mean wage of individuals with a college education in the population.
+- $\mu_{1}$ is the mean wage of individuals with a **high school education** in the population.  
+- $\mu_{2}$ is the mean wage of individuals with a **college education** in the population.
 
 Our goal is to test whether the population mean wage differs between these two educational groups.
 
@@ -917,9 +946,7 @@ $$H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2}$$
 
 To test this hypothesis, we use the **two-sample z-test for independent samples** with known population variances, which compares the sample means and incorporates the known variability within each population. Note that the samples are independent. The test statistic for this test is computed as:
 
-$$
-z = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{m}}}
-$$
+$$z = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{m}}}$${#eq-z-statistic}
 
 where:
 
@@ -931,61 +958,61 @@ where:
 Because population variances are known, the standard error of the difference in sample means is computed directly from the population variances, avoiding the need to estimate variance from the samples.
 
 
-### Inferential Conclusions
-
-As you can see, the test statistic computes the difference between $\bar{X}$ and $\bar{Y}$ and scales it based on the known variance of this difference. Now the question is whether this difference is significant or not? To answer this, we need to understand the behavior of the statistic we defined ($z$) and what typical values it can take.
-
-As we shown before, knowing the distribution of this statistic allows us to compute the $\textit{p-value}$ of the test as follows:
-
-$$
-\textit{p-value} = 2 \times Pr(|Z| \ge |z|)
-$$
-
-Looking at the formula, we are essentially calculating how likely it is to observe a value as extreme as $z$ under the null hypothesis.
-
 ::::: Heads-up
 ::: Heads-up-header
 Heads-up!
 :::
 
 ::: Heads-up-container
-Note that $z$ itself is a random variable that would vary from sample to sample. 
+Note that $z$ defined in @eq-z-statistic itself is a random variable meaning that it would vary from sample to sample. 
 :::
 :::::
+
+
+### Inferential Conclusions
+
+As you can see, the test statistic defined in @eq-z-statistic computes the difference between $\bar{X}$ and $\bar{Y}$ and scales it based on the known variance of this difference (or more precisely standard deviation of the difference!). Now the question is whether this difference is significant or not? To answer this, we need to understand the behavior of the statistic we defined in @eq-z-statistic ($z$) and what typical values it can take.
+
+As we shown before, knowing the distribution of this statistic allows us to compute the $\textit{p-value}$ of the test as follows:
+
+$$\textit{p-value} = 2 \times Pr(Z \ge |z|)$${#eq-z-test-pvalue}
+
+::::: Heads-up
+::: Heads-up-header
+Upper case $Z$ vs lower case $z$!
+:::
+
+::: Heads-up-container
+- The lower case $z$ in @eq-z-test-pvalue is the statistic computed from the sample (@eq-z-statistic).
+- The upper case $Z$ though is a notation to use for random variable.
+- This random variable follows a Normal distribution with mean zero and standard deviation of one.
+- Looking at the formula in @eq-z-test-pvalue, we are essentially calculating how likely it is to observe a value as extreme as $z$ under the null hypothesis - a Normal distribution with mean zero and standard deviation of one.
+:::
+:::::
+
+
+<br>
 
 ::::: Tip
 ::: Tip-header
-Tip:
+Interpreting the Test Statistic and p-value!
 :::
 
 ::: Tip-container
-Under the assumption that the null hypothesis is correct (i.e., $\mu_1 = \mu_2$), the test statistic $z$ follows the **standard normal distribution** that textbooks usually denote it by $N(0,1)$. The first element is mean (0) and the second one is the standard deviation (1).
+- Under the assumption that the null hypothesis is correct (i.e., $\mu_1 = \mu_2$), the test statistic $z$ follows the **standard normal distribution** that textbooks usually denote it by $N(0,1)$. The first element is mean (0) and the second one is the standard deviation (1).
 
-**Note:** The probability is multiplied by two because we are conducting a two-sided test (alternative hypothesis: $\mu_1 \neq \mu_2$). For a one-sided test (e.g., $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) this multiplication is not needed.
+- **Note:** The probability is multiplied by two because we are conducting a two-sided test (alternative hypothesis: $\mu_1 \neq \mu_2$). For a one-sided test (e.g., $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) this multiplication is not needed.
 
-We compare the $\textit{p-value}$ to our significance level $\alpha$. If the $\textit{p-value}$ is less than $\alpha$, then we have evidence against the null hypothesis. The reasoning is: assuming the null hypothesis is true, the test statistic should follow a standard normal distribution. A very small p-value means our observed $z$ is unlikely under this distribution, and so it is unlikely the null hypothesis is correct.
+- We compare the $\textit{p-value}$ to our significance level $\alpha$. If the $\textit{p-value}$ is less than $\alpha$, then we have evidence against the null hypothesis. 
+
+- The reasoning is: assuming the null hypothesis is true, the test statistic should follow a standard normal distribution. A very small $\textit{p-value}$ means our observed $z$ is unlikely under this distribution, and so it is unlikely the null hypothesis is correct.
 :::
 :::::
-
 
 
 ### How to run the two-sample `z-test` in `R` and `Python`
 
-The following examples show how to implement the two-sample `z-test` for independent samples with **known population variances** in both `R` and `Python` using the `Wage` data set.  
-
-::::: Heads-up
-::: Heads-up-header
-Important reminder!
-:::
-
-::: Heads-up-container
-
-- Note that we know the **population variances** $\sigma_1^2 = 75$ for high school graduates and $\sigma_2^2 = 60$ for college graduates from previous studies.  
-
-- The test statistic $z$ is calculated by `z.test` function from `BSDA` package which have a similar input and output to `t.test` function. 
-
-:::
-:::::
+The following examples show how to implement the two-sample `z-test` for independent samples with **known population variances** in both `R` and `Python` using the `Wage` data set. Note that we know the **population variances** $\sigma_1^2 = 75$ for high school graduates and $\sigma_2^2 = 60$ for college graduates.
 
 
 ::: {.panel-tabset}
@@ -993,15 +1020,21 @@ Important reminder!
 ### R Code
 
 ```{r}
-# Filter test_wage data to create two groups: High school graduates and college graduates
-hs_wages <- test_wage %>% filter(education == "2. HS Grad") %>% pull(wage)
-col_wages <- test_wage %>% filter(education == "4. College Grad") %>% pull(wage)
+# Filter test_wage data to create two groups: 
+# High school graduates and college graduates
+hs_wages <- test_wage %>% 
+  filter(education == 'High school graduate') %>% 
+  pull(wage)
+
+col_wages <- test_wage %>% 
+  filter(education == 'College graduate') %>% 
+  pull(wage)
 
 # Set the known population variances
 sigma2_hs <- 75
 sigma2_col <- 60
 
-# Run two-sample z-test with known variances using z.test function from BSDA package
+# Run two-sample z-test with known variances
 result <- z.test(
   x = hs_wages,
   y = col_wages,
@@ -1027,13 +1060,44 @@ write.csv(x = test_wage, file = 'data/test_wage.csv')
 ```{python}
 import pandas as pd
 import numpy as np
+from scipy.stats import norm
+
 
 # Read data set
 df = pd.read_csv('data/test_wage.csv')
+
+# Extract wages for high school graduates and college graduates
+hs_wages = df.loc[df['education'] == 'High school graduate', 'wage'].to_numpy()
+col_wages = df.loc[df['education'] == 'College graduate', 'wage'].to_numpy()
+
+# Sample sizes
+n1 = len(hs_wages)
+n2 = len(col_wages)
+
+# Sample means
+mean1 = np.mean(hs_wages)
+mean2 = np.mean(col_wages)
+
+# Standard deviations (square root of known variances)
+sigma1 = np.sqrt(75)
+sigma2 = np.sqrt(60)
+
+# Calculate standard error using known population std dev
+se = np.sqrt( (sigma1**2 / n1) + (sigma2**2 / n2) )
+
+# Calculate z-statistic
+z_stat = (mean1 - mean2) / se
+
+# Two-sided p-value
+p_value = 2 * norm.cdf(-abs(z_stat))
+
+# Print z-statistic and p-value
+print(f"Z-statistic: {z_stat}")
+print(f"P-value: {p_value}")
 ```
 :::
 
-In order to run the two-sample z-test with known population variances, we use the `z.test` function from the `BSDA` package in `R`. This function is designed to handle one and two sample `z-tests` when population standard deviations are known. The key arguments of `z.test` for a two-sample test are:
+In order to run the two-sample z-test with known population variances, we use the `z.test` function from the `BSDA` package in `R` which have a similar input and output to `t.test` function. This function is designed to handle one and two sample `z-tests` when population standard deviations are known. The key arguments of `z.test` for a two-sample test are:
 
 - `x`: a numeric vector of data values for group 1.
 - `y`: a numeric vector of data values for group 2.
@@ -1045,15 +1109,17 @@ In order to run the two-sample z-test with known population variances, we use th
 
 When you run the test, the output includes:
 
-- `statistic`: the calculated z test statistic.
-- `p.value`: the p-value for the test based on the standard normal distribution.
+- `statistic`: the calculated $z$ test statistic defined in @eq-z-statistic.
+- `p.value`: the p-value for the test based on the standard normal distribution, defined in @eq-z-test-pvalue.
 - `conf.int`: the confidence interval for the difference in means $\mu_1 - \mu_2$.
 - `estimate`: the sample means for each group.
 
-**Note:** The `z.test` function assumes that the population standard deviations are known and uses them directly to compute the test statistic and confidence interval. This differs from tests that estimate variance from the samples, such as `t-tests` that we have been studying so far.
+**Note:** The `z.test` function assumes that the population standard deviations are known and uses them directly to compute the test statistic and confidence interval. This differs from tests that estimate variance from the samples such as `t-tests` that we discussed in [Section @sec-t-test-ind-samples] and [Section @sec-welch-t-test-ind-samples].
 
 
 ### Storytelling
+
+In summary, these results tell us that the observed difference in wages is highly unlikely to have occurred by random chance if the true means were equal. Therefore, we conclude that college graduates earn significantly more than high school graduates on average.
 
 
 ## Two sample t-test for Paired Samples
