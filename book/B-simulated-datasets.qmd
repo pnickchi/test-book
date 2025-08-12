@@ -353,9 +353,38 @@ print_as_dt(head(py$ABn_customer_data, 100))
 
 ## Dataset: Two sample t-test for Paired Samples
 
-This dataset is used in @sec-t-test-paired-samples to elaborate on **Two sample t-test for Paired Samples**.
+This dataset is presented here and is being used in @sec-t-test-paired-samples to demonstrate the **paired-sample t-test** using a hypothetical scenario from medical research. Note that data is simulated and by no means should be considered for medical research or advice. 
+
+Consider a clinical investigation examining whether an innovative medication can lower LDL cholesterol levels in adults diagnosed with hypercholesterolemia which basically means having too much cholesterol in the blood. This can increase the risk of heart problems because cholesterol can build up in blood vessels and block blood flow. 
+
+The study monitors a group of $n=120$ participants over time, recording LDL cholesterol concentrations prior to treatment and again after an 8-week course of the drug. The outcome of interest is the LDL cholesterol measurement (in mg/dL), a widely used biomarker for cardiovascular risk. 
+
+Since each participant provides two observations (i.e. one before and one after treatment), the data are naturally paired (the same individual is measured two times), allowing the analysis to focus on **changes within individuals** rather than **differences between unrelated groups**. 
 
 ### Generative Modelling Process
+
+The simulated dataset reflects the following study characteristics:
+
+- **Baseline LDL levels:** Participants in the population have a mean pre-treatment LDL of 160 mg/dL, with individual variation.
+
+- **Expected treatment effect:** On average, LDL levels decline by 25 mg/dL after the intervention using new medication.
+
+- **Measurement variation:** Biological variability and measurement error introduce random fluctuations in LDL values, even within the same patient.
+
+Formally, for each participant $i$ the LDL before treatment follows a Normal distribution with mean = 160 mg/dL and a standard deviation of 4:
+
+$$\text{LDL}_{\text{before}, i} \sim \text{Normal}(160, 4^2)$$
+
+and for each participant $i$ the LDL after the treatment is a random value and is a combination of three elements as follows: 
+
+$$\text{LDL}_{\text{after}, i} = \text{LDL}_{\text{before}, i} - \Delta + \varepsilon_i$$
+
+where:
+
+- $\Delta = 25$ is the **average decrease** in LDL due to treatment
+
+- $\varepsilon_i \sim \text{Normal}(0, 6^2)$ represents additional variation specific to the after-treatment measurement.
+
 
 ### Code
 
@@ -364,13 +393,67 @@ This dataset is used in @sec-t-test-paired-samples to elaborate on **Two sample 
 ## **`R` Code**
 
 ``` {.r}
-#
+# set.seed for reproducibility
+set.seed(123)
+
+# Set number of participants
+n_patients <- 120   
+
+# Set the average decrease in LDL due to treatment
+Delta <- 25
+
+# Step 1: Generate LDL before treatment
+ldl_before <- rnorm(n_patients, mean = 160, sd = 4)
+
+# Step 2: Generate LDL after treatment
+ldl_after <- ldl_before - DELTA + rnorm(n_patients, mean = 0, sd = 6)
+
+# Create final dataset
+cholesterol_data <- data.frame(
+  patient_id = 1:n_patients,
+  LDL_before = round(ldl_before, 1),
+  LDL_after  = round(ldl_after, 1)
+)
+
+# Display first few observations
+head(cholesterol_data, 10)
 ```
 
 ## **`Python` Code**
 
 ``` {.python}
-#
+# Import required packages
+import numpy as np
+import pandas as pd
+
+# Set seed for reproducibility
+# Set seed for reproducibility
+# Note does not necessarily produce the same values as in R. 
+# Both languages uses different starting point when generating random sample. 
+# But the following code is guaranteed to generate the same data in Python.
+np.random.seed(123)
+
+# Number of participants
+n_patients = 120
+
+# Average decrease in LDL due to treatment
+Delta = 25
+
+# Step 1: Generate LDL before treatment
+ldl_before = np.random.normal(loc=160, scale=4, size=n_patients)
+
+# Step 2: Generate LDL after treatment
+ldl_after = ldl_before - Delta + np.random.normal(loc=0, scale=6, size=n_patients)
+
+# Create final dataset
+cholesterol_data = pd.DataFrame({
+    "patient_id": np.arange(1, n_patients + 1),
+    "LDL_before": np.round(ldl_before, 1),
+    "LDL_after": np.round(ldl_after, 1)
+})
+
+# Display first 10 rows
+print(cholesterol_data.head(10))
 ```
 
 :::
@@ -383,8 +466,30 @@ This dataset is used in @sec-t-test-paired-samples to elaborate on **Two sample 
 #| echo: false
 #| message: false
 
-set.seed(123)  # Seed for reproducibility
+# set.seed for reproducibility
+set.seed(123)
 
+# Set number of participants
+n_patients <- 120   
+
+# Set the average decrease in LDL due to treatment
+Delta <- 25
+
+# Step 1: Generate LDL before treatment
+ldl_before <- rnorm(n_patients, mean = 160, sd = 4)
+
+# Step 2: Generate LDL after treatment
+ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 6)
+
+# Create final dataset
+cholesterol_data <- data.frame(
+  patient_id = 1:n_patients,
+  LDL_before = round(ldl_before, 1),
+  LDL_after  = round(ldl_after, 1)
+)
+
+# Display first few observations
+head(cholesterol_data, 10)
 ```
 
 ## **`Python` Output**
@@ -393,11 +498,37 @@ set.seed(123)  # Seed for reproducibility
 #| echo: false
 #| message: false
 
-```
+# Import required packages
+import numpy as np
+import pandas as pd
 
-```{r}
-#| echo: false
+# Set seed for reproducibility
+# Note does not necessarily produce the same values as in R. 
+# Both languages uses different starting point when generating random sample. 
+# But the following code is guaranteed to generate the same data in Python.
+np.random.seed(123)
 
+# Number of participants
+n_patients = 120
+
+# Average decrease in LDL due to treatment
+Delta = 25
+
+# Step 1: Generate LDL before treatment
+ldl_before = np.random.normal(loc=160, scale=4, size=n_patients)
+
+# Step 2: Generate LDL after treatment
+ldl_after = ldl_before - Delta + np.random.normal(loc=0, scale=6, size=n_patients)
+
+# Create final dataset
+cholesterol_data = pd.DataFrame({
+    "patient_id": np.arange(1, n_patients + 1),
+    "LDL_before": np.round(ldl_before, 1),
+    "LDL_after": np.round(ldl_after, 1)
+})
+
+# Display first 10 rows
+print(cholesterol_data.head(10))
 ```
 
 :::
