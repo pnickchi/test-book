@@ -351,3 +351,53 @@ print_as_dt(head(py$ABn_customer_data, 100))
 :::
 
 
+## Dataset: Two sample t-test for Paired Samples
+
+This dataset is used in @sec-t-test-paired-samples to elaborate on **Two sample t-test for Paired Samples**.
+
+### Generative Modelling Process
+
+### Code
+
+::: {.panel-tabset}
+
+## **`R` Code**
+
+``` {.r}
+#
+```
+
+## **`Python` Code**
+
+``` {.python}
+#
+```
+
+:::
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| echo: false
+#| message: false
+
+set.seed(123)  # Seed for reproducibility
+
+```
+
+## **`Python` Output**
+
+```{python}
+#| echo: false
+#| message: false
+
+```
+
+```{r}
+#| echo: false
+
+```
+
+:::

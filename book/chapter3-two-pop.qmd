@@ -1122,11 +1122,13 @@ When you run the test, the output includes:
 In summary, these results tell us that the observed difference in wages is highly unlikely to have occurred by random chance if the true means were equal. Therefore, we conclude that college graduates earn significantly more than high school graduates on average.
 
 
-## Two sample t-test for Paired Samples
+## Two sample t-test for Paired Samples {#sec-t-test-paired-samples}
 
 ### Review
 
-In this section, we discuss the two sample t-test for paired samples which is used when we have two sets of related observations. Unlike the two-sample t-tests for independent samples that we discussed so far (such as the Student’s or Welch’s t-test), the paired t-test is appropriate when the two samples are dependent. This means each observation in one sample can be naturally paired with an observation in the other. Examples of such are before-and-after measurements on the same subjects, or matched subjects across two different conditions. The key idea is that the test evaluates whether the mean difference between paired observations is significantly different from zero. 
+In this section, we discuss the two sample t-test for paired samples which is used when we have two sets of related observations. Unlike the two-sample t-tests for independent samples that we discussed so far (such as the Student’s or Welch’s t-test), the paired t-test is appropriate when the two samples are dependent. This means each observation in one sample can be naturally paired with an observation in the other. 
+
+Examples of such are before-and-after measurements on the same subjects, or matched subjects across two different conditions. The key idea is that the test evaluates whether the mean difference between paired observations is significantly different from zero. 
 
 
 ::::: Heads-up
