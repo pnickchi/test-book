@@ -134,7 +134,7 @@ To answer this question, we obtain the data set which is available in `ISLR` pac
 auto_data <- Auto
 
 # Filter rows to cars with 4 or 8 cylinders
-auto_data <- auto_data %>% filter(cylinders %in% c(4,8) )
+auto_data <- auto_data |>filter(cylinders %in% c(4,8) )
 ```
 
 Finally, we randomly create test and train set from this data set. We use a proportion of 50-50 between train and test.   
@@ -181,13 +181,13 @@ ggplot(train_auto, aes(x = horsepower)) +
 We also look at some descriptive statistics of horsepower in both groups for better understanding of data. The descriptive statistics in cars with 4 cylinders:
 
 ```{r}
-summary(train_auto %>% filter(cylinders == 4) %>% select(horsepower))
+summary(train_auto |>filter(cylinders == 4) |>select(horsepower))
 ```
 
 and with 8 cylinders:
 
 ```{r}
-summary(train_auto %>% filter(cylinders == 8) %>% select(horsepower))
+summary(train_auto |>filter(cylinders == 8) |>select(horsepower))
 ```
 
 Looking at summary statistics, there is a bit of overlap between distribution of `horsepower` among two groups but it does not seem to be much. In fact they seem to be quite separated. Also there is a clear different in their mean and the following plot also confirms this:
@@ -371,10 +371,10 @@ The following lines of code in tabset show you how to run the test in `R` or `Py
 
 ```{r}
 # Create a vector to hold horsepower values for cars with 4 cylinders
-cylinders_4 <- test_auto %>% filter(cylinders == 4) %>% select(horsepower)
+cylinders_4 <- test_auto |>filter(cylinders == 4) |>select(horsepower)
 
 # Create a vector to hold horsepower values for cars with 8 cylinders
-cylinders_8 <- test_auto %>% filter(cylinders == 8) %>% select(horsepower)
+cylinders_8 <- test_auto |>filter(cylinders == 8) |>select(horsepower)
 
 # Run the test
 t.test(x = cylinders_4, y = cylinders_8, var.equal = TRUE)
@@ -485,7 +485,7 @@ To answer the question, we obtain the data set which is available in `ISLR` pack
 auto_data <- Auto
 
 # Filter rows to cars with 4 or 8 cylinders
-auto_data <- auto_data %>% filter(cylinders %in% c(4,8) )
+auto_data <- auto_data |>filter(cylinders %in% c(4,8) )
 ```
 
 
@@ -533,13 +533,13 @@ ggplot(train_auto, aes(x = horsepower)) +
 The descriptive statistics in cars with 4 cylinders:
 
 ```{r}
-summary(train_auto %>% filter(cylinders == 4) %>% select(horsepower))
+summary(train_auto |>filter(cylinders == 4) |>select(horsepower))
 ```
 
 and with 8 cylinders:
 
 ```{r}
-summary(train_auto %>% filter(cylinders == 8) %>% select(horsepower))
+summary(train_auto |>filter(cylinders == 8) |>select(horsepower))
 ```
 
 Our conclusion remains the same. Looking at summary statistics, there is a bit of overlap between distribution of `horsepower` among two groups but it does not seem to be much. In fact they seem to be quite separated. Also there is a clear different in their mean and the following plot also confirms this:
@@ -677,10 +677,10 @@ A quick reminder!
 
 ```{r}
 # Create a vector to hold horsepower values for cars with 4 cylinders
-cylinders_4 <- test_auto %>% filter(cylinders == 4) %>% select(horsepower)
+cylinders_4 <- test_auto |>filter(cylinders == 4) |>select(horsepower)
 
 # Create a vector to hold horsepower values for cars with 8 cylinders
-cylinders_8 <- test_auto %>% filter(cylinders == 8) %>% select(horsepower)
+cylinders_8 <- test_auto |>filter(cylinders == 8) |>select(horsepower)
 
 # Run the test
 t.test(x = cylinders_4, y = cylinders_8, var.equal = FALSE)
@@ -831,7 +831,7 @@ wage_data <- Wage
 # and then rename the levels to:
 # - HS Grad --> High school graduate
 # - College Grad --> College graduate
-wage_data <- wage_data %>% 
+wage_data <- wage_data |>
   filter(education %in% c('2. HS Grad', '4. College Grad')) %>%
   mutate(education = recode(education,
                             '2. HS Grad' = 'High school graduate',
@@ -884,17 +884,17 @@ We also look at some descriptive statistics of `wage` in both groups for better 
 
 
 ```{r}
-summary(train_wage %>% 
-          filter(education == 'High school graduate') %>% 
+summary(train_wage |>
+          filter(education == 'High school graduate') |>
           select(wage))
 ```
 
 and for college graduates:
 
 ```{r}
-summary(train_wage %>% 
+summary(train_wage |>
           filter(education == 'College graduate') 
-        %>% select(wage))
+        |>select(wage))
 ```
 
 Looking at these summary statistics, we can see that the wage distributions for the two education groups have some overlap, and there does not appear to be a large difference in their centers. In fact, the mean wage for college graduates is only slightly higher, and this is not immediately obvious from the plots. 
@@ -1022,12 +1022,12 @@ The following examples show how to implement the two-sample `z-test` for indepen
 ```{r}
 # Filter test_wage data to create two groups: 
 # High school graduates and college graduates
-hs_wages <- test_wage %>% 
-  filter(education == 'High school graduate') %>% 
+hs_wages <- test_wage |>
+  filter(education == 'High school graduate') |>
   pull(wage)
 
-col_wages <- test_wage %>% 
-  filter(education == 'College graduate') %>% 
+col_wages <- test_wage |>
+  filter(education == 'College graduate') |>
   pull(wage)
 
 # Set the known population variances
@@ -1097,6 +1097,7 @@ print(f"P-value: {p_value}")
 ```
 :::
 
+
 In order to run the two-sample z-test with known population variances, we use the `z.test` function from the `BSDA` package in `R` which have a similar input and output to `t.test` function. This function is designed to handle one and two sample `z-tests` when population standard deviations are known. The key arguments of `z.test` for a two-sample test are:
 
 - `x`: a numeric vector of data values for group 1.
@@ -1115,6 +1116,8 @@ When you run the test, the output includes:
 - `estimate`: the sample means for each group.
 
 **Note:** The `z.test` function assumes that the population standard deviations are known and uses them directly to compute the test statistic and confidence interval. This differs from tests that estimate variance from the samples such as `t-tests` that we discussed in [Section @sec-t-test-ind-samples] and [Section @sec-welch-t-test-ind-samples].
+
+
 
 
 ### Storytelling
@@ -1168,6 +1171,102 @@ In other words, we test the following hypothesis:
 $$H_0: \mu_D = 0 \quad \text{versus} \quad H_A: \mu_D \ne 0$$ 
 
 
+### Study Design
+
+Consider a clinical investigation examining whether an innovative medication can lower LDL cholesterol levels in adults diagnosed with hypercholesterolemia which basically means having too much cholesterol in the blood. This can increase the risk of heart problems because cholesterol can build up in blood vessels and block blood flow. 
+
+The study monitors a group of $n=120$ participants over time, recording LDL cholesterol concentrations prior to treatment and again after an 8-week course of the drug. The outcome of interest is the LDL cholesterol measurement (in mg/dL), a widely used biomarker for cardiovascular risk.
+
+
+### Data Collection and Wrangling
+
+In this section, we will work with a simulated dataset that has been specifically created to illustrate the concept of paired t-test for this example. In other words, the dataset for this study is generated under a known scenario. The code below generates the dataset we will be using. While running these lines is not strictly necessary if you are only interested in following along with the analysis, we recommend reading [@sec-simulated-datasets] for a deeper understanding of how and why the data were generated in this way.
+
+```{r}
+# set.seed for reproducibility
+set.seed(123)
+
+# Set number of participants
+n_patients <- 120   
+
+# Set the average decrease in LDL due to treatment
+Delta <- 15
+
+# Step 1: Generate LDL before treatment
+ldl_before <- rnorm(n_patients, mean = 160, sd = 5)
+
+# Step 2: Generate LDL after treatment
+ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 5)
+
+# Create final dataset
+cholesterol_data <- data.frame(
+  patient_id = 1:n_patients,
+  LDL_before = round(ldl_before, 1),
+  LDL_after  = round(ldl_after, 1)
+)
+
+# Display first few observations
+head(cholesterol_data, 10)
+```
+
+
+Note that `cholesterol_data` contains two columns: `LDL_before`, which records each patient's LDL level before taking the new medication, and `LDL_after`, which records the LDL level after taking the new medication. This setup clearly illustrates the paired nature of the data: each row corresponds to a single individual, with measurements taken at two different points in time: **before** and **after** the treatment. Because the observations are linked within each person, the analysis must account for this pairing rather than treating the two sets of values as independent samples.
+
+The next step in this type of analysis is to calculate the paired differences for each individual. If the medication is effective, we expect the difference between the after and before measurements to be substantially different from zero; if it is not effective, the differences should be close to zero on average. The code below adds a new column, LDL_diff, which stores the difference `LDL_diff = LDL_after - LDL_before` for each patient:
+
+```{r}
+cholesterol_data <- cholesterol_data |> 
+  mutate(LDL_diff = LDL_after - LDL_before)
+```
+
+Finally, we randomly split the `cholesterol_data` data set into training and testing sets, using a 50-50 proportion between train and test.
+
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Splitting the data set into train and test sets
+train_indices     <- sample(seq_len(nrow(cholesterol_data)), size = 0.50 * nrow(cholesterol_data))
+train_cholesterol <- cholesterol_data[train_indices, ]
+test_cholesterol  <- cholesterol_data[-train_indices, ]
+```
+
+
+### Exploratory Data Analysis
+
+Before performing any formal statistical tests, it is important to explore the dataset to gain an initial understanding of its characteristics. For paired data like this, our main objectives is to visualize the paired differences to see whether LDL levels tend to decrease after the medication. To address this objective, we can create a density of the paired differences. If the center of this distribution (e.g., the mean) is far from zero, it may indicate that the medication is effective.
+
+
+```{r}
+#| label: fig-density-plot-ldl-diff
+#| fig-cap: "Density Plot of Paired LDL Levels Differences"
+#| warning: false
+#| echo: false
+#| fig.height: 8
+#| fig.width: 14
+ggplot(train_cholesterol, aes(x = LDL_diff)) +
+  geom_density(alpha = 0.4, fill = 'seagreen4') +
+  labs(title = '',
+    x = 'LDL Level (mg/dL)',
+    y = 'Density') +
+  theme(
+    axis.text = element_text(size = 15.5),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20, vjust = 0.5),
+    strip.text = element_text(size = 20))
+```
+
+From the density plot, most LDL differences appear to fall below zero with the distribution noticeably centered away from it. This suggests a general decrease in LDL levels after treatment, but the observation should be verified through formal statistical testing. From this plot, it is not clear if this reduction is significant or not.
+
+
+### Testing Settings
+
+We use a significance level of $\alpha = 0.05$ to conduct the hypothesis test. Since our data represent a sample from a larger population of patients, we define the following population parameter:
+
+- $\mu_{d}$ is the mean difference in LDL levels (after treatment – before treatment) for all patients in the population. 
+
+Our goal is to test whether the population mean difference $\mu_{d}$ is equal to zero. This would indicate no change in LDL levels after treatment versus the alternative that $\mu_{d}$ is not zero which suggests a treatment effect.
+
 ::::: Tip
 ::: Tip-header
 What is $\mu_D$ as a parameter here?
@@ -1184,19 +1283,34 @@ What is $\mu_D$ as a parameter here?
 :::::
 
 
-The test statistic for this hypothesis testing is:
+### Hypothesis Definitions
 
-$$t = \frac{\bar{D}}{s_D / \sqrt{n}}$$
+We now define the null and alternative hypotheses. Recall the main question we posed:
+
+**Is the mean LDL level after treatment statistically different from the mean LDL level before treatment for the same patients?**
+
+Because the measurements are paired, this question is equivalent to asking whether the mean difference in LDL levels (*after - before*) is zero. This leads to the following hypotheses:
+
+$$H_0: \mu_d = 0 \quad \text{(no mean change in LDL levels)}$$
+
+$$H_a: \mu_d \neq 0 \quad \text{(mean LDL levels change after treatment)}$$
+
+
+### Test Flavour and Components
+
+To test this hypothesis, we use the **paired t-test**, which compares the mean difference in LDL levels before and after treatment within the same individuals. Note that the test is done on the paired differences. The test accounts for the fact that the measurements are not independent but rather are paired. The test statistic for this test is computed as:
+
+$$t = \frac{\bar{d}}{s_d / \sqrt{n}}$${#eq-t-statistic-paired}
 
 where:
 
--   $\bar{D}$ is the sample mean of the differences,
--   $s_D$ is the sample standard deviation of the differences,
--   $n$ is the number of pairs.
+- $\bar{d}$ is the mean of the differences in LDL levels (post-treatment minus pre-treatment) for all participants.
+- $s_d$ is the standard deviation of these differences and is computed as:
 
-The standard deviation of the differences is calculated as:
+$s_d = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (d_i - \bar{d})^2}$
 
-$$s_D = \sqrt{ \frac{1}{n - 1} \sum_{i=1}^n (D_i - \bar{D})^2 }$$
+- $n$ is the number of paired observations (participants).
+
 
 Under the null hypothesis, the test statistic follows a t-distribution with $n-1$ degrees of freedom. For this test, we can compute the $\textit{p-value}$ as:
 
@@ -1222,107 +1336,147 @@ If the normality assumption is also not satisfied (e.g., due to skewed distribut
 :::::
 
 
-### Study Design
+### Inferential Conclusions
 
-Consider a clinical investigation examining whether an innovative medication can lower LDL cholesterol levels in adults diagnosed with hypercholesterolemia which basically means having too much cholesterol in the blood. This can increase the risk of heart problems because cholesterol can build up in blood vessels and block blood flow. 
-
-The study monitors a group of $n=120$ participants over time, recording LDL cholesterol concentrations prior to treatment and again after an 8-week course of the drug. The outcome of interest is the LDL cholesterol measurement (in mg/dL), a widely used biomarker for cardiovascular risk.
+- TBD
 
 
-### Data Collection and Wrangling
+### How to run the two-sample paired t-test in `R` and `Python`
 
-In this section, we will work with a simulated dataset that has been specifically created to illustrate the concept of paired t-test for this example. In other words, the dataset for this study is generated under a known scenario. The code below generates the dataset we will be using. While running these lines is not strictly necessary if you are only interested in following along with the analysis, we recommend reading [@sec-simulated-datasets] for a deeper understanding of how and why the data were generated in this way.
+::: {.panel-tabset}
 
-```{r}
-# set.seed for reproducibility
-set.seed(123)
-
-# Set number of participants
-n_patients <- 120   
-
-# Set the average decrease in LDL due to treatment
-Delta <- 25
-
-# Step 1: Generate LDL before treatment
-ldl_before <- rnorm(n_patients, mean = 160, sd = 5)
-
-# Step 2: Generate LDL after treatment
-ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 15)
-
-# Create final dataset
-cholesterol_data <- data.frame(
-  patient_id = 1:n_patients,
-  LDL_before = round(ldl_before, 1),
-  LDL_after  = round(ldl_after, 1)
-)
-
-# Display first few observations
-head(cholesterol_data, 10)
-```
-
-
-Note that `cholesterol_data` contains two columns: `LDL_before`, which records each patient's LDL level before taking the new medication, and `LDL_after`, which records the LDL level after taking the new medication. This setup clearly illustrates the paired nature of the data: each row corresponds to a single individual, with measurements taken at two different points in time: **before** and **after** the treatment. Because the observations are linked within each person, the analysis must account for this pairing rather than treating the two sets of values as independent samples. Once we have dataset collected, we can now move on to some EDA.
-
-Having the dataset in its current wide format makes it easy to see the paired nature of the measurements, but this structure is not ideal for the next steps of our analysis especially for exploratory data analysis (EDA). To prepare the data for plotting and statistical testing, we first need to reshape it into a long format. The `pivot_longer` function from the `tidyverse` is the key tool for this transformation.
+### R Code
 
 ```{r}
-cholesterol_long <- cholesterol_data %>% 
-  pivot_longer(cols = c(LDL_before, LDL_after),
-               names_to = 'group',
-               values_to = 'LDL')
+
+# Extract LDL measurements before and after treatment
+ldl_before <- test_cholesterol %>% pull(LDL_before)
+ldl_after  <- test_cholesterol %>% pull(LDL_after)
+
+# Run paired t-test
+result <- t.test(x = ldl_before, y = ldl_after, paired = TRUE, alternative = "two.sided")
+
+# Print results
+print(result)
 ```
 
 
 ```{r}
-head(cholesterol_long, n = 6)
+#| label: save_data_ldl
+#| include: false
+write.csv(x = test_cholesterol, file = 'data/test_cholesterol.csv')
 ```
 
 
-**Note:** This format is great for plotting in `ggplot2` or running paired analyses later.
+### Python Code
 
+```{python}
+import pandas as pd
+from scipy.stats import ttest_rel
 
-### Exploratory Data Analysis
+# Load dataset
+df = pd.read_csv('data/test_cholesterol.csv')
 
-```{r}
-#| label: fig-density-plot-ldl-before-after
-#| fig-cap: "Density Plot of LDL Levels Before and After Treatment"
-#| warning: false
-#| echo: false
-#| fig.height: 8
-#| fig.width: 14
-ggplot(cholesterol_long, aes(x = LDL, fill = group)) +
-  geom_density(alpha = 0.4) +
-  labs(title = '',
-    x = 'LDL Level (mg/dL)',
-    y = 'Density') +
-  theme(
-    axis.text = element_text(size = 15.5),
-    axis.title.x = element_text(size = 20),
-    axis.title.y = element_text(size = 20, vjust = 0.5),
-    strip.text = element_text(size = 20)
-    )
+# Extract LDL measurements before and after treatment
+ldl_before = df['LDL_before'].to_numpy()
+ldl_after = df['LDL_after'].to_numpy()
+
+# Run paired t-test
+t_stat, p_value = ttest_rel(ldl_before, ldl_after)
+
+# Print results
+print(f"T-statistic: {t_stat}")
+print(f"P-value: {p_value}")
 ```
 
+:::
+
+
+**Details about `R` code and output**
+
+Key arguments of the t.test function in R for a paired test are:
+
+- `x`: numeric vector of measurements before treatment.
+
+- `y`: numeric vector of measurements after treatment.
+
+- `paired = TRUE`: indicates that the samples are related.
+
+- `alternative`: specifies the type of test; "two.sided" tests for any change in LDL.
+
+The output includes:
+
+- `statistic`: the calculated t-test statistic.
+
+- `p.value`: the p-value for evaluating the significance of the observed difference.
+
+- `conf.int`: confidence interval for the mean difference in LDL levels.
+
+- `estimate`: the average LDL levels before and after treatment.
+
+
+**Note:** The `paired t-test` assumes that the differences between pre and post-treatment measurements are approximately normally distributed. Unlike independent sample tests, this test directly accounts for the correlation between repeated measurements on the same patient.
+
+
+**Details about `Python` code and output**
+
+When running a paired t-test in Python using `scipy.stats.ttest_rel`, the main components are:
+
+- `x`: numeric array of measurements before treatment (`ldl_before`).
+
+- `y`: numeric array of measurements after treatment (`ldl_after`).
+
+The output includes:
+
+- `t_stat`: the computed t-test statistic for the paired differences.
+
+- `p_value`: the probability of observing the data if the null hypothesis (no difference) is true.
+
+### Storytelling
+
+- TBD
 
 
 ## Tests for Two Population Proportions
 
+- Under development
+
 ### Review
+
+- Under development
 
 ### Study Design
 
+- Under development
+
 ### Data Collection and Wrangling
+
+- Under development
 
 ### Exploratory Data Analysis
 
+- Under development
+
 ### Testing Settings
+
+- Under development
 
 ### Hypothesis Definitions
 
+- Under development
+
 ### Test Flavour and Components
+
+- Under development
 
 ### Inferential Conclusions
 
+- Under development
+
 ### How to run the two-sample z-test in `R` and `Python`
 
+- Under development
+
 ### Storytelling
+
+- Under development
