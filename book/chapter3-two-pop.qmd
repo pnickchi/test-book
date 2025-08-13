@@ -1174,7 +1174,12 @@ What is $\mu_D$ as a parameter here?
 :::
 
 ::: Tip-container
-Here the notation of $\mu_D$ is the population mean of the differences of $D_i$ which is an unknown parameter in the population. To test this hypothesis, we use the paired t-test, which is essentially a one-sample t-test on the differences $D_1, D_2, \ldots, D_n$. We test $\mu_D=0$ because if there is an actual effect of diet on blood pressure, we expect the null hypothesis to be rejected.
+
+- Here the notation of $\mu_D$ is the population mean of the differences of $D_i$ which is an unknown parameter in the population. 
+
+- To test this hypothesis, we use the paired t-test, which is essentially a one-sample t-test on the differences $D_1, D_2, \ldots, D_n$. 
+
+- We test $\mu_D=0$ because if there is an actual effect of diet on blood pressure, we expect the null hypothesis to be rejected.
 :::
 :::::
 

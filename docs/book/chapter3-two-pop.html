@@ -309,6 +309,8 @@ window.Quarto = {
   <ul>
 <li><a href="#review-3" id="toc-review-3" class="nav-link" data-scroll-target="#review-3"><span class="header-section-number">3.4.1</span> Review</a></li>
   <li><a href="#study-design-3" id="toc-study-design-3" class="nav-link" data-scroll-target="#study-design-3"><span class="header-section-number">3.4.2</span> Study Design</a></li>
+  <li><a href="#data-collection-and-wrangling-3" id="toc-data-collection-and-wrangling-3" class="nav-link" data-scroll-target="#data-collection-and-wrangling-3"><span class="header-section-number">3.4.3</span> Data Collection and Wrangling</a></li>
+  <li><a href="#exploratory-data-analysis-1" id="toc-exploratory-data-analysis-1" class="nav-link" data-scroll-target="#exploratory-data-analysis-1"><span class="header-section-number">3.4.4</span> Exploratory Data Analysis</a></li>
   </ul>
 </li>
   <li>
@@ -316,8 +318,8 @@ window.Quarto = {
   <ul>
 <li><a href="#review-4" id="toc-review-4" class="nav-link" data-scroll-target="#review-4"><span class="header-section-number">3.5.1</span> Review</a></li>
   <li><a href="#study-design-4" id="toc-study-design-4" class="nav-link" data-scroll-target="#study-design-4"><span class="header-section-number">3.5.2</span> Study Design</a></li>
-  <li><a href="#data-collection-and-wrangling-3" id="toc-data-collection-and-wrangling-3" class="nav-link" data-scroll-target="#data-collection-and-wrangling-3"><span class="header-section-number">3.5.3</span> Data Collection and Wrangling</a></li>
-  <li><a href="#exploratory-data-analysis-1" id="toc-exploratory-data-analysis-1" class="nav-link" data-scroll-target="#exploratory-data-analysis-1"><span class="header-section-number">3.5.4</span> Exploratory Data Analysis</a></li>
+  <li><a href="#data-collection-and-wrangling-4" id="toc-data-collection-and-wrangling-4" class="nav-link" data-scroll-target="#data-collection-and-wrangling-4"><span class="header-section-number">3.5.3</span> Data Collection and Wrangling</a></li>
+  <li><a href="#exploratory-data-analysis-2" id="toc-exploratory-data-analysis-2" class="nav-link" data-scroll-target="#exploratory-data-analysis-2"><span class="header-section-number">3.5.4</span> Exploratory Data Analysis</a></li>
   <li><a href="#testing-settings-3" id="toc-testing-settings-3" class="nav-link" data-scroll-target="#testing-settings-3"><span class="header-section-number">3.5.5</span> Testing Settings</a></li>
   <li><a href="#hypothesis-definitions-3" id="toc-hypothesis-definitions-3" class="nav-link" data-scroll-target="#hypothesis-definitions-3"><span class="header-section-number">3.5.6</span> Hypothesis Definitions</a></li>
   <li><a href="#test-flavour-and-components-3" id="toc-test-flavour-and-components-3" class="nav-link" data-scroll-target="#test-flavour-and-components-3"><span class="header-section-number">3.5.7</span> Test Flavour and Components</a></li>
@@ -1365,7 +1367,11 @@ mean of x mean of y
 <p>What is <span class="math inline">\(\mu_D\)</span> as a parameter here?</p>
 </div>
 <div class="Tip-container">
-<p>Here the notation of <span class="math inline">\(\mu_D\)</span> is the population mean of the differences of <span class="math inline">\(D_i\)</span> which is an unknown parameter in the population. To test this hypothesis, we use the paired t-test, which is essentially a one-sample t-test on the differences <span class="math inline">\(D_1, D_2, \ldots, D_n\)</span>. We test <span class="math inline">\(\mu_D=0\)</span> because if there is an actual effect of diet on blood pressure, we expect the null hypothesis to be rejected.</p>
+<ul>
+<li><p>Here the notation of <span class="math inline">\(\mu_D\)</span> is the population mean of the differences of <span class="math inline">\(D_i\)</span> which is an unknown parameter in the population.</p></li>
+<li><p>To test this hypothesis, we use the paired t-test, which is essentially a one-sample t-test on the differences <span class="math inline">\(D_1, D_2, \ldots, D_n\)</span>.</p></li>
+<li><p>We test <span class="math inline">\(\mu_D=0\)</span> because if there is an actual effect of diet on blood pressure, we expect the null hypothesis to be rejected.</p></li>
+</ul>
 </div>
 </div>
 <p>The test statistic for this hypothesis testing is:</p>
@@ -1398,16 +1404,96 @@ mean of x mean of y
 </div>
 </section><section id="study-design-3" class="level3" data-number="3.4.2"><h3 data-number="3.4.2" class="anchored" data-anchor-id="study-design-3">
 <span class="header-section-number">3.4.2</span> Study Design</h3>
-<p>We will be using <code>PrisonStress</code> data set from <code>PairedData</code> package in this section</p>
+<p>Consider a clinical investigation examining whether an innovative medication can lower LDL cholesterol levels in adults diagnosed with hypercholesterolemia which basically means having too much cholesterol in the blood. This can increase the risk of heart problems because cholesterol can build up in blood vessels and block blood flow.</p>
+<p>The study monitors a group of <span class="math inline">\(n=120\)</span> participants over time, recording LDL cholesterol concentrations prior to treatment and again after an 8-week course of the drug. The outcome of interest is the LDL cholesterol measurement (in mg/dL), a widely used biomarker for cardiovascular risk.</p>
+</section><section id="data-collection-and-wrangling-3" class="level3" data-number="3.4.3"><h3 data-number="3.4.3" class="anchored" data-anchor-id="data-collection-and-wrangling-3">
+<span class="header-section-number">3.4.3</span> Data Collection and Wrangling</h3>
+<p>In this section, we will work with a simulated dataset that has been specifically created to illustrate the concept of paired t-test for this example. In other words, the dataset for this study is generated under a known scenario. The code below generates the dataset we will be using. While running these lines is not strictly necessary if you are only interested in following along with the analysis, we recommend reading <a href="B-simulated-datasets.html" class="quarto-xref"><span>Appendix B</span></a> for a deeper understanding of how and why the data were generated in this way.</p>
+<div class="cell">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># set.seed for reproducibility</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Set number of participants</span></span>
+<span><span class="va">n_patients</span> <span class="op">&lt;-</span> <span class="fl">120</span>   </span>
+<span></span>
+<span><span class="co"># Set the average decrease in LDL due to treatment</span></span>
+<span><span class="va">Delta</span> <span class="op">&lt;-</span> <span class="fl">25</span></span>
+<span></span>
+<span><span class="co"># Step 1: Generate LDL before treatment</span></span>
+<span><span class="va">ldl_before</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">160</span>, sd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Step 2: Generate LDL after treatment</span></span>
+<span><span class="va">ldl_after</span> <span class="op">&lt;-</span> <span class="va">ldl_before</span> <span class="op">-</span> <span class="va">Delta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create final dataset</span></span>
+<span><span class="va">cholesterol_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  patient_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">n_patients</span>,</span>
+<span>  LDL_before <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">ldl_before</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  LDL_after  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">ldl_after</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Display first few observations</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cholesterol_data</span>, <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   patient_id LDL_before LDL_after
+1           1      157.2     134.0
+2           2      158.8     119.6
+3           3      167.8     135.4
+4           4      160.4     131.5
+5           5      160.6     163.3
+6           6      168.6     133.8
+7           7      162.3     140.8
+8           8      153.7     129.8
+9           9      156.6     117.1
+10         10      157.8     131.7</code></pre>
+</div>
+</div>
+<p>Note that <code>cholesterol_data</code> contains two columns: <code>LDL_before</code>, which records each patient’s LDL level before taking the new medication, and <code>LDL_after</code>, which records the LDL level after taking the new medication. This setup clearly illustrates the paired nature of the data: each row corresponds to a single individual, with measurements taken at two different points in time: <strong>before</strong> and <strong>after</strong> the treatment. Because the observations are linked within each person, the analysis must account for this pairing rather than treating the two sets of values as independent samples. Once we have dataset collected, we can now move on to some EDA.</p>
+<p>Having the dataset in its current wide format makes it easy to see the paired nature of the measurements, but this structure is not ideal for the next steps of our analysis especially for exploratory data analysis (EDA). To prepare the data for plotting and statistical testing, we first need to reshape it into a long format. The <code>pivot_longer</code> function from the <code>tidyverse</code> is the key tool for this transformation.</p>
+<div class="cell">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cholesterol_long</span> <span class="op">&lt;-</span> <span class="va">cholesterol_data</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">LDL_before</span>, <span class="va">LDL_after</span><span class="op">)</span>,</span>
+<span>               names_to <span class="op">=</span> <span class="st">'group'</span>,</span>
+<span>               values_to <span class="op">=</span> <span class="st">'LDL'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cholesterol_long</span>, n <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  patient_id group        LDL
+       &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
+1          1 LDL_before  157.
+2          1 LDL_after   134 
+3          2 LDL_before  159.
+4          2 LDL_after   120.
+5          3 LDL_before  168.
+6          3 LDL_after   135.</code></pre>
+</div>
+</div>
+<p><strong>Note:</strong> This format is great for plotting in <code>ggplot2</code> or running paired analyses later.</p>
+</section><section id="exploratory-data-analysis-1" class="level3" data-number="3.4.4"><h3 data-number="3.4.4" class="anchored" data-anchor-id="exploratory-data-analysis-1">
+<span class="header-section-number">3.4.4</span> Exploratory Data Analysis</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-density-plot-ldl-before-after" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-density-plot-ldl-before-after-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter3-two-pop_files/figure-html/fig-density-plot-ldl-before-after-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-density-plot-ldl-before-after-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.8: Density Plot of LDL Levels Before and After Treatment
+</figcaption></figure>
+</div>
+</div>
+</div>
 </section></section><section id="tests-for-two-population-proportions" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="tests-for-two-population-proportions">
 <span class="header-section-number">3.5</span> Tests for Two Population Proportions</h2>
 <section id="review-4" class="level3" data-number="3.5.1"><h3 data-number="3.5.1" class="anchored" data-anchor-id="review-4">
 <span class="header-section-number">3.5.1</span> Review</h3>
 </section><section id="study-design-4" class="level3" data-number="3.5.2"><h3 data-number="3.5.2" class="anchored" data-anchor-id="study-design-4">
 <span class="header-section-number">3.5.2</span> Study Design</h3>
-</section><section id="data-collection-and-wrangling-3" class="level3" data-number="3.5.3"><h3 data-number="3.5.3" class="anchored" data-anchor-id="data-collection-and-wrangling-3">
+</section><section id="data-collection-and-wrangling-4" class="level3" data-number="3.5.3"><h3 data-number="3.5.3" class="anchored" data-anchor-id="data-collection-and-wrangling-4">
 <span class="header-section-number">3.5.3</span> Data Collection and Wrangling</h3>
-</section><section id="exploratory-data-analysis-1" class="level3" data-number="3.5.4"><h3 data-number="3.5.4" class="anchored" data-anchor-id="exploratory-data-analysis-1">
+</section><section id="exploratory-data-analysis-2" class="level3" data-number="3.5.4"><h3 data-number="3.5.4" class="anchored" data-anchor-id="exploratory-data-analysis-2">
 <span class="header-section-number">3.5.4</span> Exploratory Data Analysis</h3>
 </section><section id="testing-settings-3" class="level3" data-number="3.5.5"><h3 data-number="3.5.5" class="anchored" data-anchor-id="testing-settings-3">
 <span class="header-section-number">3.5.5</span> Testing Settings</h3>
