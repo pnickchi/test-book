@@ -371,9 +371,9 @@ The simulated dataset reflects the following study characteristics:
 
 - **Measurement variation:** Biological variability and measurement error introduce random fluctuations in LDL values, even within the same patient.
 
-Formally, for each participant $i$ the LDL before treatment follows a Normal distribution with mean = 160 mg/dL and a standard deviation of 4:
+Formally, for each participant $i$ the LDL before treatment follows a Normal distribution with mean = 160 mg/dL and a standard deviation of 5:
 
-$$\text{LDL}_{\text{before}, i} \sim \text{Normal}(160, 4^2)$$
+$$\text{LDL}_{\text{before}, i} \sim \text{Normal}(160, 5^2)$$
 
 and for each participant $i$ the LDL after the treatment is a random value and is a combination of three elements as follows: 
 
@@ -383,7 +383,7 @@ where:
 
 - $\Delta = 25$ is the **average decrease** in LDL due to treatment
 
-- $\varepsilon_i \sim \text{Normal}(0, 6^2)$ represents additional variation specific to the after-treatment measurement.
+- $\varepsilon_i \sim \text{Normal}(0, 15^2)$ represents additional variation specific to the after-treatment measurement.
 
 
 ### Code
@@ -403,10 +403,10 @@ n_patients <- 120
 Delta <- 25
 
 # Step 1: Generate LDL before treatment
-ldl_before <- rnorm(n_patients, mean = 160, sd = 4)
+ldl_before <- rnorm(n_patients, mean = 160, sd = 5)
 
 # Step 2: Generate LDL after treatment
-ldl_after <- ldl_before - DELTA + rnorm(n_patients, mean = 0, sd = 6)
+ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 15)
 
 # Create final dataset
 cholesterol_data <- data.frame(
@@ -476,10 +476,10 @@ n_patients <- 120
 Delta <- 25
 
 # Step 1: Generate LDL before treatment
-ldl_before <- rnorm(n_patients, mean = 160, sd = 4)
+ldl_before <- rnorm(n_patients, mean = 160, sd = 5)
 
 # Step 2: Generate LDL after treatment
-ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 6)
+ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 15)
 
 # Create final dataset
 cholesterol_data <- data.frame(
