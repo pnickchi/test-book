@@ -365,9 +365,9 @@ Since each participant provides two observations (i.e. one before and one after 
 
 The simulated dataset reflects the following study characteristics:
 
-- **Baseline LDL levels:** Participants in the population have a mean pre-treatment LDL of 160 mg/dL, with individual variation.
+- **Baseline LDL levels:** Participants in the population have a mean pre-treatment LDL of 160 mg/dL, with a standard deviation of 5 for individual variation.
 
-- **Expected treatment effect:** On average, LDL levels decline by 25 mg/dL after the intervention using new medication.
+- **Expected treatment effect:** On average, LDL levels decline by 2.5 mg/dL after the intervention using new medication.
 
 - **Measurement variation:** Biological variability and measurement error introduce random fluctuations in LDL values, even within the same patient.
 
@@ -381,9 +381,9 @@ $$\text{LDL}_{\text{after}, i} = \text{LDL}_{\text{before}, i} - \Delta + \varep
 
 where:
 
-- $\Delta = 25$ is the **average decrease** in LDL due to treatment
+- $\Delta = 2.5$ is the **average decrease** in LDL due to treatment
 
-- $\varepsilon_i \sim \text{Normal}(0, 15^2)$ represents additional variation specific to the after-treatment measurement.
+- $\varepsilon_i \sim \text{Normal}(0, 1)$ represents additional variation specific to the after-treatment measurement.
 
 
 ### Code
@@ -400,13 +400,13 @@ set.seed(123)
 n_patients <- 120   
 
 # Set the average decrease in LDL due to treatment
-Delta <- 25
+Delta <- 2.5
 
 # Step 1: Generate LDL before treatment
 ldl_before <- rnorm(n_patients, mean = 160, sd = 5)
 
 # Step 2: Generate LDL after treatment
-ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 15)
+ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 1)
 
 # Create final dataset
 cholesterol_data <- data.frame(
@@ -437,13 +437,13 @@ np.random.seed(123)
 n_patients = 120
 
 # Average decrease in LDL due to treatment
-Delta = 25
+Delta = 2.5
 
 # Step 1: Generate LDL before treatment
-ldl_before = np.random.normal(loc=160, scale=4, size=n_patients)
+ldl_before = np.random.normal(loc=160, scale=5, size=n_patients)
 
 # Step 2: Generate LDL after treatment
-ldl_after = ldl_before - Delta + np.random.normal(loc=0, scale=6, size=n_patients)
+ldl_after = ldl_before - Delta + np.random.normal(loc=0, scale=1, size=n_patients)
 
 # Create final dataset
 cholesterol_data = pd.DataFrame({
@@ -473,13 +473,13 @@ set.seed(123)
 n_patients <- 120   
 
 # Set the average decrease in LDL due to treatment
-Delta <- 25
+Delta <- 2.5
 
 # Step 1: Generate LDL before treatment
 ldl_before <- rnorm(n_patients, mean = 160, sd = 5)
 
 # Step 2: Generate LDL after treatment
-ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 15)
+ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 1)
 
 # Create final dataset
 cholesterol_data <- data.frame(
@@ -503,6 +503,7 @@ import numpy as np
 import pandas as pd
 
 # Set seed for reproducibility
+# Set seed for reproducibility
 # Note does not necessarily produce the same values as in R. 
 # Both languages uses different starting point when generating random sample. 
 # But the following code is guaranteed to generate the same data in Python.
@@ -512,13 +513,13 @@ np.random.seed(123)
 n_patients = 120
 
 # Average decrease in LDL due to treatment
-Delta = 25
+Delta = 2.5
 
 # Step 1: Generate LDL before treatment
-ldl_before = np.random.normal(loc=160, scale=4, size=n_patients)
+ldl_before = np.random.normal(loc=160, scale=5, size=n_patients)
 
 # Step 2: Generate LDL after treatment
-ldl_after = ldl_before - Delta + np.random.normal(loc=0, scale=6, size=n_patients)
+ldl_after = ldl_before - Delta + np.random.normal(loc=0, scale=1, size=n_patients)
 
 # Create final dataset
 cholesterol_data = pd.DataFrame({

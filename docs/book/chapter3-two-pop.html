@@ -1365,9 +1365,10 @@ mean of x mean of y
 </ul>
 <p>Note that in this case the sample size is the same (in both before and after diet sample we have <span class="math inline">\(n\)</span> observations). We call this a paired sample. Since the samples are paired, we define the difference for each individual as follows:</p>
 <p><span class="math display">\[D_i = Y_i - X_i \quad \textit{for} \quad i = 1,2, \ldots, n\]</span> Each <span class="math inline">\(D_i\)</span> is the difference of blood pressure after and before using new diet for the <span class="math inline">\(i\)</span>-th person. Now the main statistical question is:</p>
-<p><strong>Is there a statistically significant difference in the mean blood pressure before and after the diet?</strong></p>
-<p>In other words, we test the following hypothesis:</p>
+<p><strong>Is there a significant difference in the mean blood pressure before and after the diet?</strong></p>
+<p>Now if the treatment is effective, one expect to have difference sample average of around zero. In other words, we test the following hypothesis:</p>
 <p><span class="math display">\[H_0: \mu_D = 0 \quad \text{versus} \quad H_A: \mu_D \ne 0\]</span></p>
+<p>where <span class="math inline">\(\mu_D\)</span> is a parameter to show the population mean differences. We talk more about this later in this section.</p>
 </section><section id="study-design-3" class="level3" data-number="3.4.2"><h3 data-number="3.4.2" class="anchored" data-anchor-id="study-design-3">
 <span class="header-section-number">3.4.2</span> Study Design</h3>
 <p>Consider a clinical investigation examining whether an innovative medication can lower LDL cholesterol levels in adults diagnosed with hypercholesterolemia which basically means having too much cholesterol in the blood. This can increase the risk of heart problems because cholesterol can build up in blood vessels and block blood flow.</p>
@@ -1383,13 +1384,13 @@ mean of x mean of y
 <span><span class="va">n_patients</span> <span class="op">&lt;-</span> <span class="fl">120</span>   </span>
 <span></span>
 <span><span class="co"># Set the average decrease in LDL due to treatment</span></span>
-<span><span class="va">Delta</span> <span class="op">&lt;-</span> <span class="fl">15</span></span>
+<span><span class="va">Delta</span> <span class="op">&lt;-</span> <span class="fl">2.5</span></span>
 <span></span>
 <span><span class="co"># Step 1: Generate LDL before treatment</span></span>
 <span><span class="va">ldl_before</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">160</span>, sd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Step 2: Generate LDL after treatment</span></span>
-<span><span class="va">ldl_after</span> <span class="op">&lt;-</span> <span class="va">ldl_before</span> <span class="op">-</span> <span class="va">Delta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">ldl_after</span> <span class="op">&lt;-</span> <span class="va">ldl_before</span> <span class="op">-</span> <span class="va">Delta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create final dataset</span></span>
 <span><span class="va">cholesterol_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
@@ -1402,16 +1403,16 @@ mean of x mean of y
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cholesterol_data</span>, <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   patient_id LDL_before LDL_after
-1           1      157.2     142.8
-2           2      158.8     139.1
-3           3      167.8     150.3
-4           4      160.4     144.1
-5           5      160.6     154.9
-6           6      168.6     150.3
-7           7      162.3     148.5
-8           8      153.7     139.1
-9           9      156.6     136.8
-10         10      157.8     142.4</code></pre>
+1           1      157.2     154.8
+2           2      158.8     155.4
+3           3      167.8     164.8
+4           4      160.4     157.6
+5           5      160.6     160.0
+6           6      168.6     165.4
+7           7      162.3     160.0
+8           8      153.7     151.3
+9           9      156.6     153.1
+10         10      157.8     155.2</code></pre>
 </div>
 </div>
 <p>Note that <code>cholesterol_data</code> contains two columns: <code>LDL_before</code>, which records each patient’s LDL level before taking the new medication, and <code>LDL_after</code>, which records the LDL level after taking the new medication. This setup clearly illustrates the paired nature of the data: each row corresponds to a single individual, with measurements taken at two different points in time: <strong>before</strong> and <strong>after</strong> the treatment. Because the observations are linked within each person, the analysis must account for this pairing rather than treating the two sets of values as independent samples.</p>
@@ -1471,44 +1472,43 @@ Figure&nbsp;3.8: Density Plot of Paired LDL Levels Differences
 <p>We now define the null and alternative hypotheses. Recall the main question we posed:</p>
 <p><strong>Is the mean LDL level after treatment statistically different from the mean LDL level before treatment for the same patients?</strong></p>
 <p>Because the measurements are paired, this question is equivalent to asking whether the mean difference in LDL levels (<em>after - before</em>) is zero. This leads to the following hypotheses:</p>
-<p><span class="math display">\[H_0: \mu_d = 0 \quad \text{(no mean change in LDL levels)}\]</span></p>
-<p><span class="math display">\[H_a: \mu_d \neq 0 \quad \text{(mean LDL levels change after treatment)}\]</span></p>
+<p><span class="math display">\[H_0: \mu_d = 0 \quad \textit{(no mean change in LDL levels)}\]</span></p>
+<p><span class="math display">\[H_a: \mu_d \neq 0 \quad \textit{(mean LDL levels change after treatment)}\]</span></p>
 </section><section id="test-flavour-and-components-3" class="level3" data-number="3.4.7"><h3 data-number="3.4.7" class="anchored" data-anchor-id="test-flavour-and-components-3">
 <span class="header-section-number">3.4.7</span> Test Flavour and Components</h3>
 <p>To test this hypothesis, we use the <strong>paired t-test</strong>, which compares the mean difference in LDL levels before and after treatment within the same individuals. Note that the test is done on the paired differences. The test accounts for the fact that the measurements are not independent but rather are paired. The test statistic for this test is computed as:</p>
-<p><span id="eq-t-statistic-paired"><span class="math display">\[t = \frac{\bar{d}}{s_d / \sqrt{n}} \tag{3.6}\]</span></span></p>
+<p><span id="eq-t-statistic-paired"><span class="math display">\[t = \frac{\bar{d}}{ s_d / \sqrt{n} } \tag{3.6}\]</span></span></p>
 <p>where:</p>
 <ul>
-<li>
-<span class="math inline">\(\bar{d}\)</span> is the mean of the differences in LDL levels (post-treatment minus pre-treatment) for all participants.</li>
-<li>
-<span class="math inline">\(s_d\)</span> is the standard deviation of these differences and is computed as:</li>
+<li><p><span class="math inline">\(\bar{d}\)</span> is the mean of the differences in LDL levels (post-treatment minus pre-treatment) for all participants.</p></li>
+<li><p><span class="math inline">\(s_d\)</span> is the standard deviation of these differences and is computed as:</p></li>
 </ul>
 <p><span class="math inline">\(s_d = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (d_i - \bar{d})^2}\)</span></p>
 <ul>
 <li>
 <span class="math inline">\(n\)</span> is the number of paired observations (participants).</li>
-</ul>
-<p>Under the null hypothesis, the test statistic follows a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom. For this test, we can compute the <span class="math inline">\(\textit{p-value}\)</span> as:</p>
+</ul></section><section id="inferential-conclusions-3" class="level3" data-number="3.4.8"><h3 data-number="3.4.8" class="anchored" data-anchor-id="inferential-conclusions-3">
+<span class="header-section-number">3.4.8</span> Inferential Conclusions</h3>
+<p>As you can see in <a href="#eq-t-statistic-paired" class="quarto-xref">Equation&nbsp;<span>3.6</span></a>, the statistic divide the sample mean of differences and scale it according to the standard deviation. The idea is very similar to the other tests that we have been working on so far. Under the null hypothesis, the test statistic defined in <a href="#eq-t-statistic-paired" class="quarto-xref">Equation&nbsp;<span>3.6</span></a> follows a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom. For this test, we can compute the <span class="math inline">\(\textit{p-value}\)</span> as:</p>
 <p><span class="math display">\[\textit{p-value} = 2 \times \Pr(T_{n - 1} \ge |t|)\]</span></p>
 <div class="Tip">
 <div class="Tip-header">
 <p>Remember!</p>
 </div>
 <div class="Tip-container">
-<p>When we run this test, we operate under the assumption that:</p>
+<ul>
+<li>When we run this test, we make the following assumptions:</li>
+</ul>
 <ol type="1">
 <li><p>either the sample size is large enough (we are thinking about <span class="math inline">\(n=30\)</span> at least) so that central limit theorem assumptions work well, or</p></li>
 <li><p>the distribution of our sample in each group is normal or symmetric enough.</p></li>
 </ol>
-<p>If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers) or we have a very small sample size, we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it. You can read more about it LINK.</p>
-</div>
-</div>
-</section><section id="inferential-conclusions-3" class="level3" data-number="3.4.8"><h3 data-number="3.4.8" class="anchored" data-anchor-id="inferential-conclusions-3">
-<span class="header-section-number">3.4.8</span> Inferential Conclusions</h3>
 <ul>
-<li>TBD</li>
-</ul></section><section id="how-to-run-the-two-sample-paired-t-test-in-r-and-python" class="level3" data-number="3.4.9"><h3 data-number="3.4.9" class="anchored" data-anchor-id="how-to-run-the-two-sample-paired-t-test-in-r-and-python">
+<li>If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers) or we have a very small sample size, we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it. You can read more about it LINK.</li>
+</ul>
+</div>
+</div>
+</section><section id="how-to-run-the-two-sample-paired-t-test-in-r-and-python" class="level3" data-number="3.4.9"><h3 data-number="3.4.9" class="anchored" data-anchor-id="how-to-run-the-two-sample-paired-t-test-in-r-and-python">
 <span class="header-section-number">3.4.9</span> How to run the two-sample paired t-test in <code>R</code> and <code>Python</code>
 </h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -1524,22 +1524,19 @@ Figure&nbsp;3.8: Density Plot of Paired LDL Levels Differences
 <span><span class="va">ldl_after</span>  <span class="op">&lt;-</span> <span class="va">test_cholesterol</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">LDL_after</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Run paired t-test</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">ldl_before</span>, y <span class="op">=</span> <span class="va">ldl_after</span>, paired <span class="op">=</span> <span class="cn">TRUE</span>, alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Print results</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">ldl_before</span>, y <span class="op">=</span> <span class="va">ldl_after</span>, paired <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Paired t-test
 
 data:  ldl_before and ldl_after
-t = 22.303, df = 59, p-value &lt; 2.2e-16
+t = 18.248, df = 59, p-value &lt; 2.2e-16
 alternative hypothesis: true mean difference is not equal to 0
 95 percent confidence interval:
- 13.20059 15.80274
+ 2.141281 2.668719
 sample estimates:
 mean difference 
-       14.50167 </code></pre>
+          2.405 </code></pre>
 </div>
 </div>
 </div>
@@ -1561,11 +1558,11 @@ mean difference
 <span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Print results</span></span>
 <span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"T-statistic: </span><span class="sc">{</span>t_stat<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>T-statistic: 22.302952028256467</code></pre>
+<pre><code>T-statistic: 18.248188665420518</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"P-value: </span><span class="sc">{</span>p_value<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>P-value: 1.944860014622962e-30</code></pre>
+<pre><code>P-value: 6.125701137511437e-26</code></pre>
 </div>
 </div>
 </div>
@@ -1577,14 +1574,14 @@ mean difference
 <li><p><code>x</code>: numeric vector of measurements before treatment.</p></li>
 <li><p><code>y</code>: numeric vector of measurements after treatment.</p></li>
 <li><p><code>paired = TRUE</code>: indicates that the samples are related.</p></li>
-<li><p><code>alternative</code>: specifies the type of test; “two.sided” tests for any change in LDL.</p></li>
 </ul>
 <p>The output includes:</p>
 <ul>
-<li><p><code>statistic</code>: the calculated t-test statistic.</p></li>
-<li><p><code>p.value</code>: the p-value for evaluating the significance of the observed difference.</p></li>
-<li><p><code>conf.int</code>: confidence interval for the mean difference in LDL levels.</p></li>
-<li><p><code>estimate</code>: the average LDL levels before and after treatment.</p></li>
+<li><p><code>statistic</code>: the calculated t-test statistic (here, t = 22.303).</p></li>
+<li><p><code>df</code>: the degrees of freedom for t-distribution</p></li>
+<li><p><code>p.value</code>: the p-value for testing the null hypothesis that the true mean difference is zero.</p></li>
+<li><p><code>conf.int</code>: the 95% confidence interval for the mean difference in LDL levels.</p></li>
+<li><p><code>estimate</code>: the estimated mean of the paired differences.</p></li>
 </ul>
 <p><strong>Note:</strong> The <code>paired t-test</code> assumes that the differences between pre and post-treatment measurements are approximately normally distributed. Unlike independent sample tests, this test directly accounts for the correlation between repeated measurements on the same patient.</p>
 <p><strong>Details about <code>Python</code> code and output</strong></p>
@@ -1599,9 +1596,8 @@ mean difference
 <li><p><code>p_value</code>: the probability of observing the data if the null hypothesis (no difference) is true.</p></li>
 </ul></section><section id="storytelling-3" class="level3" data-number="3.4.10"><h3 data-number="3.4.10" class="anchored" data-anchor-id="storytelling-3">
 <span class="header-section-number">3.4.10</span> Storytelling</h3>
-<ul>
-<li>TBD</li>
-</ul></section></section><section id="tests-for-two-population-proportions" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="tests-for-two-population-proportions">
+<p>Based on our analysis, we asked: <strong>Did LDL levels change significantly after treatment?</strong> The paired t-test gave a very small <span class="math inline">\(\textit{p-value}\)</span>, far below <span class="math inline">\(\alpha = 0.05\)</span> providing strong evidence against the null hypothesis. In simple terms, this means LDL levels after treatment are significantly lower than before. On average, the reduction was about 2.4 units, with the true effect likely between 2.1 and 2.7 units. In summary, these results indicate that the observed reduction in LDL levels is highly unlikely to have occurred by chance if there were no true effect.</p>
+</section></section><section id="tests-for-two-population-proportions" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="tests-for-two-population-proportions">
 <span class="header-section-number">3.5</span> Tests for Two Population Proportions</h2>
 <ul>
 <li>Under development</li>

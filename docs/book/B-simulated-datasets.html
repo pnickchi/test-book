@@ -554,8 +554,8 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 <span class="header-section-number">B.2.1</span> Generative Modelling Process</h3>
 <p>The simulated dataset reflects the following study characteristics:</p>
 <ul>
-<li><p><strong>Baseline LDL levels:</strong> Participants in the population have a mean pre-treatment LDL of 160 mg/dL, with individual variation.</p></li>
-<li><p><strong>Expected treatment effect:</strong> On average, LDL levels decline by 25 mg/dL after the intervention using new medication.</p></li>
+<li><p><strong>Baseline LDL levels:</strong> Participants in the population have a mean pre-treatment LDL of 160 mg/dL, with a standard deviation of 5 for individual variation.</p></li>
+<li><p><strong>Expected treatment effect:</strong> On average, LDL levels decline by 2.5 mg/dL after the intervention using new medication.</p></li>
 <li><p><strong>Measurement variation:</strong> Biological variability and measurement error introduce random fluctuations in LDL values, even within the same patient.</p></li>
 </ul>
 <p>Formally, for each participant <span class="math inline">\(i\)</span> the LDL before treatment follows a Normal distribution with mean = 160 mg/dL and a standard deviation of 5:</p>
@@ -564,8 +564,8 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 <p><span class="math display">\[\text{LDL}_{\text{after}, i} = \text{LDL}_{\text{before}, i} - \Delta + \varepsilon_i\]</span></p>
 <p>where:</p>
 <ul>
-<li><p><span class="math inline">\(\Delta = 25\)</span> is the <strong>average decrease</strong> in LDL due to treatment</p></li>
-<li><p><span class="math inline">\(\varepsilon_i \sim \text{Normal}(0, 15^2)\)</span> represents additional variation specific to the after-treatment measurement.</p></li>
+<li><p><span class="math inline">\(\Delta = 2.5\)</span> is the <strong>average decrease</strong> in LDL due to treatment</p></li>
+<li><p><span class="math inline">\(\varepsilon_i \sim \text{Normal}(0, 1)\)</span> represents additional variation specific to the after-treatment measurement.</p></li>
 </ul></section><section id="code-1" class="level3" data-number="B.2.2"><h3 data-number="B.2.2" class="anchored" data-anchor-id="code-1">
 <span class="header-section-number">B.2.2</span> Code</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -582,13 +582,13 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 <span><span class="va">n_patients</span> <span class="op">&lt;-</span> <span class="fl">120</span>   </span>
 <span></span>
 <span><span class="co"># Set the average decrease in LDL due to treatment</span></span>
-<span><span class="va">Delta</span> <span class="op">&lt;-</span> <span class="fl">25</span></span>
+<span><span class="va">Delta</span> <span class="op">&lt;-</span> <span class="fl">2.5</span></span>
 <span></span>
 <span><span class="co"># Step 1: Generate LDL before treatment</span></span>
 <span><span class="va">ldl_before</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">160</span>, sd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Step 2: Generate LDL after treatment</span></span>
-<span><span class="va">ldl_after</span> <span class="op">&lt;-</span> <span class="va">ldl_before</span> <span class="op">-</span> <span class="va">Delta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
+<span><span class="va">ldl_after</span> <span class="op">&lt;-</span> <span class="va">ldl_before</span> <span class="op">-</span> <span class="va">Delta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create final dataset</span></span>
 <span><span class="va">cholesterol_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
@@ -616,13 +616,13 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>n_patients <span class="op">=</span> <span class="dv">120</span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Average decrease in LDL due to treatment</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>Delta <span class="op">=</span> <span class="dv">25</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>Delta <span class="op">=</span> <span class="fl">2.5</span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Generate LDL before treatment</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>ldl_before <span class="op">=</span> np.random.normal(loc<span class="op">=</span><span class="dv">160</span>, scale<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span>n_patients)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>ldl_before <span class="op">=</span> np.random.normal(loc<span class="op">=</span><span class="dv">160</span>, scale<span class="op">=</span><span class="dv">5</span>, size<span class="op">=</span>n_patients)</span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Generate LDL after treatment</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>ldl_after <span class="op">=</span> ldl_before <span class="op">-</span> Delta <span class="op">+</span> np.random.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">6</span>, size<span class="op">=</span>n_patients)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>ldl_after <span class="op">=</span> ldl_before <span class="op">-</span> Delta <span class="op">+</span> np.random.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>n_patients)</span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Create final dataset</span></span>
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>cholesterol_data <span class="op">=</span> pd.DataFrame({</span>
@@ -646,16 +646,16 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>   patient_id LDL_before LDL_after
-1           1      157.2     134.0
-2           2      158.8     119.6
-3           3      167.8     135.4
-4           4      160.4     131.5
-5           5      160.6     163.3
-6           6      168.6     133.8
-7           7      162.3     140.8
-8           8      153.7     129.8
-9           9      156.6     117.1
-10         10      157.8     131.7</code></pre>
+1           1      157.2     154.8
+2           2      158.8     155.4
+3           3      167.8     164.8
+4           4      160.4     157.6
+5           5      160.6     160.0
+6           6      168.6     165.4
+7           7      162.3     160.0
+8           8      153.7     151.3
+9           9      156.6     153.1
+10         10      157.8     155.2</code></pre>
 </div>
 </div>
 </div>
@@ -663,16 +663,16 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>   patient_id  LDL_before  LDL_after
-0           1       155.7      129.0
-1           2       164.0      135.7
-2           3       161.1      136.9
-3           4       154.0      133.5
-4           5       157.7      142.3
-5           6       166.6      140.0
-6           7       150.3      130.2
-7           8       158.3      136.3
-8           9       165.1      142.9
-9          10       156.5      128.1</code></pre>
+0           1       154.6      151.8
+1           2       165.0      161.9
+2           3       161.4      159.0
+3           4       152.5      150.7
+4           5       157.1      156.2
+5           6       168.3      165.5
+6           7       147.9      146.2
+7           8       157.9      155.9
+8           9       166.3      164.3
+9          10       155.7      152.6</code></pre>
 </div>
 </div>
 </div>

@@ -1164,11 +1164,13 @@ Note that in this case the sample size is the same (in both before and after die
 
 $$D_i = Y_i - X_i \quad \textit{for} \quad i = 1,2, \ldots, n$$ Each $D_i$ is the difference of blood pressure after and before using new diet for the $i$-th person. Now the main statistical question is:
 
-**Is there a statistically significant difference in the mean blood pressure before and after the diet?**
+**Is there a significant difference in the mean blood pressure before and after the diet?**
 
-In other words, we test the following hypothesis:
+Now if the treatment is effective, one expect to have difference sample average of around zero. In other words, we test the following hypothesis:
 
 $$H_0: \mu_D = 0 \quad \text{versus} \quad H_A: \mu_D \ne 0$$ 
+
+where $\mu_D$ is a parameter to show the population mean differences. We talk more about this later in this section.
 
 
 ### Study Design
@@ -1190,13 +1192,13 @@ set.seed(123)
 n_patients <- 120   
 
 # Set the average decrease in LDL due to treatment
-Delta <- 15
+Delta <- 2.5
 
 # Step 1: Generate LDL before treatment
 ldl_before <- rnorm(n_patients, mean = 160, sd = 5)
 
 # Step 2: Generate LDL after treatment
-ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 5)
+ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 1)
 
 # Create final dataset
 cholesterol_data <- data.frame(
@@ -1291,20 +1293,21 @@ We now define the null and alternative hypotheses. Recall the main question we p
 
 Because the measurements are paired, this question is equivalent to asking whether the mean difference in LDL levels (*after - before*) is zero. This leads to the following hypotheses:
 
-$$H_0: \mu_d = 0 \quad \text{(no mean change in LDL levels)}$$
+$$H_0: \mu_d = 0 \quad \textit{(no mean change in LDL levels)}$$
 
-$$H_a: \mu_d \neq 0 \quad \text{(mean LDL levels change after treatment)}$$
+$$H_a: \mu_d \neq 0 \quad \textit{(mean LDL levels change after treatment)}$$
 
 
 ### Test Flavour and Components
 
 To test this hypothesis, we use the **paired t-test**, which compares the mean difference in LDL levels before and after treatment within the same individuals. Note that the test is done on the paired differences. The test accounts for the fact that the measurements are not independent but rather are paired. The test statistic for this test is computed as:
 
-$$t = \frac{\bar{d}}{s_d / \sqrt{n}}$${#eq-t-statistic-paired}
+$$t = \frac{\bar{d}}{ s_d / \sqrt{n} }$${#eq-t-statistic-paired}
 
 where:
 
 - $\bar{d}$ is the mean of the differences in LDL levels (post-treatment minus pre-treatment) for all participants.
+
 - $s_d$ is the standard deviation of these differences and is computed as:
 
 $s_d = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (d_i - \bar{d})^2}$
@@ -1312,7 +1315,9 @@ $s_d = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (d_i - \bar{d})^2}$
 - $n$ is the number of paired observations (participants).
 
 
-Under the null hypothesis, the test statistic follows a t-distribution with $n-1$ degrees of freedom. For this test, we can compute the $\textit{p-value}$ as:
+### Inferential Conclusions
+
+As you can see in @eq-t-statistic-paired, the statistic divide the sample mean of differences and scale it according to the standard deviation. The idea is very similar to the other tests that we have been working on so far. Under the null hypothesis, the test statistic defined in @eq-t-statistic-paired follows a t-distribution with $n-1$ degrees of freedom. For this test, we can compute the $\textit{p-value}$ as:
 
 $$\textit{p-value} = 2 \times \Pr(T_{n - 1} \ge |t|)$$
 
@@ -1324,22 +1329,16 @@ Remember!
 
 ::: Tip-container
 
-When we run this test, we operate under the assumption that: 
+- When we run this test, we make the following assumptions: 
 
 1) either the sample size is large enough (we are thinking about $n=30$ at least) so that central limit theorem assumptions work well, or 
 
 2) the distribution of our sample in each group is normal or symmetric enough.
 
-If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers) or we have a very small sample size, we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it. You can read more about it LINK.
+- If the normality assumption is also not satisfied (e.g., due to skewed distributions or outliers) or we have a very small sample size, we may turn to a non-parametric alternative, such as the Mann–Whitney–Wilcoxon test, which compares the ranks of the observations across groups rather than the raw values but this book will not cover it. You can read more about it LINK.
 
 :::
 :::::
-
-
-### Inferential Conclusions
-
-- TBD
-
 
 ### How to run the two-sample paired t-test in `R` and `Python`
 
@@ -1354,10 +1353,8 @@ ldl_before <- test_cholesterol %>% pull(LDL_before)
 ldl_after  <- test_cholesterol %>% pull(LDL_after)
 
 # Run paired t-test
-result <- t.test(x = ldl_before, y = ldl_after, paired = TRUE, alternative = "two.sided")
+t.test(x = ldl_before, y = ldl_after, paired = TRUE)
 
-# Print results
-print(result)
 ```
 
 
@@ -1402,17 +1399,17 @@ Key arguments of the t.test function in R for a paired test are:
 
 - `paired = TRUE`: indicates that the samples are related.
 
-- `alternative`: specifies the type of test; "two.sided" tests for any change in LDL.
-
 The output includes:
 
-- `statistic`: the calculated t-test statistic.
+- `statistic`: the calculated t-test statistic (here, t = 22.303).
 
-- `p.value`: the p-value for evaluating the significance of the observed difference.
+- `df`: the degrees of freedom for t-distribution
 
-- `conf.int`: confidence interval for the mean difference in LDL levels.
+- `p.value`: the p-value for testing the null hypothesis that the true mean difference is zero.
 
-- `estimate`: the average LDL levels before and after treatment.
+- `conf.int`: the 95% confidence interval for the mean difference in LDL levels.
+
+- `estimate`: the estimated mean of the paired differences.
 
 
 **Note:** The `paired t-test` assumes that the differences between pre and post-treatment measurements are approximately normally distributed. Unlike independent sample tests, this test directly accounts for the correlation between repeated measurements on the same patient.
@@ -1432,10 +1429,10 @@ The output includes:
 
 - `p_value`: the probability of observing the data if the null hypothesis (no difference) is true.
 
+
 ### Storytelling
 
-- TBD
-
+Based on our analysis, we asked: **Did LDL levels change significantly after treatment?** The paired t-test gave a very small $\textit{p-value}$, far below $\alpha = 0.05$ providing strong evidence against the null hypothesis. In simple terms, this means LDL levels after treatment are significantly lower than before. On average, the reduction was about 2.4 units, with the true effect likely between 2.1 and 2.7 units. In summary, these results indicate that the observed reduction in LDL levels is highly unlikely to have occurred by chance if there were no true effect. 
 
 ## Tests for Two Population Proportions
 
