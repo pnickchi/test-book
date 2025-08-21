@@ -126,6 +126,22 @@ The dataset spans three penguin species and includes continuous variables such a
 
 We obtain the dataset **Palmer Station Penguins** dataset collected by the 'LTER'
 
+### R Code
+```{r}
+library(palmerpenguins)
+library(dplyr)
+set.seed(42)
+
+penguins_clean <- penguins %>% drop_na()
+
+# 80/20 split
+train_index <- sample(seq_len(nrow(penguins_clean)), 
+                      size = 0.8 * nrow(penguins_clean))
+train_set <- penguins_clean[train_index, ]
+test_set <- penguins_clean[-train_index, ]
+```
+
+### Python Code
 ```{python}
 import seaborn as sns
 import pandas as pd
@@ -149,6 +165,12 @@ Before conducting the statistical test, we begin with an exploratory analysis to
 
 First, we examine summary statistics such as the mean, standard deviation, and quartiles. This helps us get a sense of the central tendency and spread of the data:
 
+### R Code
+```{r}
+summary(train_set$flipper_length_mm)
+```
+
+### Python Code
 ```{python}
 print(train_set["flipper_length_mm"].describe())
 ```
@@ -180,6 +202,14 @@ plt.show()
 ```
 
 Now, we can perform one‑Sample t-Test
+
+### R Code
+```{r}
+t_test <- t.test(train_set$flipper_length_mm, mu = 200)
+t_test
+```
+
+### Python Code
 
 ```{python}
 import scipy.stats as stats
@@ -264,6 +294,20 @@ It includes measurements such as *flipper length*, *bill size*, and *body mass* 
 
 ### Data Collection & Wrangling
 
+### R Code
+```{r}
+library(palmerpenguins)
+library(dplyr)
+set.seed(42)
+
+penguins_clean <- penguins %>% drop_na()
+train_index <- sample(seq_len(nrow(penguins_clean)), 
+                      size = 0.8 * nrow(penguins_clean))
+train_set <- penguins_clean[train_index, ]
+test_set <- penguins_clean[-train_index, ]
+```
+### Python Code
+
 ```{python}
 import seaborn as sns
 import pandas as pd
@@ -278,6 +322,13 @@ train_set, test_set = train_test_split(
 ```
 
 ### Exploratory Data Analysis (EDA)
+
+### R Code
+```{r}
+summary(train_set$flipper_length_mm)
+
+```
+### Python Code
 
 ```{python}
 print(train_set["flipper_length_mm"].describe())
@@ -348,6 +399,19 @@ Once again, we turn to the **Palmer Station Penguins** dataset, which includes
 
 We continue with the same cleaned and split dataset from the earlier section.
 
+
+### R Code
+```{r}
+train_set$is_adelie <- ifelse(train_set$species == "Adelie", 1, 0)
+n <- nrow(train_set)
+num_adelie <- sum(train_set$is_adelie)
+p_hat <- num_adelie / n
+cat("Sample size:", n, "\n")
+cat("Number of Adelie penguins:", num_adelie, "\n")
+cat("Sample proportion:", round(p_hat, 3), "\n")
+
+```
+### Python Code
 ```{python}
 # Add a binary column: 1 if Adelie, 0 otherwise
 train_set["is_adelie"] = (train_set["species"] == "Adelie").astype(int)
@@ -367,6 +431,18 @@ print(f"Sample proportion: {p_hat:.3f}")
 
 Let’s visualize the distribution of penguin species in our training sample.
 
+
+### R Code
+```{r}
+library(ggplot2)
+
+ggplot(train_set, aes(x = species)) +
+  geom_bar(fill = "orange", color = "black") +
+  labs(title = "Penguin Species Count in Training Set",
+       x = "Species", y = "Count")
+```
+### Python Code
+
 ```{python}
 train_set["species"].value_counts().plot(
 kind="bar", color="orange", edgecolor="black"
@@ -383,6 +459,16 @@ plt.show()
 
 Now we perform the z-test for one proportion. Assuming a historical reference proportion of 0.45 for Adelie penguins:
 
+### R Code
+```{r}
+p0 <- 0.45
+se <- sqrt(p0 * (1 - p0) / n)
+z_stat <- (p_hat - p0) / se
+p_value <- 2 * (1 - pnorm(abs(z_stat)))
+
+cat("z =", round(z_stat, 3), ", p =", round(p_value, 4), "\n")
+```
+### Python Code
 ```{python}
 import numpy as np
 import scipy.stats as stats
