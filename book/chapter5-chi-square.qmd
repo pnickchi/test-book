@@ -1,0 +1,292 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DZWGQVJSHE');
+</script>
+
+
+# Chapter 5: Chi-square Tests
+
+
+```{r setup, include=FALSE}
+# Setting up Python dependencies
+library(reticulate)
+
+# Optional: check if modules are available
+if (!py_module_available("pandas")) stop("pandas not found")
+if (!py_module_available("seaborn")) stop("seaborn not found")
+if (!py_module_available("sklearn")) stop("scikit-learn not found")
+if (!py_module_available("statsmodels")) stop("statsmodels not found")
+
+# Import Python modules
+pandas <- import("pandas")
+seaborn <- import("seaborn")
+sklearn <- import("sklearn")
+statsmodels <- import("statsmodels")
+```
+
+
+The **chi-square test** is a non-parametric statistical test used for categorical data. Chi-square tests are used to make statistical inferences about categorical variables. Depending on the research question and the number of categorical variables, the specific chi-square test can differ, so it is important to identify the correct scenario for application.
+
+The core idea behind chi-square tests is to **compare observed counts with expected counts** based on a population or theoretical distribution.  
+
+### Hypotheses
+
+- **Null hypothesis** ($H_0$): The observed counts ($O_i$) and expected counts ($E_i$) are equal.  
+- **Alternative hypothesis** ($H_1$): The observed counts ($O_i$) and expected counts ($E_i$) are not equal.  
+
+### Test Statistic
+
+The chi-square test statistic is calculated as:  
+
+$$
+\chi^2 = \sum \frac{(O_i - E_i)^2}{E_i}
+$$  
+
+Under the null hypothesis, this statistic follows a **chi-square distribution** with degrees of freedom that depend on the type of test being performed.  
+
+Intuitively:  
+- If the observed and expected counts are close, the test statistic is small and not significant.  
+- If the observed counts differ substantially from the expected counts, the test statistic is large and significant, indicating a meaningful difference between the sample and the expected distribution.  
+
+### Assumptions
+
+1. Observations are independent.  
+2. Expected counts are sufficiently large (typically greater than 5).  
+
+The chi-square distribution is defined by its **degrees of freedom**, which vary depending on the test design and the number of categories.
+
+There are two main types of chi-square tests:  
+
+1. **Goodness-of-Fit Test**  
+   - Compares observed frequencies to expected frequencies for a single categorical variable.  
+   - Example: *Do the proportions of penguin species in the dataset match a hypothesized distribution (45% Adelie, 35% Gentoo, 20% Chinstrap)?*  
+
+2. **Test of Independence (or Homogeneity)**  
+   - Tests whether two categorical variables are independent.  
+   - Example: *Is penguin species independent of the island they were observed on?*  
+
+---
+
+## (i) Chi-Square Goodness-of-Fit Test  
+
+This test examines whether the distribution of a categorical variable matches a hypothesized distribution.  
+
+### Hypotheses  
+- $H_0$: The observed distribution matches the expected distribution.  
+- $H_1$: The observed distribution does not match the expected distribution.  
+
+### Study Design  
+Suppose we hypothesize that the penguin species occur in the following proportions:  
+
+- Adelie: 45%  
+- Gentoo: 35%  
+- Chinstrap: 20%  
+
+We want to test whether the observed species distribution in the Palmer Penguins dataset matches these proportions.  
+
+### Data Collection & Wrangling  
+
+### R Code
+```{r}
+library(dplyr)
+library(ggplot2)
+library(palmerpenguins)
+
+# Load dataset
+penguins_clean <- penguins %>% 
+  drop_na()
+
+# Count observed species
+observed_counts <- table(penguins_clean$species)
+print("Observed counts:")
+print(observed_counts)
+
+# Expected proportions
+expected_props <- c(0.45, 0.35, 0.20)
+
+# Convert to expected counts
+n <- nrow(penguins_clean)
+expected_counts <- expected_props * n
+print("Expected counts (based on proportions):")
+print(expected_counts)
+
+```
+
+### Python Code
+```{python}
+import seaborn as sns
+import pandas as pd
+
+# Load dataset
+penguins = sns.load_dataset("penguins")
+
+# Drop rows with missing values
+penguins_clean = penguins.dropna()
+
+# Count observed species
+observed_counts = penguins_clean["species"].value_counts()
+print("Observed counts:")
+print(observed_counts)
+
+# Expected proportions
+expected_props = [0.45, 0.35, 0.20]
+
+# Convert to expected counts
+n = len(penguins_clean)
+expected_counts = [p * n for p in expected_props]
+
+print("\nExpected counts (based on proportions):")
+print(expected_counts)
+```
+
+### Exploratory Data Analysis (EDA)
+
+### R Code
+```{r}
+# Bar plot of observed counts
+barplot(
+  observed_counts,
+  col = "skyblue",
+  border = "black",
+  main = "Observed Penguin Species Counts",
+  xlab = "Species",
+  ylab = "Count"
+)
+```
+
+### Python Code
+```{python}
+import matplotlib.pyplot as plt
+
+observed_counts.plot(kind="bar", color="skyblue", edgecolor="black")
+plt.title("Observed Penguin Species Counts")
+plt.xlabel("Species")
+plt.ylabel("Count")
+plt.show()
+```
+
+### Implementation
+
+### R Code
+```{r}
+# Chi-square goodness-of-fit test
+chi2_test <- chisq.test(
+  x = observed_counts,
+  p = expected_props
+)
+print(chi2_test)
+```
+
+### Python Code
+```{python}
+from scipy.stats import chisquare
+
+chi2_stat, p_value = chisquare(
+    f_obs=observed_counts,
+    f_exp=expected_counts
+)
+print(f"Chi-square = {chi2_stat:.3f}, p = {p_value:.4f}")
+```
+
+### Interpretation
+
+If $p < 0.05$: Reject $H_0$ → the species distribution differs significantly from the expected proportions.
+
+If $p \ge 0.05$: Fail to reject $H_0$ → no significant difference.
+
+## (ii) Chi-Square Test of Independence
+
+This test evaluates whether two categorical variables are independent.
+
+### Hypotheses
+
+$H_0$: The two categorical variables are independent.
+
+$H_1$: The two categorical variables are not independent (they are associated).
+
+### Study Design
+
+We want to test whether penguin species is independent of island.
+
+### Data Collection & Wrangling
+
+### R Code
+```{r}
+# Contingency table: species vs island
+contingency_table <- table(
+  penguins_clean$species,
+  penguins_clean$island
+)
+print("Contingency table:")
+print(contingency_table)
+```
+
+### Python Code
+```{python}
+# Create contingency table: species vs island
+contingency_table = pd.crosstab(
+    penguins_clean["species"], 
+    penguins_clean["island"]
+)
+print("Contingency table:")
+print(contingency_table)
+```
+
+### Exploratory Data Analysis (EDA)
+
+### R Code
+```{r}
+# Stacked bar plot of species by island
+barplot(
+  contingency_table,
+  col = c("orange", "skyblue", "green"),
+  border = "black",
+  main = "Penguin Species by Island",
+  xlab = "Species",
+  ylab = "Count",
+  legend.text = TRUE
+)
+```
+
+### Python Code
+```{python}
+contingency_table.plot(
+    kind="bar", stacked=True, edgecolor="black"
+)
+plt.title("Penguin Species by Island")
+plt.xlabel("Species")
+plt.ylabel("Count")
+plt.show()
+
+```
+
+
+### Implementation
+
+### R Code
+```{r}
+# Chi-square test of independence
+chi2_indep <- chisq.test(contingency_table)
+print(chi2_indep)
+```
+
+### Python Code
+```{python}
+from scipy.stats import chi2_contingency
+
+chi2_stat, p_value, dof, expected = chi2_contingency(contingency_table)
+
+print(f"Chi-square = {chi2_stat:.3f}, df = {dof}, p = {p_value:.4f}")
+
+```
+
+### Interpretation
+
+If $p < 0.05$: Reject $H_0$ → species and island are not independent (association exists).
+
+If $p \ge 0.05$: Fail to reject $H_0$ → species and island appear independent.
