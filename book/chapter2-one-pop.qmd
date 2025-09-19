@@ -130,6 +130,7 @@ We obtain the dataset **Palmer Station Penguins** dataset collected by the 'LTER
 ```{r}
 library(palmerpenguins)
 library(dplyr)
+library(tidyverse)
 set.seed(42)
 
 penguins_clean <- penguins %>% drop_na()
@@ -297,6 +298,7 @@ It includes measurements such as *flipper length*, *bill size*, and *body mass* 
 ### R Code
 ```{r}
 library(palmerpenguins)
+library(tidyverse)
 library(dplyr)
 set.seed(42)
 
