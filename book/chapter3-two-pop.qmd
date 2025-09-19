@@ -1436,11 +1436,34 @@ Based on our analysis, we asked: **Did LDL levels change significantly after tre
 
 ## Tests for Two Population Proportions
 
-- Under development
-
 ### Review
 
-- Under development
+In the examples we studied in [Section LINK HERE], we estimated the proportion of a population based on the sample proportion $\hat{p}$. This is often the case in practice, as the population proportion is typically unknown and must be inferred from sample data. When we are comparing two groups and wish to test whether their underlying proportions differ, we can extend this idea to a two-proportion test.
+
+For instance imagine you are investigating support for a new policy among two different regions. Suppose a national statistics office previously carried out large-scale surveys and suggested that the variability in responses for each region can be reasonably modeled using the binomial distribution framework. Your aim is not the variance but rather the proportion of individuals in each group who favor the policy.
+
+Specifically, let’s consider two independent populations:
+
+**Region A (Population 1):** each individual either supports the policy (coded as 1) or policy (coded as 0).
+
+**Region B (Population 2):** defined in the same way.
+
+From each population, we take a random sample:
+
+- From Region A, a sample of size $n$, with observed sample proportion of support $\hat{p}_1$.
+
+- From Region B, a sample of size $m$, with observed sample proportion of support $\hat{p}_2$.
+
+where $p_1$ is the population proportion of support in Region A and $p_2$ is the population proportion of support in Region B. 
+
+The main statistical question becomes: **Is there a significant difference between the true population proportions of support in the two regions?** Formally, we test the hypotheses:
+
+$$
+H_0: \p_1 = \p_2 \quad \text{versus} \quad H_A: \p_1 \ne \p_2
+$$
+
+
+This leads us to the two-sample z-test for population proportions which provides a way to formally compare the two groups using their observed sample proportions.
 
 ### Study Design
 
