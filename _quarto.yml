@@ -46,6 +46,7 @@ book:
     - book/chapter2-one-pop.qmd
     - book/chapter3-two-pop.qmd
     - book/chapter4-anova.qmd
+    - book/chapter5-chi-square.qmd
     - book/references.qmd
     
   appendices:

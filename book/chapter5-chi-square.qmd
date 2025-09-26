@@ -93,6 +93,7 @@ We want to test whether the observed species distribution in the Palmer Penguins
 
 ### R Code
 ```{r}
+library(tidyverse)
 library(dplyr)
 library(ggplot2)
 library(palmerpenguins)
