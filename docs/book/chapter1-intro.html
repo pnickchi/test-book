@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.5.53">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -57,10 +57,10 @@ div.csl-indent {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f664b88e837a53bca78c5b20234386e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -204,6 +204,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../book/meet-the-authors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Meet the Authors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../book/privacy-policy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Website Privacy Policy</span></a>
   </div>
@@ -274,7 +280,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">The tools</h2>
+    <h2 id="toc-title">The content</h2>
    
   <ul>
   <li><a href="#sec-test-workflow" id="toc-sec-test-workflow" class="nav-link active" data-scroll-target="#sec-test-workflow"><span class="header-section-number">1.1</span> The Test Workflow</a>
@@ -333,7 +339,7 @@ window.Quarto = {
 <li>Define <strong>the two key components</strong> to be applied in the execution of hypothesis testing throughout this mini-book: a test workflow and a series of hypothesis testing maps.</li>
 <li>Explain how <strong>the test workflow</strong> can be applied in hypothesis testing.</li>
 <li>Define key terms such as null hypothesis, alternative hypothesis, observed effect, test statistic, <span class="math inline">\(p\)</span>-value, and statistical significance in the context of frequentist inference.</li>
-<li>Describe how the initial test mind map acts as <strong>the primary chapter structure</strong> of this book and as a <strong>toolbox</strong>.</li>
+<li>Describe how the initial test mind map acts as <strong>the primary structure</strong> of this book and as a <strong>toolbox</strong>.</li>
 </ul>
 </div>
 </div>
@@ -350,10 +356,10 @@ window.Quarto = {
 <figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/"><em>Manfred Stege</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-emotion-bored-6230197/"><em>Pixabay</em></a>.</figcaption>
 </figure>
 </div>
-<p>In a vast and diverse field like data science, it is crucial to craft effective and transparent solutions that facilitate proper data analysis. However, conducting a full census to collect data from entire populations can often be impractical due to resource limitations such as budget constraints, workforce shortages, or insufficient technical infrastructure. Despite these challenges, our primary objective remains to gain insights about any population of interest via some class of analysis, even when data availability is limited. In this regard, <strong>statistical inference</strong> is a powerful tool that allows us to draw insights even with limited data. That said, it is important to emphasize that the process of statistical inference begins with asking the <strong>right questions</strong>, even before data collection occurs.</p>
+<p>In a vast and diverse field like data science, it is crucial to craft effective and transparent solutions that facilitate proper data analysis. However, conducting a full census to collect data from an entire population can often be impractical due to resource limitations such as budget constraints, workforce shortages, or insufficient technical infrastructure. Despite these challenges, our primary objective remains to gain insights about any population of interest via some class of analysis, even when data availability is limited. In this regard, <strong>statistical inference</strong> is a powerful tool that allows us to draw insights even with limited data. That said, it is important to emphasize that the process of statistical inference begins with asking the <strong>right questions</strong>, even before data collection occurs.</p>
 <p>In light of this context, we need to establish the appropriate stages of the statistical inference process, along with a useful tool to help select the right hypothesis test based on our specific context, research questions, variable types, and parameters of interest. This is why this mini-book focuses on two key components:</p>
 <ul>
-<li><strong>A test workflow:</strong> This workflow will primarily guide us in formulating the right questions about our population(s) of interest, which will involve specific parameters. This process will generally proceed with data collection using a specific sampling method, followed by a thorough analysis that includes exploratory data analysis and the <strong>most suitable</strong> hypothesis testing based on our primary question(s). We will conclude the process by presenting a compelling storytelling to our stakeholders. <a href="#sec-test-workflow" class="quarto-xref"><span>Section 1.1</span></a> will elaborate further on this workflow.</li>
+<li><strong>A test workflow:</strong> This workflow will primarily guide us in formulating the right questions about our population(s) of interest. The question is related to one or more unknown parameters in the population of interest. This process will generally proceed with data collection using a specific sampling method, followed by a thorough analysis that includes exploratory data analysis and the <strong>most suitable</strong> hypothesis testing based on our primary question(s). We will conclude the process by presenting a compelling storytelling to our stakeholders. <a href="#sec-test-workflow" class="quarto-xref"><span>Section 1.1</span></a> will elaborate further on this workflow.</li>
 <li><strong>A series of test mind maps:</strong> Since the test workflow ultimately involves selecting the most suitable hypothesis test, we require a form of guidance to choose these tests according to the inferential question(s) we want to address. Therefore, <a href="#sec-test-mind-map" class="quarto-xref"><span>Section 1.2</span></a> will introduce our core test mind map from <a href="#fig-test-general-mindmap" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>, which will direct us to more detailed mind maps each time we introduce a new chapter.</li>
 </ul>
 <p>This mini-book on hypothesis testing is intended to serve as a <strong>practical manual</strong> rather than a traditional statistical textbook. Furthermore, it focuses on providing applied examples in each chapter without any additional exercises for the reader. We aim to explain the necessary mathematical formulas in straightforward language, avoiding formal proofs for these expressions. Additionally, we will establish conventions using admonitions to offer <strong>key insights</strong> and links to <strong>supplementary and more in-depth material</strong>.</p>
@@ -467,7 +473,7 @@ Figure&nbsp;1.1: A hypothesis testing workflow structured in eight stages: <em>s
 <p>After we have wrangled our data, we need to split it into two sets:</p>
 <ul>
 <li><strong>Training set.</strong> This set is used solely for exploratory data analysis (EDA) and allows us to gain graphical and descriptive insights into how the sample of individuals behaves concerning our main inferential inquiries.</li>
-<li><strong>Test set.</strong> This set is reserved for input in our chosen hypothesis testing to be used.</li>
+<li><strong>Test set.</strong> This set is reserved for our chosen hypothesis testing to be used.</li>
 </ul>
 <p>The data splitting is analogous to the standard practice in machine learning to split our data for model training and testing to prevent data leakage in <strong>predictive inquiries</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -589,13 +595,13 @@ Table&nbsp;1.1: Types of inferential conclusions in a frequentist hypothesis tes
 <figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3699345"><em>Manfred Steger</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-pixel-college-3702064/"><em>Pixabay</em></a>.</figcaption>
 </figure>
 </div>
-<p>Next, we calculate the observed effect derived from the previously untouched <strong>test set</strong>. For classical tests, the test statistic (calculated using the observed effect and its measure of uncertainty, the standard error) is compared against a theoretical null distribution (i.e., the distribution under the null hypothesis, <span class="math inline">\(H_0\)</span>). In the case of simulation-based tests, the observed effect is situated within a null distribution that is generated from repeated permutations or resamplings. This stage provides the statistical framework necessary to evaluate the strength of evidence against the null hypothesis.</p>
+<p>Next, we calculate the observed effect derived from the previously untouched <strong>test set</strong>. For classical tests, the test statistic (calculated using the observed effect and its measure of uncertainty, the standard error) is compared against a theoretical null distribution (i.e., the distribution under the null hypothesis, <span class="math inline">\(H_0\)</span>). In the case of simulation-based tests, the observed effect is compared to a null distribution that is generated from repeated permutations or resamplings. This stage provides the statistical framework necessary to evaluate the strength of evidence against the null hypothesis.</p>
 </section>
 <section id="sec-inferential-conclusions" class="level3" data-number="1.1.7">
 <h3 data-number="1.1.7" class="anchored" data-anchor-id="sec-inferential-conclusions"><span class="header-section-number">1.1.7</span> Inferential Conclusions</h3>
 <p>This stage involves converting the test components obtained from the previous stage into numerical outputs that will allow us to draw meaningful conclusions about our main inferential inquiries. Depending on the type of hypothesis testing, we can obtain the following numerical outputs to support these conclusions:</p>
 <ul>
-<li><strong>Critical value:</strong> In a classical hypothesis test, the critical value serves as a threshold <strong>under the null theoretical distribution</strong> and is obtained via our our previously set up significance level <span class="math inline">\(\alpha\)</span>. This value helps determine whether we can reject the null hypothesis <span class="math inline">\(H_0\)</span> in favour of the alternative hypothesis <span class="math inline">\(H_1\)</span>. We directly compare our observed test statistic against this threshold. If the test statistic exceeds the critical value, we reject <span class="math inline">\(H_0\)</span> in favour of <span class="math inline">\(H_1\)</span>; if it does not, we fail to reject <span class="math inline">\(H_0\)</span>. This approach emphasizes the magnitude of the observed effect relative to the null distribution.</li>
+<li><strong>Critical value:</strong> In a classical hypothesis test, the critical value serves as a threshold <strong>under the null theoretical distribution</strong> and is obtained via our previously set up significance level <span class="math inline">\(\alpha\)</span>. This value helps determine whether we can reject the null hypothesis <span class="math inline">\(H_0\)</span> in favour of the alternative hypothesis <span class="math inline">\(H_1\)</span>. We directly compare our observed test statistic against this threshold. If the test statistic exceeds the critical value, we reject <span class="math inline">\(H_0\)</span> in favour of <span class="math inline">\(H_1\)</span>; if it does not, we fail to reject <span class="math inline">\(H_0\)</span>. This approach emphasizes the magnitude of the observed effect relative to the null distribution.</li>
 <li><span class="math inline">\(p\)</span>-value: This approach can be employed in either a classical test or a simulation-based test. In the case of a classical test, the <span class="math inline">\(p\)</span>-value is derived from the observed test statistic <strong>under the theoretical null distribution</strong>. Conversely, when using a simulation-based test, the <span class="math inline">\(p\)</span>-value is associated with the observed effect <strong>under the empirical null distribution</strong>. Regardless of the type of test used, we compare the <span class="math inline">\(p\)</span>-value to our predetermined significance level <span class="math inline">\(\alpha\)</span>. If the <span class="math inline">\(p\)</span>-value is smaller than <span class="math inline">\(\alpha\)</span>, we reject <span class="math inline">\(H_0\)</span> in favour of <span class="math inline">\(H_1\)</span>; otherwise, we fail to reject <span class="math inline">\(H_0\)</span>. This process provides a probabilistic measure of how surprising the data are under the null distribution (i.e., the status quo).</li>
 </ul>
 <div class="Heads-up">
@@ -807,6 +813,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -924,6 +932,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
