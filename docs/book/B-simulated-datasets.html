@@ -295,14 +295,14 @@ window.Quarto = {
    
   <ul>
 <li>
-<a href="#anova-dataset" id="toc-anova-dataset" class="nav-link active" data-scroll-target="#anova-dataset"><span class="header-section-number">B.1</span> ANOVA Dataset</a>
+<a href="#t-test-for-paired-samples-dataset" id="toc-t-test-for-paired-samples-dataset" class="nav-link active" data-scroll-target="#t-test-for-paired-samples-dataset"><span class="header-section-number">B.1</span> <span class="math inline">\(t\)</span>-test for Paired Samples Dataset</a>
   <ul>
 <li><a href="#generative-modelling-process" id="toc-generative-modelling-process" class="nav-link" data-scroll-target="#generative-modelling-process"><span class="header-section-number">B.1.1</span> Generative Modelling Process</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">B.1.2</span> Code</a></li>
   </ul>
 </li>
   <li>
-<a href="#dataset-two-sample-t-test-for-paired-samples" id="toc-dataset-two-sample-t-test-for-paired-samples" class="nav-link" data-scroll-target="#dataset-two-sample-t-test-for-paired-samples"><span class="header-section-number">B.2</span> Dataset: Two sample t-test for Paired Samples</a>
+<a href="#anova-dataset" id="toc-anova-dataset" class="nav-link" data-scroll-target="#anova-dataset"><span class="header-section-number">B.2</span> ANOVA Dataset</a>
   <ul>
 <li><a href="#generative-modelling-process-1" id="toc-generative-modelling-process-1" class="nav-link" data-scroll-target="#generative-modelling-process-1"><span class="header-section-number">B.2.1</span> Generative Modelling Process</a></li>
   <li><a href="#code-1" id="toc-code-1" class="nav-link" data-scroll-target="#code-1"><span class="header-section-number">B.2.2</span> Code</a></li>
@@ -345,15 +345,145 @@ window.Quarto = {
 </div>
 </div>
 <p>For each of the datasets listed below, besides providing the simulation code, we will elaborate on the dataset context along with the relevant equations (if necessary) that generate this data.</p>
-<section id="anova-dataset" class="level2" data-number="B.1"><h2 data-number="B.1" class="anchored" data-anchor-id="anova-dataset">
-<span class="header-section-number">B.1</span> ANOVA Dataset</h2>
+<section id="t-test-for-paired-samples-dataset" class="level2" data-number="B.1"><h2 data-number="B.1" class="anchored" data-anchor-id="t-test-for-paired-samples-dataset">
+<span class="header-section-number">B.1</span> <span class="math inline">\(t\)</span>-test for Paired Samples Dataset</h2>
+<p>This dataset is used in <a href="chapter3-two-pop.html" class="quarto-xref"><span>Chapter 3</span></a>, more specifically in <a href="chapter3-two-pop.html#sec-t-test-paired-samples" class="quarto-xref"><span>Section 3.4</span></a>, to demonstrate the <strong><span class="math inline">\(t\)</span>-test for paired samples</strong> via a hypothetical scenario from medical research. Consider a clinical investigation examining whether an innovative medication can decrease low-density lipoprotein (LDL) cholesterol levels in adults diagnosed with hypercholesterolemia, a condition characterized by elevated cholesterol levels in the blood. This matter can increase the risk of heart problems because cholesterol can build up in blood vessels and block blood flow.</p>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/cholesterol.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Image by <a href="https://pixabay.com/users/fidsor-26066389/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=7070897"><em>Fakhruddin Memon</em></a> via <a href="https://pixabay.com/illustrations/heart-attack-heartache-stethoscope-7070897/"><em>Pixabay</em></a>.</figcaption></figure>
+</div>
+<p><br></p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Heads-up on the use of this dataset!</p>
+</div>
+<div class="Heads-up-container">
+<p>This data is simulated and by no means should be considered for medical research or advice.</p>
+</div>
+</div>
+<p>This simulated study monitors a group of <span class="math inline">\(n = 120\)</span> participants over time, recording LDL cholesterol concentrations prior to treatment and again after an eight-week course of the drug. The outcome of interest is the LDL cholesterol measurement (in <span class="math inline">\(\text{mg/dL}\)</span>), a widely used biomarker for cardiovascular risk. Since each participant provides two observations (i.e., one before and one after treatment), the data are naturally paired (the same individual is measured twice), allowing the analysis to focus on <strong>changes within individuals</strong> rather than <strong>differences between unrelated groups</strong>.</p>
+<section id="generative-modelling-process" class="level3" data-number="B.1.1"><h3 data-number="B.1.1" class="anchored" data-anchor-id="generative-modelling-process">
+<span class="header-section-number">B.1.1</span> Generative Modelling Process</h3>
+<p>The simulated dataset reflects the following study characteristics:</p>
+<ul>
+<li>
+<strong>Baseline LDL levels:</strong> Participants in the simulated population have a mean pre-treatment LDL cholesterol level of <span class="math inline">\(\mu = 160 \text{ mg/dL}\)</span>, with a standard deviation of <span class="math inline">\(\sigma = 5 \text{ mg/dL}\)</span> to account for individual variation.</li>
+<li>
+<strong>Expected treatment effect:</strong> On average, in this simulated population of participants, LDL cholesterol levels decline by <span class="math inline">\(\Delta = 2.5 \text{ mg/dL}\)</span> after the intervention using the new medication.</li>
+<li>
+<strong>Measurement variation:</strong> Biological variability and measurement error introduce random fluctuations in LDL values, even within the same patient.</li>
+</ul>
+<p>Since formally, for the <span class="math inline">\(i\)</span>th participant, the LDL cholesterol level before treatment is assumed to follow a Normal distribution with <span class="math inline">\(\mu = 160 \text{ mg/dL}\)</span> and <span class="math inline">\(\sigma = 5 \text{ mg/dL}\)</span>, we can express the following:</p>
+<p><span class="math display">\[\text{LDL}_{\text{before}, i} \sim \text{Normal}(\mu = 160, \sigma^2= 5^2).\]</span></p>
+<p>Then, again for the <span class="math inline">\(i\)</span>th participant, the LDL cholesterol level after the treatment is another random variable that is a combination of three components as follows:</p>
+<p><span class="math display">\[\text{LDL}_{\text{after}, i} = \text{LDL}_{\text{before}, i} - \Delta + \varepsilon_i,\]</span></p>
+<p>where:</p>
+<ul>
+<li>
+<span class="math inline">\(\Delta = 2.5 \text{ mg/dL}\)</span> is the <strong>average decrease</strong> in LDL cholesterol level due to this new treatment in the simulated population.</li>
+<li>
+<span class="math inline">\(\varepsilon_i \sim \text{Normal}(0, 1)\)</span> represents additional variation specific to the after-treatment measurement for the <span class="math inline">\(i\)</span>th participant. This is what we already defined as the <strong>measurement variation</strong>.</li>
+</ul></section><section id="code" class="level3" data-number="B.1.2"><h3 data-number="B.1.2" class="anchored" data-anchor-id="code">
+<span class="header-section-number">B.1.2</span> Code</h3>
+<p>Let us check the corresponding code to simulate this data. We are simulating <strong>120 participants in this study</strong>, which gives us a sample size of <span class="math inline">\(n = 120\)</span>. Additionally, the simulation will utilize the <a href="https://pypi.org/project/numpy/">{numpy}</a> <span class="citation" data-cites="numpy">(<a href="references.html#ref-numpy" role="doc-biblioref">Harris et al. 2020</a>)</span> and <a href="https://pypi.org/project/pandas/">{pandas}</a> libraries in <code>Python</code>. The final data frame will be stored in <code>cholesterol_data</code>, which will have the following columns: <code>patient_id</code>, <code>LDL_before</code>, and <code>LDL_after</code>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page"><strong><code>R</code> Code</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false"><strong><code>Python</code> Code</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Set seed for reproducibility</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Set number of participants</span></span>
+<span><span class="va">n_patients</span> <span class="op">&lt;-</span> <span class="fl">120</span>   </span>
+<span></span>
+<span><span class="co"># Set the average decrease in LDL cholesterol levels due to new treatment</span></span>
+<span><span class="va">Delta</span> <span class="op">&lt;-</span> <span class="fl">2.5</span></span>
+<span></span>
+<span><span class="co"># Step 1: Generate LDL cholesterol levels before treatment</span></span>
+<span><span class="va">ldl_before</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">160</span>, sd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Step 2: Generate LDL cholesterol levels after treatment</span></span>
+<span><span class="va">ldl_after</span> <span class="op">&lt;-</span> <span class="va">ldl_before</span> <span class="op">-</span> <span class="va">Delta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create final dataset</span></span>
+<span><span class="va">cholesterol_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  patient_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">n_patients</span>,</span>
+<span>  LDL_before <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">ldl_before</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  LDL_after  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">ldl_after</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Showing the first 20 participants </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cholesterol_data</span>, <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing libraries</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set number of participants</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>n_patients <span class="op">=</span> <span class="dv">120</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the average decrease in LDL cholesterol levels due to new treatment</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>Delta <span class="op">=</span> <span class="fl">2.5</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Generate LDL cholesterol levels before treatment</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>ldl_before <span class="op">=</span> np.random.normal(loc<span class="op">=</span><span class="dv">160</span>, scale<span class="op">=</span><span class="dv">5</span>, size<span class="op">=</span>n_patients)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Generate LDL cholesterol levels after treatment</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>ldl_after <span class="op">=</span> ldl_before <span class="op">-</span> Delta <span class="op">+</span> np.random.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>n_patients)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create final dataset</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>cholesterol_data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"patient_id"</span>: np.arange(<span class="dv">1</span>, n_patients <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LDL_before"</span>: np.<span class="bu">round</span>(ldl_before, <span class="dv">1</span>),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LDL_after"</span>: np.<span class="bu">round</span>(ldl_after, <span class="dv">1</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Showing the first 20 participants </span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cholesterol_data.head(<span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-155dc90fc4a3b1a0cf9b" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-155dc90fc4a3b1a0cf9b">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],[157.2,158.8,167.8,160.4,160.6,168.6,162.3,153.7,156.6,157.8,166.1,161.8,162,160.6,157.2,168.9,162.5,150.2,163.5,157.6],[154.8,155.4,164.8,157.6,160,165.4,160,151.3,153.1,155.2,165.1,159.8,159.5,157.6,152.7,167.6,158.5,148.4,162.9,153.7]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>patient_id<\/th>\n      <th>LDL_before<\/th>\n      <th>LDL_after<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"patient_id","targets":0},{"name":"LDL_before","targets":1},{"name":"LDL_after","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-b00bb49b4131cbaeb274" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b00bb49b4131cbaeb274">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8,9,10],[154.6,165,161.4,152.5,157.1,168.3,147.9,157.9,166.3,155.7],[151.8,161.9,159,150.7,156.2,165.5,146.2,155.9,164.3,152.6]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>patient_id<\/th>\n      <th>LDL_before<\/th>\n      <th>LDL_after<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"patient_id","targets":0},{"name":"LDL_before","targets":1},{"name":"LDL_after","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section><section id="anova-dataset" class="level2" data-number="B.2"><h2 data-number="B.2" class="anchored" data-anchor-id="anova-dataset">
+<span class="header-section-number">B.2</span> ANOVA Dataset</h2>
 <p>This dataset is used in <a href="chapter4-anova.html" class="quarto-xref"><span>Chapter 4</span></a> to elaborate on <strong>analysis of variance (ANOVA)</strong> and pertains to an experimental context. Suppose a data-driven marketing team at a well-known tech company, which operates a global online store, is conducting an A/B/n testing aimed at <strong>increasing the customer conversion score (i.e., the outcome)</strong>. In this experiment, the customer conversion score is defined as a unitless and standardized engagement index. This index combines various elements, such as clicks, time spent on the webpage, and the probability of making a purchase, with a baseline mean set at <span class="math inline">\(50\)</span>. This score measures customer responsiveness on the online store: <strong>the higher the score, the greater the customer responsiveness</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/ads.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption>Image by <a href="https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6370790"><em>Pabitra Kaity</em></a> via <a href="https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/"><em>Pixabay</em></a>.</figcaption></figure>
 </div>
-<section id="generative-modelling-process" class="level3" data-number="B.1.1"><h3 data-number="B.1.1" class="anchored" data-anchor-id="generative-modelling-process">
-<span class="header-section-number">B.1.1</span> Generative Modelling Process</h3>
+<section id="generative-modelling-process-1" class="level3" data-number="B.2.1"><h3 data-number="B.2.1" class="anchored" data-anchor-id="generative-modelling-process-1">
+<span class="header-section-number">B.2.1</span> Generative Modelling Process</h3>
 <p>The experiment has the following <strong>controllable factors</strong> by the experimenter:</p>
 <ul>
 <li>
@@ -388,7 +518,7 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 <li>
 <span class="math inline">\((\alpha \beta)_{i,j}\)</span> is the fixed interaction effect between the <span class="math inline">\(i\)</span>th and <span class="math inline">\(j\)</span>th levels of webpage design and discount framing respectively, and</li>
 <li>
-<span class="math inline">\(\varepsilon_{i,j,k}\)</span> is the random error associated to each <span class="math inline">\(Y_{i,j,k}\)</span>.</li>
+<span class="math inline">\(\varepsilon_{i,j,k}\)</span> is the random error associated to each <span class="math inline">\(Y_{i,j,k}\)</span>, capturing the variability and measurement error that introduces randomness in the response <span class="math inline">\(Y_{i,j,k}\)</span>.</li>
 </ul>
 <div class="Heads-up">
 <div class="Heads-up-header">
@@ -437,17 +567,18 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 \sigma^2 = 16.
 \]</span></p>
 <p>The fixed-effect interaction arrangement above induces non-parallel trends in an interaction plot, as shown in <a href="chapter4-anova.html" class="quarto-xref"><span>Chapter 4</span></a>, while preserving additive decomposition for interpretation and statistical testing.</p>
-</section><section id="code" class="level3" data-number="B.1.2"><h3 data-number="B.1.2" class="anchored" data-anchor-id="code">
-<span class="header-section-number">B.1.2</span> Code</h3>
-<p>Let us move to the corresponding code to simulate this data. Recall we are simulating <strong>200 customers for each one of the six treatments</strong>, which will give us an <strong>overall sample size of <span class="math inline">\(n = 1,200\)</span></strong>. Furthermore, note that <code>Python</code> additionally uses the <a href="https://pypi.org/project/numpy/">{numpy}</a> <span class="citation" data-cites="numpy">(<a href="references.html#ref-numpy" role="doc-biblioref">Harris et al. 2020</a>)</span> and <a href="https://pypi.org/project/pandas/">{pandas}</a> libraries. The final data frame will be stored in <code>ABn_customer_data</code> whose columns will be <code>webpage_design</code>, <code>discount_framing</code>, and <code>conversion_score</code>.</p>
+</section><section id="code-1" class="level3" data-number="B.2.2"><h3 data-number="B.2.2" class="anchored" data-anchor-id="code-1">
+<span class="header-section-number">B.2.2</span> Code</h3>
+<p>Let us move to the corresponding code to simulate this data. Recall we are simulating <strong>200 customers for each one of the six treatments</strong>, which will give us an <strong>overall sample size of <span class="math inline">\(n = 1,200\)</span></strong>. Furthermore, note that <code>Python</code> additionally uses the <a href="https://pypi.org/project/numpy/">{numpy}</a> and <a href="https://pypi.org/project/pandas/">{pandas}</a> libraries. The final data frame will be stored in <code>ABn_customer_data</code> whose columns will be <code>webpage_design</code>, <code>discount_framing</code>, and <code>conversion_score</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
-<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page"><strong><code>R</code> Code</strong></a></li>
-<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false"><strong><code>Python</code> Code</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true"><strong><code>R</code> Code</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false"><strong><code>Python</code> Code</strong></a></li>
 </ul>
 <div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>  <span class="co"># Seed for reproducibility</span></span>
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Set seed for reproducibility</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Factor levels and sampled customers per treatment</span></span>
 <span><span class="va">webpage_design_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"D1"</span>, <span class="st">"D2"</span>, <span class="st">"D3"</span><span class="op">)</span></span>
@@ -471,7 +602,7 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">mean_ij</span> <span class="op">&lt;-</span> <span class="va">alpha</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">+</span> <span class="va">beta</span><span class="op">[</span><span class="va">j</span><span class="op">]</span> <span class="op">+</span> <span class="va">interaction</span><span class="op">[</span><span class="va">i</span>, <span class="va">j</span><span class="op">]</span></span>
-<span>    <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_per_treatment</span>, mean <span class="op">=</span> <span class="va">mean_ij</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span><span class="op">)</span>     <span class="co"># sigma^2 = 16</span></span>
+<span>    <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_per_treatment</span>, mean <span class="op">=</span> <span class="va">mean_ij</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span><span class="op">)</span></span>
 <span>    <span class="va">df_ij</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>      webpage_design <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">webpage_design_levels</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>      discount_framing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">discount_framing_levels</span><span class="op">[</span><span class="va">j</span><span class="op">]</span><span class="op">)</span>,</span>
@@ -485,166 +616,50 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 <span><span class="co"># Showing the first 100 customers of the A/B/n testing</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ABn_customer_data</span>, n <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing libraries</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Factor levels and sampled customers per treatment</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>webpage_design_levels <span class="op">=</span> [<span class="st">"D1"</span>, <span class="st">"D2"</span>, <span class="st">"D3"</span>]</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>discount_framing_levels <span class="op">=</span> [<span class="st">"Low"</span>, <span class="st">"High"</span>]</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>n_per_treatment <span class="op">=</span> <span class="dv">200</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Population fixed additive parameters</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> [<span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">70</span>]          </span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> [<span class="op">-</span><span class="dv">5</span>, <span class="dv">12</span>]              </span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>interaction <span class="op">=</span> np.array([</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">5</span>],</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    [<span class="op">-</span><span class="dv">8</span>, <span class="dv">0</span>],</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">11</span>, <span class="op">-</span><span class="dv">13</span>]</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulating data</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>data_list <span class="op">=</span> []</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):  </span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>):  </span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        mean_ij <span class="op">=</span> alpha[i] <span class="op">+</span> beta[j] <span class="op">+</span> interaction[i, j]</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> np.random.normal(loc<span class="op">=</span>mean_ij, scale<span class="op">=</span>np.sqrt(<span class="dv">16</span>), size <span class="op">=</span> n_per_treatment)      <span class="co"># sigma^2 = 16</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        y_rounded <span class="op">=</span> np.<span class="bu">round</span>(y, <span class="dv">2</span>) </span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        df_ij <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">'webpage_design'</span>: [webpage_design_levels[i]] <span class="op">*</span> n_per_treatment,</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">'discount_framing'</span>: [discount_framing_levels[j]] <span class="op">*</span> n_per_treatment,</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>            <span class="st">'conversion_score'</span>: y_rounded</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        data_list.append(df_ij)</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenate all groups into one DataFrame</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>ABn_customer_data <span class="op">=</span> pd.concat(data_list, ignore_index <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Showing the first 100 customers of the A/B/n testing</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ABn_customer_data.head(<span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist">
-<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
-<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
-</ul>
-<div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="cell">
-<div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-7916708a81fa2d585810" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-7916708a81fa2d585810">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[32.76,34.08,41.23,35.28,35.52,41.86,36.84,29.94,32.25,33.22,39.9,36.44,36.6,35.44,32.78,42.15,36.99,27.13,37.81,33.11,30.73,34.13,30.9,32.08,32.5,28.25,38.35,35.61,30.45,40.02,36.71,33.82,38.58,38.51,38.29,37.75,37.22,34.75,33.78,33.48,32.22,34.17,29.94,43.68,39.83,30.51,33.39,33.13,38.12,34.67,36.01,34.89,34.83,40.47,34.1,41.07,28.8,37.34,35.5,35.86,36.52,32.99,33.67,30.93,30.71,36.21,36.79,35.21,38.69,43.2,33.04,25.76,39.02,32.16,32.25,39.1,33.86,30.12,35.73,34.44,35.02,36.54,33.52,37.58,34.12,36.33,39.39,36.74,33.7,39.6,38.97,37.19,35.95,32.49,40.44,32.6,43.75,41.13,34.06,30.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell">
-<div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-15cc5518b6c8ee3ba2d7" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-15cc5518b6c8ee3ba2d7">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[30.66,38.99,36.13,28.97,32.69,41.61,25.29,33.28,40.06,31.53,32.28,34.62,40.97,32.44,33.22,33.26,43.82,43.75,39.02,36.54,37.95,40.96,31.26,39.7,29.98,32.45,38.63,29.29,34.44,31.55,33.98,23.81,27.91,32.2,38.71,34.31,35.01,37.75,31.48,36.13,31.78,28.09,33.44,37.3,36.35,34.95,44.57,36.65,38.91,43.95,29.82,30.84,41.97,31.81,35.12,39.28,38.56,42.02,40.98,39.28,31.91,38.18,36.26,29.69,40.67,38.23,35.18,34.07,30.21,35.8,36.87,31.68,39.65,30.61,26.51,39.16,33.39,34.5,31.65,28.58,40.02,32.24,41.64,38.23,33.74,30.66,32.07,30.15,43.35,35.66,39.6,29.93,35.72,39.71,33.66,39.12,30.66,29.55,36.52,33.48]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section></section><section id="dataset-two-sample-t-test-for-paired-samples" class="level2" data-number="B.2"><h2 data-number="B.2" class="anchored" data-anchor-id="dataset-two-sample-t-test-for-paired-samples">
-<span class="header-section-number">B.2</span> Dataset: Two sample t-test for Paired Samples</h2>
-<p>This dataset is presented here and is being used in <a href="chapter3-two-pop.html#sec-t-test-paired-samples" class="quarto-xref"><span>Section 3.4</span></a> to demonstrate the <strong>paired-sample t-test</strong> using a hypothetical scenario from medical research. Note that data is simulated and by no means should be considered for medical research or advice.</p>
-<p>Consider a clinical investigation examining whether an innovative medication can lower LDL cholesterol levels in adults diagnosed with hypercholesterolemia which basically means having too much cholesterol in the blood. This can increase the risk of heart problems because cholesterol can build up in blood vessels and block blood flow.</p>
-<p>The study monitors a group of <span class="math inline">\(n=120\)</span> participants over time, recording LDL cholesterol concentrations prior to treatment and again after an 8-week course of the drug. The outcome of interest is the LDL cholesterol measurement (in mg/dL), a widely used biomarker for cardiovascular risk.</p>
-<p>Since each participant provides two observations (i.e.&nbsp;one before and one after treatment), the data are naturally paired (the same individual is measured two times), allowing the analysis to focus on <strong>changes within individuals</strong> rather than <strong>differences between unrelated groups</strong>.</p>
-<section id="generative-modelling-process-1" class="level3" data-number="B.2.1"><h3 data-number="B.2.1" class="anchored" data-anchor-id="generative-modelling-process-1">
-<span class="header-section-number">B.2.1</span> Generative Modelling Process</h3>
-<p>The simulated dataset reflects the following study characteristics:</p>
-<ul>
-<li><p><strong>Baseline LDL levels:</strong> Participants in the population have a mean pre-treatment LDL of 160 mg/dL, with a standard deviation of 5 for individual variation.</p></li>
-<li><p><strong>Expected treatment effect:</strong> On average, LDL levels decline by 2.5 mg/dL after the intervention using new medication.</p></li>
-<li><p><strong>Measurement variation:</strong> Biological variability and measurement error introduce random fluctuations in LDL values, even within the same patient.</p></li>
-</ul>
-<p>Formally, for each participant <span class="math inline">\(i\)</span> the LDL before treatment follows a Normal distribution with mean = 160 mg/dL and a standard deviation of 5:</p>
-<p><span class="math display">\[\text{LDL}_{\text{before}, i} \sim \text{Normal}(160, 5^2)\]</span></p>
-<p>and for each participant <span class="math inline">\(i\)</span> the LDL after the treatment is a random value and is a combination of three elements as follows:</p>
-<p><span class="math display">\[\text{LDL}_{\text{after}, i} = \text{LDL}_{\text{before}, i} - \Delta + \varepsilon_i\]</span></p>
-<p>where:</p>
-<ul>
-<li><p><span class="math inline">\(\Delta = 2.5\)</span> is the <strong>average decrease</strong> in LDL due to treatment</p></li>
-<li><p><span class="math inline">\(\varepsilon_i \sim \text{Normal}(0, 1)\)</span> represents additional variation specific to the after-treatment measurement.</p></li>
-</ul></section><section id="code-1" class="level3" data-number="B.2.2"><h3 data-number="B.2.2" class="anchored" data-anchor-id="code-1">
-<span class="header-section-number">B.2.2</span> Code</h3>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist">
-<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true"><strong><code>R</code> Code</strong></a></li>
-<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false"><strong><code>Python</code> Code</strong></a></li>
-</ul>
-<div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># set.seed for reproducibility</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Set number of participants</span></span>
-<span><span class="va">n_patients</span> <span class="op">&lt;-</span> <span class="fl">120</span>   </span>
-<span></span>
-<span><span class="co"># Set the average decrease in LDL due to treatment</span></span>
-<span><span class="va">Delta</span> <span class="op">&lt;-</span> <span class="fl">2.5</span></span>
-<span></span>
-<span><span class="co"># Step 1: Generate LDL before treatment</span></span>
-<span><span class="va">ldl_before</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">160</span>, sd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Step 2: Generate LDL after treatment</span></span>
-<span><span class="va">ldl_after</span> <span class="op">&lt;-</span> <span class="va">ldl_before</span> <span class="op">-</span> <span class="va">Delta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n_patients</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Create final dataset</span></span>
-<span><span class="va">cholesterol_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
-<span>  patient_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">n_patients</span>,</span>
-<span>  LDL_before <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">ldl_before</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  LDL_after  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">ldl_after</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Display first few observations</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cholesterol_data</span>, <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import required packages</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing libraries</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Note does not necessarily produce the same values as in R. </span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Both languages uses different starting point when generating random sample. </span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># But the following code is guaranteed to generate the same data in Python.</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of participants</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>n_patients <span class="op">=</span> <span class="dv">120</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Average decrease in LDL due to treatment</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>Delta <span class="op">=</span> <span class="fl">2.5</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Generate LDL before treatment</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>ldl_before <span class="op">=</span> np.random.normal(loc<span class="op">=</span><span class="dv">160</span>, scale<span class="op">=</span><span class="dv">5</span>, size<span class="op">=</span>n_patients)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Generate LDL after treatment</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>ldl_after <span class="op">=</span> ldl_before <span class="op">-</span> Delta <span class="op">+</span> np.random.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>n_patients)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Create final dataset</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>cholesterol_data <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"patient_id"</span>: np.arange(<span class="dv">1</span>, n_patients <span class="op">+</span> <span class="dv">1</span>),</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LDL_before"</span>: np.<span class="bu">round</span>(ldl_before, <span class="dv">1</span>),</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LDL_after"</span>: np.<span class="bu">round</span>(ldl_after, <span class="dv">1</span>)</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Display first 10 rows</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cholesterol_data.head(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Factor levels and sampled customers per treatment</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>webpage_design_levels <span class="op">=</span> [<span class="st">"D1"</span>, <span class="st">"D2"</span>, <span class="st">"D3"</span>]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>discount_framing_levels <span class="op">=</span> [<span class="st">"Low"</span>, <span class="st">"High"</span>]</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>n_per_treatment <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Population fixed additive parameters</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> [<span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">70</span>]          </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> [<span class="op">-</span><span class="dv">5</span>, <span class="dv">12</span>]              </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>interaction <span class="op">=</span> np.array([</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">5</span>],</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    [<span class="op">-</span><span class="dv">8</span>, <span class="dv">0</span>],</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">11</span>, <span class="op">-</span><span class="dv">13</span>]</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulating data</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>data_list <span class="op">=</span> []</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):  </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>):  </span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        mean_ij <span class="op">=</span> alpha[i] <span class="op">+</span> beta[j] <span class="op">+</span> interaction[i, j]</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> np.random.normal(loc<span class="op">=</span>mean_ij, scale<span class="op">=</span>np.sqrt(<span class="dv">16</span>), size <span class="op">=</span> n_per_treatment)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        y_rounded <span class="op">=</span> np.<span class="bu">round</span>(y, <span class="dv">2</span>) </span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        df_ij <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">'webpage_design'</span>: [webpage_design_levels[i]] <span class="op">*</span> n_per_treatment,</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">'discount_framing'</span>: [discount_framing_levels[j]] <span class="op">*</span> n_per_treatment,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>            <span class="st">'conversion_score'</span>: y_rounded</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>        data_list.append(df_ij)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenate all groups into one DataFrame</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>ABn_customer_data <span class="op">=</span> pd.concat(data_list, ignore_index <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Showing the first 100 customers of the A/B/n testing</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ABn_customer_data.head(<span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -656,35 +671,17 @@ Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>   patient_id LDL_before LDL_after
-1           1      157.2     154.8
-2           2      158.8     155.4
-3           3      167.8     164.8
-4           4      160.4     157.6
-5           5      160.6     160.0
-6           6      168.6     165.4
-7           7      162.3     160.0
-8           8      153.7     151.3
-9           9      156.6     153.1
-10         10      157.8     155.2</code></pre>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-85cf7f798e923a02ed60" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-85cf7f798e923a02ed60">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[32.76,34.08,41.23,35.28,35.52,41.86,36.84,29.94,32.25,33.22,39.9,36.44,36.6,35.44,32.78,42.15,36.99,27.13,37.81,33.11,30.73,34.13,30.9,32.08,32.5,28.25,38.35,35.61,30.45,40.02,36.71,33.82,38.58,38.51,38.29,37.75,37.22,34.75,33.78,33.48,32.22,34.17,29.94,43.68,39.83,30.51,33.39,33.13,38.12,34.67,36.01,34.89,34.83,40.47,34.1,41.07,28.8,37.34,35.5,35.86,36.52,32.99,33.67,30.93,30.71,36.21,36.79,35.21,38.69,43.2,33.04,25.76,39.02,32.16,32.25,39.1,33.86,30.12,35.73,34.44,35.02,36.54,33.52,37.58,34.12,36.33,39.39,36.74,33.7,39.6,38.97,37.19,35.95,32.49,40.44,32.6,43.75,41.13,34.06,30.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>   patient_id  LDL_before  LDL_after
-0           1       154.6      151.8
-1           2       165.0      161.9
-2           3       161.4      159.0
-3           4       152.5      150.7
-4           5       157.1      156.2
-5           6       168.3      165.5
-6           7       147.9      146.2
-7           8       157.9      155.9
-8           9       166.3      164.3
-9          10       155.7      152.6</code></pre>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-f7202f4a63f76b2c09a9" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f7202f4a63f76b2c09a9">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[30.66,38.99,36.13,28.97,32.69,41.61,25.29,33.28,40.06,31.53,32.28,34.62,40.97,32.44,33.22,33.26,43.82,43.75,39.02,36.54,37.95,40.96,31.26,39.7,29.98,32.45,38.63,29.29,34.44,31.55,33.98,23.81,27.91,32.2,38.71,34.31,35.01,37.75,31.48,36.13,31.78,28.09,33.44,37.3,36.35,34.95,44.57,36.65,38.91,43.95,29.82,30.84,41.97,31.81,35.12,39.28,38.56,42.02,40.98,39.28,31.91,38.18,36.26,29.69,40.67,38.23,35.18,34.07,30.21,35.8,36.87,31.68,39.65,30.61,26.51,39.16,33.39,34.5,31.65,28.58,40.02,32.24,41.64,38.23,33.74,30.66,32.07,30.15,43.35,35.66,39.6,29.93,35.72,39.71,33.66,39.12,30.66,29.55,36.52,33.48]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
