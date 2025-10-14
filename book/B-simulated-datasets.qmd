@@ -53,6 +53,196 @@ To maintain a bilingual approach using both `R` and `Python`, we will provide th
 
 For each of the datasets listed below, besides providing the simulation code, we will elaborate on the dataset context along with the relevant equations (if necessary) that generate this data.
 
+## $t$-test for Paired Samples Dataset
+
+This dataset is used in @sec-two-continuous-means, more specifically in @sec-t-test-paired-samples, to demonstrate the **$t$-test for paired samples** via a hypothetical scenario from medical research. Consider a clinical investigation examining whether an innovative medication can decrease low-density lipoprotein (LDL) cholesterol levels in adults diagnosed with hypercholesterolemia, a condition characterized by elevated cholesterol levels in the blood. This matter can increase the risk of heart problems because cholesterol can build up in blood vessels and block blood flow.
+
+<br>
+
+![Image by [*Fakhruddin Memon*](https://pixabay.com/users/fidsor-26066389/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=7070897) via [*Pixabay*](https://pixabay.com/illustrations/heart-attack-heartache-stethoscope-7070897/).](img/cholesterol.png){fig-align="center" width=70%}
+
+<br>
+
+::::: Heads-up
+::: Heads-up-header
+Heads-up on the use of this dataset!
+:::
+::: Heads-up-container
+This data is simulated and by no means should be considered for medical research or advice. 
+:::
+:::::
+
+This simulated study monitors a group of $n = 120$ participants over time, recording LDL cholesterol concentrations prior to treatment and again after an eight-week course of the drug. The outcome of interest is the LDL cholesterol measurement (in $\text{mg/dL}$), a widely used biomarker for cardiovascular risk. Since each participant provides two observations (i.e., one before and one after treatment), the data are naturally paired (the same individual is measured twice), allowing the analysis to focus on **changes within individuals** rather than **differences between unrelated groups**. 
+
+### Generative Modelling Process
+
+The simulated dataset reflects the following study characteristics:
+
+- **Baseline LDL levels:** Participants in the simulated population have a mean pre-treatment LDL cholesterol level of $\mu = 160 \text{ mg/dL}$, with a standard deviation of $\sigma = 5 \text{ mg/dL}$ to account for individual variation.
+- **Expected treatment effect:** On average, in this simulated population of participants, LDL cholesterol levels decline by $\Delta = 2.5 \text{ mg/dL}$ after the intervention using the new medication.
+- **Measurement variation:** Biological variability and measurement error introduce random fluctuations in LDL values, even within the same patient.
+
+Since formally, for the $i$th participant, the LDL cholesterol level before treatment is assumed to follow a Normal distribution with $\mu = 160 \text{ mg/dL}$ and $\sigma = 5 \text{ mg/dL}$, we can express the following:
+
+$$\text{LDL}_{\text{before}, i} \sim \text{Normal}(\mu = 160, \sigma^2= 5^2).$$
+
+Then, again for the $i$th participant, the LDL cholesterol level after the treatment is another random variable that is a combination of three components as follows:
+
+$$\text{LDL}_{\text{after}, i} = \text{LDL}_{\text{before}, i} - \Delta + \varepsilon_i,$$
+
+where:
+
+- $\Delta = 2.5 \text{ mg/dL}$ is the **average decrease** in LDL cholesterol level due to this new treatment in the simulated population.
+- $\varepsilon_i \sim \text{Normal}(0, 1)$ represents additional variation specific to the after-treatment measurement for the $i$th participant. This is what we already defined as the **measurement variation**.
+
+
+### Code
+
+Let us check the corresponding code to simulate this data. We are simulating **120 participants in this study**, which gives us a sample size of $n = 120$. Additionally, the simulation will utilize the [{numpy}](https://pypi.org/project/numpy/) [@numpy] and [{pandas}](https://pypi.org/project/pandas/) libraries in `Python`. The final data frame will be stored in `cholesterol_data`, which will have the following columns: `patient_id`, `LDL_before`, and `LDL_after`.
+
+::: {.panel-tabset}
+
+## **`R` Code**
+
+``` {.r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Set number of participants
+n_patients <- 120   
+
+# Set the average decrease in LDL cholesterol levels due to new treatment
+Delta <- 2.5
+
+# Step 1: Generate LDL cholesterol levels before treatment
+ldl_before <- rnorm(n_patients, mean = 160, sd = 5)
+
+# Step 2: Generate LDL cholesterol levels after treatment
+ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 1)
+
+# Create final dataset
+cholesterol_data <- data.frame(
+  patient_id = 1:n_patients,
+  LDL_before = round(ldl_before, 1),
+  LDL_after  = round(ldl_after, 1)
+)
+
+# Showing the first 20 participants 
+head(cholesterol_data, 20)
+```
+
+## **`Python` Code**
+
+``` {.python}
+# Importing libraries
+import numpy as np
+import pandas as pd
+
+# Set seed for reproducibility
+np.random.seed(123)
+
+# Set number of participants
+n_patients = 120
+
+# Set the average decrease in LDL cholesterol levels due to new treatment
+Delta = 2.5
+
+# Step 1: Generate LDL cholesterol levels before treatment
+ldl_before = np.random.normal(loc=160, scale=5, size=n_patients)
+
+# Step 2: Generate LDL cholesterol levels after treatment
+ldl_after = ldl_before - Delta + np.random.normal(loc=0, scale=1, size=n_patients)
+
+# Create final dataset
+cholesterol_data = pd.DataFrame({
+    "patient_id": np.arange(1, n_patients + 1),
+    "LDL_before": np.round(ldl_before, 1),
+    "LDL_after": np.round(ldl_after, 1)
+})
+
+# Showing the first 20 participants 
+print(cholesterol_data.head(20))
+```
+
+:::
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| echo: false
+#| message: false
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Set number of participants
+n_patients <- 120   
+
+# Set the average decrease in LDL cholesterol levels due to new treatment
+Delta <- 2.5
+
+# Step 1: Generate LDL cholesterol levels before treatment
+ldl_before <- rnorm(n_patients, mean = 160, sd = 5)
+
+# Step 2: Generate LDL cholesterol levels after treatment
+ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 1)
+
+# Create final dataset
+cholesterol_data <- data.frame(
+  patient_id = 1:n_patients,
+  LDL_before = round(ldl_before, 1),
+  LDL_after  = round(ldl_after, 1)
+)
+
+# Showing the first 20 participants 
+head(cholesterol_data, 20) |> 
+  print_as_dt()
+```
+
+## **`Python` Output**
+
+```{python}
+#| echo: false
+#| message: false
+
+# Importing libraries
+import numpy as np
+import pandas as pd
+
+# Set seed for reproducibility
+np.random.seed(123)
+
+# Set number of participants
+n_patients = 120
+
+# Set the average decrease in LDL cholesterol levels due to new treatment
+Delta = 2.5
+
+# Step 1: Generate LDL cholesterol levels before treatment
+ldl_before = np.random.normal(loc=160, scale=5, size=n_patients)
+
+# Step 2: Generate LDL cholesterol levels after treatment
+ldl_after = ldl_before - Delta + np.random.normal(loc=0, scale=1, size=n_patients)
+
+# Create final dataset
+cholesterol_data = pd.DataFrame({
+    "patient_id": np.arange(1, n_patients + 1),
+    "LDL_before": np.round(ldl_before, 1),
+    "LDL_after": np.round(ldl_after, 1)
+})
+```
+
+
+```{r}
+#| echo: false
+
+# Showing the first 10 participants 
+print_as_dt(head(py$cholesterol_data, 10))
+```
+:::
+
 ## ANOVA Dataset
 
 This dataset is used in @sec-anova to elaborate on **analysis of variance (ANOVA)** and pertains to an experimental context. Suppose a data-driven marketing team at a well-known tech company, which operates a global online store, is conducting an A/B/n testing aimed at **increasing the customer conversion score (i.e., the outcome)**. In this experiment, the customer conversion score is defined as a unitless and standardized engagement index. This index combines various elements, such as clicks, time spent on the webpage, and the probability of making a purchase, with a baseline mean set at $50$. This score measures customer responsiveness on the online store: **the higher the score, the greater the customer responsiveness**.
@@ -93,7 +283,7 @@ where
 - $\alpha_i$ is the fixed first main effect corresponding to the $i$th level of webpage design for $i = D_1, D_2, D_3$;
 - $\beta_j$ is the second fixed main effect corresponding to the $j$th level of discount framing for $j = \text{Low}, \text{High}$;
 - $(\alpha \beta)_{i,j}$ is the fixed interaction effect between the $i$th and $j$th levels of webpage design and discount framing respectively, and
-- $\varepsilon_{i,j,k}$ is the random error associated to each $Y_{i,j,k}$.
+- $\varepsilon_{i,j,k}$ is the random error associated to each $Y_{i,j,k}$,  capturing the variability and measurement error that introduces randomness in the response $Y_{i,j,k}$.
 
 ::::: Heads-up
 ::: Heads-up-header
@@ -149,14 +339,15 @@ The fixed-effect interaction arrangement above induces non-parallel trends in an
 
 ### Code
 
-Let us move to the corresponding code to simulate this data. Recall we are simulating **200 customers for each one of the six treatments**, which will give us an **overall sample size of $n = 1,200$**. Furthermore, note that `Python` additionally uses the [{numpy}](https://pypi.org/project/numpy/) [@numpy] and [{pandas}](https://pypi.org/project/pandas/) libraries. The final data frame will be stored in `ABn_customer_data` whose columns will be `webpage_design`, `discount_framing`, and `conversion_score`.
+Let us move to the corresponding code to simulate this data. Recall we are simulating **200 customers for each one of the six treatments**, which will give us an **overall sample size of $n = 1,200$**. Furthermore, note that `Python` additionally uses the [{numpy}](https://pypi.org/project/numpy/) and [{pandas}](https://pypi.org/project/pandas/) libraries. The final data frame will be stored in `ABn_customer_data` whose columns will be `webpage_design`, `discount_framing`, and `conversion_score`.
 
 ::: {.panel-tabset}
 
 ## **`R` Code**
 
 ``` {.r}
-set.seed(123)  # Seed for reproducibility
+# Set seed for reproducibility
+set.seed(123)
 
 # Factor levels and sampled customers per treatment
 webpage_design_levels <- c("D1", "D2", "D3")
@@ -180,7 +371,7 @@ data_list <- list()
 for (i in 1:3) {
   for (j in 1:2) {
     mean_ij <- alpha[i] + beta[j] + interaction[i, j]
-    y <- rnorm(n_per_treatment, mean = mean_ij, sd = sqrt(16))     # sigma^2 = 16
+    y <- rnorm(n_per_treatment, mean = mean_ij, sd = sqrt(16))
     df_ij <- data.frame(
       webpage_design = as.factor(webpage_design_levels[i]),
       discount_framing = as.factor(discount_framing_levels[j]),
@@ -225,7 +416,7 @@ data_list = []
 for i in range(3):  
     for j in range(2):  
         mean_ij = alpha[i] + beta[j] + interaction[i, j]
-        y = np.random.normal(loc=mean_ij, scale=np.sqrt(16), size = n_per_treatment)      # sigma^2 = 16
+        y = np.random.normal(loc=mean_ij, scale=np.sqrt(16), size = n_per_treatment)
         y_rounded = np.round(y, 2) 
         
         df_ij = pd.DataFrame({
@@ -253,7 +444,8 @@ print(ABn_customer_data.head(100))
 #| echo: false
 #| message: false
 
-set.seed(123)  # Seed for reproducibility
+# Set seed for reproducibility
+set.seed(123)
 
 # Factor levels and sampled customers per treatment
 webpage_design_levels <- c("D1", "D2", "D3")
@@ -277,7 +469,7 @@ data_list <- list()
 for (i in 1:3) {
   for (j in 1:2) {
     mean_ij <- alpha[i] + beta[j] + interaction[i, j]
-    y <- rnorm(n_per_treatment, mean = mean_ij, sd = sqrt(16))     # sigma^2 = 16
+    y <- rnorm(n_per_treatment, mean = mean_ij, sd = sqrt(16))
     df_ij <- data.frame(
       webpage_design = as.factor(webpage_design_levels[i]),
       discount_framing = as.factor(discount_framing_levels[j]),
@@ -326,7 +518,7 @@ data_list = []
 for i in range(3):  
     for j in range(2):  
         mean_ij = alpha[i] + beta[j] + interaction[i, j]
-        y = np.random.normal(loc=mean_ij, scale=np.sqrt(16), size = n_per_treatment)      # sigma^2 = 16
+        y = np.random.normal(loc=mean_ij, scale=np.sqrt(16), size = n_per_treatment)
         y_rounded = np.round(y, 2)
         
         df_ij = pd.DataFrame({
@@ -346,190 +538,6 @@ ABn_customer_data = pd.concat(data_list, ignore_index = True)
 
 # Showing the first 100 customers of the A/B/n testing
 print_as_dt(head(py$ABn_customer_data, 100))
-```
-
-:::
-
-
-## Dataset: Two sample t-test for Paired Samples
-
-This dataset is presented here and is being used in @sec-t-test-paired-samples to demonstrate the **paired-sample t-test** using a hypothetical scenario from medical research. Note that data is simulated and by no means should be considered for medical research or advice. 
-
-Consider a clinical investigation examining whether an innovative medication can lower LDL cholesterol levels in adults diagnosed with hypercholesterolemia which basically means having too much cholesterol in the blood. This can increase the risk of heart problems because cholesterol can build up in blood vessels and block blood flow. 
-
-The study monitors a group of $n=120$ participants over time, recording LDL cholesterol concentrations prior to treatment and again after an 8-week course of the drug. The outcome of interest is the LDL cholesterol measurement (in mg/dL), a widely used biomarker for cardiovascular risk. 
-
-Since each participant provides two observations (i.e. one before and one after treatment), the data are naturally paired (the same individual is measured two times), allowing the analysis to focus on **changes within individuals** rather than **differences between unrelated groups**. 
-
-### Generative Modelling Process
-
-The simulated dataset reflects the following study characteristics:
-
-- **Baseline LDL levels:** Participants in the population have a mean pre-treatment LDL of 160 mg/dL, with a standard deviation of 5 for individual variation.
-
-- **Expected treatment effect:** On average, LDL levels decline by 2.5 mg/dL after the intervention using new medication.
-
-- **Measurement variation:** Biological variability and measurement error introduce random fluctuations in LDL values, even within the same patient.
-
-Formally, for each participant $i$ the LDL before treatment follows a Normal distribution with mean = 160 mg/dL and a standard deviation of 5:
-
-$$\text{LDL}_{\text{before}, i} \sim \text{Normal}(160, 5^2)$$
-
-and for each participant $i$ the LDL after the treatment is a random value and is a combination of three elements as follows: 
-
-$$\text{LDL}_{\text{after}, i} = \text{LDL}_{\text{before}, i} - \Delta + \varepsilon_i$$
-
-where:
-
-- $\Delta = 2.5$ is the **average decrease** in LDL due to treatment
-
-- $\varepsilon_i \sim \text{Normal}(0, 1)$ represents additional variation specific to the after-treatment measurement.
-
-
-### Code
-
-::: {.panel-tabset}
-
-## **`R` Code**
-
-``` {.r}
-# set.seed for reproducibility
-set.seed(123)
-
-# Set number of participants
-n_patients <- 120   
-
-# Set the average decrease in LDL due to treatment
-Delta <- 2.5
-
-# Step 1: Generate LDL before treatment
-ldl_before <- rnorm(n_patients, mean = 160, sd = 5)
-
-# Step 2: Generate LDL after treatment
-ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 1)
-
-# Create final dataset
-cholesterol_data <- data.frame(
-  patient_id = 1:n_patients,
-  LDL_before = round(ldl_before, 1),
-  LDL_after  = round(ldl_after, 1)
-)
-
-# Display first few observations
-head(cholesterol_data, 10)
-```
-
-## **`Python` Code**
-
-``` {.python}
-# Import required packages
-import numpy as np
-import pandas as pd
-
-# Set seed for reproducibility
-# Set seed for reproducibility
-# Note does not necessarily produce the same values as in R. 
-# Both languages uses different starting point when generating random sample. 
-# But the following code is guaranteed to generate the same data in Python.
-np.random.seed(123)
-
-# Number of participants
-n_patients = 120
-
-# Average decrease in LDL due to treatment
-Delta = 2.5
-
-# Step 1: Generate LDL before treatment
-ldl_before = np.random.normal(loc=160, scale=5, size=n_patients)
-
-# Step 2: Generate LDL after treatment
-ldl_after = ldl_before - Delta + np.random.normal(loc=0, scale=1, size=n_patients)
-
-# Create final dataset
-cholesterol_data = pd.DataFrame({
-    "patient_id": np.arange(1, n_patients + 1),
-    "LDL_before": np.round(ldl_before, 1),
-    "LDL_after": np.round(ldl_after, 1)
-})
-
-# Display first 10 rows
-print(cholesterol_data.head(10))
-```
-
-:::
-
-::: {.panel-tabset}
-
-## **`R` Output**
-
-```{r}
-#| echo: false
-#| message: false
-
-# set.seed for reproducibility
-set.seed(123)
-
-# Set number of participants
-n_patients <- 120   
-
-# Set the average decrease in LDL due to treatment
-Delta <- 2.5
-
-# Step 1: Generate LDL before treatment
-ldl_before <- rnorm(n_patients, mean = 160, sd = 5)
-
-# Step 2: Generate LDL after treatment
-ldl_after <- ldl_before - Delta + rnorm(n_patients, mean = 0, sd = 1)
-
-# Create final dataset
-cholesterol_data <- data.frame(
-  patient_id = 1:n_patients,
-  LDL_before = round(ldl_before, 1),
-  LDL_after  = round(ldl_after, 1)
-)
-
-# Display first few observations
-head(cholesterol_data, 10)
-```
-
-## **`Python` Output**
-
-```{python}
-#| echo: false
-#| message: false
-
-# Import required packages
-import numpy as np
-import pandas as pd
-
-# Set seed for reproducibility
-# Set seed for reproducibility
-# Note does not necessarily produce the same values as in R. 
-# Both languages uses different starting point when generating random sample. 
-# But the following code is guaranteed to generate the same data in Python.
-np.random.seed(123)
-
-# Number of participants
-n_patients = 120
-
-# Average decrease in LDL due to treatment
-Delta = 2.5
-
-# Step 1: Generate LDL before treatment
-ldl_before = np.random.normal(loc=160, scale=5, size=n_patients)
-
-# Step 2: Generate LDL after treatment
-ldl_after = ldl_before - Delta + np.random.normal(loc=0, scale=1, size=n_patients)
-
-# Create final dataset
-cholesterol_data = pd.DataFrame({
-    "patient_id": np.arange(1, n_patients + 1),
-    "LDL_before": np.round(ldl_before, 1),
-    "LDL_after": np.round(ldl_after, 1)
-})
-
-# Display first 10 rows
-print(cholesterol_data.head(10))
 ```
 
 :::
