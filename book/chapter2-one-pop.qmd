@@ -126,6 +126,8 @@ The dataset spans three penguin species and includes continuous variables such a
 
 We obtain the dataset **Palmer Station Penguins** dataset collected by the 'LTER'
 
+::: {.panel-tabset}
+
 ### R Code
 ```{r}
 library(palmerpenguins)
@@ -159,12 +161,15 @@ train_set, test_set = train_test_split(
     penguins_clean, test_size=0.2, random_state=42
 )
 ```
+:::
 
 ### Exploratory Data Analysis (EDA)
 
 Before conducting the statistical test, we begin with an exploratory analysis to understand the distribution and characteristics of the flipper_length_mm variable.
 
 First, we examine summary statistics such as the mean, standard deviation, and quartiles. This helps us get a sense of the central tendency and spread of the data:
+
+::: {.panel-tabset}
 
 ### R Code
 ```{r}
@@ -175,6 +180,7 @@ summary(train_set$flipper_length_mm)
 ```{python}
 print(train_set["flipper_length_mm"].describe())
 ```
+:::
 
 Next, we visualize the distribution of flipper lengths using a histogram. This allows us to assess whether the data are approximately symmetric and whether any outliers are present:
 
@@ -204,6 +210,8 @@ plt.show()
 
 Now, we can perform one‑Sample t-Test
 
+::: {.panel-tabset}
+
 ### R Code
 ```{r}
 t_test <- t.test(train_set$flipper_length_mm, mu = 200)
@@ -220,6 +228,7 @@ t_stat, p_value = stats.ttest_1samp(
 )
 print(f"t = {t_stat:.3f},  p = {p_value:.4f}")
 ```
+:::
 
 A one-sample t-test was conducted to determine whether the average flipper length of penguins is significantly different from 200 mm. Based on a training sample, the test produced a t-statistic of t and a p-value of p.
 
@@ -295,7 +304,10 @@ It includes measurements such as *flipper length*, *bill size*, and *body mass* 
 
 ### Data Collection & Wrangling
 
+::: {.panel-tabset}
+
 ### R Code
+
 ```{r}
 library(palmerpenguins)
 library(tidyverse)
@@ -322,8 +334,11 @@ train_set, test_set = train_test_split(
     penguins_clean, test_size=0.2, random_state=42
 )
 ```
+:::
 
 ### Exploratory Data Analysis (EDA)
+
+::: {.panel-tabset}
 
 ### R Code
 ```{r}
@@ -354,6 +369,7 @@ plt.ylabel("Flipper Length (mm)")
 plt.show()
 
 ```
+:::
 
 ------------------------------------------------------------------------
 
@@ -401,6 +417,7 @@ Once again, we turn to the **Palmer Station Penguins** dataset, which includes
 
 We continue with the same cleaned and split dataset from the earlier section.
 
+::: {.panel-tabset}
 
 ### R Code
 ```{r}
@@ -428,11 +445,13 @@ print(f"Number of Adelie penguins: {num_adelie}")
 print(f"Sample proportion: {p_hat:.3f}")
 
 ```
+:::
 
 ### Exploratory Data Analysis (EDA)
 
 Let’s visualize the distribution of penguin species in our training sample.
 
+::: {.panel-tabset}
 
 ### R Code
 ```{r}
@@ -456,10 +475,13 @@ plt.xticks(rotation=0)
 plt.show()
 
 ```
+:::
 
 ### Performing the One-Sample z-Test
 
 Now we perform the z-test for one proportion. Assuming a historical reference proportion of 0.45 for Adelie penguins:
+
+::: {.panel-tabset}
 
 ### R Code
 ```{r}
@@ -470,6 +492,7 @@ p_value <- 2 * (1 - pnorm(abs(z_stat)))
 
 cat("z =", round(z_stat, 3), ", p =", round(p_value, 4), "\n")
 ```
+
 ### Python Code
 ```{python}
 import numpy as np
@@ -486,6 +509,7 @@ z_stat = (p_hat - p0) / se
 p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
 print(f"z = {z_stat:.3f}, p = {p_value:.4f}")
 ```
+:::
 
 A one-sample z-test for proportions was conducted to determine whether the proportion of female penguins differs significantly from 0.45. Based on the sample data, the test produced a z-statistic of z and a p-value of p. Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the proportion of female penguins is significantly different from 0.45. Otherwise, we do not have sufficient evidence to say it differs.
 
