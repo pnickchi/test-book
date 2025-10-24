@@ -832,7 +832,7 @@ wage_data <- Wage
 # - HS Grad --> High school graduate
 # - College Grad --> College graduate
 wage_data <- wage_data |>
-  filter(education %in% c('2. HS Grad', '4. College Grad')) %>%
+  filter(education %in% c('2. HS Grad', '4. College Grad')) |>
   mutate(education = recode(education,
                             '2. HS Grad' = 'High school graduate',
                             '4. College Grad' = 'College graduate'))
@@ -1349,8 +1349,8 @@ Remember!
 ```{r}
 
 # Extract LDL measurements before and after treatment
-ldl_before <- test_cholesterol %>% pull(LDL_before)
-ldl_after  <- test_cholesterol %>% pull(LDL_after)
+ldl_before <- test_cholesterol |> pull(LDL_before)
+ldl_after  <- test_cholesterol |> pull(LDL_after)
 
 # Run paired t-test
 t.test(x = ldl_before, y = ldl_after, paired = TRUE)
@@ -1440,9 +1440,9 @@ Based on our analysis, we asked: **Did LDL levels change significantly after tre
 
 In the examples we studied in [Section LINK HERE], we estimated the proportion of a population based on the sample proportion $\hat{p}$. This is often the case in practice, as the population proportion is typically unknown and must be inferred from sample data. When we are comparing two groups and wish to test whether their underlying proportions differ, we can extend this idea to a two-proportion test.
 
-For instance imagine you are investigating support for a new policy among two different regions. Suppose a national statistics office previously carried out large-scale surveys and suggested that the variability in responses for each region can be reasonably modeled using the binomial distribution framework. Your aim is not the variance but rather the proportion of individuals in each group who favor the policy.
+Suppose you are investigating support for a new policy among two different regions. Each individual either **supports the policy** (coded as 1) or **does not support it** (coded as 0). You want to determine if the proportion of supporters is significantly different between Region A and Region B.
 
-Specifically, let’s consider two independent populations:
+Formally, let:
 
 **Region A (Population 1):** each individual either supports the policy (coded as 1) or policy (coded as 0).
 
@@ -1456,47 +1456,141 @@ From each population, we take a random sample:
 
 where $p_1$ is the population proportion of support in Region A and $p_2$ is the population proportion of support in Region B. 
 
-The main statistical question becomes: **Is there a significant difference between the true population proportions of support in the two regions?** Formally, we test the hypotheses:
+The main statistical question becomes: **Is there a significant difference between the true population proportions of support in the two regions?** We formalize this as a hypothesis test:
 
 $$
-H_0: \p_1 = \p_2 \quad \text{versus} \quad H_A: \p_1 \ne \p_2
+H_0: p_1 = p_2 \quad \text{versus} \quad H_A: p_1 \ne p_2
 $$
+To answer this, we use the **two-sample z-test for population proportions**, which compares the observed sample proportions while accounting for the variability expected under the null hypothesis.
 
-
-This leads us to the two-sample z-test for population proportions which provides a way to formally compare the two groups using their observed sample proportions.
 
 ### Study Design
 
-- Under development
+Consider a survey aimed at estimating support for a new environmental policy in two regions of a country. Researchers randomly sample Region A (n = 150 individuals) and Region B (m = 200 individuals), recording whether each participant supports the policy. The main outcome of interest is whether an individual supports or does not support the policy.
+
 
 ### Data Collection and Wrangling
 
-- Under development
+We will simulate a dataset to illustrate the concept:
+
+```{r}
+# Set seed
+set.seed(123)
+
+# Set sample sizes
+n_A <- 150
+n_B <- 200
+
+# Simulate true population proportions
+p_A <- 0.55
+p_B <- 0.45
+
+# Generate binary outcomes for survey responses
+support_A <- rbinom(n_A, size = 1, prob = p_A)
+support_B <- rbinom(n_B, size = 1, prob = p_B)
+
+# Create dataset
+policy_data <- data.frame(
+  region = c(rep("A", n_A), rep("B", n_B)),
+  support = c(support_A, support_B) )
+
+# Display first few rows
+head(policy_data, 10)
+```
+
+The dataset contains a region column and a support column indicating if the participant supports the policy.
+
 
 ### Exploratory Data Analysis
 
-- Under development
+
+```{r}
+policy_summary <- policy_data |>
+  group_by(region) |>
+  summarise(n = n(), supporters = sum(support), prop_support = mean(support))
+policy_summary
+```
+
+A simple bar plot can also help visualize the differences:
+
+```{r}
+ggplot(policy_summary, aes(x = region, y = prop_support, fill = region)) +
+  geom_bar(stat = 'identity', alpha = 0.7) +
+  labs(
+    x = 'Region', 
+    y = 'Proportion Supporting Policy',
+    title = 'Proportion of Policy Supporters by Region'
+    ) +
+  theme_minimal()
+```
+
 
 ### Testing Settings
 
-- Under development
+We use a significance level of $\alpha = 0.05$. The population parameters are:
+
+- $p_1$: true proportion of supporters in Region A.
+
+- $p_2$: true proportion of supporters in Region B.
+
+The goal is to test if the difference $p_1 - p_2$ is significantly different from zero.
+
 
 ### Hypothesis Definitions
 
-- Under development
+The null and alternative hypotheses are:
+
+$$H_0:p_1 = p_2 \quad vs \quad H_1:p_1 \neq p_2$$
 
 ### Test Flavour and Components
 
-- Under development
+The two-sample z-test for proportions uses the pooled proportion:
+
+$$\hat p = \frac{x_1 + x_2}{n_1 + n_2}$$
+
+$$z = \frac{\hat p_1 - \hat p_2}{ \hat p (1 - \hat p) \left( \frac{1}{n_1} + \frac{1}{n_2} \right)}$$
+
+Under $H_0$, this statistic approximately follows a standard normal distribution. The p-value is calculated as:
+
+$$\text{p-value} = 2 \times Pr(Z \ge |z|)$$
 
 ### Inferential Conclusions
 
-- Under development
+If the p-value is smaller than $\alpha = 0.05$, we reject $H_0$, indicating a significant difference in policy support between the two regions. Otherwise, we fail to reject $H_0$, suggesting no evidence of a difference.
 
-### How to run the two-sample z-test in `R` and `Python`
 
-- Under development
+### How to run the two-sample paired t-test in `R` and `Python`
+
+::: {.panel-tabset}
+
+### R Code
+
+```{r}
+# Using policy_summary to get counts and sample sizes
+x1 <- policy_summary$supporters[policy_summary$region == "A"]
+x2 <- policy_summary$supporters[policy_summary$region == "B"]
+
+n1 <- policy_summary$n[policy_summary$region == "A"]
+n2 <- policy_summary$n[policy_summary$region == "B"]
+
+# Run two-proportion z-test
+prop.test(c(x1, x2), c(n1, n2), correct = FALSE)
+```
+
+
+
+### Python Code
+
+```{python}
+import pandas as pd
+from statsmodels.stats.proportion import proportions_ztest
+
+```
+
+:::
+
+
 
 ### Storytelling
 
-- Under development
+- Under dev
