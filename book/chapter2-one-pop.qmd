@@ -14,6 +14,11 @@
 # Setting up Python dependencies
 library(reticulate)
 
+py_require("pandas")
+py_require("seaborn")
+py_require("scikit-learn")
+py_require("statsmodels")
+
 # Optional: check if modules are available
 if (!py_module_available("pandas")) stop("pandas not found")
 if (!py_module_available("seaborn")) stop("seaborn not found")

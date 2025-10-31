@@ -4,7 +4,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 
@@ -17,10 +16,15 @@ library(reticulate)
 library(DT)
 
 # Setting up Python dependencies
-# py_require("pandas")
-# py_require("numpy")
-# pandas <- import("pandas")
-# numpy <- import("numpy")
+py_require("pandas")
+py_require("numpy")
+py_require("statsmodels")
+py_require("scipy")
+pandas <- import("pandas")
+numpy <- import("numpy")
+sklearn <- import("sklearn")
+statsmodels <- import("statsmodels")
+scipy.stats <- import("scipy.stats")
 
 options(htmlwidgets.TOJSON_ARGS = list(na = 'string')) 
 
@@ -93,12 +97,12 @@ Fisher’s statistical work remains central to frequentist inference. However, e
 :::
 :::::
 
-This chapter builds on the concepts introduced in the earlier works by @sec-one-continuous-mean and @sec-two-continuous-means, which concentrated on hypothesis testing for one and two groups, respectively. While those chapters primarily addressed pairwise comparisons, we will now shift our focus multiple comparisons:
+This chapter builds on the concepts introduced in the earlier works by @sec-one-continuous-mean and @sec-two-continuous-means, which concentrated on hypothesis testing for one and two groups, respectively. While those chapters primarily addressed pairwise comparisons, we will now shift our focus to multiple comparisons:
 
--   The **one-way ANOVA**, discussed in @sec-one-way-ANOVA, will assume a **single categorical factor with** $k$ levels. This approach allows us to test whether at least one group mean is significantly different from the others.
--   In contrast, the **two-way ANOVA**, from @sec-two-way-ANOVA, will incorporate an **additional categorical factor with** $m$ levels, permitting the analysis of both main effects and interaction effects. Interaction terms in ANOVA are especially useful for revealing cases where the effect of one factor depends on the level of another, a situation often encountered in complex experimental designs.
+- The **one-way ANOVA**, discussed in @sec-one-way-ANOVA, will assume a **single categorical factor with** $k$ levels. This approach allows us to test whether at least one group mean is significantly different from the others.
+- In contrast, the **two-way ANOVA**, from @sec-two-way-ANOVA, will incorporate an **additional categorical factor with** $m$ levels, permitting the analysis of both main effects and interaction effects. Interaction terms in ANOVA are especially useful for revealing cases where the effect of one factor depends on the level of another, a situation often encountered in complex experimental designs.
 
-As a side note, the workflow guiding this chapter, as referenced in @fig-hypothesis-testing-workflow, will provide a structured approach for applying both one-way and two-way ANOVA to the same A/B/n dataset (see @sec-ANOVA-dataset).
+As a side note, the workflow guiding this chapter, as referenced in @fig-hypothesis-testing-workflow, will provide a structured approach for applying both one-way and two-way ANOVA to their respective A/B/n datasets (see @sec-ANOVA-datasets).
 
 ::::: Heads-up
 ::: Heads-up-header
@@ -112,13 +116,13 @@ In modern data science, ANOVA remains significant, particularly in **A/B/n testi
 :::
 :::::
 
-## The ANOVA Dataset {#sec-ANOVA-dataset}
+## The ANOVA Datasets {#sec-ANOVA-datasets}
 
-The **simulated dataset** discussed in this chapter relates to an experimental context known as A/B/n testing, which is an expansion of traditional A/B testing as previously discussed. In a typical A/B testing, participants are randomly assigned to one of two strategies, referred to as treatments: treatment $A$ (the **control treatment**) and treatment $B$ (the **experimental treatment**). This approach enables us to infer **causation** concerning the following inquiry:
+The **simulated datasets** discussed in this chapter relate to an experimental context known as A/B/n testing, which is an expansion of traditional A/B testing as previously discussed. In a typical A/B testing, participants are randomly assigned to one of two strategies, referred to as treatments: treatment $A$ (the **control treatment**) and treatment $B$ (the **experimental treatment**). This approach enables us to infer **causation** concerning the following inquiry:
 
 > **Will changing from treatment** $A$ to treatment $B$ cause my outcome of interest, $Y$, to increase (or decrease, if that is the case)?
 
-In an ANOVA setting, the outcome must be continuous. The primary goal of A/B testing is to determine whether there is a statistically significant difference between treatments $A$ and $B$ concerning the outcome. Additionally, because we are conducting a proper randomized experiment, we can infer causation (which goes further than mere association), as treatment randomization enables us to get rid of the effect of further **confounders**.
+In an ANOVA setting, the outcome must be **continuous**. The primary goal of A/B testing is to determine whether there is a statistically significant difference between treatments $A$ and $B$ concerning the outcome. Additionally, because we are conducting a proper randomized experiment, we can infer causation (which goes further than mere association), as treatment randomization enables us to get rid of the effect of further **confounders**.
 
 ::::: Heads-up
 ::: Heads-up-header
@@ -132,55 +136,10 @@ In causal inference, confounding refers to the mixing of effects between the out
 :::
 :::::
 
-When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as **A/B/n testing**. In this case, the "*n*" does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments $A$ and $B$. With this clarification, we can now proceed with our simulated dataset.
+When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as **A/B/n testing**. In this case, the "*n*" does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments $A$ and $B$. With this clarification, we can now proceed with our simulated datasets.
 
 ![Image by [*Pabitra Kaity*](https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6370790) via [*Pixabay*](https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/).](img/ads.png){fig-align="center" width="50%"}
 
-```{r}
-#| label: tbl-ANOVA-ABn-data
-#| tbl-cap: "First 100 rows of our A/B/n simulated data."
-#| echo: false 
-#| message: false
-
-set.seed(123)  # Seed for reproducibility
-
-# Factor levels and sampled customers per treatment
-webpage_design_levels <- c("D1", "D2", "D3")
-discount_framing_levels <- c("Low", "High")
-n_per_treatment <- 200
-
-# Population fixed additive parameters
-alpha <- c(40, 50, 70)
-beta <- c(-5, 12)
-interaction <- matrix(
-  c(
-    0, 5,
-    -8, 0,
-    11, -13
-  ),
-  nrow = 3, byrow = TRUE
-)
-
-# Simulating data
-data_list <- list()
-for (i in 1:3) {
-  for (j in 1:2) {
-    mean_ij <- alpha[i] + beta[j] + interaction[i, j]
-    y <- rnorm(n_per_treatment, mean = mean_ij, sd = sqrt(16))     # sigma^2 = 16
-    df_ij <- data.frame(
-      webpage_design = as.factor(webpage_design_levels[i]),
-      discount_framing = as.factor(discount_framing_levels[j]),
-      conversion_score = round(y, 2)
-    )
-    data_list[[length(data_list) + 1]] <- df_ij
-  }
-}
-ABn_customer_data <- do.call(rbind, data_list)
-
-# Showing the first 100 customers of the A/B/n testing
-head(ABn_customer_data, n = 100) |> 
-  print_as_dt()
-```
 
 ## One-way ANOVA {#sec-one-way-ANOVA}
 
@@ -188,7 +147,327 @@ head(ABn_customer_data, n = 100) |>
 
 ### Data Collection and Wrangling {#sec-one-way-ANOVA-data-collection-wrangling}
 
+::: {.panel-tabset}
+
+## **`R` Code**
+
+``` {.r}
+# Loading dataset
+OneWay_ABn_customer_data <- read.csv("data/ABn_customer_data_one_factor.csv")
+
+# Showing the first 100 customers of the A/B/n testing
+head(OneWay_ABn_customer_data, n = 100)
+```
+
+## **`Python` Code**
+
+``` {.python}
+# Importing library
+import pandas as pd
+
+# Loading dataset
+OneWay_ABn_customer_data = pd.read_csv("data/ABn_customer_data_one_factor.csv")
+
+# Showing the first 100 customers of the A/B/n testing
+print(OneWay_ABn_customer_data.head(100))
+```
+
+:::
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| label: tbl-ANOVA-ABn-data-r-one
+#| tbl-cap: "First 100 rows of our A/B/n simulated data with webpage design as a standalone experimental factor."
+#| echo: false
+#| message: false
+
+# Loading dataset
+OneWay_ABn_customer_data <- read.csv("data/ABn_customer_data_one_factor.csv")
+
+# Showing the first 100 customers of the A/B/n testing
+head(OneWay_ABn_customer_data, n = 100) |> 
+  print_as_dt()
+```
+
+## **`Python` Output**
+
+```{python}
+#| echo: false
+#| message: false
+
+# Importing library
+import pandas as pd
+
+# Loading dataset
+OneWay_ABn_customer_data = pd.read_csv("data/ABn_customer_data_one_factor.csv")
+```
+
+
+```{r}
+#| label: tbl-ANOVA-ABn-data-py-one
+#| tbl-cap: "First 100 rows of our A/B/n simulated data with webpage design as a standalone experimental factor."
+#| echo: false
+
+# Showing the first 100 customers of the A/B/n testing
+print_as_dt(head(py$OneWay_ABn_customer_data, 100))
+```
+
+:::
+
+
+::: {.panel-tabset}
+
+## **`R` Code**
+
+``` {.r}
+# Loading libraries
+library(tidyverse)
+library(rsample)
+
+# Seed for reproducibility
+set.seed(123)
+
+# Randomly splitting into training and testing sets by webpage_design
+OneWay_ABn_customer_data_splitting <- initial_split(OneWay_ABn_customer_data,
+  prop = 0.5, strata = webpage_design
+)
+
+# Assigning data points to training and testing sets
+OneWay_ABn_training <- training(OneWay_ABn_customer_data_splitting)
+OneWay_ABn_testing <- testing(OneWay_ABn_customer_data_splitting)
+
+# Sanity check
+cat("Training shape:", dim(OneWay_ABn_training), "\n")
+cat("Testing shape:", dim(OneWay_ABn_testing), "\n\n")
+cat("Training proportions:\n")
+print(prop.table(table(OneWay_ABn_training$webpage_design)))
+cat("\nTesting proportions:\n")
+print(prop.table(table(OneWay_ABn_testing$webpage_design)))
+```
+
+## **`Python` Code**
+
+``` {.python}
+# Importing library
+from sklearn.model_selection import train_test_split
+
+# Seed for reproducibility
+random_state = 123
+
+# Randomly splitting into training and testing sets by webpage_design
+OneWay_ABn_training, OneWay_ABn_testing = train_test_split(
+    OneWay_ABn_customer_data,
+    test_size=0.5,
+    stratify=OneWay_ABn_customer_data["webpage_design"],
+    random_state=random_state
+)
+
+# Sanity check
+print("Training shape:", OneWay_ABn_training.shape)
+print("Testing shape:", OneWay_ABn_testing.shape)
+print("\nTraining proportions:")
+print(OneWay_ABn_training["webpage_design"].value_counts(normalize=True))
+print("\nTesting proportions:")
+print(OneWay_ABn_testing["webpage_design"].value_counts(normalize=True))
+```
+
+:::
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| echo: false
+#| message: false
+
+# Loading libraries
+library(tidyverse)
+library(rsample)
+
+# Seed for reproducibility
+set.seed(123)
+
+# Randomly splitting into training and testing sets by webpage_design
+OneWay_ABn_customer_data_splitting <- initial_split(OneWay_ABn_customer_data,
+  prop = 0.5, strata = webpage_design
+)
+
+# Assigning data points to training and testing sets
+OneWay_ABn_training <- training(OneWay_ABn_customer_data_splitting)
+OneWay_ABn_testing <- testing(OneWay_ABn_customer_data_splitting)
+
+# Sanity check
+cat("Training shape:", dim(OneWay_ABn_training), "\n")
+cat("Testing shape:", dim(OneWay_ABn_testing), "\n\n")
+cat("Training proportions:\n")
+print(prop.table(table(OneWay_ABn_training$webpage_design)))
+cat("\nTesting proportions:\n")
+print(prop.table(table(OneWay_ABn_testing$webpage_design)))
+```
+
+## **`Python` Output**
+
+```{python}
+#| echo: false
+#| message: false
+
+# Importing library
+from sklearn.model_selection import train_test_split
+
+# Seed for reproducibility
+random_state = 123
+
+# Randomly splitting into training and testing sets by webpage_design
+OneWay_ABn_training, OneWay_ABn_testing = train_test_split(
+    OneWay_ABn_customer_data,
+    test_size=0.5,
+    stratify=OneWay_ABn_customer_data["webpage_design"],
+    random_state=random_state
+)
+
+# Sanity check
+print("Training shape:", OneWay_ABn_training.shape)
+print("Testing shape:", OneWay_ABn_testing.shape)
+print("\nTraining proportions:")
+print(OneWay_ABn_training["webpage_design"].value_counts(normalize=True))
+print("\nTesting proportions:")
+print(OneWay_ABn_testing["webpage_design"].value_counts(normalize=True))
+```
+
+:::
+
 ### Exploratory Data Analysis {#sec-one-way-ANOVA-EDA}
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| label: tbl-one-summary-stats-r
+#| tbl-cap: "Descriptive statistics of one-factor A/B/n testing via training set."
+#| message: false
+# Computing summaries
+OneWay_summary_table <- OneWay_ABn_training |>
+  group_by(webpage_design) |>
+  summarise(
+    mean_conversion = round(mean(conversion_score), 2),
+    sd_conversion = round(sd(conversion_score), 2),
+    n = n()
+  ) |>
+  arrange(webpage_design)
+OneWay_summary_table
+```
+
+## **`Python` Output**
+
+```{python}
+#| label: tbl-one-summary-stats-py
+#| tbl-cap: "Descriptive statistics of one-factor A/B/n testing via training set."
+#| message: false
+# Importing library
+import numpy as np
+
+# Importing R training set via R library reticulate
+OneWay_ABn_training = r.OneWay_ABn_training
+
+OneWay_summary_table = (
+    OneWay_ABn_training
+    .groupby("webpage_design")
+    .agg(
+        mean_conversion=("conversion_score", lambda x: round(np.mean(x), 2)),
+        sd_conversion=("conversion_score", lambda x: round(np.std(x, ddof=1), 2)),
+        n=("conversion_score", "count")
+    )
+    .reset_index()
+    .sort_values("webpage_design")
+)
+OneWay_summary_table
+```
+
+:::
+
+```{r}
+#| label: fig-hist-webpage-design-one
+#| fig-cap: "Histograms of conversion score by webpage design via training data."
+#| warning: false
+#| echo: false
+#| message: false
+#| fig.height: 8
+#| fig.width: 14
+
+hist_one_way <- ggplot(
+  OneWay_ABn_training,
+  aes(x = conversion_score, fill = webpage_design)
+) +
+  geom_histogram(
+    alpha = 0.7,
+    position = "identity",
+    bins = 30,
+    color = "white"
+  ) +
+  labs(
+    x = "Conversion Score",
+    y = "Count",
+    fill = "Webpage Design"
+  ) +
+  theme_bw(base_size = 14) +
+  theme(
+    axis.text = element_text(size = 15.5),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20, vjust = 0.5),
+    strip.text = element_text(size = 20),
+    legend.position = "bottom",
+    legend.title = element_text(size = 20),
+    legend.text = element_text(size = 20),
+    legend.key.size = unit(1.4, "cm"),
+    legend.spacing.x = unit(1, "cm")
+  ) +
+  scale_fill_manual(
+    values = c(
+      "D1" = "#E69F00",
+      "D2" = "#56B4E9",
+      "D3" = "#009E73"
+    )
+  )
+hist_one_way
+```
+
+
+```{r}
+#| label: fig-boxplot-webpage-design-one
+#| fig-cap: "Side-by-side boxplots of conversion score by webpage design via training data."
+#| warning: false
+#| echo: false
+#| message: false
+#| fig.height: 8
+#| fig.width: 14
+
+boxplots_webpage_design_one_way <- ggplot(OneWay_ABn_training, aes(
+  x = webpage_design, y = conversion_score,
+  fill = webpage_design
+)) +
+  geom_boxplot(alpha = 0.7, outlier.color = "black") +
+  labs(
+    x = "Webpage Design",
+    y = "Conversion Score"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme_bw() +
+  theme(
+    axis.text = element_text(size = 15.5),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20, vjust = 0.5),
+    strip.text = element_text(size = 20)
+  ) +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("D1" = "#E69F00", "D2" = "#56B4E9", "D3" = "#009E73"))
+boxplots_webpage_design_one_way
+```
+
 
 ### Testing Settings {#sec-one-way-ANOVA-testing-settings}
 
@@ -196,7 +475,169 @@ head(ABn_customer_data, n = 100) |>
 
 ### Test Flavour and Components {#sec-one-way-ANOVA-test-flavour}
 
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| label: tbl-one-fitting-r
+#| tbl-cap: "One-way ANOVA: Conversion score by webpage design via testing set."
+#| message: false
+# Loading library
+library(broom)
+
+# Running one-way ANOVA
+OneWay_aov <- aov(conversion_score ~ webpage_design,
+  data = OneWay_ABn_testing
+)
+
+# Displaying full one-way ANOVA table
+tidy(OneWay_aov) |>
+  mutate_if(is.numeric, round, 2)
+```
+
+## **`Python` Output**
+
+```{python}
+#| label: tbl-one-fitting-py
+#| tbl-cap: "One-way ANOVA: Conversion score by webpage design via testing set."
+#| message: false
+# Importing library
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+# Importing R testing set via R library reticulate
+OneWay_ABn_testing = r.OneWay_ABn_testing
+
+# Running one-way ANOVA
+OneWay_model = ols('conversion_score ~ C(webpage_design)', data=OneWay_ABn_testing).fit()
+OneWay_aov = sm.stats.anova_lm(OneWay_model, typ=2)
+
+# Displaying full one-way ANOVA table
+OneWay_aov = OneWay_aov.round(2)
+OneWay_aov
+```
+
+:::
+
 ### Inferential Conclusions {#sec-one-way-ANOVA-inferential-conclusions}
+
+```{r}
+#| label: fig-q-q-plot-one-way
+#| fig-cap: "Diagnostic Q-Q plot for one-way ANOVA of conversion score by webpage design via residuals."
+#| warning: false
+#| echo: false
+#| message: false
+#| fig.height: 8
+#| fig.width: 14
+
+# Extract residuals from model
+OneWay_resid <- augment(OneWay_aov)
+
+# Q–Q plot for one-way ANOVA
+qqplot_oneway <- ggplot(OneWay_resid, aes(sample = .resid)) +
+  stat_qq(size = 2, color = "#6A3D9A", alpha = 0.6) +
+  stat_qq_line(color = "black", linewidth = 1) +
+  labs(
+    x = "Theoretical Quantiles",
+    y = "Sample Quantiles",
+  ) +
+  theme_bw(base_size = 14) +
+  theme(
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20),
+    axis.text = element_text(size = 15.5)
+  )
+qqplot_oneway
+```
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| label: tbl-one-shapiro-wilks-r
+#| tbl-cap: "Shapiro–Wilks normality test for one-way ANOVA via residuals."
+#| message: false
+# Extracting residuals
+OneWay_resid <- residuals(OneWay_aov)
+
+# Running Shapiro–Wilk test
+OneWay_shapiro <- shapiro.test(OneWay_resid)
+
+# Displaying outputs
+tidy(OneWay_shapiro) |>
+  mutate_if(is.numeric, round, 2)
+```
+
+## **`Python` Output**
+
+```{python}
+#| label: tbl-one-shapiro-wilks-py
+#| tbl-cap: "Shapiro–Wilks normality test for one-way ANOVA via residuals."
+#| message: false
+# Importing library
+from scipy.stats import shapiro
+
+# Extracting residuals
+OneWay_resid = OneWay_model.resid
+
+# Running Shapiro–Wilk tests
+OneWay_shapiro = shapiro(OneWay_resid)
+
+# Displaying outputs
+OneWay_shapiro = pd.DataFrame({
+    "W Statistic": [round(OneWay_shapiro.statistic, 2)],
+    "p-value": [round(OneWay_shapiro.pvalue, 2)]
+})
+OneWay_shapiro
+```
+
+:::
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| label: tbl-one-levene-r
+#| tbl-cap: "Levene’s test for homogeneity of variances for one-way ANOVA via testing data."
+#| message: false
+# Loading library
+library(car)
+
+# Running Levene test
+OneWay_levene <- leveneTest(conversion_score ~ as.factor(webpage_design),
+  data = OneWay_ABn_testing
+)
+
+# Displaying outputs
+tidy(OneWay_levene) |>
+  mutate_if(is.numeric, round, 2)
+```
+
+## **`Python` Output**
+
+```{python}
+#| label: tbl-one-levene-py
+#| tbl-cap: "Levene’s test for homogeneity of variances for one-way ANOVA via testing data."
+#| message: false
+# Importing library
+from scipy.stats import levene
+
+# Running Levene test
+groups_OneWay = [group["conversion_score"].values for _, group in OneWay_ABn_testing.groupby("webpage_design")]
+stat1, p1 = levene(*groups_OneWay)
+
+# Displaying outputs
+OneWay_levene = pd.DataFrame({
+    "Levene Statistic": [round(stat1, 2)],
+    "p-value": [round(p1, 2)]
+})
+OneWay_levene
+```
+
+:::
 
 ### Storytelling {#sec-one-way-ANOVA-storytelling}
 
@@ -206,7 +647,398 @@ head(ABn_customer_data, n = 100) |>
 
 ### Data Collection and Wrangling {#sec-two-way-ANOVA-data-collection-wrangling}
 
+::: {.panel-tabset}
+
+## **`R` Code**
+
+``` {.r}
+# Loading dataset
+TwoWay_ABn_customer_data <- read.csv("data/ABn_customer_data_two_factors.csv")
+
+# Showing the first 100 customers of the A/B/n testing
+head(TwoWay_ABn_customer_data, n = 100)
+```
+
+## **`Python` Code**
+
+``` {.python}
+# Loading dataset
+TwoWay_ABn_customer_data = pd.read_csv("data/ABn_customer_data_two_factors.csv")
+
+# Showing the first 100 customers of the A/B/n testing
+print(TwoWay_ABn_customer_data(100))
+```
+
+:::
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| label: tbl-ANOVA-ABn-data-r-two
+#| tbl-cap: "First 100 rows of our A/B/n simulated data with webpage design and discount framing as a experimental factors."
+#| echo: false
+#| message: false
+
+# Loading dataset
+TwoWay_ABn_customer_data <- read.csv("data/ABn_customer_data_two_factors.csv")
+
+# Showing the first 100 customers of the A/B/n testing
+head(TwoWay_ABn_customer_data, n = 100) |> 
+  print_as_dt()
+```
+
+## **`Python` Output**
+
+```{python}
+#| echo: false
+#| message: false
+
+# Loading dataset
+TwoWay_ABn_customer_data = pd.read_csv("data/ABn_customer_data_two_factors.csv")
+```
+
+
+```{r}
+#| label: tbl-ANOVA-ABn-data-py-two
+#| tbl-cap: "First 100 rows of our A/B/n simulated data with webpage design and discount framing as a experimental factors."
+#| echo: false
+
+# Showing the first 100 customers of the A/B/n testing
+print_as_dt(head(py$TwoWay_ABn_customer_data, 100))
+```
+
+:::
+
+
+
+::: {.panel-tabset}
+
+## **`R` Code**
+
+``` {.r}
+# Seed for reproducibility
+set.seed(123)
+
+# Create a combined stratification variable
+TwoWay_ABn_customer_data <- TwoWay_ABn_customer_data |>
+  mutate(strata = interaction(webpage_design, discount_framing))
+
+# Randomly splitting into training and testing sets by both factors
+TwoWay_ABn_customer_data_splitting <- initial_split(
+  TwoWay_ABn_customer_data,
+  prop = 0.5,
+  strata = strata
+)
+
+# Assigning data points to training and testing sets
+TwoWay_ABn_training <- training(TwoWay_ABn_customer_data_splitting)
+TwoWay_ABn_testing  <- testing(TwoWay_ABn_customer_data_splitting)
+
+# Sanity check
+cat("Training shape:", dim(TwoWay_ABn_training), "\n")
+cat("Testing shape:", dim(TwoWay_ABn_testing), "\n\n")
+
+cat("Training proportions:\n")
+print(prop.table(table(TwoWay_ABn_training$webpage_design, TwoWay_ABn_training$discount_framing)))
+
+cat("\nTesting proportions:\n")
+print(prop.table(table(TwoWay_ABn_testing$webpage_design, TwoWay_ABn_testing$discount_framing)))
+```
+
+## **`Python` Code**
+
+``` {.python}
+# Seed for reproducibility
+random_state = 123
+
+# Create a combined stratification variable
+TwoWay_ABn_customer_data["strata"] = (
+    TwoWay_ABn_customer_data["webpage_design"].astype(str)
+    + "_"
+    + TwoWay_ABn_customer_data["discount_framing"].astype(str)
+)
+
+# Randomly splitting into training and testing sets by both factors
+TwoWay_ABn_training, TwoWay_ABn_testing = train_test_split(
+    TwoWay_ABn_customer_data,
+    test_size=0.5,
+    stratify=TwoWay_ABn_customer_data["strata"],
+    random_state=random_state
+)
+
+# Sanity check
+print("Training shape:", TwoWay_ABn_training.shape)
+print("Testing shape:", TwoWay_ABn_testing.shape)
+
+print("\nTraining proportions:")
+print(TwoWay_ABn_training.groupby(["webpage_design", "discount_framing"]).size().div(len(TwoWay_ABn_training)))
+
+print("\nTesting proportions:")
+print(TwoWay_ABn_testing.groupby(["webpage_design", "discount_framing"]).size().div(len(TwoWay_ABn_testing)))
+```
+
+:::
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| echo: false
+#| message: false
+
+# Seed for reproducibility
+set.seed(123)
+
+# Create a combined stratification variable
+TwoWay_ABn_customer_data <- TwoWay_ABn_customer_data |>
+  mutate(strata = interaction(webpage_design, discount_framing))
+
+# Randomly splitting into training and testing sets by both factors
+TwoWay_ABn_customer_data_splitting <- initial_split(
+  TwoWay_ABn_customer_data,
+  prop = 0.5,
+  strata = strata
+)
+
+# Assigning data points to training and testing sets
+TwoWay_ABn_training <- training(TwoWay_ABn_customer_data_splitting)
+TwoWay_ABn_testing  <- testing(TwoWay_ABn_customer_data_splitting)
+
+# Sanity check
+cat("Training shape:", dim(TwoWay_ABn_training), "\n")
+cat("Testing shape:", dim(TwoWay_ABn_testing), "\n\n")
+
+cat("Training proportions:\n")
+print(prop.table(table(TwoWay_ABn_training$webpage_design, TwoWay_ABn_training$discount_framing)))
+
+cat("\nTesting proportions:\n")
+print(prop.table(table(TwoWay_ABn_testing$webpage_design, TwoWay_ABn_testing$discount_framing)))
+```
+
+## **`Python` Output**
+
+```{python}
+#| echo: false
+#| message: false
+
+# Seed for reproducibility
+random_state = 123
+
+# Create a combined stratification variable
+TwoWay_ABn_customer_data["strata"] = (
+    TwoWay_ABn_customer_data["webpage_design"].astype(str)
+    + "_"
+    + TwoWay_ABn_customer_data["discount_framing"].astype(str)
+)
+
+# Randomly splitting into training and testing sets by both factors
+TwoWay_ABn_training, TwoWay_ABn_testing = train_test_split(
+    TwoWay_ABn_customer_data,
+    test_size=0.5,
+    stratify=TwoWay_ABn_customer_data["strata"],
+    random_state=random_state
+)
+
+# Sanity check
+print("Training shape:", TwoWay_ABn_training.shape)
+print("Testing shape:", TwoWay_ABn_testing.shape)
+
+print("\nTraining proportions:")
+print(TwoWay_ABn_training.groupby(["webpage_design", "discount_framing"]).size().div(len(TwoWay_ABn_training)))
+
+print("\nTesting proportions:")
+print(TwoWay_ABn_testing.groupby(["webpage_design", "discount_framing"]).size().div(len(TwoWay_ABn_testing)))
+```
+
+:::
+
 ### Exploratory Data Analysis {#sec-two-way-ANOVA-EDA}
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| label: tbl-two-summary-stats-r
+#| tbl-cap: "Descriptive statistics of two-factor A/B/n testing via training set."
+#| message: false
+# Computing summaries
+TwoWay_summary_table <- TwoWay_ABn_training |>
+  group_by(webpage_design, discount_framing) |>
+  summarise(
+    mean_conversion = round(mean(conversion_score), 2),
+    sd_conversion = round(sd(conversion_score), 2),
+    n = n()
+  ) |>
+  arrange(webpage_design, discount_framing)
+TwoWay_summary_table
+```
+
+## **`Python` Output**
+
+```{python}
+#| label: tbl-two-summary-stats-py
+#| tbl-cap: "Descriptive statistics of two-factor A/B/n testing via training set."
+#| message: false
+# Importing R training set via R library reticulate
+TwoWay_ABn_training = r.TwoWay_ABn_training
+
+# Computing summaries
+TwoWay_summary_table = (
+    TwoWay_ABn_training
+    .groupby(["webpage_design", "discount_framing"])
+    .agg(
+        mean_conversion=("conversion_score", lambda x: round(np.mean(x), 2)),
+        sd_conversion=("conversion_score", lambda x: round(np.std(x, ddof=1), 2)),
+        n=("conversion_score", "count")
+    )
+    .reset_index()
+    .sort_values(["webpage_design", "discount_framing"])
+)
+TwoWay_summary_table
+```
+
+:::
+
+```{r}
+#| label: fig-hist-webpage-design-two
+#| fig-cap: "Histograms of conversion score by webpage design and discount framing via training data."
+#| warning: false
+#| echo: false
+#| message: false
+#| fig.height: 8
+#| fig.width: 14
+
+hist_two_way <- ggplot(
+  TwoWay_ABn_training,
+  aes(x = conversion_score, fill = webpage_design)
+) +
+  geom_histogram(
+    alpha = 0.7,
+    position = "identity",
+    bins = 30,
+    color = "white"
+  ) +
+  facet_wrap(~discount_framing) +
+  labs(
+    x = "Conversion Score",
+    y = "Count",
+    fill = "Webpage Design"
+  ) +
+  theme_bw(base_size = 14) +
+  theme(
+    axis.text = element_text(size = 15.5),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20, vjust = 0.5),
+    strip.text = element_text(size = 20),
+    legend.position = "bottom",
+    legend.title = element_text(size = 20),
+    legend.text = element_text(size = 20),
+    legend.key.size = unit(1.4, "cm"),
+    legend.spacing.x = unit(1, "cm")
+  ) +
+  scale_fill_manual(
+    values = c(
+      "D1" = "#E69F00",
+      "D2" = "#56B4E9",
+      "D3" = "#009E73"
+    )
+  )
+hist_two_way
+```
+
+
+
+```{r}
+#| label: fig-boxplot-webpage-design-two
+#| fig-cap: "Side-by-side boxplots of conversion score by webpage design and discount framing via training data."
+#| warning: false
+#| echo: false
+#| message: false
+#| fig.height: 8
+#| fig.width: 14
+
+boxplots_webpage_design_two_way <- ggplot(TwoWay_ABn_training, aes(
+  x = discount_framing, y = conversion_score,
+  fill = webpage_design
+)) +
+  geom_boxplot(alpha = 0.7, outlier.color = "black") +
+  labs(
+    x = "Discount Framing",
+    y = "Conversion Score",
+    fill = "Webpage Design"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme_bw() +
+  theme(
+    axis.text = element_text(size = 15.5),
+    legend.position = "bottom",               
+    legend.title = element_text(size = 20),    
+    legend.text = element_text(size = 20),     
+    legend.key.size = unit(1.4, "cm"),         
+    legend.spacing.x = unit(2, "cm"),          
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20, vjust = 0.5),
+    strip.text = element_text(size = 20)
+  ) +
+  scale_fill_manual(values = c("D1" = "#E69F00", "D2" = "#56B4E9", "D3" = "#009E73"))
+boxplots_webpage_design_two_way
+```
+
+
+```{r}
+#| label: fig-interaction-plot
+#| fig-cap: "Interaction plot of conversion score by webpage design and discount framing via training data."
+#| warning: false
+#| echo: false
+#| message: false
+#| fig.height: 8
+#| fig.width: 14
+
+# Compute means for each combination
+interaction_means <- TwoWay_ABn_training |>
+  group_by(discount_framing, webpage_design) |>
+  summarise(
+    mean_conversion = mean(conversion_score),
+    .groups = "drop"
+  )
+interaction_means$discount_framing <- factor(
+  interaction_means$discount_framing,
+  levels = c("Low", "High")
+)
+
+# Interaction plot
+interaction_plot <- ggplot(interaction_means, aes(
+  x = discount_framing,
+  y = mean_conversion,
+  color = webpage_design,
+  group = webpage_design
+)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 4) +
+  labs(
+    x = "Discount Framing",
+    y = "Mean Conversion Score",
+    color = "Webpage Design"
+  ) +
+  theme_bw() +
+  theme(
+    axis.text = element_text(size = 15.5),
+    axis.title = element_text(size = 20),
+    legend.title = element_text(size = 20),
+    legend.text = element_text(size = 20),
+    legend.key.size = unit(1.4, "cm"),
+    legend.spacing.x = unit(2, "cm"),
+    legend.position = "bottom"
+  ) +
+  scale_color_manual(
+    values = c("D1" = "#E69F00", "D2" = "#56B4E9", "D3" = "#009E73")
+  )
+interaction_plot
+```
 
 ### Testing Settings {#sec-two-way-ANOVA-testing-settings}
 
@@ -214,7 +1046,164 @@ head(ABn_customer_data, n = 100) |>
 
 ### Test Flavour and Components {#sec-two-way-ANOVA-test-flavour}
 
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| label: tbl-two-fitting-r
+#| tbl-cap: "Two-way ANOVA: Conversion score by webpage design and discount framing via testing set."
+#| message: false
+# Running two-way ANOVA
+TwoWay_aov <- aov(conversion_score ~ webpage_design * discount_framing,
+  data = TwoWay_ABn_testing
+)
+
+# Displaying full two-way ANOVA table
+TwoWay_aov <- tidy(TwoWay_aov) |>
+  mutate(across(where(is.numeric) & !matches("p.value"), ~ round(.x, 2)))
+TwoWay_aov
+```
+
+## **`Python` Output**
+
+```{python}
+#| label: tbl-two-fitting-py
+#| tbl-cap: "Two-way ANOVA: Conversion score by webpage design and discount framing via testing set."
+#| message: false
+# Importing R testing set via R library reticulate
+TwoWay_ABn_testing = r.TwoWay_ABn_testing
+
+# Running two-way ANOVA
+TwoWay_model = ols('conversion_score ~ C(webpage_design) * C(discount_framing)', data=TwoWay_ABn_testing).fit()
+TwoWay_aov = sm.stats.anova_lm(TwoWay_model, typ=2)
+
+# Round all numeric columns except p-values
+cols_to_round = [c for c in TwoWay_aov.columns if c != "PR(>F)"]
+TwoWay_aov[cols_to_round] = TwoWay_aov[cols_to_round].round(2)
+
+# Displaying full two-way ANOVA table
+TwoWay_aov
+```
+
+:::
+
 ### Inferential Conclusions {#sec-two-way-ANOVA-inferential-conclusions}
+
+```{r}
+#| label: fig-q-q-plot-two-way
+#| fig-cap: "Diagnostic Q-Q plot for two-way ANOVA of conversion score by webpage design and discount framing via residuals."
+#| warning: false
+#| echo: false
+#| message: false
+#| fig.height: 8
+#| fig.width: 14
+
+# Extract residuals from model
+TwoWay_aov <- aov(conversion_score ~ webpage_design * discount_framing,
+  data = TwoWay_ABn_testing
+)
+TwoWay_resid <- augment(TwoWay_aov)
+
+# Q–Q plot for two-way ANOVA
+qqplot_twoway <- ggplot(TwoWay_resid, aes(sample = .resid)) +
+  stat_qq(size = 2, color = "#6A3D9A", alpha = 0.6) +
+  stat_qq_line(color = "black", linewidth = 1) +
+  labs(
+    x = "Theoretical Quantiles",
+    y = "Sample Quantiles",
+  ) +
+  theme_bw(base_size = 14) +
+  theme(
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20),
+    axis.text = element_text(size = 15.5)
+  )
+qqplot_twoway
+```
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| label: tbl-two-shapiro-wilks-r
+#| tbl-cap: "Shapiro–Wilks normality test for two-way ANOVA via residuals."
+#| message: false
+# Extracting residuals
+TwoWay_resid <- residuals(TwoWay_aov)
+
+# Running Shapiro–Wilk test
+TwoWay_shapiro <- shapiro.test(TwoWay_resid)
+
+# Displaying outputs
+tidy(TwoWay_shapiro) |>
+  mutate_if(is.numeric, round, 2)
+```
+
+## **`Python` Output**
+
+```{python}
+#| label: tbl-two-shapiro-wilks-py
+#| tbl-cap: "Shapiro–Wilks normality test for two-way ANOVA via residuals."
+#| message: false
+# Extracting residuals
+TwoWay_resid = TwoWay_model.resid
+
+# Running Shapiro–Wilk tests
+TwoWay_shapiro = shapiro(TwoWay_resid)
+
+# Displaying outputs
+TwoWay_shapiro = pd.DataFrame({
+    "W Statistic": [round(TwoWay_shapiro.statistic, 2)],
+    "p-value": [round(TwoWay_shapiro.pvalue, 2)]
+})
+TwoWay_shapiro
+```
+
+:::
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| label: tbl-two-levene-r
+#| tbl-cap: "Levene’s test for homogeneity of variances for two-way ANOVA via testing data."
+#| message: false
+# Loading library
+library(car)
+
+# Running Levene test
+TwoWay_levene <- leveneTest(conversion_score ~ as.factor(webpage_design) * as.factor(discount_framing),
+  data = TwoWay_ABn_testing
+)
+
+# Displaying outputs
+tidy(TwoWay_levene) |>
+  mutate_if(is.numeric, round, 2)
+```
+
+## **`Python` Output**
+
+```{python}
+#| label: tbl-two-levene-py
+#| tbl-cap: "Levene’s test for homogeneity of variances for two-way ANOVA via testing data."
+#| message: false
+# Running Levene test
+TwoWay_ABn_testing["group"] = TwoWay_ABn_testing["webpage_design"].astype(str) + "_" + TwoWay_ABn_testing["discount_framing"].astype(str)
+groups_TwoWay = [group["conversion_score"].values for _, group in TwoWay_ABn_testing.groupby("group")]
+stat1, p1 = levene(*groups_TwoWay)
+
+# Displaying outputs
+TwoWay_levene = pd.DataFrame({
+    "Levene Statistic": [round(stat1, 2)],
+    "p-value": [round(p1, 2)]
+})
+TwoWay_levene
+```
+
+:::
 
 ### Storytelling {#sec-two-way-ANOVA-storytelling}
 
