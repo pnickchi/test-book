@@ -17,6 +17,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -262,7 +296,7 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">The content</h2>
    
   <ul>
-<li><a href="#sec-ANOVA-dataset" id="toc-sec-ANOVA-dataset" class="nav-link active" data-scroll-target="#sec-ANOVA-dataset"><span class="header-section-number">4.1</span> The ANOVA Dataset</a></li>
+<li><a href="#sec-ANOVA-datasets" id="toc-sec-ANOVA-datasets" class="nav-link active" data-scroll-target="#sec-ANOVA-datasets"><span class="header-section-number">4.1</span> The ANOVA Datasets</a></li>
   <li>
 <a href="#sec-one-way-ANOVA" id="toc-sec-one-way-ANOVA" class="nav-link" data-scroll-target="#sec-one-way-ANOVA"><span class="header-section-number">4.2</span> One-way ANOVA</a>
   <ul>
@@ -312,7 +346,6 @@ window.Quarto = {
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-DZWGQVJSHE');
 </script><div class="LO">
 <div class="LO-header">
@@ -374,12 +407,12 @@ Figure&nbsp;4.1: A specific hypothesis testing mind map outlining the techniques
 <p>Fisher’s statistical work remains central to frequentist inference. However, educators and researchers must confront the historical connection between statistical innovation and eugenic thinking in early 20th-century science <span class="citation" data-cites="tabery2015">(<a href="references.html#ref-tabery2015" role="doc-biblioref">Tabery and Sarkar 2015</a>)</span>. By explicitly addressing this context, we can acknowledge the rigour of Fisher’s methodological contributions while rejecting the discriminatory worldviews he promoted. This approach aligns with contemporary efforts to ensure that teaching statistics is grounded not only in subject matter accuracy but also in ethical reflection and historical accountability <span class="citation" data-cites="kennedyshaffer02024">(<a href="references.html#ref-kennedyshaffer02024" role="doc-biblioref">Kennedy-Shaffer 2024</a>)</span>.</p>
 </div>
 </div>
-<p>This chapter builds on the concepts introduced in the earlier works by <a href="chapter2-one-pop.html" class="quarto-xref"><span>Chapter 2</span></a> and <a href="chapter3-two-pop.html" class="quarto-xref"><span>Chapter 3</span></a>, which concentrated on hypothesis testing for one and two groups, respectively. While those chapters primarily addressed pairwise comparisons, we will now shift our focus multiple comparisons:</p>
+<p>This chapter builds on the concepts introduced in the earlier works by <a href="chapter2-one-pop.html" class="quarto-xref"><span>Chapter 2</span></a> and <a href="chapter3-two-pop.html" class="quarto-xref"><span>Chapter 3</span></a>, which concentrated on hypothesis testing for one and two groups, respectively. While those chapters primarily addressed pairwise comparisons, we will now shift our focus to multiple comparisons:</p>
 <ul>
 <li>The <strong>one-way ANOVA</strong>, discussed in <a href="#sec-one-way-ANOVA" class="quarto-xref"><span>Section 4.2</span></a>, will assume a <strong>single categorical factor with</strong> <span class="math inline">\(k\)</span> levels. This approach allows us to test whether at least one group mean is significantly different from the others.</li>
 <li>In contrast, the <strong>two-way ANOVA</strong>, from <a href="#sec-two-way-ANOVA" class="quarto-xref"><span>Section 4.3</span></a>, will incorporate an <strong>additional categorical factor with</strong> <span class="math inline">\(m\)</span> levels, permitting the analysis of both main effects and interaction effects. Interaction terms in ANOVA are especially useful for revealing cases where the effect of one factor depends on the level of another, a situation often encountered in complex experimental designs.</li>
 </ul>
-<p>As a side note, the workflow guiding this chapter, as referenced in <a href="chapter1-intro.html#fig-hypothesis-testing-workflow" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>, will provide a structured approach for applying both one-way and two-way ANOVA to the same A/B/n dataset (see <a href="#sec-ANOVA-dataset" class="quarto-xref"><span>Section 4.1</span></a>).</p>
+<p>As a side note, the workflow guiding this chapter, as referenced in <a href="chapter1-intro.html#fig-hypothesis-testing-workflow" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>, will provide a structured approach for applying both one-way and two-way ANOVA to their respective A/B/n datasets (see <a href="#sec-ANOVA-datasets" class="quarto-xref"><span>Section 4.1</span></a>).</p>
 <div class="Heads-up">
 <div class="Heads-up-header">
 <p>Heads-up on the importance of ANOVA in data science!</p>
@@ -392,13 +425,13 @@ Figure&nbsp;4.1: A specific hypothesis testing mind map outlining the techniques
 </div>
 </div>
 </div>
-<section id="sec-ANOVA-dataset" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="sec-ANOVA-dataset">
-<span class="header-section-number">4.1</span> The ANOVA Dataset</h2>
-<p>The <strong>simulated dataset</strong> discussed in this chapter relates to an experimental context known as A/B/n testing, which is an expansion of traditional A/B testing as previously discussed. In a typical A/B testing, participants are randomly assigned to one of two strategies, referred to as treatments: treatment <span class="math inline">\(A\)</span> (the <strong>control treatment</strong>) and treatment <span class="math inline">\(B\)</span> (the <strong>experimental treatment</strong>). This approach enables us to infer <strong>causation</strong> concerning the following inquiry:</p>
+<section id="sec-ANOVA-datasets" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="sec-ANOVA-datasets">
+<span class="header-section-number">4.1</span> The ANOVA Datasets</h2>
+<p>The <strong>simulated datasets</strong> discussed in this chapter relate to an experimental context known as A/B/n testing, which is an expansion of traditional A/B testing as previously discussed. In a typical A/B testing, participants are randomly assigned to one of two strategies, referred to as treatments: treatment <span class="math inline">\(A\)</span> (the <strong>control treatment</strong>) and treatment <span class="math inline">\(B\)</span> (the <strong>experimental treatment</strong>). This approach enables us to infer <strong>causation</strong> concerning the following inquiry:</p>
 <blockquote class="blockquote">
 <p><strong>Will changing from treatment</strong> <span class="math inline">\(A\)</span> to treatment <span class="math inline">\(B\)</span> cause my outcome of interest, <span class="math inline">\(Y\)</span>, to increase (or decrease, if that is the case)?</p>
 </blockquote>
-<p>In an ANOVA setting, the outcome must be continuous. The primary goal of A/B testing is to determine whether there is a statistically significant difference between treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> concerning the outcome. Additionally, because we are conducting a proper randomized experiment, we can infer causation (which goes further than mere association), as treatment randomization enables us to get rid of the effect of further <strong>confounders</strong>.</p>
+<p>In an ANOVA setting, the outcome must be <strong>continuous</strong>. The primary goal of A/B testing is to determine whether there is a statistically significant difference between treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> concerning the outcome. Additionally, because we are conducting a proper randomized experiment, we can infer causation (which goes further than mere association), as treatment randomization enables us to get rid of the effect of further <strong>confounders</strong>.</p>
 <div class="Heads-up">
 <div class="Heads-up-header">
 <p>Heads-up on confounding!</p>
@@ -415,23 +448,10 @@ Figure&nbsp;4.2: Diagram depicting confounding <span class="citation" data-cites
 </div>
 </div>
 </div>
-<p>When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as <strong>A/B/n testing</strong>. In this case, the “<em>n</em>” does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. With this clarification, we can now proceed with our simulated dataset.</p>
+<p>When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as <strong>A/B/n testing</strong>. In this case, the “<em>n</em>” does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. With this clarification, we can now proceed with our simulated datasets.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/ads.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption>Image by <a href="https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6370790"><em>Pabitra Kaity</em></a> via <a href="https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/"><em>Pixabay</em></a>.</figcaption></figure>
-</div>
-<div class="cell">
-<div id="tbl-ANOVA-ABn-data" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ANOVA-ABn-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.1: First 100 rows of our A/B/n simulated data.
-</figcaption><div aria-describedby="tbl-ANOVA-ABn-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-7916708a81fa2d585810" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-7916708a81fa2d585810">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[32.76,34.08,41.23,35.28,35.52,41.86,36.84,29.94,32.25,33.22,39.9,36.44,36.6,35.44,32.78,42.15,36.99,27.13,37.81,33.11,30.73,34.13,30.9,32.08,32.5,28.25,38.35,35.61,30.45,40.02,36.71,33.82,38.58,38.51,38.29,37.75,37.22,34.75,33.78,33.48,32.22,34.17,29.94,43.68,39.83,30.51,33.39,33.13,38.12,34.67,36.01,34.89,34.83,40.47,34.1,41.07,28.8,37.34,35.5,35.86,36.52,32.99,33.67,30.93,30.71,36.21,36.79,35.21,38.69,43.2,33.04,25.76,39.02,32.16,32.25,39.1,33.86,30.12,35.73,34.44,35.02,36.54,33.52,37.58,34.12,36.33,39.39,36.74,33.7,39.6,38.97,37.19,35.95,32.49,40.44,32.6,43.75,41.13,34.06,30.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-</figure>
-</div>
 </div>
 </section><section id="sec-one-way-ANOVA" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="sec-one-way-ANOVA">
 <span class="header-section-number">4.2</span> One-way ANOVA</h2>
@@ -439,16 +459,489 @@ Table&nbsp;4.1: First 100 rows of our A/B/n simulated data.
 <span class="header-section-number">4.2.1</span> Study Design</h3>
 </section><section id="sec-one-way-ANOVA-data-collection-wrangling" class="level3" data-number="4.2.2"><h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-one-way-ANOVA-data-collection-wrangling">
 <span class="header-section-number">4.2.2</span> Data Collection and Wrangling</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page"><strong><code>R</code> Code</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false"><strong><code>Python</code> Code</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading dataset</span></span>
+<span><span class="va">OneWay_ABn_customer_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data/ABn_customer_data_one_factor.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Showing the first 100 customers of the A/B/n testing</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">OneWay_ABn_customer_data</span>, n <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing library</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading dataset</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>OneWay_ABn_customer_data <span class="op">=</span> pd.read_csv(<span class="st">"data/ABn_customer_data_one_factor.csv"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Showing the first 100 customers of the A/B/n testing</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(OneWay_ABn_customer_data.head(<span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div id="tbl-ANOVA-ABn-data-r-one" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ANOVA-ABn-data-r-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: First 100 rows of our A/B/n simulated data with webpage design as a standalone experimental factor.
+</figcaption><div aria-describedby="tbl-ANOVA-ABn-data-r-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-1c45e701d362d4044251" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1c45e701d362d4044251">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],[58.23,59.27,64.93000000000001,60.22,60.41,65.42,61.46,56,57.83,58.59,63.87,61.14,61.27,60.35,58.24,65.65000000000001,61.57,53.78,62.22,58.5,56.62,59.31,56.76,57.7,58.02,54.67,62.65,60.49,56.4,63.96,61.35,59.07,62.83,62.78,62.6,62.18,61.75,59.8,59.03,58.8,57.8,59.34,56,66.86,63.82,56.45,58.73,58.52,62.47,59.74,60.8,59.91,59.86,64.33,59.29,64.8,55.1,61.85,60.39,60.68,61.2,58.41,58.95,56.78,56.61,60.96,61.42,60.17,62.92,66.48,58.45,52.7,63.18,57.76,57.82,63.24,59.1,56.14,60.57,59.56,60.02,61.22,58.83,62.04,59.3,61.05,63.47,61.38,58.97,63.63,63.14,61.73,60.75,58.01,64.3,58.1,66.92,64.84999999999999,59.25,56.75]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"conversion_score","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div id="tbl-ANOVA-ABn-data-py-one" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ANOVA-ABn-data-py-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.2: First 100 rows of our A/B/n simulated data with webpage design as a standalone experimental factor.
+</figcaption><div aria-describedby="tbl-ANOVA-ABn-data-py-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-a4196cd2ec1f7b406051" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a4196cd2ec1f7b406051">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],[58.23,59.27,64.93000000000001,60.22,60.41,65.42,61.46,56,57.83,58.59,63.87,61.14,61.27,60.35,58.24,65.65000000000001,61.57,53.78,62.22,58.5,56.62,59.31,56.76,57.7,58.02,54.67,62.65,60.49,56.4,63.96,61.35,59.07,62.83,62.78,62.6,62.18,61.75,59.8,59.03,58.8,57.8,59.34,56,66.86,63.82,56.45,58.73,58.52,62.47,59.74,60.8,59.91,59.86,64.33,59.29,64.8,55.1,61.85,60.39,60.68,61.2,58.41,58.95,56.78,56.61,60.96,61.42,60.17,62.92,66.48,58.45,52.7,63.18,57.76,57.82,63.24,59.1,56.14,60.57,59.56,60.02,61.22,58.83,62.04,59.3,61.05,63.47,61.38,58.97,63.63,63.14,61.73,60.75,58.01,64.3,58.1,66.92,64.84999999999999,59.25,56.75]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"conversion_score","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true"><strong><code>R</code> Code</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false"><strong><code>Python</code> Code</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading libraries</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rsample.tidymodels.org">rsample</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Seed for reproducibility</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Randomly splitting into training and testing sets by webpage_design</span></span>
+<span><span class="va">OneWay_ABn_customer_data_splitting</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">initial_split</a></span><span class="op">(</span><span class="va">OneWay_ABn_customer_data</span>,</span>
+<span>  prop <span class="op">=</span> <span class="fl">0.5</span>, strata <span class="op">=</span> <span class="va">webpage_design</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Assigning data points to training and testing sets</span></span>
+<span><span class="va">OneWay_ABn_training</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">training</a></span><span class="op">(</span><span class="va">OneWay_ABn_customer_data_splitting</span><span class="op">)</span></span>
+<span><span class="va">OneWay_ABn_testing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">testing</a></span><span class="op">(</span><span class="va">OneWay_ABn_customer_data_splitting</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Sanity check</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Training shape:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">OneWay_ABn_training</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Testing shape:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">OneWay_ABn_testing</span><span class="op">)</span>, <span class="st">"\n\n"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Training proportions:\n"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">OneWay_ABn_training</span><span class="op">$</span><span class="va">webpage_design</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nTesting proportions:\n"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">OneWay_ABn_testing</span><span class="op">$</span><span class="va">webpage_design</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing library</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Seed for reproducibility</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>random_state <span class="op">=</span> <span class="dv">123</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly splitting into training and testing sets by webpage_design</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>OneWay_ABn_training, OneWay_ABn_testing <span class="op">=</span> train_test_split(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    OneWay_ABn_customer_data,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    test_size<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>OneWay_ABn_customer_data[<span class="st">"webpage_design"</span>],</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span>random_state</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Sanity check</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training shape:"</span>, OneWay_ABn_training.shape)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing shape:"</span>, OneWay_ABn_testing.shape)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Training proportions:"</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(OneWay_ABn_training[<span class="st">"webpage_design"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Testing proportions:"</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(OneWay_ABn_testing[<span class="st">"webpage_design"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Training shape: 300 2 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Testing shape: 300 2 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training proportions:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+       D1        D2        D3 
+0.3333333 0.3333333 0.3333333 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Testing proportions:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+       D1        D2        D3 
+0.3333333 0.3333333 0.3333333 </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Training shape: (300, 2)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Testing shape: (300, 2)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Training proportions:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>webpage_design
+D2    0.333333
+D3    0.333333
+D1    0.333333
+Name: proportion, dtype: float64</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Testing proportions:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>webpage_design
+D1    0.333333
+D3    0.333333
+D2    0.333333
+Name: proportion, dtype: float64</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section><section id="sec-one-way-ANOVA-EDA" class="level3" data-number="4.2.3"><h3 data-number="4.2.3" class="anchored" data-anchor-id="sec-one-way-ANOVA-EDA">
 <span class="header-section-number">4.2.3</span> Exploratory Data Analysis</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div id="tbl-one-summary-stats-r" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-summary-stats-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.3: Descriptive statistics of one-factor A/B/n testing via training set.
+</figcaption><div aria-describedby="tbl-one-summary-stats-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Computing summaries</span></span>
+<span><span class="va">OneWay_summary_table</span> <span class="op">&lt;-</span> <span class="va">OneWay_ABn_training</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">webpage_design</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    mean_conversion <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">conversion_score</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>    sd_conversion <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">conversion_score</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">webpage_design</span><span class="op">)</span></span>
+<span><span class="va">OneWay_summary_table</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  webpage_design mean_conversion sd_conversion     n
+  &lt;chr&gt;                    &lt;dbl&gt;         &lt;dbl&gt; &lt;int&gt;
+1 D1                        60.1          2.9    100
+2 D2                        60.4          3.05   100
+3 D3                        60.3          3.05   100</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div id="tbl-one-summary-stats-py" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-summary-stats-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.4: Descriptive statistics of one-factor A/B/n testing via training set.
+</figcaption><div aria-describedby="tbl-one-summary-stats-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing library</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing R training set via R library reticulate</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>OneWay_ABn_training <span class="op">=</span> r.OneWay_ABn_training</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>OneWay_summary_table <span class="op">=</span> (</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    OneWay_ABn_training</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">"webpage_design"</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        mean_conversion<span class="op">=</span>(<span class="st">"conversion_score"</span>, <span class="kw">lambda</span> x: <span class="bu">round</span>(np.mean(x), <span class="dv">2</span>)),</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        sd_conversion<span class="op">=</span>(<span class="st">"conversion_score"</span>, <span class="kw">lambda</span> x: <span class="bu">round</span>(np.std(x, ddof<span class="op">=</span><span class="dv">1</span>), <span class="dv">2</span>)),</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span>(<span class="st">"conversion_score"</span>, <span class="st">"count"</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">"webpage_design"</span>)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>OneWay_summary_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  webpage_design  mean_conversion  sd_conversion    n
+0             D1            60.11           2.90  100
+1             D2            60.35           3.05  100
+2             D3            60.28           3.05  100</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-hist-webpage-design-one" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-hist-webpage-design-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter4-anova_files/figure-html/fig-hist-webpage-design-one-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-webpage-design-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.3: Histograms of conversion score by webpage design via training data.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-boxplot-webpage-design-one" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-boxplot-webpage-design-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter4-anova_files/figure-html/fig-boxplot-webpage-design-one-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-webpage-design-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.4: Side-by-side boxplots of conversion score by webpage design via training data.
+</figcaption></figure>
+</div>
+</div>
+</div>
 </section><section id="sec-one-way-ANOVA-testing-settings" class="level3" data-number="4.2.4"><h3 data-number="4.2.4" class="anchored" data-anchor-id="sec-one-way-ANOVA-testing-settings">
 <span class="header-section-number">4.2.4</span> Testing Settings</h3>
 </section><section id="sec-one-way-ANOVA-hypothesis-definitions" class="level3" data-number="4.2.5"><h3 data-number="4.2.5" class="anchored" data-anchor-id="sec-one-way-ANOVA-hypothesis-definitions">
 <span class="header-section-number">4.2.5</span> Hypothesis Definitions</h3>
 </section><section id="sec-one-way-ANOVA-test-flavour" class="level3" data-number="4.2.6"><h3 data-number="4.2.6" class="anchored" data-anchor-id="sec-one-way-ANOVA-test-flavour">
 <span class="header-section-number">4.2.6</span> Test Flavour and Components</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div id="tbl-one-fitting-r" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-fitting-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.5: One-way ANOVA: Conversion score by webpage design via testing set.
+</figcaption><div aria-describedby="tbl-one-fitting-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading library</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Running one-way ANOVA</span></span>
+<span><span class="va">OneWay_aov</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">conversion_score</span> <span class="op">~</span> <span class="va">webpage_design</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">OneWay_ABn_testing</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Displaying full one-way ANOVA table</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">OneWay_aov</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  term              df   sumsq meansq statistic p.value
+  &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1 webpage_design     2    0.49   0.24      0.03    0.98
+2 Residuals        297 2901.     9.77     NA      NA   </code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div id="tbl-one-fitting-py" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-fitting-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.6: One-way ANOVA: Conversion score by webpage design via testing set.
+</figcaption><div aria-describedby="tbl-one-fitting-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing library</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing R testing set via R library reticulate</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>OneWay_ABn_testing <span class="op">=</span> r.OneWay_ABn_testing</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Running one-way ANOVA</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>OneWay_model <span class="op">=</span> ols(<span class="st">'conversion_score ~ C(webpage_design)'</span>, data<span class="op">=</span>OneWay_ABn_testing).fit()</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>OneWay_aov <span class="op">=</span> sm.stats.anova_lm(OneWay_model, typ<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying full one-way ANOVA table</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>OneWay_aov <span class="op">=</span> OneWay_aov.<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>OneWay_aov</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    sum_sq     df     F  PR(&gt;F)
+C(webpage_design)     0.49    2.0  0.03    0.98
+Residual           2900.76  297.0   NaN     NaN</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section><section id="sec-one-way-ANOVA-inferential-conclusions" class="level3" data-number="4.2.7"><h3 data-number="4.2.7" class="anchored" data-anchor-id="sec-one-way-ANOVA-inferential-conclusions">
 <span class="header-section-number">4.2.7</span> Inferential Conclusions</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-q-q-plot-one-way" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-q-q-plot-one-way-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter4-anova_files/figure-html/fig-q-q-plot-one-way-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-q-q-plot-one-way-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.5: Diagnostic Q-Q plot for one-way ANOVA of conversion score by webpage design via residuals.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div id="tbl-one-shapiro-wilks-r" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-shapiro-wilks-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.7: Shapiro–Wilks normality test for one-way ANOVA via residuals.
+</figcaption><div aria-describedby="tbl-one-shapiro-wilks-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Extracting residuals</span></span>
+<span><span class="va">OneWay_resid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">OneWay_aov</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Running Shapiro–Wilk test</span></span>
+<span><span class="va">OneWay_shapiro</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">OneWay_resid</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Displaying outputs</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">OneWay_shapiro</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  statistic p.value method                     
+      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                      
+1      0.99     0.3 Shapiro-Wilk normality test</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div id="tbl-one-shapiro-wilks-py" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-shapiro-wilks-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.8: Shapiro–Wilks normality test for one-way ANOVA via residuals.
+</figcaption><div aria-describedby="tbl-one-shapiro-wilks-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing library</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> shapiro</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting residuals</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>OneWay_resid <span class="op">=</span> OneWay_model.resid</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Running Shapiro–Wilk tests</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>OneWay_shapiro <span class="op">=</span> shapiro(OneWay_resid)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying outputs</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>OneWay_shapiro <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"W Statistic"</span>: [<span class="bu">round</span>(OneWay_shapiro.statistic, <span class="dv">2</span>)],</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p-value"</span>: [<span class="bu">round</span>(OneWay_shapiro.pvalue, <span class="dv">2</span>)]</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>OneWay_shapiro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   W Statistic  p-value
+0         0.99      0.3</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div id="tbl-one-levene-r" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-levene-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.9: Levene’s test for homogeneity of variances for one-way ANOVA via testing data.
+</figcaption><div aria-describedby="tbl-one-levene-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading library</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/car/">car</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Running Levene test</span></span>
+<span><span class="va">OneWay_levene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/car/man/leveneTest.html">leveneTest</a></span><span class="op">(</span><span class="va">conversion_score</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">webpage_design</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">OneWay_ABn_testing</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Displaying outputs</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">OneWay_levene</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  statistic p.value    df df.residual
+      &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;
+1      0.26    0.77     2         297</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<div id="tbl-one-levene-py" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-levene-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.10: Levene’s test for homogeneity of variances for one-way ANOVA via testing data.
+</figcaption><div aria-describedby="tbl-one-levene-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing library</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> levene</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Running Levene test</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>groups_OneWay <span class="op">=</span> [group[<span class="st">"conversion_score"</span>].values <span class="cf">for</span> _, group <span class="kw">in</span> OneWay_ABn_testing.groupby(<span class="st">"webpage_design"</span>)]</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>stat1, p1 <span class="op">=</span> levene(<span class="op">*</span>groups_OneWay)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying outputs</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>OneWay_levene <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Levene Statistic"</span>: [<span class="bu">round</span>(stat1, <span class="dv">2</span>)],</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p-value"</span>: [<span class="bu">round</span>(p1, <span class="dv">2</span>)]</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>OneWay_levene</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Levene Statistic  p-value
+0              0.26     0.77</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section><section id="sec-one-way-ANOVA-storytelling" class="level3" data-number="4.2.8"><h3 data-number="4.2.8" class="anchored" data-anchor-id="sec-one-way-ANOVA-storytelling">
 <span class="header-section-number">4.2.8</span> Storytelling</h3>
 </section></section><section id="sec-two-way-ANOVA" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="sec-two-way-ANOVA">
@@ -457,16 +950,519 @@ Table&nbsp;4.1: First 100 rows of our A/B/n simulated data.
 <span class="header-section-number">4.3.1</span> Study Design</h3>
 </section><section id="sec-two-way-ANOVA-data-collection-wrangling" class="level3" data-number="4.3.2"><h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-two-way-ANOVA-data-collection-wrangling">
 <span class="header-section-number">4.3.2</span> Data Collection and Wrangling</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true"><strong><code>R</code> Code</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false"><strong><code>Python</code> Code</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading dataset</span></span>
+<span><span class="va">TwoWay_ABn_customer_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data/ABn_customer_data_two_factors.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Showing the first 100 customers of the A/B/n testing</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">TwoWay_ABn_customer_data</span>, n <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading dataset</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>TwoWay_ABn_customer_data <span class="op">=</span> pd.read_csv(<span class="st">"data/ABn_customer_data_two_factors.csv"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Showing the first 100 customers of the A/B/n testing</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(TwoWay_ABn_customer_data(<span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<div class="cell">
+<div id="tbl-ANOVA-ABn-data-r-two" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ANOVA-ABn-data-r-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.11: First 100 rows of our A/B/n simulated data with webpage design and discount framing as a experimental factors.
+</figcaption><div aria-describedby="tbl-ANOVA-ABn-data-r-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-35cb0888b0abe7f3f4f5" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-35cb0888b0abe7f3f4f5">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[31.76,33.08,40.23,34.28,34.52,40.86,35.84,28.94,31.25,32.22,38.9,35.44,35.6,34.44,31.78,41.15,35.99,26.13,36.81,32.11,29.73,33.13,29.9,31.08,31.5,27.25,37.35,34.61,29.45,39.02,35.71,32.82,37.58,37.51,37.29,36.75,36.22,33.75,32.78,32.48,31.22,33.17,28.94,42.68,38.83,29.51,32.39,32.13,37.12,33.67,35.01,33.89,33.83,39.47,33.1,40.07,27.8,36.34,34.5,34.86,35.52,31.99,32.67,29.93,29.71,35.21,35.79,34.21,37.69,42.2,32.04,24.76,38.02,31.16,31.25,38.1,32.86,29.12,34.73,33.44,34.02,35.54,32.52,36.58,33.12,35.33,38.39,35.74,32.7,38.6,37.97,36.19,34.95,31.49,39.44,31.6,42.75,40.13,33.06,29.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
+<div class="cell">
+<div id="tbl-ANOVA-ABn-data-py-two" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ANOVA-ABn-data-py-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.12: First 100 rows of our A/B/n simulated data with webpage design and discount framing as a experimental factors.
+</figcaption><div aria-describedby="tbl-ANOVA-ABn-data-py-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-445366782359a4023db6" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-445366782359a4023db6">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[31.76,33.08,40.23,34.28,34.52,40.86,35.84,28.94,31.25,32.22,38.9,35.44,35.6,34.44,31.78,41.15,35.99,26.13,36.81,32.11,29.73,33.13,29.9,31.08,31.5,27.25,37.35,34.61,29.45,39.02,35.71,32.82,37.58,37.51,37.29,36.75,36.22,33.75,32.78,32.48,31.22,33.17,28.94,42.68,38.83,29.51,32.39,32.13,37.12,33.67,35.01,33.89,33.83,39.47,33.1,40.07,27.8,36.34,34.5,34.86,35.52,31.99,32.67,29.93,29.71,35.21,35.79,34.21,37.69,42.2,32.04,24.76,38.02,31.16,31.25,38.1,32.86,29.12,34.73,33.44,34.02,35.54,32.52,36.58,33.12,35.33,38.39,35.74,32.7,38.6,37.97,36.19,34.95,31.49,39.44,31.6,42.75,40.13,33.06,29.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true"><strong><code>R</code> Code</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false"><strong><code>Python</code> Code</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Seed for reproducibility</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a combined stratification variable</span></span>
+<span><span class="va">TwoWay_ABn_customer_data</span> <span class="op">&lt;-</span> <span class="va">TwoWay_ABn_customer_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">webpage_design</span>, <span class="va">discount_framing</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Randomly splitting into training and testing sets by both factors</span></span>
+<span><span class="va">TwoWay_ABn_customer_data_splitting</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">initial_split</a></span><span class="op">(</span></span>
+<span>  <span class="va">TwoWay_ABn_customer_data</span>,</span>
+<span>  prop <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  strata <span class="op">=</span> <span class="va">strata</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Assigning data points to training and testing sets</span></span>
+<span><span class="va">TwoWay_ABn_training</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">training</a></span><span class="op">(</span><span class="va">TwoWay_ABn_customer_data_splitting</span><span class="op">)</span></span>
+<span><span class="va">TwoWay_ABn_testing</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">testing</a></span><span class="op">(</span><span class="va">TwoWay_ABn_customer_data_splitting</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Sanity check</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Training shape:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">TwoWay_ABn_training</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Testing shape:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">TwoWay_ABn_testing</span><span class="op">)</span>, <span class="st">"\n\n"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Training proportions:\n"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">TwoWay_ABn_training</span><span class="op">$</span><span class="va">webpage_design</span>, <span class="va">TwoWay_ABn_training</span><span class="op">$</span><span class="va">discount_framing</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nTesting proportions:\n"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">TwoWay_ABn_testing</span><span class="op">$</span><span class="va">webpage_design</span>, <span class="va">TwoWay_ABn_testing</span><span class="op">$</span><span class="va">discount_framing</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Seed for reproducibility</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>random_state <span class="op">=</span> <span class="dv">123</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a combined stratification variable</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>TwoWay_ABn_customer_data[<span class="st">"strata"</span>] <span class="op">=</span> (</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    TwoWay_ABn_customer_data[<span class="st">"webpage_design"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="st">"_"</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> TwoWay_ABn_customer_data[<span class="st">"discount_framing"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly splitting into training and testing sets by both factors</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>TwoWay_ABn_training, TwoWay_ABn_testing <span class="op">=</span> train_test_split(</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    TwoWay_ABn_customer_data,</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    test_size<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>TwoWay_ABn_customer_data[<span class="st">"strata"</span>],</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span>random_state</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Sanity check</span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training shape:"</span>, TwoWay_ABn_training.shape)</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing shape:"</span>, TwoWay_ABn_testing.shape)</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Training proportions:"</span>)</span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(TwoWay_ABn_training.groupby([<span class="st">"webpage_design"</span>, <span class="st">"discount_framing"</span>]).size().div(<span class="bu">len</span>(TwoWay_ABn_training)))</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Testing proportions:"</span>)</span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(TwoWay_ABn_testing.groupby([<span class="st">"webpage_design"</span>, <span class="st">"discount_framing"</span>]).size().div(<span class="bu">len</span>(TwoWay_ABn_testing)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Training shape: 600 4 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Testing shape: 600 4 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training proportions:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    
+          High       Low
+  D1 0.1666667 0.1666667
+  D2 0.1666667 0.1666667
+  D3 0.1666667 0.1666667</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Testing proportions:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    
+          High       Low
+  D1 0.1666667 0.1666667
+  D2 0.1666667 0.1666667
+  D3 0.1666667 0.1666667</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Training shape: (600, 4)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Testing shape: (600, 4)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Training proportions:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>webpage_design  discount_framing
+D1              High                0.166667
+                Low                 0.166667
+D2              High                0.166667
+                Low                 0.166667
+D3              High                0.166667
+                Low                 0.166667
+dtype: float64</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Testing proportions:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>webpage_design  discount_framing
+D1              High                0.166667
+                Low                 0.166667
+D2              High                0.166667
+                Low                 0.166667
+D3              High                0.166667
+                Low                 0.166667
+dtype: float64</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section><section id="sec-two-way-ANOVA-EDA" class="level3" data-number="4.3.3"><h3 data-number="4.3.3" class="anchored" data-anchor-id="sec-two-way-ANOVA-EDA">
 <span class="header-section-number">4.3.3</span> Exploratory Data Analysis</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
+<div id="tbl-two-summary-stats-r" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-two-summary-stats-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.13: Descriptive statistics of two-factor A/B/n testing via training set.
+</figcaption><div aria-describedby="tbl-two-summary-stats-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Computing summaries</span></span>
+<span><span class="va">TwoWay_summary_table</span> <span class="op">&lt;-</span> <span class="va">TwoWay_ABn_training</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">webpage_design</span>, <span class="va">discount_framing</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    mean_conversion <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">conversion_score</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>    sd_conversion <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">conversion_score</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">webpage_design</span>, <span class="va">discount_framing</span><span class="op">)</span></span>
+<span><span class="va">TwoWay_summary_table</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+# Groups:   webpage_design [3]
+  webpage_design discount_framing mean_conversion sd_conversion     n
+  &lt;chr&gt;          &lt;chr&gt;                      &lt;dbl&gt;         &lt;dbl&gt; &lt;int&gt;
+1 D1             High                        51.1          3.79   100
+2 D1             Low                         33.5          3.89   100
+3 D2             High                        62.1          3.73   100
+4 D2             Low                         47.8          4.04   100
+5 D3             High                        54.1          4.27   100
+6 D3             Low                         62.0          3.91   100</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
+<div id="tbl-two-summary-stats-py" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-two-summary-stats-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.14: Descriptive statistics of two-factor A/B/n testing via training set.
+</figcaption><div aria-describedby="tbl-two-summary-stats-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing R training set via R library reticulate</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>TwoWay_ABn_training <span class="op">=</span> r.TwoWay_ABn_training</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing summaries</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>TwoWay_summary_table <span class="op">=</span> (</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>    TwoWay_ABn_training</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">"webpage_design"</span>, <span class="st">"discount_framing"</span>])</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>        mean_conversion<span class="op">=</span>(<span class="st">"conversion_score"</span>, <span class="kw">lambda</span> x: <span class="bu">round</span>(np.mean(x), <span class="dv">2</span>)),</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>        sd_conversion<span class="op">=</span>(<span class="st">"conversion_score"</span>, <span class="kw">lambda</span> x: <span class="bu">round</span>(np.std(x, ddof<span class="op">=</span><span class="dv">1</span>), <span class="dv">2</span>)),</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span>(<span class="st">"conversion_score"</span>, <span class="st">"count"</span>)</span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>    .sort_values([<span class="st">"webpage_design"</span>, <span class="st">"discount_framing"</span>])</span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>TwoWay_summary_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  webpage_design discount_framing  mean_conversion  sd_conversion    n
+0             D1             High            51.10           3.79  100
+1             D1              Low            33.54           3.89  100
+2             D2             High            62.07           3.73  100
+3             D2              Low            47.83           4.04  100
+4             D3             High            54.14           4.27  100
+5             D3              Low            61.95           3.91  100</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-hist-webpage-design-two" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-hist-webpage-design-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter4-anova_files/figure-html/fig-hist-webpage-design-two-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-webpage-design-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.6: Histograms of conversion score by webpage design and discount framing via training data.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-boxplot-webpage-design-two" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-boxplot-webpage-design-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter4-anova_files/figure-html/fig-boxplot-webpage-design-two-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-webpage-design-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.7: Side-by-side boxplots of conversion score by webpage design and discount framing via training data.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-interaction-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-interaction-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter4-anova_files/figure-html/fig-interaction-plot-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interaction-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.8: Interaction plot of conversion score by webpage design and discount framing via training data.
+</figcaption></figure>
+</div>
+</div>
+</div>
 </section><section id="sec-two-way-ANOVA-testing-settings" class="level3" data-number="4.3.4"><h3 data-number="4.3.4" class="anchored" data-anchor-id="sec-two-way-ANOVA-testing-settings">
 <span class="header-section-number">4.3.4</span> Testing Settings</h3>
 </section><section id="sec-two-way-ANOVA-hypothesis-definitions" class="level3" data-number="4.3.5"><h3 data-number="4.3.5" class="anchored" data-anchor-id="sec-two-way-ANOVA-hypothesis-definitions">
 <span class="header-section-number">4.3.5</span> Hypothesis Definitions</h3>
 </section><section id="sec-two-way-ANOVA-test-flavour" class="level3" data-number="4.3.6"><h3 data-number="4.3.6" class="anchored" data-anchor-id="sec-two-way-ANOVA-test-flavour">
 <span class="header-section-number">4.3.6</span> Test Flavour and Components</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
+<div id="tbl-two-fitting-r" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-two-fitting-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.15: Two-way ANOVA: Conversion score by webpage design and discount framing via testing set.
+</figcaption><div aria-describedby="tbl-two-fitting-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Running two-way ANOVA</span></span>
+<span><span class="va">TwoWay_aov</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">conversion_score</span> <span class="op">~</span> <span class="va">webpage_design</span> <span class="op">*</span> <span class="va">discount_framing</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">TwoWay_ABn_testing</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Displaying full two-way ANOVA table</span></span>
+<span><span class="va">TwoWay_aov</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">TwoWay_aov</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches</a></span><span class="op">(</span><span class="st">"p.value"</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">TwoWay_aov</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  term                               df  sumsq  meansq statistic    p.value
+  &lt;chr&gt;                           &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1 webpage_design                      2 26750. 13375.       817.  3.00e-171
+2 discount_framing                    1  8140.  8140.       497.  1.72e- 80
+3 webpage_design:discount_framing     2 18207.  9103.       556.  7.93e-137
+4 Residuals                         594  9723.    16.4       NA  NA        </code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
+<div id="tbl-two-fitting-py" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-two-fitting-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.16: Two-way ANOVA: Conversion score by webpage design and discount framing via testing set.
+</figcaption><div aria-describedby="tbl-two-fitting-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing R testing set via R library reticulate</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>TwoWay_ABn_testing <span class="op">=</span> r.TwoWay_ABn_testing</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Running two-way ANOVA</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>TwoWay_model <span class="op">=</span> ols(<span class="st">'conversion_score ~ C(webpage_design) * C(discount_framing)'</span>, data<span class="op">=</span>TwoWay_ABn_testing).fit()</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>TwoWay_aov <span class="op">=</span> sm.stats.anova_lm(TwoWay_model, typ<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Round all numeric columns except p-values</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>cols_to_round <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> TwoWay_aov.columns <span class="cf">if</span> c <span class="op">!=</span> <span class="st">"PR(&gt;F)"</span>]</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>TwoWay_aov[cols_to_round] <span class="op">=</span> TwoWay_aov[cols_to_round].<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying full two-way ANOVA table</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>TwoWay_aov</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                         sum_sq     df       F         PR(&gt;F)
+C(webpage_design)                      26749.51    2.0  817.05  3.002041e-171
+C(discount_framing)                     8139.80    1.0  497.25   1.718558e-80
+C(webpage_design):C(discount_framing)  18206.69    2.0  556.12  7.926552e-137
+Residual                                9723.46  594.0     NaN            NaN</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section><section id="sec-two-way-ANOVA-inferential-conclusions" class="level3" data-number="4.3.7"><h3 data-number="4.3.7" class="anchored" data-anchor-id="sec-two-way-ANOVA-inferential-conclusions">
 <span class="header-section-number">4.3.7</span> Inferential Conclusions</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-q-q-plot-two-way" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-q-q-plot-two-way-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chapter4-anova_files/figure-html/fig-q-q-plot-two-way-1.png" class="img-fluid figure-img" width="1344">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-q-q-plot-two-way-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.9: Diagnostic Q-Q plot for two-way ANOVA of conversion score by webpage design and discount framing via residuals.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
+<div id="tbl-two-shapiro-wilks-r" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-two-shapiro-wilks-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.17: Shapiro–Wilks normality test for two-way ANOVA via residuals.
+</figcaption><div aria-describedby="tbl-two-shapiro-wilks-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Extracting residuals</span></span>
+<span><span class="va">TwoWay_resid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">TwoWay_aov</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Running Shapiro–Wilk test</span></span>
+<span><span class="va">TwoWay_shapiro</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">TwoWay_resid</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Displaying outputs</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">TwoWay_shapiro</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  statistic p.value method                     
+      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                      
+1         1    0.19 Shapiro-Wilk normality test</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
+<div id="tbl-two-shapiro-wilks-py" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-two-shapiro-wilks-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.18: Shapiro–Wilks normality test for two-way ANOVA via residuals.
+</figcaption><div aria-describedby="tbl-two-shapiro-wilks-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting residuals</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>TwoWay_resid <span class="op">=</span> TwoWay_model.resid</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Running Shapiro–Wilk tests</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>TwoWay_shapiro <span class="op">=</span> shapiro(TwoWay_resid)</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying outputs</span></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>TwoWay_shapiro <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"W Statistic"</span>: [<span class="bu">round</span>(TwoWay_shapiro.statistic, <span class="dv">2</span>)],</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p-value"</span>: [<span class="bu">round</span>(TwoWay_shapiro.pvalue, <span class="dv">2</span>)]</span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>TwoWay_shapiro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   W Statistic  p-value
+0          1.0     0.19</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-16-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-1" role="tab" aria-controls="tabset-16-1" aria-selected="true"><strong><code>R</code> Output</strong></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-2" role="tab" aria-controls="tabset-16-2" aria-selected="false"><strong><code>Python</code> Output</strong></a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-16-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-16-1-tab">
+<div id="tbl-two-levene-r" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-two-levene-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.19: Levene’s test for homogeneity of variances for two-way ANOVA via testing data.
+</figcaption><div aria-describedby="tbl-two-levene-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading library</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/car/">car</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Running Levene test</span></span>
+<span><span class="va">TwoWay_levene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/car/man/leveneTest.html">leveneTest</a></span><span class="op">(</span><span class="va">conversion_score</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">webpage_design</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">discount_framing</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">TwoWay_ABn_testing</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Displaying outputs</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">TwoWay_levene</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  statistic p.value    df df.residual
+      &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;
+1      1.92    0.09     5         594</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div id="tabset-16-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-2-tab">
+<div id="tbl-two-levene-py" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-two-levene-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.20: Levene’s test for homogeneity of variances for two-way ANOVA via testing data.
+</figcaption><div aria-describedby="tbl-two-levene-py-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Running Levene test</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>TwoWay_ABn_testing[<span class="st">"group"</span>] <span class="op">=</span> TwoWay_ABn_testing[<span class="st">"webpage_design"</span>].astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"_"</span> <span class="op">+</span> TwoWay_ABn_testing[<span class="st">"discount_framing"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>groups_TwoWay <span class="op">=</span> [group[<span class="st">"conversion_score"</span>].values <span class="cf">for</span> _, group <span class="kw">in</span> TwoWay_ABn_testing.groupby(<span class="st">"group"</span>)]</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>stat1, p1 <span class="op">=</span> levene(<span class="op">*</span>groups_TwoWay)</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying outputs</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>TwoWay_levene <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Levene Statistic"</span>: [<span class="bu">round</span>(stat1, <span class="dv">2</span>)],</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p-value"</span>: [<span class="bu">round</span>(p1, <span class="dv">2</span>)]</span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>TwoWay_levene</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Levene Statistic  p-value
+0              1.92     0.09</code></pre>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section><section id="sec-two-way-ANOVA-storytelling" class="level3" data-number="4.3.8"><h3 data-number="4.3.8" class="anchored" data-anchor-id="sec-two-way-ANOVA-storytelling">
 <span class="header-section-number">4.3.8</span> Storytelling</h3>
 </section></section><section id="sec-chapter-4-summary" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="sec-chapter-4-summary">

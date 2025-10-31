@@ -10,7 +10,7 @@
 
 # Meet the Authors {.unnumbered}
 
-*The Mini Test Book* is a collaborative project created by three educators and researchers from the University of British Columbia (UBC). This open educational resource integrates their expertise in statistic, bioinformatics, and data science pedagogy to make concepts related to hypothesis testing and model evaluation more accessible to learners. Each author provides a unique perspective, encompassing areas such as teaching, curriculum design, applied machine learning, and bioinformatics research. They are united by a common commitment to clarity, reproducibility, and open science. The following sections will introduce the authors and outline their academic and professional backgrounds.
+*The Mini Test Book* is a collaborative project created by three educators and researchers from the University of British Columbia (UBC). This open educational resource integrates their expertise in statistic, bioinformatics, and data science pedagogy to make concepts related to hypothesis testing and model evaluation more accessible to learners. Each author provides a unique perspective, encompassing areas such as teaching, curriculum design, applied machine learning, and bioinformatics research. They are united by a common commitment to **clarity**, **reproducibility**, and **open science**. The following sections will introduce the authors and outline their academic and professional backgrounds.
 
 ![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-group-discussion-3947909/).](img/summary.png){width="400"}
 

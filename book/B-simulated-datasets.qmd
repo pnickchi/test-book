@@ -243,15 +243,235 @@ print_as_dt(head(py$cholesterol_data, 10))
 ```
 :::
 
-## ANOVA Dataset
+## ANOVA Datasets
 
-This dataset is used in @sec-anova to elaborate on **analysis of variance (ANOVA)** and pertains to an experimental context. Suppose a data-driven marketing team at a well-known tech company, which operates a global online store, is conducting an A/B/n testing aimed at **increasing the customer conversion score (i.e., the outcome)**. In this experiment, the customer conversion score is defined as a unitless and standardized engagement index. This index combines various elements, such as clicks, time spent on the webpage, and the probability of making a purchase, with a baseline mean set at $50$. This score measures customer responsiveness on the online store: **the higher the score, the greater the customer responsiveness**.
+These datasets are used in @sec-anova to elaborate on **analysis of variance (ANOVA)** and pertain to an experimental context. Suppose a data-driven marketing team at a well-known tech company, which operates a global online store, is conducting two different A/B/n testings aimed at **increasing the customer conversion score (i.e., the outcome)**. In these experiments, the customer conversion score is defined as a unitless and standardized engagement index. This index combines various elements, such as clicks, time spent on the webpage, and the probability of making a purchase, with a baseline mean set at $50$. This score measures customer responsiveness on the online store: **the higher the score, the greater the customer responsiveness**.
 
 ![Image by [*Pabitra Kaity*](https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6370790) via [*Pixabay*](https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/).](img/ads.png){fig-align="center" width=50%}
 
-### Generative Modelling Process
+### One-way ANOVA {#sec-one-way-ANOVA-sim}
 
-The experiment has the following **controllable factors** by the experimenter:
+Let us start by outlining the generative modelling process for a **one-way ANOVA experiment**. In this context, we will simulate a dataset that represents a continuous response variable (in this case, the customer conversion score) affected by a **single experimental factor**, specifically the design of a webpage. This setup allows us to assess whether the average response systematically varies across different design options.
+
+#### Generative Modelling Process
+
+The experiment involves **webpage design** as a **controllable factor** determined by the experimenter. This factor includes three different layouts: $D_1$ (the current layout), $D_2$ (a new layout), and $D_3$ (another new layout), making it a three-level factor. This study will be conducted as a **full factorial experiment** characterized by the following elements:
+
+- One factor, namely, **webpage design**.
+- There are $3$ treatments (i.e., the above three factor levels), which classifies this study as A/B/n testing.
+- We will simulate 200 customers (i.e., **replicates**) per treatment in our final dataset.
+- The outcome variable $Y$ is the customer conversion score, which has been previously explained.
+
+Our data structure will be an **additive model** conceptually depicted as:
+
+$$
+\begin{align*}
+\text{Outcome} &= \text{First Main Effect} + \text{Random Error}.
+\end{align*}
+$${#eq-ANOVA-conceptual-model-app-one}
+
+Then, for the data generation process, let $Y_{i,k}$ represent the customer conversion score for the $k$th replicate of the treatment related to the $i$th webpage design level. @eq-ANOVA-conceptual-model-app-one is translated as:
+
+$$
+Y_{i,k} = \alpha_i + \varepsilon_{i,k},
+$${#eq-ANOVA-math-model-app-one}
+
+where
+
+- $\alpha_i$ is the fixed main effect corresponding to the $i$th level of webpage design for $i = D_1, D_2, D_3$;
+- $\varepsilon_{i,k}$ is the random error associated to each $Y_{i,k}$,  capturing the variability and measurement error that introduces randomness in the response $Y_{i,k}$.
+
+In this case, @eq-ANOVA-math-model-app-one breaks down the outcome on the right-hand side into two additive components, which serve as the foundation for how ANOVA models the data. Unlike the random error $\varepsilon_{i,k}$, the term $\alpha_i$ is assumed to be fixed within the data-generating process, as we are using a **frequentist approach**. Since $\varepsilon_{i,k}$ is random, we will assume it follows a Normal distribution with a mean of $0$ and a variance of $\sigma^2$, which is another fixed parameter in the simulation:
+
+$$
+\varepsilon_{i,k} \sim \text{Normal}(0, \sigma^2).
+$$
+In terms of our simulation, imagine you have a population of customers with the following fixed parameters:
+
+- A vector of webpage design effects (i.e., the main effect) 
+
+$$\boldsymbol{\alpha} = 
+\begin{bmatrix} \alpha_{D_1} \\ \alpha_{D_2} \\ \alpha_{D_3} \end{bmatrix} =
+\begin{bmatrix} 60 \\ 60 \\ 60 \end{bmatrix}.$$
+
+- An overall variance 
+
+$$
+\sigma^2 = 10.
+$$
+
+The rationale for this simulation setup lies in constructing a **baseline generative process** that explicitly embodies the null hypothesis of a one-way ANOVA. By assigning identical mean effects to all three webpage designs, we model a population in which, on average, each webpage design yields the same customer conversion performance (that is, all group means are equal as specified in the vector $\boldsymbol{\alpha}$). Consequently, any observed differences among sample means arise purely from **random sampling variability**, not from systematic treatment effects.
+
+In addition, this generative design encodes two fundamental assumptions of the ANOVA framework: **normality** and **homoscedasticity**. The normality assumption on the random component $\varepsilon_{i,k}$ ensures that each group’s response distribution is symmetric and bell-shaped, supporting the validity of parametric inference represented by the $F$-test in ANOVA. The homoscedasticity assumption (expressed here as a constant variance $\sigma^2 = 10$) asserts that the **variability** in customer responses is **identical** across all webpage designs. This condition guarantees that any detected mean differences can be attributed to true design effects rather than unequal levels of random noise.
+
+#### Code
+
+Let us move to the corresponding code to simulate this data. Recall we are simulating **200 customers for each one of the three treatments**, which will give us an **overall sample size of $n = 600$**. Furthermore, note that `Python` additionally uses the [{numpy}](https://pypi.org/project/numpy/) and [{pandas}](https://pypi.org/project/pandas/) libraries. The final data frame will be stored in `ABn_customer_data_one_factor` whose columns will be `webpage_design` and `conversion_score`.
+
+::: {.panel-tabset}
+
+## **`R` Code**
+
+``` {.r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Factor levels and sampled customers per treatment
+webpage_design_levels <- c("D1", "D2", "D3")
+n_per_treatment <- 200
+
+# Population fixed additive parameters
+alpha <- c(60, 60, 60)
+
+# Simulating data
+data_list <- list()
+for (i in 1:3) {
+  mean_i <- alpha[i]
+  y <- rnorm(n_per_treatment, mean = mean_i, sd = sqrt(10))
+  df_i <- data.frame(
+    webpage_design = as.factor(webpage_design_levels[i]),
+    conversion_score = round(y, 2)
+  )
+  data_list[[length(data_list) + 1]] <- df_i
+}
+ABn_customer_data_one_factor <- do.call(rbind, data_list)
+
+# Showing the first 100 customers of the A/B/n testing
+head(ABn_customer_data_one_factor, n = 100)
+```
+
+## **`Python` Code**
+
+``` {.python}
+# Importing libraries
+import numpy as np
+import pandas as pd
+
+# Set seed for reproducibility
+np.random.seed(123)
+
+# Factor levels and sampled customers per treatment
+webpage_design_levels = ["D1", "D2", "D3"]
+n_per_treatment = 200
+
+# Population fixed additive parameters
+alpha = [60, 60, 60]          
+
+# Simulating data
+data_list = []
+
+for i in range(3):  
+      mean_i = alpha[i]
+      y = np.random.normal(loc=mean_i, scale=np.sqrt(10), size = n_per_treatment)
+      y_rounded = np.round(y, 2)
+        
+      df_i = pd.DataFrame({
+          'webpage_design': [webpage_design_levels[i]] * n_per_treatment,
+          'conversion_score': y_rounded
+      })
+        
+      data_list.append(df_i)
+
+# Concatenate all groups into one DataFrame
+ABn_customer_data_one_factor = pd.concat(data_list, ignore_index = True)
+
+# Showing the first 100 customers of the A/B/n testing
+print(ABn_customer_data.head(100))
+```
+
+:::
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| echo: false
+#| message: false
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Factor levels and sampled customers per treatment
+webpage_design_levels <- c("D1", "D2", "D3")
+n_per_treatment <- 200
+
+# Population fixed additive parameters
+alpha <- c(60, 60, 60)
+
+# Simulating data
+data_list <- list()
+for (i in 1:3) {
+  mean_i <- alpha[i]
+  y <- rnorm(n_per_treatment, mean = mean_i, sd = sqrt(10))
+  df_i <- data.frame(
+    webpage_design = as.factor(webpage_design_levels[i]),
+    conversion_score = round(y, 2)
+  )
+  data_list[[length(data_list) + 1]] <- df_i
+}
+ABn_customer_data_one_factor <- do.call(rbind, data_list)
+
+# Showing the first 100 customers of the A/B/n testing
+head(ABn_customer_data_one_factor, n = 100) |> 
+  print_as_dt()
+```
+
+## **`Python` Output**
+
+```{python}
+#| echo: false
+#| message: false
+
+# Importing libraries
+import numpy as np
+import pandas as pd
+
+# Set seed for reproducibility
+np.random.seed(123)
+
+# Factor levels and sampled customers per treatment
+webpage_design_levels = ["D1", "D2", "D3"]
+n_per_treatment = 200
+
+# Population fixed additive parameters
+alpha = [60, 60, 60]          
+
+# Simulating data
+data_list = []
+
+for i in range(3):  
+      mean_i = alpha[i]
+      y = np.random.normal(loc=mean_i, scale=np.sqrt(10), size = n_per_treatment)
+      y_rounded = np.round(y, 2)
+        
+      df_i = pd.DataFrame({
+          'webpage_design': [webpage_design_levels[i]] * n_per_treatment,
+          'conversion_score': y_rounded
+      })
+        
+      data_list.append(df_i)
+
+# Concatenate all groups into one DataFrame
+ABn_customer_data_one_factor = pd.concat(data_list, ignore_index = True)
+```
+
+```{r}
+#| echo: false
+
+# Showing the first 100 customers of the A/B/n testing
+print_as_dt(head(py$ABn_customer_data_one_factor, 100))
+```
+
+:::
+
+### Two-way ANOVA {#sec-two-way-ANOVA-sim}
+
+Let us extend our generative modelling framework to a **two-way ANOVA** experiment. In this context, we will simulate a dataset that represents a continuous response variable (i.e., the customer conversion score) affected by **two experimental factors**: webpage design and discount framing strategy. Each factor has its own **main effect** on the response, and their combination may also result in an **interaction effect**, which indicates how the impact of one factor depends on the level of the other. This setup allows us to assess whether variations in customer conversion arise from the individual effects of design and discount framing, as well as their combined influence. This approach offers a more comprehensive understanding of experimental variation and aids in practical decision-making.
+
+#### Generative Modelling Process
+
+This second experiment has the following **controllable factors** by the experimenter:
 
 - **Webpage design:** Three different layouts $D_1$ (the current layout), $D_2$ (a new layout), and $D_3$ (another new layout). This makes a three-level factor.
 - **Discount framing:** $\text{Low}$ (i.e., "*Save 10% today*") or $\text{High}$ (i.e., "*Save up to 40% today*"). This makes a two-level factor.
@@ -270,13 +490,13 @@ $$
 \text{Outcome} &= \text{First Main Effect} + \text{Second Main Effect} + \\
 & \qquad \text{Interaction Effect} + \text{Random Error}.
 \end{align*}
-$${#eq-ANOVA-conceptual-model-app}
+$${#eq-ANOVA-conceptual-model-app-two}
 
-Then, for the data generation process, let $Y_{i,j,k}$ represent the customer conversion score for the $k$th replicate of the treatment related to the $i$th webpage design and the $j$th discount framing levels. @eq-ANOVA-conceptual-model-app is translated as:
+Then, for the data generation process, let $Y_{i,j,k}$ represent the customer conversion score for the $k$th replicate of the treatment related to the $i$th webpage design and the $j$th discount framing levels. @eq-ANOVA-conceptual-model-app-two is translated as:
 
 $$
 Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
-$${#eq-ANOVA-math-model-app}
+$${#eq-ANOVA-math-model-app-two}
 
 where
 
@@ -290,28 +510,29 @@ where
 Heads-up on the mathematical representation of the interaction term!
 :::
 ::: Heads-up-container
-The $(\alpha \beta)_{i,j}$ in @eq-ANOVA-math-model-app **does not** indicate that the main effects are multiplying each other. Mathematically, it is just another additive term on the right-hand side of the equation.
+The $(\alpha \beta)_{i,j}$ in @eq-ANOVA-math-model-app-two **does not** indicate that the main effects are multiplying each other. Mathematically, it is just another additive term on the right-hand side of the equation.
 :::
 :::::
 
-In this case, @eq-ANOVA-math-model-app is breaking down the outcome on the right-hand side into four additive components, which form the basis on how ANOVA models the data. With the exception of the random error $\varepsilon_{i,j,k}$, the other three terms are assumed to be fixed within the data-generating process, given that we are using a **frequentist approach**. Since $\varepsilon_{i,j,k}$ is random, we will assume that it follows a Normal distribution with a mean of $0$ and a variance of $\sigma^2$ (which is another fixed parameter in the simulation):
+In this case, @eq-ANOVA-math-model-app-two is breaking down the outcome on the right-hand side into four additive components, which form the basis on how ANOVA models the data. With the exception of the random error $\varepsilon_{i,j,k}$, the other three terms are assumed to be fixed within the data-generating process, given that we are using a **frequentist approach**. Since $\varepsilon_{i,j,k}$ is random, we will assume that it follows a Normal distribution with a mean of $0$ and a variance of $\sigma^2$ (which is another fixed parameter in the simulation):
 
 $$
 \varepsilon_{i,j,k} \sim \text{Normal}(0, \sigma^2).
 $$
+
 In terms of our simulation, imagine you have a population of customers with the following fixed parameters:
 
 - A vector of webpage design effects (i.e., the first main effect) 
 
 $$\boldsymbol{\alpha} = 
 \begin{bmatrix} \alpha_{D_1} \\ \alpha_{D_2} \\ \alpha_{D_3} \end{bmatrix} =
-\begin{bmatrix} 40 \\ 50 \\ 70 \end{bmatrix}.$$
+\begin{bmatrix} 40 \\ 50 \\ 60 \end{bmatrix}.$$
 
 - A vector of discount framing effects (i.e., the second main effect)
 
 $$\boldsymbol{\beta} = 
 \begin{bmatrix} \alpha_{\text{Low}} \\ \alpha_{\text{High}} \end{bmatrix} = 
-\begin{bmatrix} -5 \\ 12 \end{bmatrix}.$$
+\begin{bmatrix} -6 \\ 6 \end{bmatrix}.$$
 
 - A matrix of interaction effects, whose rows correspond to the levels of webpage design and columns to the levels of discount framing,
 
@@ -324,8 +545,8 @@ $$
 \end{bmatrix} =
 \begin{bmatrix}
 0 & 5 \\
--8 & 0 \\
-11 & -13
+4 & 6 \\
+8 & -12
 \end{bmatrix}.
 $$
 
@@ -335,11 +556,13 @@ $$
 \sigma^2 = 16.
 $$
 
-The fixed-effect interaction arrangement above induces non-parallel trends in an interaction plot, as shown in @sec-anova, while preserving additive decomposition for interpretation and statistical testing.
+The purpose of this simulation is to define a **generative process** that captures the essential structure of a two-way ANOVA design. In this setting, both webpage design and discount framing are treated as controlled experimental factors, each contributing to the overall pattern of customer conversion scores. By specifying fixed main effects for each factor and an accompanying matrix of interaction effects, we represent a population where conversion performance arises from both individual influences and their **combined interplay**. This design enables us to study how the effect of one factor may depend on the level of the other, which is an idea central to interpreting two-way ANOVA outcomes.
 
-### Code
+Moreover, the simulation is grounded in the core distributional assumptions of the ANOVA framework: **normality** and **homoscedasticity**. The random term $\varepsilon_{i,j,k}$ is assumed to follow a Normal distribution, ensuring that the response within each treatment combination is approximately symmetric and well-behaved. The homoscedasticity condition, specified through a constant variance $\sigma^2 = 16$, implies that the degree of **variability** in customer responses remains **consistent** across all combinations of factors. These assumptions provide the stability necessary for the $F$-test to reliably separate true factor effects from random fluctuations.
 
-Let us move to the corresponding code to simulate this data. Recall we are simulating **200 customers for each one of the six treatments**, which will give us an **overall sample size of $n = 1,200$**. Furthermore, note that `Python` additionally uses the [{numpy}](https://pypi.org/project/numpy/) and [{pandas}](https://pypi.org/project/pandas/) libraries. The final data frame will be stored in `ABn_customer_data` whose columns will be `webpage_design`, `discount_framing`, and `conversion_score`.
+#### Code
+
+Let us move to the corresponding code to simulate this data. Recall we are simulating **200 customers for each one of the six treatments**, which will give us an **overall sample size of $n = 1,200$**. Furthermore, note that `Python` additionally uses the [{numpy}](https://pypi.org/project/numpy/) and [{pandas}](https://pypi.org/project/pandas/) libraries. The final data frame will be stored in `ABn_customer_data_two_factors` whose columns will be `webpage_design`, `discount_framing`, and `conversion_score`.
 
 ::: {.panel-tabset}
 
@@ -355,13 +578,13 @@ discount_framing_levels <- c("Low", "High")
 n_per_treatment <- 200
 
 # Population fixed additive parameters
-alpha <- c(40, 50, 70)
-beta <- c(-5, 12)
+alpha <- c(40, 50, 60)
+beta <- c(-6, 6)
 interaction <- matrix(
   c(
     0, 5,
-    -8, 0,
-    11, -13
+    4, 6,
+    8, -12
   ),
   nrow = 3, byrow = TRUE
 )
@@ -380,10 +603,10 @@ for (i in 1:3) {
     data_list[[length(data_list) + 1]] <- df_ij
   }
 }
-ABn_customer_data <- do.call(rbind, data_list)
+ABn_customer_data_two_factors <- do.call(rbind, data_list)
 
 # Showing the first 100 customers of the A/B/n testing
-head(ABn_customer_data, n = 100)
+head(ABn_customer_data_two_factors, n = 100)
 ```
 
 ## **`Python` Code**
@@ -402,12 +625,12 @@ discount_framing_levels = ["Low", "High"]
 n_per_treatment = 200
 
 # Population fixed additive parameters
-alpha = [40, 50, 70]          
-beta = [-5, 12]              
+alpha = [40, 50, 60]          
+beta = [-6, 6]              
 interaction = np.array([
     [0, 5],
-    [-8, 0],
-    [11, -13]
+    [4, 6],
+    [8, -12]
 ])
 
 # Simulating data
@@ -428,10 +651,10 @@ for i in range(3):
         data_list.append(df_ij)
 
 # Concatenate all groups into one DataFrame
-ABn_customer_data = pd.concat(data_list, ignore_index = True)
+ABn_customer_data_two_factors = pd.concat(data_list, ignore_index = True)
 
 # Showing the first 100 customers of the A/B/n testing
-print(ABn_customer_data.head(100))
+print(ABn_customer_data_two_factors.head(100))
 ```
 
 :::
@@ -453,13 +676,13 @@ discount_framing_levels <- c("Low", "High")
 n_per_treatment <- 200
 
 # Population fixed additive parameters
-alpha <- c(40, 50, 70)
-beta <- c(-5, 12)
+alpha <- c(40, 50, 60)
+beta <- c(-6, 6)
 interaction <- matrix(
   c(
     0, 5,
-    -8, 0,
-    11, -13
+    4, 6,
+    8, -12
   ),
   nrow = 3, byrow = TRUE
 )
@@ -478,10 +701,10 @@ for (i in 1:3) {
     data_list[[length(data_list) + 1]] <- df_ij
   }
 }
-ABn_customer_data <- do.call(rbind, data_list)
+ABn_customer_data_two_factors <- do.call(rbind, data_list)
 
 # Showing the first 100 customers of the A/B/n testing
-head(ABn_customer_data, n = 100) |> 
+head(ABn_customer_data_two_factors, n = 100) |> 
   print_as_dt()
 ```
 
@@ -504,12 +727,12 @@ discount_framing_levels = ["Low", "High"]
 n_per_treatment = 200
 
 # Population fixed additive parameters
-alpha = [40, 50, 70]          
-beta = [-5, 12]              
+alpha = [40, 50, 60]          
+beta = [-6, 6]              
 interaction = np.array([
     [0, 5],
-    [-8, 0],
-    [11, -13]
+    [4, 6],
+    [8, -12]
 ])
 
 # Simulating data
@@ -530,14 +753,14 @@ for i in range(3):
         data_list.append(df_ij)
 
 # Concatenate all groups into one DataFrame
-ABn_customer_data = pd.concat(data_list, ignore_index = True)
+ABn_customer_data_two_factors = pd.concat(data_list, ignore_index = True)
 ```
 
 ```{r}
 #| echo: false
 
 # Showing the first 100 customers of the A/B/n testing
-print_as_dt(head(py$ABn_customer_data, 100))
+print_as_dt(head(py$ABn_customer_data_two_factors, 100))
 ```
 
 :::
