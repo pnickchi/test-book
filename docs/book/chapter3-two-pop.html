@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.53">
+<meta name="generator" content="quarto-1.6.42">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>3&nbsp; Tests for Two Continuous Population Mean – The Mini Test Book (in development)</title>
 <style>
@@ -67,10 +67,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-f664b88e837a53bca78c5b20234386e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -140,19 +140,19 @@ window.Quarto = {
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
 <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
               <i class="bi bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=%7Curl%7C">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
               <i class="bi bi-linkedin pe-1"></i>
             LinkedIn
             </a>
@@ -342,7 +342,7 @@ window.Quarto = {
   <li><a href="#hypothesis-definitions-4" id="toc-hypothesis-definitions-4" class="nav-link" data-scroll-target="#hypothesis-definitions-4"><span class="header-section-number">3.5.6</span> Hypothesis Definitions</a></li>
   <li><a href="#test-flavour-and-components-4" id="toc-test-flavour-and-components-4" class="nav-link" data-scroll-target="#test-flavour-and-components-4"><span class="header-section-number">3.5.7</span> Test Flavour and Components</a></li>
   <li><a href="#inferential-conclusions-4" id="toc-inferential-conclusions-4" class="nav-link" data-scroll-target="#inferential-conclusions-4"><span class="header-section-number">3.5.8</span> Inferential Conclusions</a></li>
-  <li><a href="#how-to-run-the-two-sample-z-test-in-r-and-python-1" id="toc-how-to-run-the-two-sample-z-test-in-r-and-python-1" class="nav-link" data-scroll-target="#how-to-run-the-two-sample-z-test-in-r-and-python-1"><span class="header-section-number">3.5.9</span> How to run the two-sample z-test in <code>R</code> and <code>Python</code></a></li>
+  <li><a href="#how-to-run-the-two-sample-paired-t-test-in-r-and-python-1" id="toc-how-to-run-the-two-sample-paired-t-test-in-r-and-python-1" class="nav-link" data-scroll-target="#how-to-run-the-two-sample-paired-t-test-in-r-and-python-1"><span class="header-section-number">3.5.9</span> How to run the two-sample paired t-test in <code>R</code> and <code>Python</code></a></li>
   <li><a href="#storytelling-4" id="toc-storytelling-4" class="nav-link" data-scroll-target="#storytelling-4"><span class="header-section-number">3.5.10</span> Storytelling</a></li>
   </ul>
 </li>
@@ -1072,7 +1072,7 @@ H_0: \mu_1 = \mu_2 \quad \text{versus} \quad H_A: \mu_1 \ne \mu_2
 <span><span class="co"># - HS Grad --&gt; High school graduate</span></span>
 <span><span class="co"># - College Grad --&gt; College graduate</span></span>
 <span><span class="va">wage_data</span> <span class="op">&lt;-</span> <span class="va">wage_data</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'2. HS Grad'</span>, <span class="st">'4. College Grad'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">education</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'2. HS Grad'</span>, <span class="st">'4. College Grad'</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>education <span class="op">=</span> <span class="fu">recode</span><span class="op">(</span><span class="va">education</span>,</span>
 <span>                            <span class="st">'2. HS Grad'</span> <span class="op">=</span> <span class="st">'High school graduate'</span>,</span>
 <span>                            <span class="st">'4. College Grad'</span> <span class="op">=</span> <span class="st">'College graduate'</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1113,7 +1113,7 @@ Figure&nbsp;3.6: Side-by-side histogram of wage by education level
  Min.   : 23.27  
  1st Qu.: 78.39  
  Median : 94.07  
- Mean   : 97.18  
+ Mean   : 97.19  
  3rd Qu.:111.72  
  Max.   :318.34  </code></pre>
 </div>
@@ -1532,8 +1532,8 @@ Figure&nbsp;3.8: Density Plot of Paired LDL Levels Differences
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Extract LDL measurements before and after treatment</span></span>
-<span><span class="va">ldl_before</span> <span class="op">&lt;-</span> <span class="va">test_cholesterol</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">LDL_before</span><span class="op">)</span></span>
-<span><span class="va">ldl_after</span>  <span class="op">&lt;-</span> <span class="va">test_cholesterol</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">LDL_after</span><span class="op">)</span></span>
+<span><span class="va">ldl_before</span> <span class="op">&lt;-</span> <span class="va">test_cholesterol</span> <span class="op">|&gt;</span> <span class="fu">pull</span><span class="op">(</span><span class="va">LDL_before</span><span class="op">)</span></span>
+<span><span class="va">ldl_after</span>  <span class="op">&lt;-</span> <span class="va">test_cholesterol</span> <span class="op">|&gt;</span> <span class="fu">pull</span><span class="op">(</span><span class="va">LDL_after</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Run paired t-test</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">ldl_before</span>, y <span class="op">=</span> <span class="va">ldl_after</span>, paired <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1574,7 +1574,7 @@ mean difference
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"P-value: </span><span class="sc">{</span>p_value<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>P-value: 6.125701137511482e-26</code></pre>
+<pre><code>P-value: 6.125701137511437e-26</code></pre>
 </div>
 </div>
 </div>
@@ -1614,8 +1614,8 @@ mean difference
 <section id="review-4" class="level3" data-number="3.5.1"><h3 data-number="3.5.1" class="anchored" data-anchor-id="review-4">
 <span class="header-section-number">3.5.1</span> Review</h3>
 <p>In the examples we studied in [Section LINK HERE], we estimated the proportion of a population based on the sample proportion <span class="math inline">\(\hat{p}\)</span>. This is often the case in practice, as the population proportion is typically unknown and must be inferred from sample data. When we are comparing two groups and wish to test whether their underlying proportions differ, we can extend this idea to a two-proportion test.</p>
-<p>For instance imagine you are investigating support for a new policy among two different regions. Suppose a national statistics office previously carried out large-scale surveys and suggested that the variability in responses for each region can be reasonably modeled using the binomial distribution framework. Your aim is not the variance but rather the proportion of individuals in each group who favor the policy.</p>
-<p>Specifically, let’s consider two independent populations:</p>
+<p>Suppose you are investigating support for a new policy among two different regions. Each individual either <strong>supports the policy</strong> (coded as 1) or <strong>does not support it</strong> (coded as 0). You want to determine if the proportion of supporters is significantly different between Region A and Region B.</p>
+<p>Formally, let:</p>
 <p><strong>Region A (Population 1):</strong> each individual either supports the policy (coded as 1) or policy (coded as 0).</p>
 <p><strong>Region B (Population 2):</strong> defined in the same way.</p>
 <p>From each population, we take a random sample:</p>
@@ -1624,48 +1624,155 @@ mean difference
 <li><p>From Region B, a sample of size <span class="math inline">\(m\)</span>, with observed sample proportion of support <span class="math inline">\(\hat{p}_2\)</span>.</p></li>
 </ul>
 <p>where <span class="math inline">\(p_1\)</span> is the population proportion of support in Region A and <span class="math inline">\(p_2\)</span> is the population proportion of support in Region B.</p>
-<p>The main statistical question becomes: <strong>Is there a significant difference between the true population proportions of support in the two regions?</strong> Formally, we test the hypotheses:</p>
+<p>The main statistical question becomes: <strong>Is there a significant difference between the true population proportions of support in the two regions?</strong> We formalize this as a hypothesis test:</p>
 <p><span class="math display">\[
-H_0: \p_1 = \p_2 \quad \text{versus} \quad H_A: \p_1 \ne \p_2
-\]</span></p>
-<p>This leads us to the two-sample z-test for population proportions which provides a way to formally compare the two groups using their observed sample proportions.</p>
+H_0: p_1 = p_2 \quad \text{versus} \quad H_A: p_1 \ne p_2
+\]</span> To answer this, we use the <strong>two-sample z-test for population proportions</strong>, which compares the observed sample proportions while accounting for the variability expected under the null hypothesis.</p>
 </section><section id="study-design-4" class="level3" data-number="3.5.2"><h3 data-number="3.5.2" class="anchored" data-anchor-id="study-design-4">
 <span class="header-section-number">3.5.2</span> Study Design</h3>
-<ul>
-<li>Under development</li>
-</ul></section><section id="data-collection-and-wrangling-4" class="level3" data-number="3.5.3"><h3 data-number="3.5.3" class="anchored" data-anchor-id="data-collection-and-wrangling-4">
+<p>Consider a survey aimed at estimating support for a new environmental policy in two regions of a country. Researchers randomly sample Region A (n = 150 individuals) and Region B (m = 200 individuals), recording whether each participant supports the policy. The main outcome of interest is whether an individual supports or does not support the policy.</p>
+</section><section id="data-collection-and-wrangling-4" class="level3" data-number="3.5.3"><h3 data-number="3.5.3" class="anchored" data-anchor-id="data-collection-and-wrangling-4">
 <span class="header-section-number">3.5.3</span> Data Collection and Wrangling</h3>
-<ul>
-<li>Under development</li>
-</ul></section><section id="exploratory-data-analysis-2" class="level3" data-number="3.5.4"><h3 data-number="3.5.4" class="anchored" data-anchor-id="exploratory-data-analysis-2">
+<p>We will simulate a dataset to illustrate the concept:</p>
+<div class="cell">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Set seed</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Set sample sizes</span></span>
+<span><span class="va">n_A</span> <span class="op">&lt;-</span> <span class="fl">150</span></span>
+<span><span class="va">n_B</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
+<span></span>
+<span><span class="co"># Simulate true population proportions</span></span>
+<span><span class="va">p_A</span> <span class="op">&lt;-</span> <span class="fl">0.55</span></span>
+<span><span class="va">p_B</span> <span class="op">&lt;-</span> <span class="fl">0.45</span></span>
+<span></span>
+<span><span class="co"># Generate binary outcomes for survey responses</span></span>
+<span><span class="va">support_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">n_A</span>, size <span class="op">=</span> <span class="fl">1</span>, prob <span class="op">=</span> <span class="va">p_A</span><span class="op">)</span></span>
+<span><span class="va">support_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">n_B</span>, size <span class="op">=</span> <span class="fl">1</span>, prob <span class="op">=</span> <span class="va">p_B</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create dataset</span></span>
+<span><span class="va">policy_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  region <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="va">n_A</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="va">n_B</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  support <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">support_A</span>, <span class="va">support_B</span><span class="op">)</span> <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Display first few rows</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">policy_data</span>, <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   region support
+1       A       1
+2       A       0
+3       A       1
+4       A       0
+5       A       0
+6       A       1
+7       A       1
+8       A       0
+9       A       0
+10      A       1</code></pre>
+</div>
+</div>
+<p>The dataset contains a region column and a support column indicating if the participant supports the policy.</p>
+</section><section id="exploratory-data-analysis-2" class="level3" data-number="3.5.4"><h3 data-number="3.5.4" class="anchored" data-anchor-id="exploratory-data-analysis-2">
 <span class="header-section-number">3.5.4</span> Exploratory Data Analysis</h3>
-<ul>
-<li>Under development</li>
-</ul></section><section id="testing-settings-4" class="level3" data-number="3.5.5"><h3 data-number="3.5.5" class="anchored" data-anchor-id="testing-settings-4">
+<div class="cell">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">policy_summary</span> <span class="op">&lt;-</span> <span class="va">policy_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">region</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>, supporters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">support</span><span class="op">)</span>, prop_support <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">support</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">policy_summary</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  region     n supporters prop_support
+  &lt;chr&gt;  &lt;int&gt;      &lt;int&gt;        &lt;dbl&gt;
+1 A        150         83        0.553
+2 B        200         85        0.425</code></pre>
+</div>
+</div>
+<p>A simple bar plot can also help visualize the differences:</p>
+<div class="cell">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">policy_summary</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">region</span>, y <span class="op">=</span> <span class="va">prop_support</span>, fill <span class="op">=</span> <span class="va">region</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">'identity'</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="st">'Region'</span>, </span>
+<span>    y <span class="op">=</span> <span class="st">'Proportion Supporting Policy'</span>,</span>
+<span>    title <span class="op">=</span> <span class="st">'Proportion of Policy Supporters by Region'</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chapter3-two-pop_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="testing-settings-4" class="level3" data-number="3.5.5"><h3 data-number="3.5.5" class="anchored" data-anchor-id="testing-settings-4">
 <span class="header-section-number">3.5.5</span> Testing Settings</h3>
+<p>We use a significance level of <span class="math inline">\(\alpha = 0.05\)</span>. The population parameters are:</p>
 <ul>
-<li>Under development</li>
-</ul></section><section id="hypothesis-definitions-4" class="level3" data-number="3.5.6"><h3 data-number="3.5.6" class="anchored" data-anchor-id="hypothesis-definitions-4">
+<li><p><span class="math inline">\(p_1\)</span>: true proportion of supporters in Region A.</p></li>
+<li><p><span class="math inline">\(p_2\)</span>: true proportion of supporters in Region B.</p></li>
+</ul>
+<p>The goal is to test if the difference <span class="math inline">\(p_1 - p_2\)</span> is significantly different from zero.</p>
+</section><section id="hypothesis-definitions-4" class="level3" data-number="3.5.6"><h3 data-number="3.5.6" class="anchored" data-anchor-id="hypothesis-definitions-4">
 <span class="header-section-number">3.5.6</span> Hypothesis Definitions</h3>
-<ul>
-<li>Under development</li>
-</ul></section><section id="test-flavour-and-components-4" class="level3" data-number="3.5.7"><h3 data-number="3.5.7" class="anchored" data-anchor-id="test-flavour-and-components-4">
+<p>The null and alternative hypotheses are:</p>
+<p><span class="math display">\[H_0:p_1 = p_2 \quad vs \quad H_1:p_1 \neq p_2\]</span></p>
+</section><section id="test-flavour-and-components-4" class="level3" data-number="3.5.7"><h3 data-number="3.5.7" class="anchored" data-anchor-id="test-flavour-and-components-4">
 <span class="header-section-number">3.5.7</span> Test Flavour and Components</h3>
-<ul>
-<li>Under development</li>
-</ul></section><section id="inferential-conclusions-4" class="level3" data-number="3.5.8"><h3 data-number="3.5.8" class="anchored" data-anchor-id="inferential-conclusions-4">
+<p>The two-sample z-test for proportions uses the pooled proportion:</p>
+<p><span class="math display">\[\hat p = \frac{x_1 + x_2}{n_1 + n_2}\]</span></p>
+<p><span class="math display">\[z = \frac{\hat p_1 - \hat p_2}{ \hat p (1 - \hat p) \left( \frac{1}{n_1} + \frac{1}{n_2} \right)}\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>, this statistic approximately follows a standard normal distribution. The p-value is calculated as:</p>
+<p><span class="math display">\[\text{p-value} = 2 \times Pr(Z \ge |z|)\]</span></p>
+</section><section id="inferential-conclusions-4" class="level3" data-number="3.5.8"><h3 data-number="3.5.8" class="anchored" data-anchor-id="inferential-conclusions-4">
 <span class="header-section-number">3.5.8</span> Inferential Conclusions</h3>
-<ul>
-<li>Under development</li>
-</ul></section><section id="how-to-run-the-two-sample-z-test-in-r-and-python-1" class="level3" data-number="3.5.9"><h3 data-number="3.5.9" class="anchored" data-anchor-id="how-to-run-the-two-sample-z-test-in-r-and-python-1">
-<span class="header-section-number">3.5.9</span> How to run the two-sample z-test in <code>R</code> and <code>Python</code>
+<p>If the p-value is smaller than <span class="math inline">\(\alpha = 0.05\)</span>, we reject <span class="math inline">\(H_0\)</span>, indicating a significant difference in policy support between the two regions. Otherwise, we fail to reject <span class="math inline">\(H_0\)</span>, suggesting no evidence of a difference.</p>
+</section><section id="how-to-run-the-two-sample-paired-t-test-in-r-and-python-1" class="level3" data-number="3.5.9"><h3 data-number="3.5.9" class="anchored" data-anchor-id="how-to-run-the-two-sample-paired-t-test-in-r-and-python-1">
+<span class="header-section-number">3.5.9</span> How to run the two-sample paired t-test in <code>R</code> and <code>Python</code>
 </h3>
-<ul>
-<li>Under development</li>
-</ul></section><section id="storytelling-4" class="level3" data-number="3.5.10"><h3 data-number="3.5.10" class="anchored" data-anchor-id="storytelling-4">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">R Code</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Python Code</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="cell">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Using policy_summary to get counts and sample sizes</span></span>
+<span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="va">policy_summary</span><span class="op">$</span><span class="va">supporters</span><span class="op">[</span><span class="va">policy_summary</span><span class="op">$</span><span class="va">region</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">]</span></span>
+<span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="va">policy_summary</span><span class="op">$</span><span class="va">supporters</span><span class="op">[</span><span class="va">policy_summary</span><span class="op">$</span><span class="va">region</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">n1</span> <span class="op">&lt;-</span> <span class="va">policy_summary</span><span class="op">$</span><span class="va">n</span><span class="op">[</span><span class="va">policy_summary</span><span class="op">$</span><span class="va">region</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">]</span></span>
+<span><span class="va">n2</span> <span class="op">&lt;-</span> <span class="va">policy_summary</span><span class="op">$</span><span class="va">n</span><span class="op">[</span><span class="va">policy_summary</span><span class="op">$</span><span class="va">region</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Run two-proportion z-test</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/prop.test.html">prop.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">n1</span>, <span class="va">n2</span><span class="op">)</span>, correct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    2-sample test for equality of proportions without continuity correction
+
+data:  c(x1, x2) out of c(n1, n2)
+X-squared = 5.6557, df = 1, p-value = 0.0174
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ 0.0233411 0.2333256
+sample estimates:
+   prop 1    prop 2 
+0.5533333 0.4250000 </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.proportion <span class="im">import</span> proportions_ztest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="storytelling-4" class="level3" data-number="3.5.10"><h3 data-number="3.5.10" class="anchored" data-anchor-id="storytelling-4">
 <span class="header-section-number">3.5.10</span> Storytelling</h3>
 <ul>
-<li>Under development</li>
+<li>Under dev</li>
 </ul>
 
 
@@ -1751,8 +1858,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1870,7 +1975,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

@@ -34,7 +34,7 @@ The **chi-square test** is a non-parametric statistical test used for categorica
 
 The core idea behind chi-square tests is to **compare observed counts with expected counts** based on a population or theoretical distribution.  
 
-### Hypotheses
+## Hypotheses
 
 - **Null hypothesis** ($H_0$): The observed counts ($O_i$) and expected counts ($E_i$) are equal.  
 - **Alternative hypothesis** ($H_1$): The observed counts ($O_i$) and expected counts ($E_i$) are not equal.  
@@ -90,6 +90,11 @@ Suppose we hypothesize that the penguin species occur in the following proportio
 We want to test whether the observed species distribution in the Palmer Penguins dataset matches these proportions.  
 
 ### Data Collection & Wrangling  
+Here, we first load the Palmer Penguins dataset and remove any missing values to ensure complete observations.
+Next, we count how many penguins of each species are observed and calculate the expected counts based on our hypothesized proportions.
+These observed and expected frequencies will later be compared using the Chi-square test statistic.
+
+::: {.panel-tabset}
 
 ### R Code
 ```{r}
@@ -144,8 +149,13 @@ expected_counts = [p * n for p in expected_props]
 print("\nExpected counts (based on proportions):")
 print(expected_counts)
 ```
+:::
 
 ### Exploratory Data Analysis (EDA)
+Before running the statistical test, it’s helpful to visualize the observed counts.
+A simple bar plot allows us to see whether any species appear more or less frequent than expected, which helps build intuition about potential differences.
+
+::: {.panel-tabset}
 
 ### R Code
 ```{r}
@@ -170,8 +180,14 @@ plt.xlabel("Species")
 plt.ylabel("Count")
 plt.show()
 ```
+:::
 
 ### Implementation
+Now we apply the Chi-square goodness-of-fit test, comparing observed and expected counts.
+The test statistic measures how far the observed frequencies deviate from the expected ones.
+A large value suggests that the observed distribution differs significantly from what was hypothesized.
+
+::: {.panel-tabset}
 
 ### R Code
 ```{r}
@@ -193,6 +209,7 @@ chi2_stat, p_value = chisquare(
 )
 print(f"Chi-square = {chi2_stat:.3f}, p = {p_value:.4f}")
 ```
+:::
 
 ### Interpretation
 
@@ -212,9 +229,13 @@ $H_1$: The two categorical variables are not independent (they are associated).
 
 ### Study Design
 
-We want to test whether penguin species is independent of island.
+We want to test whether penguin species is independent of island — in other words, whether certain species are more common on certain islands.
 
 ### Data Collection & Wrangling
+We create a contingency table summarizing the counts of species across islands.
+This table serves as the basis for calculating expected frequencies and testing independence.
+
+::: {.panel-tabset}
 
 ### R Code
 ```{r}
@@ -237,8 +258,13 @@ contingency_table = pd.crosstab(
 print("Contingency table:")
 print(contingency_table)
 ```
+:::
 
 ### Exploratory Data Analysis (EDA)
+Visualizing the contingency table helps us see any apparent association between species and island.
+If bars differ noticeably in height across islands, it hints that species distribution might depend on island location.
+
+::: {.panel-tabset}
 
 ### R Code
 ```{r}
@@ -265,9 +291,14 @@ plt.ylabel("Count")
 plt.show()
 
 ```
+:::
 
 
 ### Implementation
+We now apply the Chi-square test of independence to evaluate whether the distribution of species differs by island.
+If the test is significant, it suggests a relationship between the two categorical variables.
+
+::: {.panel-tabset}
 
 ### R Code
 ```{r}
@@ -285,6 +316,7 @@ chi2_stat, p_value, dof, expected = chi2_contingency(contingency_table)
 print(f"Chi-square = {chi2_stat:.3f}, df = {dof}, p = {p_value:.4f}")
 
 ```
+:::
 
 ### Interpretation
 
