@@ -22,6 +22,8 @@ library(tidyverse)
 library(ISLR)
 library(ISLR2)
 library(BSDA)
+library(rsample)
+library(viridis)
 ```
 
 
@@ -108,9 +110,9 @@ $$
 
 Since we do not have access to all students' grades, we take a random sample from each school. Suppose:
 
--   From UBC (Population 1), we obtain a sample of size $n$, denoted as: $$X_1, X_2, \ldots, X_n$$
+-   From UBC (Population 1), we obtain a sample of size $n$, denoted as: $$x_1, x_2, \ldots, x_n$$
 
--   From SFU (Population 2), we obtain a sample of size $m$, denoted as: $$Y_1, Y_2, \ldots, Y_m$$
+-   From SFU (Population 2), we obtain a sample of size $m$, denoted as: $$y_1, y_2, \ldots, y_m$$
 
 Note that the sample sizes $n$ and $m$ do not necessarily have to be equal. Now, the central question becomes:
 
@@ -134,19 +136,29 @@ To answer this question, we obtain the data set which is available in `ISLR` pac
 auto_data <- Auto
 
 # Filter rows to cars with 4 or 8 cylinders
-auto_data <- auto_data |>filter(cylinders %in% c(4,8) )
+auto_data <- auto_data |>  filter(cylinders %in% c(4,8) )
 ```
 
-Finally, we randomly create test and train set from this data set. We use a proportion of 50-50 between train and test.   
+Finally, we randomly create training and test sets from this dataset, using a 50–50 split. It is important to ensure that the proportion of cars with 4 and 8 cylinders remains similar across the two sets; otherwise, the imbalance could introduce bias into our analysis. The `initial_split`, `training`, and `testing` functions from the `rsample` package are very helpful for handling this correctly.
 
 ```{r}
 # Set seed for reproducibility
 set.seed(123)
 
-# Splitting the data set into train and test sets
-train_indices <- sample(seq_len(nrow(auto_data)), size = 0.50 * nrow(auto_data))
-train_auto <- auto_data[train_indices, ]
-test_auto <- auto_data[-train_indices, ]
+# Randomly splitting into training and testing sets by number of car cylinders
+auto_data_splitting <- initial_split(auto_data, prop = 0.5, strata = cylinders)
+
+# Assigning data points to training and testing sets
+train_auto <- training(auto_data_splitting)
+test_auto  <- testing(auto_data_splitting)
+
+# Sanity check
+cat("Training shape:", dim(train_auto), "\n")
+cat("Testing shape:", dim(test_auto), "\n\n")
+cat("Training proportions:\n")
+print(prop.table(table(train_auto$cylinders)))
+cat("\nTesting proportions:\n")
+print(prop.table(table(test_auto$cylinders)))
 ```
 
 
@@ -158,14 +170,14 @@ In particular, we are interested in the distribution of `horsepower` in two diff
 
 ```{r echo=FALSE}
 #| label: fig-histogram-horspower-by-cylinders
-#| fig-cap: "Side-by-side histogram of horsepower by number of cylinders for train data."
+#| fig-cap: "Histogram of horsepower by number of cylinders for train data."
 #| warning: false
 #| echo: false
 #| fig.height: 8
 #| fig.width: 14
 ggplot(train_auto, aes(x = horsepower)) +
   geom_histogram(fill = "steelblue", color = "white", bins = 20) +
-  facet_wrap(~ cylinders, nrow = 1) +
+  facet_wrap(~ cylinders, ncol = 1) +
   labs(title = "",
        x = "Horsepower",
        y = "Count") +
@@ -181,16 +193,16 @@ ggplot(train_auto, aes(x = horsepower)) +
 We also look at some descriptive statistics of horsepower in both groups for better understanding of data. The descriptive statistics in cars with 4 cylinders:
 
 ```{r}
-summary(train_auto |>filter(cylinders == 4) |>select(horsepower))
+summary(train_auto |>  filter(cylinders == 4) |>  select(horsepower))
 ```
 
 and with 8 cylinders:
 
 ```{r}
-summary(train_auto |>filter(cylinders == 8) |>select(horsepower))
+summary(train_auto |>  filter(cylinders == 8) |>  select(horsepower))
 ```
 
-Looking at summary statistics, there is a bit of overlap between distribution of `horsepower` among two groups but it does not seem to be much. In fact they seem to be quite separated. Also there is a clear different in their mean and the following plot also confirms this:
+Looking at summary statistics, there is a bit of overlap between distribution of `horsepower` among two groups but it does not seem to be much. In fact they seem to be quite separated. Also there is a clear difference in their mean and the following plot also confirms this:
 
 
 ```{r echo=FALSE}
@@ -207,6 +219,8 @@ ggplot(train_auto, aes(x = horsepower, color = factor(cylinders), fill = factor(
        y = "Density",
        color = "Cylinders",
        fill = "Cylinders") +
+  ggthemes::scale_color_tableau() +
+  ggthemes::scale_fill_tableau() +
   theme_bw() +
   theme(
     axis.text = element_text(size = 15.5),
@@ -242,14 +256,14 @@ To test this hypothesis, we use the **two-sample student's t-test for independen
 
 Now we need to compute a test statistic from the sample. Assuming equal population variances, the test statistic is:
 
-$$t = \frac{(\bar{X} - \bar{Y})}{ \sqrt{ S^{2}_p (\frac{1}{n} + \frac{1}{m}})}$${#eq-t-statistic-equal-var}
+$$t = \frac{(\bar{x} - \bar{y})}{ \sqrt{ s^{2}_p (\frac{1}{n} + \frac{1}{m}})}$${#eq-t-statistic-equal-var}
 where:
 
--   $\bar{X}$ is the mean of horsepower for cars with 4 cylinders in the sample
--   $\bar{Y}$ is the mean of horsepower for cars with 8 cylinders in the sample
--   $S^{2}_p$ is the $\textbf{pooled sample variane}$ and is computed as: 
-$$S^{2}_p = \frac{(n - 1)S_X^2 + (m - 1)S_Y^2}{n + m - 2}$${#eq-pooled-sample-variance}
--   $S_X^2$ and $S_Y^2$ are the sample variances of the two groups.
+-   $\bar{x}$ is the mean of horsepower for cars with 4 cylinders in the sample
+-   $\bar{y}$ is the mean of horsepower for cars with 8 cylinders in the sample
+-   $s^{2}_p$ is the $\textbf{pooled sample variane}$ and is computed as: 
+$$s^{2}_p = \frac{(n - 1)s_x^2 + (m - 1)s_y^2}{n + m - 2}$${#eq-pooled-sample-variance}
+-   $s_x^2$ and $s_y^2$ are the sample variances of the two groups.
 
 <br>
 
@@ -262,7 +276,7 @@ Heads-up!
 
 - Note that all elements in @eq-t-statistic-equal-var which is our statistic are computed based on sample.
 
-- You can think of pooled sample variance defined in @eq-pooled-sample-variance as a weighted average of sample variances of $S_X^2$ and $S_Y^2$. 
+- You can think of pooled sample variance defined in @eq-pooled-sample-variance as a weighted average of sample variances of $s_x^2$ and $s_y^2$. 
 
 - **Why it is a weighted average?**    
 
@@ -270,7 +284,7 @@ Heads-up!
 
 $$
 S_p^{2} 
-= \frac{(n - 1)}{n + m - 2} \, S_X^2 + \frac{(m - 1)}{n + m - 2} \, S_Y^2
+= \frac{(n - 1)}{n + m - 2} \, s_x^2 + \frac{(m - 1)}{n + m - 2} \, s_y^2
 $$
 
 - You can see it is literally a weighted mean where weights sum to one:
@@ -294,11 +308,11 @@ Tip: Equal variance assumption!
 
 ::: Tip-container
 
-- The assumption in this test is that variances among two groups are equal meaning that if we look at the random variable of horsepower in both populations, the variance of this random variable is roughly equal in two groups (cars with 4 cylinders and cars with 8 cylinders). 
+- The assumption in this test is that variances among two groups in the population are equal meaning that if we look at the random variable of horsepower in both populations, the variance of this random variable is roughly equal in two groups (cars with 4 cylinders and cars with 8 cylinders). 
 
 - Note that we do not have access to population and this is rather an assumption that we make with consultation with experts or justifying it based on previous studies. We will introduce the test without equal variance assumption in the next section.
 
-- There are some statistical methods designed to test if the variances of different groups are the same or not. Similar to any hypothesis testing, these tests work on a random sample from the population to run the test. Some of the tests are *F-test for Equality of Variances*, *Levene’s Test*, and *Bartlett’s Test*. 
+- There are some statistical methods designed to test if the variances of different groups are the same or not. In fact they can be used to test the equal assumption of variances of groups in the population. Similar to any hypothesis testing, these tests work on a random sample from the population to run the test. Some of the tests are *F-test for Equality of Variances*, *Levene’s Test*, and *Bartlett’s Test*. 
 
 - Describing these tests is not the focus of this book. You can read more about them HERE/LINK
 
@@ -309,7 +323,7 @@ Tip: Equal variance assumption!
 
 ### Inferential Conclusions
 
-As you can see, the test statistic defined in @eq-t-statistic-equal-var computes the difference between $\bar{X}$ and $\bar{Y}$ and scale it based on the standard deviation of this difference. Now the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined in @eq-t-statistic-equal-var (and denoted by $t$) and have a better understanding of what are typical values of this statistic. 
+As you can see, the test statistic defined in @eq-t-statistic-equal-var computes the difference between $\bar{x}$ and $\bar{y}$ and scale it based on the standard deviation of this difference. Now the question is whether this difference is significant or not? In order to answer this question we need to know the behavior of statistic that we defined in @eq-t-statistic-equal-var (and denoted by $t$) and have a better understanding of what are typical values of this statistic. 
 
 <br>
 
@@ -345,7 +359,7 @@ Tip:
 
 - **Note:** The probability is multiplied by two since we have a two sided hypothesis (alternative is $\mu_1 \neq \mu_2$). For a one sided test (when alternative hypothesis is $\mu_1 > \mu_2$ or $\mu_1 < \mu_2$) we do not need to multiply by two.
 
-- Now we compare the $\textit{p-value}$ to our significance level. If the $\textit{p-value}$ is less than the significance level, then we have evidence against the null hypothesis. The reasoning is as follows: we performed the calculation under the assumption that the null hypothesis is true. If the null hypothesis is true, then the test statistic we computed should follow a $t$-distribution with $n + m - 2$ degrees of freedom. If the p-value is smaller than our chosen significance level, this means it is unlikely that our observed result comes from a $t$-distribution with $n + m - 2$ degrees of freedom. In other words, it is unlikely that the null hypothesis is correct. 
+- Now we compare the $\textit{p-value}$ to our significance level. If the $\textit{p-value}$ is less than the significance level, then we have evidence against the null hypothesis. The reasoning is as follows: we performed the calculation under the assumption that the null hypothesis is true. If the null hypothesis is true, then the test statistic we computed should follow a $t$-distribution with $n + m - 2$ degrees of freedom. If the p-value is smaller than our chosen significance level, this means it is unlikely that our observed result comes from a $t$-distribution with $n + m - 2$ degrees of freedom. In other words, it is unlikely that our initial assumption about the null hypothesis is correct.
 
 :::
 :::::
@@ -354,7 +368,7 @@ Tip:
 
 Note that our observation from the sample might still lead us to an incorrect conclusion (since there is variability among samples). Our tolerance for this type of error is determined by the significance level. If $\textit{p-value}$ **is not less than** significant level then we do not have any evidence to reject the null hypothesis. Otherwise (if $\textit{p-value}$ **is less than** significant level) we do have evidence against the null hypothesis
 
-Now let us see how to run the two-sample test in `R` and `Python` using some read data. Note that we already used train data for EDA purposes. For the purpose of hypothesis testing now we use test data to avoid double dipping.
+Now let us see how to run the two-sample test in `R` and `Python`. Note that we already used train data for EDA purposes. For the purpose of hypothesis testing now we use test data to avoid double dipping.
 
 
 ### How to run the test in `R` and `Python`?
@@ -371,10 +385,10 @@ The following lines of code in tabset show you how to run the test in `R` or `Py
 
 ```{r}
 # Create a vector to hold horsepower values for cars with 4 cylinders
-cylinders_4 <- test_auto |>filter(cylinders == 4) |>select(horsepower)
+cylinders_4 <- test_auto |>  filter(cylinders == 4) |>  select(horsepower)
 
 # Create a vector to hold horsepower values for cars with 8 cylinders
-cylinders_8 <- test_auto |>filter(cylinders == 8) |>select(horsepower)
+cylinders_8 <- test_auto |>  filter(cylinders == 8) |>  select(horsepower)
 
 # Run the test
 t.test(x = cylinders_4, y = cylinders_8, var.equal = TRUE)
@@ -435,7 +449,7 @@ Using *Option 1* or *Option 2* for `R`, in both outputs we can see the following
 
 -   `95 percent confidence interval` provides the 95% confidence interval for the parameter of $\mu_1 - \mu_2$. You can control the level of your confidence interval by setting `conf.level` to other values between 0 and 1. By default it is set to `conf.level = 0.95`.
 
--   `sample estimates` gives the sample means for each group, i.e. $\bar{X}$ and $\bar{Y}$.
+-   `sample estimates` gives the sample means for each group, i.e. $\bar{x}$ and $\bar{y}$.
 
 
 **Details about `Python` code and output**
@@ -444,7 +458,7 @@ In this example, we perform the test in `Python`. We use `pandas` package to rea
 
 - `cylinders_4` and `cylinders_8` are `pandas` objects containing the horsepower values for cars with 4 and 8 cylinders, respectively.
 
-- The function `stats.ttest_ind` computes the `t-test` for the means of two independent samples.
+- The function `ttest_ind` from `stats` module computes the `t-test` for the means of two independent samples.
 
 - The argument `equal_var=True` tells `Python` to assume equal population variances (similar to setting `var.equal = TRUE` in `t.test` function `R`).
 
@@ -459,7 +473,7 @@ Finally, based on the sample we have and the analysis we conducted, we can draw 
 
 We observed that the $p-\textit{value}$ of the test was extremely small compared to the significance level $\alpha = 0.05$. This provides strong evidence against the null hypothesis. In simple terms, this means: *There is a meaningful difference in the average horsepower between cars with 4 cylinders and those with 8 cylinders.*
 
-So, if you are shopping for a car with more horsepower, it looks like going for one with 8 cylinders might be the way to go — assuming you don't mind the extra fuel costs of course!!
+So, if you are shopping for a car with more horsepower, it looks like going for one with 8 cylinders might be the way to go as you get a significant boost in powerhorse — assuming you don't mind the extra fuel costs of course!!
 
 
 ## Two sample Welch's t-test for independent samples {#sec-welch-t-test-ind-samples}
@@ -485,7 +499,7 @@ To answer the question, we obtain the data set which is available in `ISLR` pack
 auto_data <- Auto
 
 # Filter rows to cars with 4 or 8 cylinders
-auto_data <- auto_data |>filter(cylinders %in% c(4,8) )
+auto_data <- auto_data |>  filter(cylinders %in% c(4,8) )
 ```
 
 
@@ -493,10 +507,20 @@ auto_data <- auto_data |>filter(cylinders %in% c(4,8) )
 # Set seed for reproducibility
 set.seed(123)
 
-# Splitting the data set into train and test sets
-train_indices <- sample(seq_len(nrow(auto_data)), size = 0.50 * nrow(auto_data))
-train_auto <- auto_data[train_indices, ]
-test_auto <- auto_data[-train_indices, ]
+# Randomly splitting into training and testing sets by number of car cylinders
+auto_data_splitting <- initial_split(auto_data, prop = 0.5, strata = cylinders)
+
+# Assigning data points to training and testing sets
+train_auto <- training(auto_data_splitting)
+test_auto  <- testing(auto_data_splitting)
+
+# Sanity check
+cat("Training shape:", dim(train_auto), "\n")
+cat("Testing shape:", dim(test_auto), "\n\n")
+cat("Training proportions:\n")
+print(prop.table(table(train_auto$cylinders)))
+cat("\nTesting proportions:\n")
+print(prop.table(table(test_auto$cylinders)))
 ```
 
 
@@ -509,14 +533,14 @@ We are still interested in the distribution of `horsepower` in two different gro
 
 ```{r echo=FALSE}
 #| label: fig-histogram-horspower-by-cylinders-v2
-#| fig-cap: "Side-by-side histogram of horsepower by number of cylinders for train data."
+#| fig-cap: "Histogram of horsepower by number of cylinders for train data."
 #| warning: false
 #| echo: false
 #| fig.height: 8
 #| fig.width: 14
 ggplot(train_auto, aes(x = horsepower)) +
   geom_histogram(fill = "steelblue", color = "white", bins = 20) +
-  facet_wrap(~ cylinders, nrow = 1) +
+  facet_wrap(~ cylinders, ncol = 1) +
   labs(title = "",
        x = "Horsepower",
        y = "Count") +
@@ -533,16 +557,16 @@ ggplot(train_auto, aes(x = horsepower)) +
 The descriptive statistics in cars with 4 cylinders:
 
 ```{r}
-summary(train_auto |>filter(cylinders == 4) |>select(horsepower))
+summary(train_auto |>  filter(cylinders == 4) |>  select(horsepower))
 ```
 
 and with 8 cylinders:
 
 ```{r}
-summary(train_auto |>filter(cylinders == 8) |>select(horsepower))
+summary(train_auto |>  filter(cylinders == 8) |>  select(horsepower))
 ```
 
-Our conclusion remains the same. Looking at summary statistics, there is a bit of overlap between distribution of `horsepower` among two groups but it does not seem to be much. In fact they seem to be quite separated. Also there is a clear different in their mean and the following plot also confirms this:
+Our conclusion remains the same. Looking at summary statistics, there is a bit of overlap between distribution of `horsepower` among two groups but it does not seem to be much. In fact they seem to be quite separated. Also there is a clear difference in their mean and the following plot also confirms this:
 
 ```{r echo=FALSE}
 #| label: fig-density-plot-horspower-by-cylinders-v2
@@ -558,6 +582,8 @@ ggplot(train_auto, aes(x = horsepower, color = factor(cylinders), fill = factor(
        y = "Density",
        color = "Cylinders",
        fill = "Cylinders") +
+  ggthemes::scale_color_tableau() +
+  ggthemes::scale_fill_tableau() +
   theme_bw() +
   theme(
     axis.text = element_text(size = 15.5),
@@ -591,13 +617,13 @@ Note that the alternative hypothesis is two-sided, as our question does not favo
 
 As noted before we use Welch’s t-test if the assumption of equal variances is questionable. This test adjusts the standard error and degrees of freedom (`df`) of the test accordingly. As a result the test statistic and `df` of the test are different than what we described in [Section @sec-t-test-ind-samples]. The Welch's test statistic is computed as:
 
-$$t = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{S_X^2}{n} + \frac{S_Y^2}{m}}}$${#eq-t-statistic-unequal-var}
+$$t = \frac{\bar{x} - \bar{y}}{\sqrt{\frac{s_x^2}{n} + \frac{s_y^2}{m}}}$${#eq-t-statistic-unequal-var}
 
 where:
 
--   $\bar{X}$ is the mean of horsepower for cars with 4 cylinders in the sample
--   $\bar{Y}$ is the mean of horsepower for cars with 8 cylinders in the sample
--   $S_X^2$ and $S_Y^2$ are the sample variances of the two groups.
+-   $\bar{x}$ is the mean of horsepower for cars with 4 cylinders in the sample
+-   $\bar{y}$ is the mean of horsepower for cars with 8 cylinders in the sample
+-   $s_x^2$ and $s_y^2$ are the sample variances of the two groups.
 -   $n$ and $m$ are the sample sizes in two groups (not necessarily the same).
 
 
@@ -640,8 +666,8 @@ Tip on degrees of freedom!
 
 - The degree of freedom is computed as
 
-$$\nu = \frac{\left( \frac{s_1^2}{n} + \frac{s_2^2}{m} \right)^2}
-{\frac{\left( \frac{s_1^2}{n} \right)^2}{n - 1} + \frac{\left( \frac{s_2^2}{m} \right)^2}{m - 1}}$$
+$$\nu = \frac{\left( \frac{s_x^2}{n} + \frac{s_y^2}{m} \right)^2}
+{\frac{\left( \frac{s_x^2}{n} \right)^2}{n - 1} + \frac{\left( \frac{s_y^2}{m} \right)^2}{m - 1}}$$
 
 
 :::
@@ -677,10 +703,10 @@ A quick reminder!
 
 ```{r}
 # Create a vector to hold horsepower values for cars with 4 cylinders
-cylinders_4 <- test_auto |>filter(cylinders == 4) |>select(horsepower)
+cylinders_4 <- test_auto |> filter(cylinders == 4) |> select(horsepower)
 
 # Create a vector to hold horsepower values for cars with 8 cylinders
-cylinders_8 <- test_auto |>filter(cylinders == 8) |>select(horsepower)
+cylinders_8 <- test_auto |> filter(cylinders == 8) |> select(horsepower)
 
 # Run the test
 t.test(x = cylinders_4, y = cylinders_8, var.equal = FALSE)
@@ -732,7 +758,7 @@ In order to run this test in `R`, similar to what we learned in @sec-one-continu
 
 -   `x` is (non-empty) numeric vector of data values.
 -   `y` is also (non-empty) numeric vector of data values (can be `NULL` if you run a one sample test).
--   `var.equal` is a binary value (TRUE/FALSE) to indicate if `R` needs to assume equal variance between population of two groups or not. By default the value of `var.equal` is `FALSE` and we manually set it to `FALSE` to make it clear to the reader that we are making an unequal variance assumption in our test.
+-   `var.equal` is a binary value (TRUE/FALSE) to indicate if `R` needs to assume equal variance between population of two groups or not. By default the value of `var.equal` is `FALSE` but we manually set it to `FALSE` to make it clear to the reader that we are making an unequal variance assumption in our test.
 
 
 Using **Option 1** or **Option 2** for `R`, in both outputs we can see the following elements:
@@ -745,7 +771,7 @@ Using **Option 1** or **Option 2** for `R`, in both outputs we can see the follo
 
 -   `95 percent confidence interval` provides the 95% confidence interval for the parameter of $\mu_1 - \mu_2$. You can control the level of your confidence interval by setting `conf.level` to other values between 0 and 1. By default it is set to `conf.level = 0.95`.
 
--   `sample estimates` gives the sample means for each group, i.e. $\bar{X}$ and $\bar{Y}$.
+-   `sample estimates` gives the sample means for each group, i.e. $\bar{x}$ and $\bar{y}$.
 
 
 **Details about `Python` code and output**
@@ -754,7 +780,7 @@ In this example, we perform the test in `Python`. We use `pandas` package to rea
 
 - `cylinders_4` and `cylinders_8` are `pandas` objects containing the horsepower values for cars with 4 and 8 cylinders, respectively.
 
-- The function `stats.ttest_ind` computes the `t-test` for the means of two independent samples.
+- The function `ttest_ind` from `stats` module computes the `t-test` for the means of two independent samples.
 
 - The argument `equal_var=False` tells `Python` to assume unequal population variances (similar to setting `var.equal = FALSE` in `t.test` function `R`).
 
@@ -776,12 +802,12 @@ So, if you are shopping for a car with more horsepower, it looks like going for 
 
 ### Review
 
-In the tests we have seen so far in [Section @sec-t-test-ind-samples] and [Section @sec-welch-t-test-ind-samples], we estimated the variance of each group using the sample variance. For example see $S^2_{X}$ or $S^2_{Y}$ defined in formula @eq-t-statistic-unequal-var. This approach is realistic, as in most cases we do not know the population variance of our variable of interest and it is being estimated by sample variance. However, if the population variance for each group is known we can incorporate this information into our test.
+In the tests we have seen so far in [Section @sec-t-test-ind-samples] and [Section @sec-welch-t-test-ind-samples], we estimated the variance of each group using the sample variance. For example see $s^2_{x}$ or $s^2_{y}$ defined in formula @eq-t-statistic-unequal-var. This approach is realistic, as in most cases we do not know the population variance of our variable of interest and it is being estimated by sample variance. However, if the population variance for each group is known we can incorporate this information into our test.
 
 For example, suppose you are analyzing wage differences between high school and college graduates using a large labor market data set. A government labor agency previously conducted extensive research and reported that the true population variances of hourly wages for both groups (based on some historical data) should be as follows:
 
-  - Population variance of wages among **high school graduates**: $\sigma_1^2 = 75$
-  - Population variance of wages among **college graduates**: $\sigma_2^2 = 60$
+  - Population variance of wages among **high school graduates**: $\sigma_1^2 = 816$
+  - Population variance of wages among **college graduates**: $\sigma_2^2 = 1700$
 
 Note that this is the **population** variance and not the **sample**. You want to assess whether the average wage differs between the two groups. Since the population variances are known (e.g., from reliable historical studies or large scale sampling in previous studies), a **two-sample z-test** is appropriate instead of a t-test. We treat these groups as independent samples since each person's wage is recorded once and belongs to a distinct education level.
 
@@ -789,11 +815,11 @@ Since we do not have access to the wages of all individuals in each education gr
 
 - From the population of **high school graduates** (Population 1), we obtain a sample of size $n$, denoted as:
 
-$$X_1, X_2, \ldots, X_n$$
+$$x_1, x_2, \ldots, x_n$$
 
 - From the population of **college graduates** (Population 2), we obtain a sample of size $m$, denoted as:  
 
-$$Y_1, Y_2, \ldots, Y_m$$
+$$y_1, y_2, \ldots, y_m$$
 Note that the sample sizes $n$ and $m$ do not need to be equal. Now, the central question becomes **Is there a statistically significant difference between the mean wages of high school and college graduates?** In formal terms, we test the hypotheses:
 
 $$
@@ -808,7 +834,7 @@ For this example, we will be using the `Wage` data set from the `ISLR2` package.
 
 1) `education`, a categorical variable that records the highest level of education completed by the individual (e.g., “HS Grad”, “College Grad”), and  
 
-2) `wage`, a continuous variable representing the individual's hourly wage in USD.
+2) `wage`, which denotes the workers raw wage.
 
 You may be wondering: **Is the mean wage for college graduates statistically different from the mean wage for high school graduates?**
 
@@ -831,23 +857,35 @@ wage_data <- Wage
 # and then rename the levels to:
 # - HS Grad --> High school graduate
 # - College Grad --> College graduate
-wage_data <- wage_data |>
-  filter(education %in% c('2. HS Grad', '4. College Grad')) |>
+# and finally drop extra levels from education
+wage_data <- wage_data |> 
+  filter(education %in% c('2. HS Grad', '4. College Grad')) |> 
   mutate(education = recode(education,
                             '2. HS Grad' = 'High school graduate',
-                            '4. College Grad' = 'College graduate'))
+                            '4. College Grad' = 'College graduate')) |>
+  mutate(education = droplevels(education)) 
 ```
 
-Finally, we randomly split the `wage_data` data set into training and testing sets, using a 50-50 proportion between train and test. This allows us to conduct our test using a subset of the data (train) while reserving the rest (test) for potential follow-up analysis.
+Finally, we randomly split the `wage_data` data set into training and testing sets, using a 50-50 proportion between train and test following a similar method as we described earlier. This allows us to conduct our test using a subset of the data (train) while reserving the rest (test) for potential follow-up analysis.
 
 ```{r}
 # Set seed for reproducibility
 set.seed(123)
 
-# Splitting the data set into train and test sets
-train_indices <- sample(seq_len(nrow(wage_data)), size = 0.50 * nrow(wage_data))
-train_wage <- wage_data[train_indices, ]
-test_wage <- wage_data[-train_indices, ]
+# Randomly splitting into training and testing sets by level of education
+wage_data_splitting <- initial_split(wage_data, prop = 0.5, strata = education)
+
+# Assigning data points to training and testing sets
+train_wage <- training(wage_data_splitting)
+test_wage  <- testing(wage_data_splitting)
+
+# Sanity check
+cat("Training shape:", dim(train_wage), "\n")
+cat("Testing shape:", dim(test_wage), "\n\n")
+cat("Training proportions:\n")
+print(prop.table(table(train_wage$education)))
+cat("\nTesting proportions:\n")
+print(prop.table(table(test_wage$education)))
 ```
 
 
@@ -860,16 +898,16 @@ In particular, we are interested in the distribution of `wage` in two different 
 
 ```{r echo=FALSE}
 #| label: fig-histogram-wage-by-education
-#| fig-cap: "Side-by-side histogram of wage by education level"
+#| fig-cap: "Hsistogram of wage by education level"
 #| warning: false
 #| echo: false
 #| fig.height: 8
 #| fig.width: 14
 ggplot(train_wage, aes(x = wage)) +
   geom_histogram(fill = 'steelblue', color = 'white', bins = 25) +
-  facet_wrap(~ education, nrow = 1) +
+  facet_wrap(~ education, ncol = 1) +
   labs(title = '',
-       x = 'Wage (USD/hour)',
+       x = 'Wage (USD)',
        y = 'Count') +
   theme(
     axis.text = element_text(size = 15.5),
@@ -884,20 +922,20 @@ We also look at some descriptive statistics of `wage` in both groups for better 
 
 
 ```{r}
-summary(train_wage |>
-          filter(education == 'High school graduate') |>
+summary(train_wage |> 
+          filter(education == 'High school graduate') |> 
           select(wage))
 ```
 
 and for college graduates:
 
 ```{r}
-summary(train_wage |>
+summary(train_wage |> 
           filter(education == 'College graduate') 
-        |>select(wage))
+        |> select(wage))
 ```
 
-Looking at these summary statistics, we can see that the wage distributions for the two education groups have some overlap, and there does not appear to be a large difference in their centers. In fact, the mean wage for college graduates is only slightly higher, and this is not immediately obvious from the plots. 
+Looking at these summary statistics, we can see that the wage distributions for the two education groups have quite a lot of overlap, and there does not appear to be a large difference in the center of distribution In fact, the mean wage for college graduates is only slightly higher, and this is not immediately obvious from the plots. 
 
 There appears to be some observations with higher wage values in `College Grad` group compared to `High School Graduate`. The following density plot provides additional visual support for this observation:
 
@@ -911,9 +949,11 @@ There appears to be some observations with higher wage values in `College Grad` 
 ggplot(train_wage, aes(x = wage, fill = education)) +
   geom_density(alpha = 0.5) +
   labs(title = 'Wage Distribution by Education Level',
-       x = 'Wage (USD/hour)',
+       x = 'Wage (USD)',
        y = 'Density',
        fill = "Education") +
+  ggthemes::scale_color_tableau() +
+  ggthemes::scale_fill_tableau() +  
   theme(
     axis.text = element_text(size = 15.5),
     axis.title.x = element_text(size = 20),
@@ -921,6 +961,9 @@ ggplot(train_wage, aes(x = wage, fill = education)) +
     strip.text = element_text(size = 20)
   )
 ```
+
+
+We should avoid making any firm conclusion from EDA at this step. The density of both groups seems to have some overlap but in order to answer our initial question, we need to perform a formal hypothesis testing to see if the observed difference is indeed significant or not.
 
 
 ### Testing Settings
@@ -946,12 +989,12 @@ $$H_0: \mu_{1} = \mu_{2} \quad vs \quad H_a: \mu_{1} \neq \mu_{2}$$
 
 To test this hypothesis, we use the **two-sample z-test for independent samples** with known population variances, which compares the sample means and incorporates the known variability within each population. Note that the samples are independent. The test statistic for this test is computed as:
 
-$$z = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{m}}}$${#eq-z-statistic}
+$$z = \frac{\bar{x} - \bar{y}}{\sqrt{\frac{\sigma_1^2}{n} + \frac{\sigma_2^2}{m}}}$${#eq-z-statistic}
 
 where:
 
-- $\bar{X}$ is the mean wage of individuals with a high school education in the sample. 
-- $\bar{Y}$ is the mean wage of individuals with a college education in the sample.
+- $\bar{x}$ is the mean wage of individuals with a high school education in the sample. 
+- $\bar{y}$ is the mean wage of individuals with a college education in the sample.
 - $\sigma_1^2$ and $\sigma_2^2$ are the **known population variances** of the two groups
 - $n$ and $m$ are the sample sizes of the two groups
 
@@ -971,7 +1014,7 @@ Note that $z$ defined in @eq-z-statistic itself is a random variable meaning tha
 
 ### Inferential Conclusions
 
-As you can see, the test statistic defined in @eq-z-statistic computes the difference between $\bar{X}$ and $\bar{Y}$ and scales it based on the known variance of this difference (or more precisely standard deviation of the difference!). Now the question is whether this difference is significant or not? To answer this, we need to understand the behavior of the statistic we defined in @eq-z-statistic ($z$) and what typical values it can take.
+As you can see, the test statistic defined in @eq-z-statistic computes the difference between $\bar{x}$ and $\bar{y}$ and scales it based on the known variance of this difference (or more precisely standard deviation of the difference!). Now the question is whether this difference is significant or not? To answer this, we need to understand the behavior of the statistic we defined in @eq-z-statistic ($z$) and what typical values it can take.
 
 As we shown before, knowing the distribution of this statistic allows us to compute the $\textit{p-value}$ of the test as follows:
 
@@ -1012,7 +1055,7 @@ Interpreting the Test Statistic and p-value!
 
 ### How to run the two-sample `z-test` in `R` and `Python`
 
-The following examples show how to implement the two-sample `z-test` for independent samples with **known population variances** in both `R` and `Python` using the `Wage` data set. Note that we know the **population variances** $\sigma_1^2 = 75$ for high school graduates and $\sigma_2^2 = 60$ for college graduates.
+The following examples show how to implement the two-sample `z-test` for independent samples with **known population variances** in both `R` and `Python` using the `Wage` data set. Note that we know the **population variances** $\sigma_1^2 = 816$ for high school graduates and $\sigma_2^2 = 1700$ for college graduates.
 
 
 ::: {.panel-tabset}
@@ -1022,17 +1065,17 @@ The following examples show how to implement the two-sample `z-test` for indepen
 ```{r}
 # Filter test_wage data to create two groups: 
 # High school graduates and college graduates
-hs_wages <- test_wage |>
-  filter(education == 'High school graduate') |>
+hs_wages <- test_wage |> 
+  filter(education == 'High school graduate') |> 
   pull(wage)
 
-col_wages <- test_wage |>
-  filter(education == 'College graduate') |>
+col_wages <- test_wage |> 
+  filter(education == 'College graduate') |> 
   pull(wage)
 
 # Set the known population variances
-sigma2_hs <- 75
-sigma2_col <- 60
+sigma2_hs <- 816
+sigma2_col <- 1700
 
 # Run two-sample z-test with known variances
 result <- z.test(
@@ -1079,8 +1122,8 @@ mean1 = np.mean(hs_wages)
 mean2 = np.mean(col_wages)
 
 # Standard deviations (square root of known variances)
-sigma1 = np.sqrt(75)
-sigma2 = np.sqrt(60)
+sigma1 = np.sqrt(816)
+sigma2 = np.sqrt(1700)
 
 # Calculate standard error using known population std dev
 se = np.sqrt( (sigma1**2 / n1) + (sigma2**2 / n2) )
@@ -1156,28 +1199,30 @@ Suppose you are investigating whether a new diet plan reduces blood pressure. Yo
 
 To formulate the problem and hypothesis, let us assume that each individual has two measurements:
 
--   Before the diet: $X_1, X_2, \ldots, X_n$
+-   Before the diet: $x_1, x_2, \ldots, x_n$
 
--   After the diet: $Y_1, Y_2, \ldots, Y_n$
+-   After the diet: $y_1, y_2, \ldots, y_n$
 
 Note that in this case the sample size is the same (in both before and after diet sample we have $n$ observations). We call this a paired sample. Since the samples are paired, we define the difference for each individual as follows:
 
-$$D_i = Y_i - X_i \quad \textit{for} \quad i = 1,2, \ldots, n$$ Each $D_i$ is the difference of blood pressure after and before using new diet for the $i$-th person. Now the main statistical question is:
+$$d_i = y_i - x_i \quad \textit{for} \quad i = 1,2, \ldots, n$$ Each $d_i$ is the difference of blood pressure after and before using new diet for the $i$-th person. Now the main statistical question is:
 
 **Is there a significant difference in the mean blood pressure before and after the diet?**
 
 Now if the treatment is effective, one expect to have difference sample average of around zero. In other words, we test the following hypothesis:
 
-$$H_0: \mu_D = 0 \quad \text{versus} \quad H_A: \mu_D \ne 0$$ 
+$$H_0: \mu_d = 0 \quad \text{versus} \quad H_A: \mu_d \ne 0$$ 
 
-where $\mu_D$ is a parameter to show the population mean differences. We talk more about this later in this section.
+where $\mu_d$ is a parameter to show the population mean differences. We talk more about this later in this section.
 
 
 ### Study Design
 
 Consider a clinical investigation examining whether an innovative medication can lower LDL cholesterol levels in adults diagnosed with hypercholesterolemia which basically means having too much cholesterol in the blood. This can increase the risk of heart problems because cholesterol can build up in blood vessels and block blood flow. 
 
-The study monitors a group of $n=120$ participants over time, recording LDL cholesterol concentrations prior to treatment and again after an 8-week course of the drug. The outcome of interest is the LDL cholesterol measurement (in mg/dL), a widely used biomarker for cardiovascular risk.
+The study monitors a group of $n=120$ participants over time, recording LDL cholesterol concentrations prior to treatment and again after an 8-week course of taking the pill to reduce LDL levels. The outcome of interest is the LDL cholesterol measurement (in mg/dL), a widely used biomarker for cardiovascular risk.
+
+**Note:** This design is not appropriate for evaluating the effectiveness of a new treatment. In practice, more advanced and rigorous statistical methods are used in biostatistics to address such questions. These methods are routinely applied in medical research when developing new treatments and approving medications for public use (for example, through Health Canada). We use this simplified example here only to illustrate the idea behind the paired t-test, as it provides an intuitive way to see how paired data are analyzed.
 
 
 ### Data Collection and Wrangling
@@ -1217,11 +1262,11 @@ Note that `cholesterol_data` contains two columns: `LDL_before`, which records e
 The next step in this type of analysis is to calculate the paired differences for each individual. If the medication is effective, we expect the difference between the after and before measurements to be substantially different from zero; if it is not effective, the differences should be close to zero on average. The code below adds a new column, LDL_diff, which stores the difference `LDL_diff = LDL_after - LDL_before` for each patient:
 
 ```{r}
-cholesterol_data <- cholesterol_data |> 
+cholesterol_data <- cholesterol_data |>  
   mutate(LDL_diff = LDL_after - LDL_before)
 ```
 
-Finally, we randomly split the `cholesterol_data` data set into training and testing sets, using a 50-50 proportion between train and test.
+Finally, we randomly split the `cholesterol_data` data set into training and testing sets, using a 50-50 proportion between train and test. Note that in this example, we do not need to use `rsample` package as we did before since there is no grouping in the data.
 
 ```{r}
 # Set seed for reproducibility
@@ -1251,6 +1296,8 @@ ggplot(train_cholesterol, aes(x = LDL_diff)) +
   labs(title = '',
     x = 'LDL Level (mg/dL)',
     y = 'Density') +
+  ggthemes::scale_color_tableau() +
+  ggthemes::scale_fill_tableau() +  
   theme(
     axis.text = element_text(size = 15.5),
     axis.title.x = element_text(size = 20),
@@ -1271,16 +1318,16 @@ Our goal is to test whether the population mean difference $\mu_{d}$ is equal to
 
 ::::: Tip
 ::: Tip-header
-What is $\mu_D$ as a parameter here?
+What is $\mu_s$ as a parameter here?
 :::
 
 ::: Tip-container
 
-- Here the notation of $\mu_D$ is the population mean of the differences of $D_i$ which is an unknown parameter in the population. 
+- Here the notation of $\mu_d$ is the population mean of the differences of $d_i$ which is an unknown parameter in the population. 
 
-- To test this hypothesis, we use the paired t-test, which is essentially a one-sample t-test on the differences $D_1, D_2, \ldots, D_n$. 
+- To test this hypothesis, we use the paired t-test, which is essentially a one-sample t-test on the differences $d_1, d_2, \ldots, d_n$. 
 
-- We test $\mu_D=0$ because if there is an actual effect of diet on blood pressure, we expect the null hypothesis to be rejected.
+- We test $\mu_d=0$ because if there is an actual effect of diet on blood pressure, we expect the null hypothesis to be rejected.
 :::
 :::::
 
@@ -1349,8 +1396,8 @@ Remember!
 ```{r}
 
 # Extract LDL measurements before and after treatment
-ldl_before <- test_cholesterol |> pull(LDL_before)
-ldl_after  <- test_cholesterol |> pull(LDL_after)
+ldl_before <- test_cholesterol |>  pull(LDL_before)
+ldl_after  <- test_cholesterol |>  pull(LDL_after)
 
 # Run paired t-test
 t.test(x = ldl_before, y = ldl_after, paired = TRUE)
@@ -1434,6 +1481,9 @@ The output includes:
 
 Based on our analysis, we asked: **Did LDL levels change significantly after treatment?** The paired t-test gave a very small $\textit{p-value}$, far below $\alpha = 0.05$ providing strong evidence against the null hypothesis. In simple terms, this means LDL levels after treatment are significantly lower than before. On average, the reduction was about 2.4 units, with the true effect likely between 2.1 and 2.7 units. In summary, these results indicate that the observed reduction in LDL levels is highly unlikely to have occurred by chance if there were no true effect. 
 
+**Note:** Compare the 2.4-unit reduction that we estimated from our sample to the value we set for the `Delta` variable in our simulation. Also note that `Delta` is the true underlying mean reduction built into the simulated population not a value estimated from data. The sample mean reduction (2.4 units) serves as our estimate of this true effect. If our sample is representative and the assumptions of the paired t-test are met, the sample estimate should be close to the true value of `Delta` as the sample size increases. Also `Delta`, the true underlying mean reduction, is within boundary estimate of 2.1 and 2.7 units. If you are interested, try running the analysis by increasing the sample size (the `n_patients` variable in the code) to see what happens to the results!
+
+
 ## Tests for Two Population Proportions
 
 ### Review
@@ -1450,17 +1500,20 @@ Formally, let:
 
 From each population, we take a random sample:
 
-- From Region A, a sample of size $n$, with observed sample proportion of support $\hat{p}_1$.
+- From Region A, a sample of size $n$, with observed sample proportion of support $\hat{p}_A$.
 
-- From Region B, a sample of size $m$, with observed sample proportion of support $\hat{p}_2$.
+- From Region B, a sample of size $m$, with observed sample proportion of support $\hat{p}_B$.
 
-where $p_1$ is the population proportion of support in Region A and $p_2$ is the population proportion of support in Region B. 
+where $\hat{p}_A$ and $\hat{p}_B$ are the estimates for the $p_1$ and $p_2$ which are the true population proportion of support in Region A and Region B.
 
-The main statistical question becomes: **Is there a significant difference between the true population proportions of support in the two regions?** We formalize this as a hypothesis test:
+The main statistical question becomes: **Is there a significant difference between the true population proportions of support in the two regions?** 
+
+We formalize this as a hypothesis test:
 
 $$
-H_0: p_1 = p_2 \quad \text{versus} \quad H_A: p_1 \ne p_2
+H_0: p_A = p_B \quad \text{versus} \quad H_A: p_A \ne p_B
 $$
+
 To answer this, we use the **two-sample z-test for population proportions**, which compares the observed sample proportions while accounting for the variability expected under the null hypothesis.
 
 
@@ -1482,8 +1535,9 @@ n_A <- 150
 n_B <- 200
 
 # Simulate true population proportions
-p_A <- 0.55
-p_B <- 0.45
+p_A <- 0.65
+p_B <- 0.35
+
 
 # Generate binary outcomes for survey responses
 support_A <- rbinom(n_A, size = 1, prob = p_A)
@@ -1505,8 +1559,8 @@ The dataset contains a region column and a support column indicating if the part
 
 
 ```{r}
-policy_summary <- policy_data |>
-  group_by(region) |>
+policy_summary <- policy_data |> 
+  group_by(region) |> 
   summarise(n = n(), supporters = sum(support), prop_support = mean(support))
 policy_summary
 ```
@@ -1521,7 +1575,8 @@ ggplot(policy_summary, aes(x = region, y = prop_support, fill = region)) +
     y = 'Proportion Supporting Policy',
     title = 'Proportion of Policy Supporters by Region'
     ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(legend.position = 'none')
 ```
 
 
@@ -1529,18 +1584,18 @@ ggplot(policy_summary, aes(x = region, y = prop_support, fill = region)) +
 
 We use a significance level of $\alpha = 0.05$. The population parameters are:
 
-- $p_1$: true proportion of supporters in Region A.
+- $p_A$: true proportion of supporters in Region A.
 
-- $p_2$: true proportion of supporters in Region B.
+- $p_B$: true proportion of supporters in Region B.
 
-The goal is to test if the difference $p_1 - p_2$ is significantly different from zero.
+The goal is to test if the difference $p_A - p_B$ is significantly different from zero.
 
 
 ### Hypothesis Definitions
 
 The null and alternative hypotheses are:
 
-$$H_0:p_1 = p_2 \quad vs \quad H_1:p_1 \neq p_2$$
+$$H_0:p_A = p_B \quad vs \quad H_1:p_A \neq p_B$$
 
 ### Test Flavour and Components
 
@@ -1567,14 +1622,24 @@ If the p-value is smaller than $\alpha = 0.05$, we reject $H_0$, indicating a si
 
 ```{r}
 # Using policy_summary to get counts and sample sizes
-x1 <- policy_summary$supporters[policy_summary$region == "A"]
-x2 <- policy_summary$supporters[policy_summary$region == "B"]
+x1 <- policy_summary |>
+  filter(region == 'A') |>
+  pull(supporters)
 
-n1 <- policy_summary$n[policy_summary$region == "A"]
-n2 <- policy_summary$n[policy_summary$region == "B"]
+x2 <- policy_summary |>
+  filter(region == 'B') |>
+  pull(supporters)
+
+n1 <- policy_summary |>
+  filter(region == 'A') |>
+  pull(n)
+
+n2 <- policy_summary |>
+  filter(region == 'B') |>
+  pull(n)
 
 # Run two-proportion z-test
-prop.test(c(x1, x2), c(n1, n2), correct = FALSE)
+prop.test(x = c(x1, x2), n = c(n1, n2))
 ```
 
 
@@ -1594,3 +1659,4 @@ from statsmodels.stats.proportion import proportions_ztest
 ### Storytelling
 
 - Under dev
+

@@ -243,6 +243,109 @@ print_as_dt(head(py$cholesterol_data, 10))
 ```
 :::
 
+## Tests for Two Population Proportions
+
+### Generative Modelling Process
+
+- Under development
+
+### Code
+
+- Under development
+
+::: {.panel-tabset}
+
+## **`R` Code**
+
+``` {.r}
+# Set seed
+set.seed(123)
+
+# Set sample sizes
+n_A <- 150
+n_B <- 200
+
+# Simulate true population proportions
+p_A <- 0.65
+p_B <- 0.35
+
+# Generate binary outcomes for survey responses
+support_A <- rbinom(n_A, size = 1, prob = p_A)
+support_B <- rbinom(n_B, size = 1, prob = p_B)
+
+# Create dataset
+policy_data <- data.frame(
+  region = c(rep("A", n_A), rep("B", n_B)),
+  support = c(support_A, support_B) )
+
+# Display first few rows
+head(policy_data, 10)
+```
+
+## **`Python` Code**
+
+``` {.python}
+
+```
+
+:::
+
+::: {.panel-tabset}
+
+## **`R` Output**
+
+```{r}
+#| echo: false
+#| message: false
+
+# Set seed
+set.seed(123)
+
+# Set sample sizes
+n_A <- 150
+n_B <- 200
+
+# Simulate true population proportions
+p_A <- 0.65
+p_B <- 0.35
+
+# Generate binary outcomes for survey responses
+support_A <- rbinom(n_A, size = 1, prob = p_A)
+support_B <- rbinom(n_B, size = 1, prob = p_B)
+
+# Create dataset
+policy_data <- data.frame(
+  region = c(rep("A", n_A), rep("B", n_B)),
+  support = c(support_A, support_B) )
+
+# Display first few rows
+head(policy_data, 10)
+```
+
+## **`Python` Output**
+
+```{python}
+#| echo: false
+#| message: false
+
+# Importing libraries
+import numpy as np
+import pandas as pd
+
+
+```
+
+
+```{r}
+#| echo: false
+
+# Showing the first 10 participants 
+
+```
+:::
+
+
+
 ## ANOVA Datasets
 
 These datasets are used in @sec-anova to elaborate on **analysis of variance (ANOVA)** and pertain to an experimental context. Suppose a data-driven marketing team at a well-known tech company, which operates a global online store, is conducting two different A/B/n testings aimed at **increasing the customer conversion score (i.e., the outcome)**. In these experiments, the customer conversion score is defined as a unitless and standardized engagement index. This index combines various elements, such as clicks, time spent on the webpage, and the probability of making a purchase, with a baseline mean set at $50$. This score measures customer responsiveness on the online store: **the higher the score, the greater the customer responsiveness**.
