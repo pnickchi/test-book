@@ -356,7 +356,7 @@ Let us start by outlining the generative modelling process for a **one-way ANOVA
 
 #### Generative Modelling Process
 
-The experiment involves **webpage design** as a **controllable factor** determined by the experimenter. This factor includes three different layouts: $D_1$ (the current layout), $D_2$ (a new layout), and $D_3$ (another new layout), making it a three-level factor. This study will be conducted as a **full factorial experiment** characterized by the following elements:
+The experiment involves **webpage design** as a **controllable factor** determined by the experimenter. This factor includes three different layouts: $D_1$ (the current layout), $D_2$ (a new and experimental layout), and $D_3$ (another new and experimental layout), making it a three-level factor. This experimental study will be characterized by the following elements:
 
 - One factor, namely, **webpage design**.
 - There are $3$ treatments (i.e., the above three factor levels), which classifies this study as A/B/n testing.
@@ -367,7 +367,7 @@ Our data structure will be an **additive model** conceptually depicted as:
 
 $$
 \begin{align*}
-\text{Outcome} &= \text{First Main Effect} + \text{Random Error}.
+\text{Outcome} &= \text{Main Effect} + \text{Random Error}.
 \end{align*}
 $${#eq-ANOVA-conceptual-model-app-one}
 

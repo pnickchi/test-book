@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.5.53">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>4&nbsp; ANOVA-related Tests for k Continuous Population Means – The Mini Test Book (in development)</title>
 <style>
@@ -87,10 +87,10 @@ div.csl-indent {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f664b88e837a53bca78c5b20234386e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -120,10 +120,10 @@ div.csl-indent {
 <script src="../site_libs/quarto-diagram/mermaid.min.js"></script><script src="../site_libs/quarto-diagram/mermaid-init.js"></script><link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 <link href="../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
 <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="../site_libs/datatables-binding-0.33/datatables.js"></script><script src="../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><link href="../site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="../site_libs/datatables-binding-0.34.0/datatables.js"></script><script src="../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><link href="../site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="../site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="../site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="../site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
-<script src="../site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+<script src="../site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+<script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -165,19 +165,19 @@ window.Quarto = {
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
 <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
               <i class="bi bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
               <i class="bi bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=%7Curl%7C">
               <i class="bi bi-linkedin pe-1"></i>
             LinkedIn
             </a>
@@ -296,34 +296,33 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">The content</h2>
    
   <ul>
-<li><a href="#sec-ANOVA-datasets" id="toc-sec-ANOVA-datasets" class="nav-link active" data-scroll-target="#sec-ANOVA-datasets"><span class="header-section-number">4.1</span> The ANOVA Datasets</a></li>
-  <li>
-<a href="#sec-one-way-ANOVA" id="toc-sec-one-way-ANOVA" class="nav-link" data-scroll-target="#sec-one-way-ANOVA"><span class="header-section-number">4.2</span> One-way ANOVA</a>
+<li>
+<a href="#sec-one-way-ANOVA" id="toc-sec-one-way-ANOVA" class="nav-link active" data-scroll-target="#sec-one-way-ANOVA"><span class="header-section-number">4.1</span> One-way ANOVA</a>
   <ul>
-<li><a href="#sec-one-way-ANOVA-study-design" id="toc-sec-one-way-ANOVA-study-design" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-study-design"><span class="header-section-number">4.2.1</span> Study Design</a></li>
-  <li><a href="#sec-one-way-ANOVA-data-collection-wrangling" id="toc-sec-one-way-ANOVA-data-collection-wrangling" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-data-collection-wrangling"><span class="header-section-number">4.2.2</span> Data Collection and Wrangling</a></li>
-  <li><a href="#sec-one-way-ANOVA-EDA" id="toc-sec-one-way-ANOVA-EDA" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-EDA"><span class="header-section-number">4.2.3</span> Exploratory Data Analysis</a></li>
-  <li><a href="#sec-one-way-ANOVA-testing-settings" id="toc-sec-one-way-ANOVA-testing-settings" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-testing-settings"><span class="header-section-number">4.2.4</span> Testing Settings</a></li>
-  <li><a href="#sec-one-way-ANOVA-hypothesis-definitions" id="toc-sec-one-way-ANOVA-hypothesis-definitions" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-hypothesis-definitions"><span class="header-section-number">4.2.5</span> Hypothesis Definitions</a></li>
-  <li><a href="#sec-one-way-ANOVA-test-flavour" id="toc-sec-one-way-ANOVA-test-flavour" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-test-flavour"><span class="header-section-number">4.2.6</span> Test Flavour and Components</a></li>
-  <li><a href="#sec-one-way-ANOVA-inferential-conclusions" id="toc-sec-one-way-ANOVA-inferential-conclusions" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-inferential-conclusions"><span class="header-section-number">4.2.7</span> Inferential Conclusions</a></li>
-  <li><a href="#sec-one-way-ANOVA-storytelling" id="toc-sec-one-way-ANOVA-storytelling" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-storytelling"><span class="header-section-number">4.2.8</span> Storytelling</a></li>
+<li><a href="#sec-one-way-ANOVA-study-design" id="toc-sec-one-way-ANOVA-study-design" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-study-design"><span class="header-section-number">4.1.1</span> Study Design</a></li>
+  <li><a href="#sec-one-way-ANOVA-data-collection-wrangling" id="toc-sec-one-way-ANOVA-data-collection-wrangling" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-data-collection-wrangling"><span class="header-section-number">4.1.2</span> Data Collection and Wrangling</a></li>
+  <li><a href="#sec-one-way-ANOVA-EDA" id="toc-sec-one-way-ANOVA-EDA" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-EDA"><span class="header-section-number">4.1.3</span> Exploratory Data Analysis</a></li>
+  <li><a href="#sec-one-way-ANOVA-testing-settings" id="toc-sec-one-way-ANOVA-testing-settings" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-testing-settings"><span class="header-section-number">4.1.4</span> Testing Settings</a></li>
+  <li><a href="#sec-one-way-ANOVA-hypothesis-definitions" id="toc-sec-one-way-ANOVA-hypothesis-definitions" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-hypothesis-definitions"><span class="header-section-number">4.1.5</span> Hypothesis Definitions</a></li>
+  <li><a href="#sec-one-way-ANOVA-test-flavour" id="toc-sec-one-way-ANOVA-test-flavour" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-test-flavour"><span class="header-section-number">4.1.6</span> Test Flavour and Components</a></li>
+  <li><a href="#sec-one-way-ANOVA-inferential-conclusions" id="toc-sec-one-way-ANOVA-inferential-conclusions" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-inferential-conclusions"><span class="header-section-number">4.1.7</span> Inferential Conclusions</a></li>
+  <li><a href="#sec-one-way-ANOVA-storytelling" id="toc-sec-one-way-ANOVA-storytelling" class="nav-link" data-scroll-target="#sec-one-way-ANOVA-storytelling"><span class="header-section-number">4.1.8</span> Storytelling</a></li>
   </ul>
 </li>
   <li>
-<a href="#sec-two-way-ANOVA" id="toc-sec-two-way-ANOVA" class="nav-link" data-scroll-target="#sec-two-way-ANOVA"><span class="header-section-number">4.3</span> Two-way ANOVA</a>
+<a href="#sec-two-way-ANOVA" id="toc-sec-two-way-ANOVA" class="nav-link" data-scroll-target="#sec-two-way-ANOVA"><span class="header-section-number">4.2</span> Two-way ANOVA</a>
   <ul>
-<li><a href="#sec-two-way-ANOVA-study-design" id="toc-sec-two-way-ANOVA-study-design" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-study-design"><span class="header-section-number">4.3.1</span> Study Design</a></li>
-  <li><a href="#sec-two-way-ANOVA-data-collection-wrangling" id="toc-sec-two-way-ANOVA-data-collection-wrangling" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-data-collection-wrangling"><span class="header-section-number">4.3.2</span> Data Collection and Wrangling</a></li>
-  <li><a href="#sec-two-way-ANOVA-EDA" id="toc-sec-two-way-ANOVA-EDA" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-EDA"><span class="header-section-number">4.3.3</span> Exploratory Data Analysis</a></li>
-  <li><a href="#sec-two-way-ANOVA-testing-settings" id="toc-sec-two-way-ANOVA-testing-settings" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-testing-settings"><span class="header-section-number">4.3.4</span> Testing Settings</a></li>
-  <li><a href="#sec-two-way-ANOVA-hypothesis-definitions" id="toc-sec-two-way-ANOVA-hypothesis-definitions" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-hypothesis-definitions"><span class="header-section-number">4.3.5</span> Hypothesis Definitions</a></li>
-  <li><a href="#sec-two-way-ANOVA-test-flavour" id="toc-sec-two-way-ANOVA-test-flavour" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-test-flavour"><span class="header-section-number">4.3.6</span> Test Flavour and Components</a></li>
-  <li><a href="#sec-two-way-ANOVA-inferential-conclusions" id="toc-sec-two-way-ANOVA-inferential-conclusions" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-inferential-conclusions"><span class="header-section-number">4.3.7</span> Inferential Conclusions</a></li>
-  <li><a href="#sec-two-way-ANOVA-storytelling" id="toc-sec-two-way-ANOVA-storytelling" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-storytelling"><span class="header-section-number">4.3.8</span> Storytelling</a></li>
+<li><a href="#sec-two-way-ANOVA-study-design" id="toc-sec-two-way-ANOVA-study-design" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-study-design"><span class="header-section-number">4.2.1</span> Study Design</a></li>
+  <li><a href="#sec-two-way-ANOVA-data-collection-wrangling" id="toc-sec-two-way-ANOVA-data-collection-wrangling" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-data-collection-wrangling"><span class="header-section-number">4.2.2</span> Data Collection and Wrangling</a></li>
+  <li><a href="#sec-two-way-ANOVA-EDA" id="toc-sec-two-way-ANOVA-EDA" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-EDA"><span class="header-section-number">4.2.3</span> Exploratory Data Analysis</a></li>
+  <li><a href="#sec-two-way-ANOVA-testing-settings" id="toc-sec-two-way-ANOVA-testing-settings" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-testing-settings"><span class="header-section-number">4.2.4</span> Testing Settings</a></li>
+  <li><a href="#sec-two-way-ANOVA-hypothesis-definitions" id="toc-sec-two-way-ANOVA-hypothesis-definitions" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-hypothesis-definitions"><span class="header-section-number">4.2.5</span> Hypothesis Definitions</a></li>
+  <li><a href="#sec-two-way-ANOVA-test-flavour" id="toc-sec-two-way-ANOVA-test-flavour" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-test-flavour"><span class="header-section-number">4.2.6</span> Test Flavour and Components</a></li>
+  <li><a href="#sec-two-way-ANOVA-inferential-conclusions" id="toc-sec-two-way-ANOVA-inferential-conclusions" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-inferential-conclusions"><span class="header-section-number">4.2.7</span> Inferential Conclusions</a></li>
+  <li><a href="#sec-two-way-ANOVA-storytelling" id="toc-sec-two-way-ANOVA-storytelling" class="nav-link" data-scroll-target="#sec-two-way-ANOVA-storytelling"><span class="header-section-number">4.2.8</span> Storytelling</a></li>
   </ul>
 </li>
-  <li><a href="#sec-chapter-4-summary" id="toc-sec-chapter-4-summary" class="nav-link" data-scroll-target="#sec-chapter-4-summary"><span class="header-section-number">4.4</span> Chapter Summary</a></li>
+  <li><a href="#sec-chapter-4-summary" id="toc-sec-chapter-4-summary" class="nav-link" data-scroll-target="#sec-chapter-4-summary"><span class="header-section-number">4.3</span> Chapter Summary</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter4-anova.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter4-anova.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -409,10 +408,9 @@ Figure&nbsp;4.1: A specific hypothesis testing mind map outlining the techniques
 </div>
 <p>This chapter builds on the concepts introduced in the earlier works by <a href="chapter2-one-pop.html" class="quarto-xref"><span>Chapter 2</span></a> and <a href="chapter3-two-pop.html" class="quarto-xref"><span>Chapter 3</span></a>, which concentrated on hypothesis testing for one and two groups, respectively. While those chapters primarily addressed pairwise comparisons, we will now shift our focus to multiple comparisons:</p>
 <ul>
-<li>The <strong>one-way ANOVA</strong>, discussed in <a href="#sec-one-way-ANOVA" class="quarto-xref"><span>Section 4.2</span></a>, will assume a <strong>single categorical factor with</strong> <span class="math inline">\(k\)</span> levels. This approach allows us to test whether at least one group mean is significantly different from the others.</li>
-<li>In contrast, the <strong>two-way ANOVA</strong>, from <a href="#sec-two-way-ANOVA" class="quarto-xref"><span>Section 4.3</span></a>, will incorporate an <strong>additional categorical factor with</strong> <span class="math inline">\(m\)</span> levels, permitting the analysis of both main effects and interaction effects. Interaction terms in ANOVA are especially useful for revealing cases where the effect of one factor depends on the level of another, a situation often encountered in complex experimental designs.</li>
+<li>The <strong>one-way ANOVA</strong>, discussed in <a href="#sec-one-way-ANOVA" class="quarto-xref"><span>Section 4.1</span></a>, will assume a <strong>single categorical factor with</strong> <span class="math inline">\(k\)</span> levels. This approach allows us to test whether at least one group mean is significantly different from the others.</li>
+<li>In contrast, the <strong>two-way ANOVA</strong>, from <a href="#sec-two-way-ANOVA" class="quarto-xref"><span>Section 4.2</span></a>, will incorporate an <strong>additional categorical factor with</strong> <span class="math inline">\(m\)</span> levels, permitting the analysis of both main effects and interaction effects. Interaction terms in ANOVA are especially useful for revealing cases where the effect of one factor depends on the level of another, a situation often encountered in complex experimental designs.</li>
 </ul>
-<p>As a side note, the workflow guiding this chapter, as referenced in <a href="chapter1-intro.html#fig-hypothesis-testing-workflow" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>, will provide a structured approach for applying both one-way and two-way ANOVA to their respective A/B/n datasets (see <a href="#sec-ANOVA-datasets" class="quarto-xref"><span>Section 4.1</span></a>).</p>
 <div class="Heads-up">
 <div class="Heads-up-header">
 <p>Heads-up on the importance of ANOVA in data science!</p>
@@ -425,11 +423,9 @@ Figure&nbsp;4.1: A specific hypothesis testing mind map outlining the techniques
 </div>
 </div>
 </div>
-<section id="sec-ANOVA-datasets" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="sec-ANOVA-datasets">
-<span class="header-section-number">4.1</span> The ANOVA Datasets</h2>
 <p>The <strong>simulated datasets</strong> discussed in this chapter relate to an experimental context known as A/B/n testing, which is an expansion of traditional A/B testing as previously discussed. In a typical A/B testing, participants are randomly assigned to one of two strategies, referred to as treatments: treatment <span class="math inline">\(A\)</span> (the <strong>control treatment</strong>) and treatment <span class="math inline">\(B\)</span> (the <strong>experimental treatment</strong>). This approach enables us to infer <strong>causation</strong> concerning the following inquiry:</p>
 <blockquote class="blockquote">
-<p><strong>Will changing from treatment</strong> <span class="math inline">\(A\)</span> to treatment <span class="math inline">\(B\)</span> cause my outcome of interest, <span class="math inline">\(Y\)</span>, to increase (or decrease, if that is the case)?</p>
+<p><strong>Will changing from treatment <span class="math inline">\(A\)</span> to treatment <span class="math inline">\(B\)</span> cause my outcome of interest, <span class="math inline">\(Y\)</span>, to increase (or decrease, if that is the case)?</strong></p>
 </blockquote>
 <p>In an ANOVA setting, the outcome must be <strong>continuous</strong>. The primary goal of A/B testing is to determine whether there is a statistically significant difference between treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> concerning the outcome. Additionally, because we are conducting a proper randomized experiment, we can infer causation (which goes further than mere association), as treatment randomization enables us to get rid of the effect of further <strong>confounders</strong>.</p>
 <div class="Heads-up">
@@ -448,17 +444,66 @@ Figure&nbsp;4.2: Diagram depicting confounding <span class="citation" data-cites
 </div>
 </div>
 </div>
-<p>When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as <strong>A/B/n testing</strong>. In this case, the “<em>n</em>” does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. With this clarification, we can now proceed with our simulated datasets.</p>
+<p>When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as <strong>A/B/n testing</strong>. In this case, the “<em>n</em>” does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. With this clarification, we can now proceed with our two ANOVA cases (one and two-way) with their corresponding datasets to illustrate how this statistical approach can be applied via the structured test workflow from <a href="chapter1-intro.html#fig-hypothesis-testing-workflow" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> found in <a href="chapter1-intro.html#sec-test-workflow" class="quarto-xref"><span>Section 1.1</span></a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/ads.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption>Image by <a href="https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6370790"><em>Pabitra Kaity</em></a> via <a href="https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/"><em>Pixabay</em></a>.</figcaption></figure>
 </div>
-</section><section id="sec-one-way-ANOVA" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="sec-one-way-ANOVA">
-<span class="header-section-number">4.2</span> One-way ANOVA</h2>
-<section id="sec-one-way-ANOVA-study-design" class="level3" data-number="4.2.1"><h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-one-way-ANOVA-study-design">
-<span class="header-section-number">4.2.1</span> Study Design</h3>
-</section><section id="sec-one-way-ANOVA-data-collection-wrangling" class="level3" data-number="4.2.2"><h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-one-way-ANOVA-data-collection-wrangling">
-<span class="header-section-number">4.2.2</span> Data Collection and Wrangling</h3>
+<section id="sec-one-way-ANOVA" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="sec-one-way-ANOVA">
+<span class="header-section-number">4.1</span> One-way ANOVA</h2>
+<p>Imagine you are part of a data-driven marketing team at a well-known tech company that operates a global online store. This store is heavily invested in using statistical experimentation on its website to enhance the customer shopping experience, with the goal of increasing profit margins in the long term. As part of this effort, the team frequently conducts A/B/n testings. These A/B/n testings specifically aim to <strong>increase the customer conversion score</strong>, which is the primary outcome measure. This <strong>continuous score</strong> is a unitless and standardized index of engagement, incorporating various elements such as clicks, time spent on the website, and the probability of making a purchase. The baseline of this score is set at <span class="math inline">\(50\)</span>. This index measures customer responsiveness on the online store: <strong>the higher the score, the greater the customer responsiveness</strong>.</p>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/study.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3699345"><em>Manfred Steger</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-observation-internship-3974186/"><em>Pixabay</em></a>.</figcaption></figure>
+</div>
+<p>To start with the first of these A/B/n testings, let us suppose the heads of the marketing and sales departments have come up with the groundbreaking idea of modifying the overall webpage design in two different experimental ways to investigate whether these modifications somehow <strong>cause</strong> the aforementioned <strong>mean customer conversion score</strong> to change. For the sake of this case, the department heads aim to compare how this score behaves between these <strong>two experimental webpage designs</strong> and the <strong>current webpage design</strong>.</p>
+<section id="sec-one-way-ANOVA-study-design" class="level3" data-number="4.1.1"><h3 data-number="4.1.1" class="anchored" data-anchor-id="sec-one-way-ANOVA-study-design">
+<span class="header-section-number">4.1.1</span> Study Design</h3>
+<p>The first stage of our testing workflow involves the main statistical inquiry we aim to address. Therefore, let us translate the above situation into a concrete question that is meaningful for both the stakeholders (namely, the marketing and sales departments) and for you as part of the data-driven marketing team. We can frame the main inquiry as follows:</p>
+<blockquote class="blockquote">
+<p><strong>Will the change across the two experimental webpage designs and the current design result in any statistical difference in the population mean customer conversion score?</strong></p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/puzzle.png" class="img-fluid figure-img" width="300"></p>
+<figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/"><em>Manfred Stege</em></a> via <a href="https://pixabay.com/vectors/laptop-games-jigsaw-puzzle-puzzle-7426707/"><em>Pixabay</em></a>.</figcaption></figure>
+</div>
+<p>This statistical inquiry represents the foundational step in our testing workflow. We transform a practical business question into a testable inferential statement (specifically, a causal one). By framing the problem as whether the average customer conversion score varies across different webpage designs, we connect stakeholder demands with statistical analysis.</p>
+<p>In terms on how this A/B/n testing would be designed, let us consider the following aspects:</p>
+<ol type="1">
+<li>The experiment will solely focus on <strong>webpage design</strong>, which we consider a <strong>controllable factor</strong> determined by the experimenter (that is you, as part of the data-driven marketing team). This factor includes three different webpage layouts (or designs): <span class="math inline">\(D_1\)</span> (the current layout), <span class="math inline">\(D_2\)</span> (a new and experimental layout), and <span class="math inline">\(D_3\)</span> (another new and experimental layout). This setup creates a three-level factor. To summarize in statistical terms, we have:
+<ul>
+<li>One factor: <strong>webpage design</strong>
+</li>
+<li>Three <strong>treatments</strong> (the three layout options), which classifies this study as A/B/n testing.</li>
+<li>The <strong>outcome variable <span class="math inline">\(Y\)</span></strong>, defined as the customer conversion score, which has been explained previously.</li>
+</ul>
+</li>
+<li>
+<strong>Before conducting the experiment</strong>, assume that your team has performed a proper <strong>power analysis</strong> to determine the total sample size of customers to be recruited for the A/B/n testing. This power analysis has indicated an overall sample size of <span class="math inline">\(n = 600\)</span> customers (namely, <strong>experimental units</strong>). Consequently, each treatment group will consist of <span class="math inline">\(\frac{n}{3} = 200\)</span> customers, making this a <strong>balanced experiment</strong>.</li>
+</ol>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Heads-up on the importance of having a balanced experiment</p>
+</div>
+<div class="Heads-up-container">
+<p>In the <strong>design and analysis of experiments</strong>, having a balanced experiment (where each treatment receives the same number of experimental units) offers two advantages:</p>
+<ul>
+<li>Statistically, a balanced experiment helps <strong>minimize the uncertainty in estimating the population parameters</strong> necessary for hypothesis testing, which is essential for addressing our main statistical inquiries.</li>
+<li>On the other hand, from a practical point of view, a balanced experiment makes analysis robust against <strong>biased parameter estimation</strong>, which might be caused by an uneven exposure of experimental units to the different treatments.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/question-2.png" class="img-fluid figure-img" width="250"></p>
+<figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/"><em>Manfred Stege</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-emotion-confused-6230199/"><em>Pixabay</em></a>.</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="sec-one-way-ANOVA-data-collection-wrangling" class="level3" data-number="4.1.2"><h3 data-number="4.1.2" class="anchored" data-anchor-id="sec-one-way-ANOVA-data-collection-wrangling">
+<span class="header-section-number">4.1.2</span> Data Collection and Wrangling</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/screen.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/"><em>Manfred Stege</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-portfolio-work-folder-3947911/"><em>Pixabay</em></a>.</figcaption></figure>
+</div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page"><strong><code>R</code> Code</strong></a></li>
@@ -497,8 +542,8 @@ Figure&nbsp;4.2: Diagram depicting confounding <span class="citation" data-cites
 Table&nbsp;4.1: First 100 rows of our A/B/n simulated data with webpage design as a standalone experimental factor.
 </figcaption><div aria-describedby="tbl-ANOVA-ABn-data-r-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-355dcfc6c329fc99e9ce" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-355dcfc6c329fc99e9ce">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],[58.23,59.27,64.93000000000001,60.22,60.41,65.42,61.46,56,57.83,58.59,63.87,61.14,61.27,60.35,58.24,65.65000000000001,61.57,53.78,62.22,58.5,56.62,59.31,56.76,57.7,58.02,54.67,62.65,60.49,56.4,63.96,61.35,59.07,62.83,62.78,62.6,62.18,61.75,59.8,59.03,58.8,57.8,59.34,56,66.86,63.82,56.45,58.73,58.52,62.47,59.74,60.8,59.91,59.86,64.33,59.29,64.8,55.1,61.85,60.39,60.68,61.2,58.41,58.95,56.78,56.61,60.96,61.42,60.17,62.92,66.48,58.45,52.7,63.18,57.76,57.82,63.24,59.1,56.14,60.57,59.56,60.02,61.22,58.83,62.04,59.3,61.05,63.47,61.38,58.97,63.63,63.14,61.73,60.75,58.01,64.3,58.1,66.92,64.84999999999999,59.25,56.75]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"conversion_score","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-721c2d0387040a1d9305" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-721c2d0387040a1d9305">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],[58.23,59.27,64.93000000000001,60.22,60.41,65.42,61.46,56,57.83,58.59,63.87,61.14,61.27,60.35,58.24,65.65000000000001,61.57,53.78,62.22,58.5,56.62,59.31,56.76,57.7,58.02,54.67,62.65,60.49,56.4,63.96,61.35,59.07,62.83,62.78,62.6,62.18,61.75,59.8,59.03,58.8,57.8,59.34,56,66.86,63.82,56.45,58.73,58.52,62.47,59.74,60.8,59.91,59.86,64.33,59.29,64.8,55.1,61.85,60.39,60.68,61.2,58.41,58.95,56.78,56.61,60.96,61.42,60.17,62.92,66.48,58.45,52.7,63.18,57.76,57.82,63.24,59.1,56.14,60.57,59.56,60.02,61.22,58.83,62.04,59.3,61.05,63.47,61.38,58.97,63.63,63.14,61.73,60.75,58.01,64.3,58.1,66.92,64.84999999999999,59.25,56.75]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"conversion_score","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </figure>
@@ -512,8 +557,8 @@ Table&nbsp;4.1: First 100 rows of our A/B/n simulated data with webpage design a
 Table&nbsp;4.2: First 100 rows of our A/B/n simulated data with webpage design as a standalone experimental factor.
 </figcaption><div aria-describedby="tbl-ANOVA-ABn-data-py-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-222f7979e188da2b3fb9" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-222f7979e188da2b3fb9">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],[58.23,59.27,64.93000000000001,60.22,60.41,65.42,61.46,56,57.83,58.59,63.87,61.14,61.27,60.35,58.24,65.65000000000001,61.57,53.78,62.22,58.5,56.62,59.31,56.76,57.7,58.02,54.67,62.65,60.49,56.4,63.96,61.35,59.07,62.83,62.78,62.6,62.18,61.75,59.8,59.03,58.8,57.8,59.34,56,66.86,63.82,56.45,58.73,58.52,62.47,59.74,60.8,59.91,59.86,64.33,59.29,64.8,55.1,61.85,60.39,60.68,61.2,58.41,58.95,56.78,56.61,60.96,61.42,60.17,62.92,66.48,58.45,52.7,63.18,57.76,57.82,63.24,59.1,56.14,60.57,59.56,60.02,61.22,58.83,62.04,59.3,61.05,63.47,61.38,58.97,63.63,63.14,61.73,60.75,58.01,64.3,58.1,66.92,64.84999999999999,59.25,56.75]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"conversion_score","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-e21334b35f8658f33f46" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e21334b35f8658f33f46">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],[58.23,59.27,64.93000000000001,60.22,60.41,65.42,61.46,56,57.83,58.59,63.87,61.14,61.27,60.35,58.24,65.65000000000001,61.57,53.78,62.22,58.5,56.62,59.31,56.76,57.7,58.02,54.67,62.65,60.49,56.4,63.96,61.35,59.07,62.83,62.78,62.6,62.18,61.75,59.8,59.03,58.8,57.8,59.34,56,66.86,63.82,56.45,58.73,58.52,62.47,59.74,60.8,59.91,59.86,64.33,59.29,64.8,55.1,61.85,60.39,60.68,61.2,58.41,58.95,56.78,56.61,60.96,61.42,60.17,62.92,66.48,58.45,52.7,63.18,57.76,57.82,63.24,59.1,56.14,60.57,59.56,60.02,61.22,58.83,62.04,59.3,61.05,63.47,61.38,58.97,63.63,63.14,61.73,60.75,58.01,64.3,58.1,66.92,64.84999999999999,59.25,56.75]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"conversion_score","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </figure>
@@ -645,8 +690,8 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-</section><section id="sec-one-way-ANOVA-EDA" class="level3" data-number="4.2.3"><h3 data-number="4.2.3" class="anchored" data-anchor-id="sec-one-way-ANOVA-EDA">
-<span class="header-section-number">4.2.3</span> Exploratory Data Analysis</h3>
+</section><section id="sec-one-way-ANOVA-EDA" class="level3" data-number="4.1.3"><h3 data-number="4.1.3" class="anchored" data-anchor-id="sec-one-way-ANOVA-EDA">
+<span class="header-section-number">4.1.3</span> Exploratory Data Analysis</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true"><strong><code>R</code></strong></a></li>
@@ -739,12 +784,12 @@ Figure&nbsp;4.4: Side-by-side boxplots of conversion score by webpage design via
 </div>
 </div>
 </div>
-</section><section id="sec-one-way-ANOVA-testing-settings" class="level3" data-number="4.2.4"><h3 data-number="4.2.4" class="anchored" data-anchor-id="sec-one-way-ANOVA-testing-settings">
-<span class="header-section-number">4.2.4</span> Testing Settings</h3>
-</section><section id="sec-one-way-ANOVA-hypothesis-definitions" class="level3" data-number="4.2.5"><h3 data-number="4.2.5" class="anchored" data-anchor-id="sec-one-way-ANOVA-hypothesis-definitions">
-<span class="header-section-number">4.2.5</span> Hypothesis Definitions</h3>
-</section><section id="sec-one-way-ANOVA-test-flavour" class="level3" data-number="4.2.6"><h3 data-number="4.2.6" class="anchored" data-anchor-id="sec-one-way-ANOVA-test-flavour">
-<span class="header-section-number">4.2.6</span> Test Flavour and Components</h3>
+</section><section id="sec-one-way-ANOVA-testing-settings" class="level3" data-number="4.1.4"><h3 data-number="4.1.4" class="anchored" data-anchor-id="sec-one-way-ANOVA-testing-settings">
+<span class="header-section-number">4.1.4</span> Testing Settings</h3>
+</section><section id="sec-one-way-ANOVA-hypothesis-definitions" class="level3" data-number="4.1.5"><h3 data-number="4.1.5" class="anchored" data-anchor-id="sec-one-way-ANOVA-hypothesis-definitions">
+<span class="header-section-number">4.1.5</span> Hypothesis Definitions</h3>
+</section><section id="sec-one-way-ANOVA-test-flavour" class="level3" data-number="4.1.6"><h3 data-number="4.1.6" class="anchored" data-anchor-id="sec-one-way-ANOVA-test-flavour">
+<span class="header-section-number">4.1.6</span> Test Flavour and Components</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true"><strong><code>R</code></strong></a></li>
@@ -808,8 +853,8 @@ Residual           2900.76  297.0   NaN     NaN</code></pre>
 </div>
 </div>
 </div>
-</section><section id="sec-one-way-ANOVA-inferential-conclusions" class="level3" data-number="4.2.7"><h3 data-number="4.2.7" class="anchored" data-anchor-id="sec-one-way-ANOVA-inferential-conclusions">
-<span class="header-section-number">4.2.7</span> Inferential Conclusions</h3>
+</section><section id="sec-one-way-ANOVA-inferential-conclusions" class="level3" data-number="4.1.7"><h3 data-number="4.1.7" class="anchored" data-anchor-id="sec-one-way-ANOVA-inferential-conclusions">
+<span class="header-section-number">4.1.7</span> Inferential Conclusions</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-q-q-plot-one-way" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -942,14 +987,14 @@ Table&nbsp;4.10: Levene’s test for homogeneity of variances for one-way ANOVA 
 </div>
 </div>
 </div>
-</section><section id="sec-one-way-ANOVA-storytelling" class="level3" data-number="4.2.8"><h3 data-number="4.2.8" class="anchored" data-anchor-id="sec-one-way-ANOVA-storytelling">
-<span class="header-section-number">4.2.8</span> Storytelling</h3>
-</section></section><section id="sec-two-way-ANOVA" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="sec-two-way-ANOVA">
-<span class="header-section-number">4.3</span> Two-way ANOVA</h2>
-<section id="sec-two-way-ANOVA-study-design" class="level3" data-number="4.3.1"><h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-two-way-ANOVA-study-design">
-<span class="header-section-number">4.3.1</span> Study Design</h3>
-</section><section id="sec-two-way-ANOVA-data-collection-wrangling" class="level3" data-number="4.3.2"><h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-two-way-ANOVA-data-collection-wrangling">
-<span class="header-section-number">4.3.2</span> Data Collection and Wrangling</h3>
+</section><section id="sec-one-way-ANOVA-storytelling" class="level3" data-number="4.1.8"><h3 data-number="4.1.8" class="anchored" data-anchor-id="sec-one-way-ANOVA-storytelling">
+<span class="header-section-number">4.1.8</span> Storytelling</h3>
+</section></section><section id="sec-two-way-ANOVA" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="sec-two-way-ANOVA">
+<span class="header-section-number">4.2</span> Two-way ANOVA</h2>
+<section id="sec-two-way-ANOVA-study-design" class="level3" data-number="4.2.1"><h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-two-way-ANOVA-study-design">
+<span class="header-section-number">4.2.1</span> Study Design</h3>
+</section><section id="sec-two-way-ANOVA-data-collection-wrangling" class="level3" data-number="4.2.2"><h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-two-way-ANOVA-data-collection-wrangling">
+<span class="header-section-number">4.2.2</span> Data Collection and Wrangling</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true"><strong><code>R</code> Code</strong></a></li>
@@ -985,8 +1030,8 @@ Table&nbsp;4.10: Levene’s test for homogeneity of variances for one-way ANOVA 
 Table&nbsp;4.11: First 100 rows of our A/B/n simulated data with webpage design and discount framing as a experimental factors.
 </figcaption><div aria-describedby="tbl-ANOVA-ABn-data-r-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-108e9e741a3e46725297" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-108e9e741a3e46725297">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[46.76,48.08,55.23,49.28,49.52,55.86,50.84,43.94,46.25,47.22,53.9,50.44,50.6,49.44,46.78,56.15,50.99,41.13,51.81,47.11,44.73,48.13,44.9,46.08,46.5,42.25,52.35,49.61,44.45,54.02,50.71,47.82,52.58,52.51,52.29,51.75,51.22,48.75,47.78,47.48,46.22,48.17,43.94,57.68,53.83,44.51,47.39,47.13,52.12,48.67,50.01,48.89,48.83,54.47,48.1,55.07,42.8,51.34,49.5,49.86,50.52,46.99,47.67,44.93,44.71,50.21,50.79,49.21,52.69,57.2,47.04,39.76,53.02,46.16,46.25,53.1,47.86,44.12,49.73,48.44,49.02,50.54,47.52,51.58,48.12,50.33,53.39,50.74,47.7,53.6,52.97,51.19,49.95,46.49,54.44,46.6,57.75,55.13,48.06,44.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-210dc57d0e4b6cefcee0" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-210dc57d0e4b6cefcee0">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[46.76,48.08,55.23,49.28,49.52,55.86,50.84,43.94,46.25,47.22,53.9,50.44,50.6,49.44,46.78,56.15,50.99,41.13,51.81,47.11,44.73,48.13,44.9,46.08,46.5,42.25,52.35,49.61,44.45,54.02,50.71,47.82,52.58,52.51,52.29,51.75,51.22,48.75,47.78,47.48,46.22,48.17,43.94,57.68,53.83,44.51,47.39,47.13,52.12,48.67,50.01,48.89,48.83,54.47,48.1,55.07,42.8,51.34,49.5,49.86,50.52,46.99,47.67,44.93,44.71,50.21,50.79,49.21,52.69,57.2,47.04,39.76,53.02,46.16,46.25,53.1,47.86,44.12,49.73,48.44,49.02,50.54,47.52,51.58,48.12,50.33,53.39,50.74,47.7,53.6,52.97,51.19,49.95,46.49,54.44,46.6,57.75,55.13,48.06,44.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </figure>
@@ -1000,8 +1045,8 @@ Table&nbsp;4.11: First 100 rows of our A/B/n simulated data with webpage design 
 Table&nbsp;4.12: First 100 rows of our A/B/n simulated data with webpage design and discount framing as a experimental factors.
 </figcaption><div aria-describedby="tbl-ANOVA-ABn-data-py-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-5d39040379231a97595a" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-5d39040379231a97595a">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[46.76,48.08,55.23,49.28,49.52,55.86,50.84,43.94,46.25,47.22,53.9,50.44,50.6,49.44,46.78,56.15,50.99,41.13,51.81,47.11,44.73,48.13,44.9,46.08,46.5,42.25,52.35,49.61,44.45,54.02,50.71,47.82,52.58,52.51,52.29,51.75,51.22,48.75,47.78,47.48,46.22,48.17,43.94,57.68,53.83,44.51,47.39,47.13,52.12,48.67,50.01,48.89,48.83,54.47,48.1,55.07,42.8,51.34,49.5,49.86,50.52,46.99,47.67,44.93,44.71,50.21,50.79,49.21,52.69,57.2,47.04,39.76,53.02,46.16,46.25,53.1,47.86,44.12,49.73,48.44,49.02,50.54,47.52,51.58,48.12,50.33,53.39,50.74,47.7,53.6,52.97,51.19,49.95,46.49,54.44,46.6,57.75,55.13,48.06,44.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-a9f9e52caaa41ebc3847" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a9f9e52caaa41ebc3847">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[46.76,48.08,55.23,49.28,49.52,55.86,50.84,43.94,46.25,47.22,53.9,50.44,50.6,49.44,46.78,56.15,50.99,41.13,51.81,47.11,44.73,48.13,44.9,46.08,46.5,42.25,52.35,49.61,44.45,54.02,50.71,47.82,52.58,52.51,52.29,51.75,51.22,48.75,47.78,47.48,46.22,48.17,43.94,57.68,53.83,44.51,47.39,47.13,52.12,48.67,50.01,48.89,48.83,54.47,48.1,55.07,42.8,51.34,49.5,49.86,50.52,46.99,47.67,44.93,44.71,50.21,50.79,49.21,52.69,57.2,47.04,39.76,53.02,46.16,46.25,53.1,47.86,44.12,49.73,48.44,49.02,50.54,47.52,51.58,48.12,50.33,53.39,50.74,47.7,53.6,52.97,51.19,49.95,46.49,54.44,46.6,57.75,55.13,48.06,44.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </figure>
@@ -1153,8 +1198,8 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-</section><section id="sec-two-way-ANOVA-EDA" class="level3" data-number="4.3.3"><h3 data-number="4.3.3" class="anchored" data-anchor-id="sec-two-way-ANOVA-EDA">
-<span class="header-section-number">4.3.3</span> Exploratory Data Analysis</h3>
+</section><section id="sec-two-way-ANOVA-EDA" class="level3" data-number="4.2.3"><h3 data-number="4.2.3" class="anchored" data-anchor-id="sec-two-way-ANOVA-EDA">
+<span class="header-section-number">4.2.3</span> Exploratory Data Analysis</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true"><strong><code>R</code></strong></a></li>
@@ -1264,12 +1309,12 @@ Figure&nbsp;4.8: Interaction plot of conversion score by webpage design and disc
 </div>
 </div>
 </div>
-</section><section id="sec-two-way-ANOVA-testing-settings" class="level3" data-number="4.3.4"><h3 data-number="4.3.4" class="anchored" data-anchor-id="sec-two-way-ANOVA-testing-settings">
-<span class="header-section-number">4.3.4</span> Testing Settings</h3>
-</section><section id="sec-two-way-ANOVA-hypothesis-definitions" class="level3" data-number="4.3.5"><h3 data-number="4.3.5" class="anchored" data-anchor-id="sec-two-way-ANOVA-hypothesis-definitions">
-<span class="header-section-number">4.3.5</span> Hypothesis Definitions</h3>
-</section><section id="sec-two-way-ANOVA-test-flavour" class="level3" data-number="4.3.6"><h3 data-number="4.3.6" class="anchored" data-anchor-id="sec-two-way-ANOVA-test-flavour">
-<span class="header-section-number">4.3.6</span> Test Flavour and Components</h3>
+</section><section id="sec-two-way-ANOVA-testing-settings" class="level3" data-number="4.2.4"><h3 data-number="4.2.4" class="anchored" data-anchor-id="sec-two-way-ANOVA-testing-settings">
+<span class="header-section-number">4.2.4</span> Testing Settings</h3>
+</section><section id="sec-two-way-ANOVA-hypothesis-definitions" class="level3" data-number="4.2.5"><h3 data-number="4.2.5" class="anchored" data-anchor-id="sec-two-way-ANOVA-hypothesis-definitions">
+<span class="header-section-number">4.2.5</span> Hypothesis Definitions</h3>
+</section><section id="sec-two-way-ANOVA-test-flavour" class="level3" data-number="4.2.6"><h3 data-number="4.2.6" class="anchored" data-anchor-id="sec-two-way-ANOVA-test-flavour">
+<span class="header-section-number">4.2.6</span> Test Flavour and Components</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true"><strong><code>R</code></strong></a></li>
@@ -1334,8 +1379,8 @@ Residual                                9723.46  594.0     NaN            NaN</c
 </div>
 </div>
 </div>
-</section><section id="sec-two-way-ANOVA-inferential-conclusions" class="level3" data-number="4.3.7"><h3 data-number="4.3.7" class="anchored" data-anchor-id="sec-two-way-ANOVA-inferential-conclusions">
-<span class="header-section-number">4.3.7</span> Inferential Conclusions</h3>
+</section><section id="sec-two-way-ANOVA-inferential-conclusions" class="level3" data-number="4.2.7"><h3 data-number="4.2.7" class="anchored" data-anchor-id="sec-two-way-ANOVA-inferential-conclusions">
+<span class="header-section-number">4.2.7</span> Inferential Conclusions</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-q-q-plot-two-way" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1463,10 +1508,10 @@ Table&nbsp;4.20: Levene’s test for homogeneity of variances for two-way ANOVA 
 </div>
 </div>
 </div>
-</section><section id="sec-two-way-ANOVA-storytelling" class="level3" data-number="4.3.8"><h3 data-number="4.3.8" class="anchored" data-anchor-id="sec-two-way-ANOVA-storytelling">
-<span class="header-section-number">4.3.8</span> Storytelling</h3>
-</section></section><section id="sec-chapter-4-summary" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="sec-chapter-4-summary">
-<span class="header-section-number">4.4</span> Chapter Summary</h2>
+</section><section id="sec-two-way-ANOVA-storytelling" class="level3" data-number="4.2.8"><h3 data-number="4.2.8" class="anchored" data-anchor-id="sec-two-way-ANOVA-storytelling">
+<span class="header-section-number">4.2.8</span> Storytelling</h3>
+</section></section><section id="sec-chapter-4-summary" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="sec-chapter-4-summary">
+<span class="header-section-number">4.3</span> Chapter Summary</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -1571,6 +1616,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1688,6 +1735,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

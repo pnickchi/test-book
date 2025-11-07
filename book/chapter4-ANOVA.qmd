@@ -89,7 +89,6 @@ A specific hypothesis testing mind map outlining the techniques explored in this
 ::: Heads-up-header
 Heads-up on some historical background in statistics!
 :::
-
 ::: Heads-up-container
 While Ronald A. Fisher (1890–1962) is rightly recognized as a significant figure in modern statistics for developing key concepts such as ANOVA, it is imperative to recognize the broader context of his legacy. Beyond his pioneering contributions to statistics, Fisher was also a prominent advocate of eugenics, a movement that promoted pseudoscientific ideas about human heredity and social hierarchy. His involvement with the eugenics community is well documented [@mackenzie1981]. These views have been called out by certain members of the scientific community [@tarran2020]. That said, we (the authors of this mini-book) consider that students and scholars need to distinguish Fisher’s statistical insights from the unethical ideologies he supported, while also acknowledging the social responsibility to critique the historical misuse of science.
 
@@ -102,13 +101,10 @@ This chapter builds on the concepts introduced in the earlier works by @sec-one-
 - The **one-way ANOVA**, discussed in @sec-one-way-ANOVA, will assume a **single categorical factor with** $k$ levels. This approach allows us to test whether at least one group mean is significantly different from the others.
 - In contrast, the **two-way ANOVA**, from @sec-two-way-ANOVA, will incorporate an **additional categorical factor with** $m$ levels, permitting the analysis of both main effects and interaction effects. Interaction terms in ANOVA are especially useful for revealing cases where the effect of one factor depends on the level of another, a situation often encountered in complex experimental designs.
 
-As a side note, the workflow guiding this chapter, as referenced in @fig-hypothesis-testing-workflow, will provide a structured approach for applying both one-way and two-way ANOVA to their respective A/B/n datasets (see @sec-ANOVA-datasets).
-
 ::::: Heads-up
 ::: Heads-up-header
 Heads-up on the importance of ANOVA in data science!
 :::
-
 ::: Heads-up-container
 In modern data science, ANOVA remains significant, particularly in **A/B/n testing** (the generalization of **A/B testing** to multiple treatments). This approach allows for the simultaneous evaluation of various treatment variations or designs. ANOVA is valued for its interpretability and its flexibility in handling both **balanced** designs (where there is an equal number of replicates for each experimental treatment) and **unbalanced** designs (where there are unequal numbers of replicates). These strengths have solidified its role in both academic research and practical applications.
 
@@ -116,11 +112,9 @@ In modern data science, ANOVA remains significant, particularly in **A/B/n testi
 :::
 :::::
 
-## The ANOVA Datasets {#sec-ANOVA-datasets}
-
 The **simulated datasets** discussed in this chapter relate to an experimental context known as A/B/n testing, which is an expansion of traditional A/B testing as previously discussed. In a typical A/B testing, participants are randomly assigned to one of two strategies, referred to as treatments: treatment $A$ (the **control treatment**) and treatment $B$ (the **experimental treatment**). This approach enables us to infer **causation** concerning the following inquiry:
 
-> **Will changing from treatment** $A$ to treatment $B$ cause my outcome of interest, $Y$, to increase (or decrease, if that is the case)?
+> **Will changing from treatment $A$ to treatment $B$ cause my outcome of interest, $Y$, to increase (or decrease, if that is the case)?**
 
 In an ANOVA setting, the outcome must be **continuous**. The primary goal of A/B testing is to determine whether there is a statistically significant difference between treatments $A$ and $B$ concerning the outcome. Additionally, because we are conducting a proper randomized experiment, we can infer causation (which goes further than mere association), as treatment randomization enables us to get rid of the effect of further **confounders**.
 
@@ -128,7 +122,6 @@ In an ANOVA setting, the outcome must be **continuous**. The primary goal of A/B
 ::: Heads-up-header
 Heads-up on confounding!
 :::
-
 ::: Heads-up-container
 In causal inference, confounding refers to the mixing of effects between the outcome of interest, denoted as $Y$, the randomized factor $X$ (which is a two-level factor in A/B testing, corresponding to treatment $A$ and treatment $B$), and a third, uncontrollable factor known as the confounder $C$. This confounder is associated with the factor $X$ and independently affects the outcome $Y$, as shown by @fig-confounding.
 
@@ -136,16 +129,61 @@ In causal inference, confounding refers to the mixing of effects between the out
 :::
 :::::
 
-When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as **A/B/n testing**. In this case, the "*n*" does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments $A$ and $B$. With this clarification, we can now proceed with our simulated datasets.
+When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as **A/B/n testing**. In this case, the "*n*" does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments $A$ and $B$. With this clarification, we can now proceed with our two ANOVA cases (one and two-way) with their corresponding datasets to illustrate how this statistical approach can be applied via the structured test workflow from @fig-hypothesis-testing-workflow found in @sec-test-workflow.
 
 ![Image by [*Pabitra Kaity*](https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6370790) via [*Pixabay*](https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/).](img/ads.png){fig-align="center" width="50%"}
 
-
 ## One-way ANOVA {#sec-one-way-ANOVA}
+
+Imagine you are part of a data-driven marketing team at a well-known tech company that operates a global online store. This store is heavily invested in using statistical experimentation on its website to enhance the customer shopping experience, with the goal of increasing profit margins in the long term. As part of this effort, the team frequently conducts A/B/n testings. These A/B/n testings specifically aim to **increase the customer conversion score**, which is the primary outcome measure. This **continuous score** is a unitless and standardized index of engagement, incorporating various elements such as clicks, time spent on the website, and the probability of making a purchase. The baseline of this score is set at $50$. This index measures customer responsiveness on the online store: **the higher the score, the greater the customer responsiveness**.
+
+<br>
+
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-observation-internship-3974186/).](img/study.png){width="80%"}
+
+To start with the first of these A/B/n testings, let us suppose the heads of the marketing and sales departments have come up with the groundbreaking idea of modifying the overall webpage design in two different experimental ways to investigate whether these modifications somehow **cause** the aforementioned **mean customer conversion score** to change. For the sake of this case, the department heads aim to compare how this score behaves between these **two experimental webpage designs** and the **current webpage design**.
 
 ### Study Design {#sec-one-way-ANOVA-study-design}
 
+The first stage of our testing workflow involves the main statistical inquiry we aim to address. Therefore, let us translate the above situation into a concrete question that is meaningful for both the stakeholders (namely, the marketing and sales departments) and for you as part of the data-driven marketing team. We can frame the main inquiry as follows:
+
+> **Will the change across the two experimental webpage designs and the current design result in any statistical difference in the population mean customer conversion score?**
+
+![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/laptop-games-jigsaw-puzzle-puzzle-7426707/).](img/puzzle.png){width="300"}
+
+This statistical inquiry represents the foundational step in our testing workflow. We transform a practical business question into a testable inferential statement (specifically, a causal one). By framing the problem as whether the average customer conversion score varies across different webpage designs, we connect stakeholder demands with statistical analysis.
+
+In terms on how this A/B/n testing would be designed, let us consider the following aspects:
+
+1. The experiment will solely focus on **webpage design**, which we consider a **controllable factor** determined by the experimenter (that is you, as part of the data-driven marketing team). This factor includes three different webpage layouts (or designs): $D_1$ (the current layout), $D_2$ (a new and experimental layout), and $D_3$ (another new and experimental layout). This setup creates a three-level factor. To summarize in statistical terms, we have:
+    - One factor: **webpage design**
+    - Three **treatments** (the three layout options), which classifies this study as A/B/n testing.
+    - The **outcome variable $Y$**, defined as the customer conversion score, which has been explained previously.
+2. **Before conducting the experiment**, assume that your team has performed a proper **power analysis** to determine the total sample size of customers to be recruited for the A/B/n testing. This power analysis has indicated an overall sample size of $n = 600$ customers (namely, **experimental units**). Consequently, each treatment group will consist of $\frac{n}{3} = 200$ customers, making this a **balanced experiment**.
+
+::::: Heads-up
+::: Heads-up-header
+Heads-up on the importance of having a balanced experiment
+:::
+::: Heads-up-container
+In the **design and analysis of experiments**, having a balanced experiment (where each treatment receives the same number of experimental units) offers two advantages:
+
+- Statistically, a balanced experiment helps **minimize the uncertainty in estimating the population parameters** necessary for hypothesis testing, which is essential for addressing our main statistical inquiries. 
+- On the other hand, from a practical point of view, a balanced experiment makes analysis robust against **biased parameter estimation**, which might be caused by an uneven exposure of experimental units to the different treatments.
+
+![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-emotion-confused-6230199/).](img/question-2.png){width="250"}
+
+:::
+:::::
+
 ### Data Collection and Wrangling {#sec-one-way-ANOVA-data-collection-wrangling}
+
+
+
+![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-portfolio-work-folder-3947911/).](img/screen.png){width="50%"}
+
+
+
 
 ::: {.panel-tabset}
 
