@@ -1,10 +1,5 @@
 <!-- Google tag (gtag.js) -->
-
-```{=html}
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZWGQVJSHE"></script>
-```
-
-```{=html}
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -12,8 +7,6 @@
 
   gtag('config', 'G-DZWGQVJSHE');
 </script>
-```
-
 
 ```{r, echo = FALSE}
 #| label: setup
@@ -22,6 +15,11 @@ library(tidyverse)
 library(ISLR)
 library(ISLR2)
 library(BSDA)
+library(reticulate)
+
+# Setting up Python dependencies
+py_require("scipy")
+scipy <- import("scipy")
 ```
 
 

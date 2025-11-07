@@ -251,7 +251,7 @@ These datasets are used in @sec-anova to elaborate on **analysis of variance (AN
 
 ### One-way ANOVA {#sec-one-way-ANOVA-sim}
 
-Let us start by outlining the generative modelling process for a **one-way ANOVA experiment**. In this context, we will simulate a dataset that represents a continuous response variable (in this case, the customer conversion score) affected by a **single experimental factor**, specifically the design of a webpage. This setup allows us to assess whether the average response systematically varies across different design options.
+Let us start by outlining the generative modelling process for a **one-way ANOVA experiment**. In this context, we will simulate a dataset that represents a continuous response variable (in this case, the customer conversion score) affected by a **single experimental factor**, specifically the *design of a webpage*. This setup allows us to assess whether the average response systematically varies across different design options.
 
 #### Generative Modelling Process
 
@@ -467,7 +467,7 @@ print_as_dt(head(py$ABn_customer_data_one_factor, 100))
 
 ### Two-way ANOVA {#sec-two-way-ANOVA-sim}
 
-Let us extend our generative modelling framework to a **two-way ANOVA** experiment. In this context, we will simulate a dataset that represents a continuous response variable (i.e., the customer conversion score) affected by **two experimental factors**: webpage design and discount framing strategy. Each factor has its own **main effect** on the response, and their combination may also result in an **interaction effect**, which indicates how the impact of one factor depends on the level of the other. This setup allows us to assess whether variations in customer conversion arise from the individual effects of design and discount framing, as well as their combined influence. This approach offers a more comprehensive understanding of experimental variation and aids in practical decision-making.
+Let us extend our generative modelling framework to a **two-way ANOVA** experiment. In this context, we will simulate a dataset with a continuous response variable (i.e., the customer conversion score) that is affected by **two experimental factors**: *webpage design* and *discount framing strategy*. Each factor has its own **main effect** on the response, and their combination may also yield an **interaction effect**, indicating how the impact of one factor depends on the level of the other. This setup allows us to assess whether variations in customer conversion arise from the webpage design and discount framing, as well as their combined influence. Note that these two types of effects are added up to an **overall effect**. This approach offers a more comprehensive understanding of experimental variation and aids in practical decision-making.
 
 #### Generative Modelling Process
 
@@ -487,19 +487,20 @@ Our data structure will be an **additive model** conceptually depicted as:
 
 $$
 \begin{align*}
-\text{Outcome} &= \text{First Main Effect} + \text{Second Main Effect} + \\
-& \qquad \text{Interaction Effect} + \text{Random Error}.
+\text{Outcome} &= \text{Overall Effect} +  \\ & \qquad \text{First Main Effect} + \text{Second Main Effect} + \\
+& \qquad \quad \text{Interaction Effect} + \text{Random Error}.
 \end{align*}
 $${#eq-ANOVA-conceptual-model-app-two}
 
 Then, for the data generation process, let $Y_{i,j,k}$ represent the customer conversion score for the $k$th replicate of the treatment related to the $i$th webpage design and the $j$th discount framing levels. @eq-ANOVA-conceptual-model-app-two is translated as:
 
 $$
-Y_{i,j,k} = \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
+Y_{i,j,k} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{i,j} + \varepsilon_{i,j,k},
 $${#eq-ANOVA-math-model-app-two}
 
 where
 
+- $\mu$ is the grand mean of all observations (i.e., the overall effect).
 - $\alpha_i$ is the fixed first main effect corresponding to the $i$th level of webpage design for $i = D_1, D_2, D_3$;
 - $\beta_j$ is the second fixed main effect corresponding to the $j$th level of discount framing for $j = \text{Low}, \text{High}$;
 - $(\alpha \beta)_{i,j}$ is the fixed interaction effect between the $i$th and $j$th levels of webpage design and discount framing respectively, and
@@ -514,13 +515,19 @@ The $(\alpha \beta)_{i,j}$ in @eq-ANOVA-math-model-app-two **does not** indicate
 :::
 :::::
 
-In this case, @eq-ANOVA-math-model-app-two is breaking down the outcome on the right-hand side into four additive components, which form the basis on how ANOVA models the data. With the exception of the random error $\varepsilon_{i,j,k}$, the other three terms are assumed to be fixed within the data-generating process, given that we are using a **frequentist approach**. Since $\varepsilon_{i,j,k}$ is random, we will assume that it follows a Normal distribution with a mean of $0$ and a variance of $\sigma^2$ (which is another fixed parameter in the simulation):
+In this case, @eq-ANOVA-math-model-app-two is breaking down the outcome on the right-hand side into five additive components, which form the basis on how ANOVA models the data. With the exception of the random error $\varepsilon_{i,j,k}$, the other four terms are assumed to be fixed within the data-generating process, given that we are using a **frequentist approach**. Since $\varepsilon_{i,j,k}$ is random, we will assume that it follows a Normal distribution with a mean of $0$ and a variance of $\sigma^2$ (which is another fixed parameter in the simulation):
 
 $$
 \varepsilon_{i,j,k} \sim \text{Normal}(0, \sigma^2).
 $$
 
 In terms of our simulation, imagine you have a population of customers with the following fixed parameters:
+
+- A scalar denoting the grand mean of all observations (i.e., the overall effect)
+
+$$
+\mu = 15.
+$$
 
 - A vector of webpage design effects (i.e., the first main effect) 
 
@@ -578,6 +585,7 @@ discount_framing_levels <- c("Low", "High")
 n_per_treatment <- 200
 
 # Population fixed additive parameters
+mu <- 15
 alpha <- c(40, 50, 60)
 beta <- c(-6, 6)
 interaction <- matrix(
@@ -593,7 +601,7 @@ interaction <- matrix(
 data_list <- list()
 for (i in 1:3) {
   for (j in 1:2) {
-    mean_ij <- alpha[i] + beta[j] + interaction[i, j]
+    mean_ij <- mu + alpha[i] + beta[j] + interaction[i, j]
     y <- rnorm(n_per_treatment, mean = mean_ij, sd = sqrt(16))
     df_ij <- data.frame(
       webpage_design = as.factor(webpage_design_levels[i]),
@@ -625,6 +633,7 @@ discount_framing_levels = ["Low", "High"]
 n_per_treatment = 200
 
 # Population fixed additive parameters
+mu = 15
 alpha = [40, 50, 60]          
 beta = [-6, 6]              
 interaction = np.array([
@@ -638,7 +647,7 @@ data_list = []
 
 for i in range(3):  
     for j in range(2):  
-        mean_ij = alpha[i] + beta[j] + interaction[i, j]
+        mean_ij = mu + alpha[i] + beta[j] + interaction[i, j]
         y = np.random.normal(loc=mean_ij, scale=np.sqrt(16), size = n_per_treatment)
         y_rounded = np.round(y, 2) 
         
@@ -676,6 +685,7 @@ discount_framing_levels <- c("Low", "High")
 n_per_treatment <- 200
 
 # Population fixed additive parameters
+mu <- 15
 alpha <- c(40, 50, 60)
 beta <- c(-6, 6)
 interaction <- matrix(
@@ -691,7 +701,7 @@ interaction <- matrix(
 data_list <- list()
 for (i in 1:3) {
   for (j in 1:2) {
-    mean_ij <- alpha[i] + beta[j] + interaction[i, j]
+    mean_ij <- mu + alpha[i] + beta[j] + interaction[i, j]
     y <- rnorm(n_per_treatment, mean = mean_ij, sd = sqrt(16))
     df_ij <- data.frame(
       webpage_design = as.factor(webpage_design_levels[i]),
@@ -727,6 +737,7 @@ discount_framing_levels = ["Low", "High"]
 n_per_treatment = 200
 
 # Population fixed additive parameters
+mu = 15
 alpha = [40, 50, 60]          
 beta = [-6, 6]              
 interaction = np.array([
@@ -740,7 +751,7 @@ data_list = []
 
 for i in range(3):  
     for j in range(2):  
-        mean_ij = alpha[i] + beta[j] + interaction[i, j]
+        mean_ij = mu + alpha[i] + beta[j] + interaction[i, j]
         y = np.random.normal(loc=mean_ij, scale=np.sqrt(16), size = n_per_treatment)
         y_rounded = np.round(y, 2)
         
