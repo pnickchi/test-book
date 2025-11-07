@@ -2,66 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pnickchi.github.io/test-book/index.html</loc>
-    <lastmod>2025-10-11T21:41:14.507Z</lastmod>
+    <lastmod>2025-10-24T05:46:42.819Z</lastmod>
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/meet-the-authors.html</loc>
-    <lastmod>2025-11-07T03:55:24.789Z</lastmod>
+    <lastmod>2025-11-06T21:24:04.649Z</lastmod>
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/privacy-policy.html</loc>
-    <lastmod>2025-10-11T04:52:26.718Z</lastmod>
+    <lastmod>2025-08-08T19:29:33.730Z</lastmod>
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/chapter1-intro.html</loc>
-    <lastmod>2025-10-11T21:41:14.553Z</lastmod>
+    <lastmod>2025-10-24T05:46:42.751Z</lastmod>
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/chapter2-one-pop.html</loc>
-<<<<<<< HEAD
-    <lastmod>2025-10-31T06:54:07.052Z</lastmod>
+    <lastmod>2025-11-06T21:24:04.616Z</lastmod>
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/chapter3-two-pop.html</loc>
-    <lastmod>2025-11-07T03:17:09.260Z</lastmod>
+    <lastmod>2025-11-07T04:50:52.856Z</lastmod>
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/chapter4-anova.html</loc>
-    <lastmod>2025-11-07T03:41:10.633Z</lastmod>
+    <lastmod>2025-11-07T04:38:51.772Z</lastmod>
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/chapter5-chi-square.html</loc>
-    <lastmod>2025-10-31T06:54:07.053Z</lastmod>
-=======
-    <lastmod>2025-11-07T03:55:24.755Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pnickchi.github.io/test-book/book/chapter3-two-pop.html</loc>
-    <lastmod>2025-11-07T03:55:24.756Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pnickchi.github.io/test-book/book/chapter4-anova.html</loc>
-    <lastmod>2025-11-07T03:58:42.414Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pnickchi.github.io/test-book/book/chapter5-chi-square.html</loc>
-    <lastmod>2025-11-07T03:55:24.779Z</lastmod>
->>>>>>> main
+    <lastmod>2025-10-24T05:57:29.728Z</lastmod>
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/references.html</loc>
-    <lastmod>2025-10-11T04:52:26.718Z</lastmod>
+    <lastmod>2025-08-08T19:29:33.730Z</lastmod>
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/A-greek-alphabet.html</loc>
-    <lastmod>2025-10-11T04:52:26.679Z</lastmod>
+    <lastmod>2025-08-08T19:29:33.673Z</lastmod>
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/B-simulated-datasets.html</loc>
-<<<<<<< HEAD
-    <lastmod>2025-11-07T03:34:58.532Z</lastmod>
-=======
-    <lastmod>2025-11-07T03:58:42.471Z</lastmod>
->>>>>>> main
+    <lastmod>2025-11-07T04:39:07.953Z</lastmod>
   </url>
 </urlset>
