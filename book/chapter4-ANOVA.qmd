@@ -344,7 +344,7 @@ print(OneWay_ABn_testing["webpage_design"].value_counts(normalize=True))
 
 ::: {.panel-tabset}
 
-## **`R` Output**
+## **`R`**
 
 ```{r}
 #| label: tbl-one-summary-stats-r
@@ -362,7 +362,7 @@ OneWay_summary_table <- OneWay_ABn_training |>
 OneWay_summary_table
 ```
 
-## **`Python` Output**
+## **`Python`**
 
 ```{python}
 #| label: tbl-one-summary-stats-py
@@ -477,7 +477,7 @@ boxplots_webpage_design_one_way
 
 ::: {.panel-tabset}
 
-## **`R` Output**
+## **`R`**
 
 ```{r}
 #| label: tbl-one-fitting-r
@@ -496,7 +496,7 @@ tidy(OneWay_aov) |>
   mutate_if(is.numeric, round, 2)
 ```
 
-## **`Python` Output**
+## **`Python`**
 
 ```{python}
 #| label: tbl-one-fitting-py
@@ -553,7 +553,7 @@ qqplot_oneway
 
 ::: {.panel-tabset}
 
-## **`R` Output**
+## **`R`**
 
 ```{r}
 #| label: tbl-one-shapiro-wilks-r
@@ -570,7 +570,7 @@ tidy(OneWay_shapiro) |>
   mutate_if(is.numeric, round, 2)
 ```
 
-## **`Python` Output**
+## **`Python`**
 
 ```{python}
 #| label: tbl-one-shapiro-wilks-py
@@ -597,7 +597,7 @@ OneWay_shapiro
 
 ::: {.panel-tabset}
 
-## **`R` Output**
+## **`R`**
 
 ```{r}
 #| label: tbl-one-levene-r
@@ -616,7 +616,7 @@ tidy(OneWay_levene) |>
   mutate_if(is.numeric, round, 2)
 ```
 
-## **`Python` Output**
+## **`Python`**
 
 ```{python}
 #| label: tbl-one-levene-py
@@ -859,7 +859,7 @@ print(TwoWay_ABn_testing.groupby(["webpage_design", "discount_framing"]).size().
 
 ::: {.panel-tabset}
 
-## **`R` Output**
+## **`R`**
 
 ```{r}
 #| label: tbl-two-summary-stats-r
@@ -877,7 +877,7 @@ TwoWay_summary_table <- TwoWay_ABn_training |>
 TwoWay_summary_table
 ```
 
-## **`Python` Output**
+## **`Python`**
 
 ```{python}
 #| label: tbl-two-summary-stats-py
@@ -1048,7 +1048,7 @@ interaction_plot
 
 ::: {.panel-tabset}
 
-## **`R` Output**
+## **`R`**
 
 ```{r}
 #| label: tbl-two-fitting-r
@@ -1065,7 +1065,7 @@ TwoWay_aov <- tidy(TwoWay_aov) |>
 TwoWay_aov
 ```
 
-## **`Python` Output**
+## **`Python`**
 
 ```{python}
 #| label: tbl-two-fitting-py
@@ -1124,7 +1124,7 @@ qqplot_twoway
 
 ::: {.panel-tabset}
 
-## **`R` Output**
+## **`R`**
 
 ```{r}
 #| label: tbl-two-shapiro-wilks-r
@@ -1141,7 +1141,7 @@ tidy(TwoWay_shapiro) |>
   mutate_if(is.numeric, round, 2)
 ```
 
-## **`Python` Output**
+## **`Python`**
 
 ```{python}
 #| label: tbl-two-shapiro-wilks-py
@@ -1165,7 +1165,7 @@ TwoWay_shapiro
 
 ::: {.panel-tabset}
 
-## **`R` Output**
+## **`R`**
 
 ```{r}
 #| label: tbl-two-levene-r
@@ -1184,7 +1184,7 @@ tidy(TwoWay_levene) |>
   mutate_if(is.numeric, round, 2)
 ```
 
-## **`Python` Output**
+## **`Python`**
 
 ```{python}
 #| label: tbl-two-levene-py
