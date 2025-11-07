@@ -352,7 +352,7 @@ These datasets are used in @sec-anova to elaborate on **analysis of variance (AN
 
 ### One-way ANOVA {#sec-one-way-ANOVA-sim}
 
-Let us start by outlining the generative modelling process for a **one-way ANOVA experiment**. In this context, we will simulate a dataset that represents a continuous response variable (in this case, the customer conversion score) affected by a **single experimental factor**, specifically the design of a webpage. This setup allows us to assess whether the average response systematically varies across different design options.
+Let us start by outlining the generative modelling process for a **one-way ANOVA experiment**. In this context, we will simulate a dataset that represents a continuous response variable (in this case, the customer conversion score) affected by a **single experimental factor**, specifically the *design of a webpage*. This setup allows us to assess whether the average response systematically varies across different design options.
 
 #### Generative Modelling Process
 

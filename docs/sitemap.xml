@@ -18,6 +18,21 @@
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/chapter2-one-pop.html</loc>
+<<<<<<< HEAD
+    <lastmod>2025-10-31T06:54:07.052Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pnickchi.github.io/test-book/book/chapter3-two-pop.html</loc>
+    <lastmod>2025-11-07T03:17:09.260Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pnickchi.github.io/test-book/book/chapter4-anova.html</loc>
+    <lastmod>2025-11-07T03:41:10.633Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pnickchi.github.io/test-book/book/chapter5-chi-square.html</loc>
+    <lastmod>2025-10-31T06:54:07.053Z</lastmod>
+=======
     <lastmod>2025-11-07T03:55:24.755Z</lastmod>
   </url>
   <url>
@@ -31,6 +46,7 @@
   <url>
     <loc>https://pnickchi.github.io/test-book/book/chapter5-chi-square.html</loc>
     <lastmod>2025-11-07T03:55:24.779Z</lastmod>
+>>>>>>> main
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/references.html</loc>
@@ -42,6 +58,10 @@
   </url>
   <url>
     <loc>https://pnickchi.github.io/test-book/book/B-simulated-datasets.html</loc>
+<<<<<<< HEAD
+    <lastmod>2025-11-07T03:34:58.532Z</lastmod>
+=======
     <lastmod>2025-11-07T03:58:42.471Z</lastmod>
+>>>>>>> main
   </url>
 </urlset>
