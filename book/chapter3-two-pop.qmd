@@ -8,6 +8,9 @@
   gtag('config', 'G-DZWGQVJSHE');
 </script>
 
+
+# Tests for Two Continuous Population Mean {#sec-two-continuous-means}
+
 ```{r, echo = FALSE}
 #| label: setup
 #| include: false
@@ -24,8 +27,6 @@ py_require("scipy")
 scipy <- import("scipy")
 ```
 
-
-# Tests for Two Continuous Population Mean {#sec-two-continuous-means}
 
 ::::: LO
 ::: LO-header
