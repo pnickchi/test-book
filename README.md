@@ -86,10 +86,10 @@ Contributions are welcome!
 
 If you would like to fix typos, clarify text, or extend examples:
 
-	1.	Fork the repo and create a new branch.
-	2.	Make your edits in `.qmd` files under `/book/`.
-	3.	Preview locally with `quarto preview`.
-	4.	Submit a pull request.
+1.	Fork the repo and create a new branch.
+2.	Make your edits in `.qmd` files under `/book/`.
+3.	Preview locally with `quarto preview`.
+4.	Submit a pull request.
 
 Please ensure your contribution preserves reproducibility and cross-language parity (`R` + `Python`).
 
