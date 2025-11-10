@@ -3,7 +3,7 @@
 
 ## Overview  
 
-**The Mini Test Book** provides a clear, modern introduction to key frequentist hypothesis tests—such as $t$-tests, one-way ANOVA, and chi-square tests. The material follows a consistent **eight-stage testing workflow** (Study Design → Data Collection and Wrangling → Exploratory Data Analysis → Hypothesis Definitions → Test Flavour and Components → Inferential Conclusions → Storytelling) and presents **parallel `R` and `Python` codes** for reproducible analysis. It combines mathematical foundations, statistical reasoning, and hands-on data science implementation to bridge theory and practice. This material is an **Open Educational Resource (OER)**.
+**The Mini Test Book** provides a clear, modern introduction to key frequentist hypothesis tests—such as $t$-tests, one-way ANOVA, and chi-square tests. The material follows a consistent **eight-stage testing workflow** (Study Design → Data Collection and Wrangling → Exploratory Data Analysis → Testing Settings → Hypothesis Definitions → Test Flavour and Components → Inferential Conclusions → Storytelling) and presents **parallel `R` and `Python` codes** for reproducible analysis. It combines mathematical foundations, statistical reasoning, and hands-on data science implementation to bridge theory and practice. This material is an **Open Educational Resource (OER)**.
 
 ##  Learning Goals
 
