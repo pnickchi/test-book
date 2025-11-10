@@ -9,7 +9,7 @@
 </script>
 
 
-# Chapter 5: Chi-square Tests
+# Chi-squared Tests {#sec-chi-squared-tests}
 
 
 ```{r setup, include=FALSE}

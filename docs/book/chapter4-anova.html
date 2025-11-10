@@ -256,7 +256,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../book/chapter5-chi-square.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Chi-square Tests</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chi-squared Tests</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -363,7 +363,7 @@ window.Quarto = {
 </ul>
 </div>
 </div>
-<p>It is time to expand our hypothesis testing framework from comparing two population means to a generalized approach for <span class="math inline">\(k\)</span> population means by exploring <strong>analysis of variance (ANOVA)</strong>. ANOVA is a foundational test in frequentist statistics designed to compare means across multiple populations under specific distributional assumptions, which we will examine in this chapter. Originally formalized by Ronald A. Fisher <span class="citation" data-cites="fisher1925">(<a href="references.html#ref-fisher1925" role="doc-biblioref">Fisher 1925</a>)</span>, ANOVA extends the concept of the two-sample <span class="math inline">\(t\)</span>-test by partitioning the total variability of our outcome of interest into components attributable to <strong>main effects</strong>, <strong>interactions</strong>, and <strong>random error</strong>. This partitioning enables us to determine whether observed differences in groups are improbable to appear under the null hypothesis, which states that all groups share the same population mean.</p>
+<p>It is time to expand our hypothesis testing framework from comparing two population means to a generalized approach for <span class="math inline">\(k\)</span> population means by exploring <strong>analysis of variance (ANOVA)</strong> as shown in <a href="#fig-test-chapter-3-mindmap" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>. ANOVA is a foundational test in frequentist statistics designed to compare means across multiple populations under specific distributional assumptions, which we will examine in this chapter. Originally formalized by Ronald A. Fisher <span class="citation" data-cites="fisher1925">(<a href="references.html#ref-fisher1925" role="doc-biblioref">Fisher 1925</a>)</span>, ANOVA extends the concept of the two-sample <span class="math inline">\(t\)</span>-test by partitioning the total variability of our outcome of interest into components attributable to <strong>main effects</strong>, <strong>interactions</strong>, and <strong>random error</strong>. This partitioning enables us to determine whether observed differences in groups are improbable to appear under the null hypothesis, which states that all groups share the same population mean.</p>
 <div id="fig-test-chapter-3-mindmap" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-test-chapter-3-mindmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell" data-layout-align="default">
@@ -378,14 +378,15 @@ window.Quarto = {
   ))
     Simulation Based&lt;br/&gt;Tests
     Classical&lt;br/&gt;Tests
-      (Chapter 1: &lt;br/&gt;Tests for One&lt;br/&gt;Continuous&lt;br/&gt;Population Mean)
-      (Chapter 2: &lt;br/&gt;Tests for Two&lt;br/&gt;Continuous&lt;br/&gt;Population Means)
-      (Chapter 3: &lt;br/&gt;ANOVA-related &lt;br/&gt;Tests for&lt;br/&gt;k Continuous&lt;br/&gt;Population Means)
+      (Chapter 2: &lt;br/&gt;Tests for One&lt;br/&gt;Continuous&lt;br/&gt;Population Mean)
+      (Chapter 3: &lt;br/&gt;Tests for Two&lt;br/&gt;Continuous&lt;br/&gt;Population Means)
+      (Chapter 4: &lt;br/&gt;ANOVA-related &lt;br/&gt;Tests for&lt;br/&gt;k Continuous&lt;br/&gt;Population Means)
         {{Unbounded&lt;br/&gt;Responses}}
           One&lt;br/&gt;Factor type&lt;br/&gt;Feature
             )One way&lt;br/&gt;ANOVA(
           Two&lt;br/&gt;Factor type&lt;br/&gt;Features
             )Two way&lt;br/&gt;ANOVA(
+      (Chapter 5: &lt;br/&gt;Chi-squared&lt;br/&gt;Tests)
 </pre>
 </div>
 <p></p>
@@ -451,18 +452,18 @@ Figure&nbsp;4.2: Diagram depicting confounding <span class="citation" data-cites
 </div>
 <section id="sec-one-way-ANOVA" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="sec-one-way-ANOVA">
 <span class="header-section-number">4.1</span> One-way ANOVA</h2>
-<p>Imagine you are part of a data-driven marketing team at a well-known tech company that operates a global online store. This store is heavily invested in using statistical experimentation on its website to enhance the customer shopping experience, with the goal of increasing profit margins in the long term. As part of this effort, the team frequently conducts A/B/n testings. These A/B/n testings specifically aim to <strong>increase the customer conversion score</strong>, which is the primary outcome measure. This <strong>continuous score</strong> is a unitless and standardized index of engagement, incorporating various elements such as clicks, time spent on the website, and the probability of making a purchase. The baseline of this score is set at <span class="math inline">\(50\)</span>. This index measures customer responsiveness on the online store: <strong>the higher the score, the greater the customer responsiveness</strong>.</p>
+<p>Imagine you are part of a data-driven marketing team at a well-known tech company that operates a global online store. This store is heavily invested in using statistical experimentation on its website to enhance the customer shopping experience, with the goal of increasing profit margins in the long term. As part of this effort, the team frequently conducts A/B/n testings. These A/B/n testings specifically aim to <strong>increase the customer conversion score</strong>, which is the primary outcome measure. This <strong>continuous score</strong> is a unitless and standardized index of engagement, incorporating various elements such as clicks, time spent on the website, and the probability of making a purchase. The baseline of this score is set at <span class="math inline">\(50\)</span>. This score measures customer responsiveness on the online store: <strong>the higher the score, the greater the customer responsiveness</strong>.</p>
 <p><br></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/study.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3699345"><em>Manfred Steger</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-observation-internship-3974186/"><em>Pixabay</em></a>.</figcaption></figure>
 </div>
-<p>To start with the first of these A/B/n testings, let us suppose the heads of the marketing and sales departments have come up with the groundbreaking idea of modifying the overall webpage design in two different experimental ways to investigate whether these modifications somehow <strong>cause</strong> the aforementioned <strong>mean customer conversion score</strong> to change. For the sake of this case, the department heads aim to compare how this score behaves between these <strong>two experimental webpage designs</strong> and the <strong>current webpage design</strong>.</p>
+<p>To start with the first of these two A/B/n testings, let us suppose the heads of the marketing and sales departments have come up with the groundbreaking idea of modifying the overall webpage design in two different experimental ways to investigate whether these modifications somehow <strong>cause</strong> the <strong>mean customer conversion score</strong> to change. For the sake of this case, the department heads aim to compare how this score behaves between these <strong>two experimental webpage designs</strong> and the <strong>current webpage design</strong>.</p>
 <section id="sec-one-way-ANOVA-study-design" class="level3" data-number="4.1.1"><h3 data-number="4.1.1" class="anchored" data-anchor-id="sec-one-way-ANOVA-study-design">
 <span class="header-section-number">4.1.1</span> Study Design</h3>
-<p>The first stage of our testing workflow involves the main statistical inquiry we aim to address. Therefore, let us translate the above situation into a concrete question that is meaningful for both the stakeholders (namely, the marketing and sales departments) and for you as part of the data-driven marketing team. We can frame the main inquiry as follows:</p>
+<p>The first stage of our testing workflow involves the main statistical inquiry we aim to address. Therefore, let us translate the above situation into a concrete question that is meaningful for both the stakeholders (namely, the marketing and sales department heads) and for you as part of the data-driven marketing team. We can frame the main inquiry as follows:</p>
 <blockquote class="blockquote">
-<p><strong>Will the change across the two experimental webpage designs and the current design result in any statistical difference in the population mean customer conversion score?</strong></p>
+<p><strong>Will the change across the two experimental webpage designs and the current design cause any statistical difference in the population mean customer conversion score?</strong></p>
 </blockquote>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/puzzle.png" class="img-fluid figure-img" width="300"></p>
@@ -471,12 +472,11 @@ Figure&nbsp;4.2: Diagram depicting confounding <span class="citation" data-cites
 <p>This statistical inquiry represents the foundational step in our testing workflow. We transform a practical business question into a testable inferential statement (specifically, a causal one). By framing the problem as whether the average customer conversion score varies across different webpage designs, we connect stakeholder demands with statistical analysis.</p>
 <p>In terms on how this A/B/n testing would be designed, let us consider the following aspects:</p>
 <ol type="1">
-<li>The experiment will solely focus on <strong>webpage design</strong>, which we consider a <strong>controllable factor</strong> determined by the experimenter (that is you, as part of the data-driven marketing team). This factor includes three different webpage layouts (or designs): <span class="math inline">\(D_1\)</span> (the current layout), <span class="math inline">\(D_2\)</span> (a new and experimental layout), and <span class="math inline">\(D_3\)</span> (another new and experimental layout). This setup creates a three-level factor. To summarize in statistical terms, we have:
+<li>The experiment will solely focus on <strong>webpage design</strong>, which we consider a <strong>controllable factor</strong> determined by the <strong>experimenter</strong> (that is you, as part of the data-driven marketing team). This factor includes three different webpage layouts (or designs): <span class="math inline">\(D_1\)</span> (the current layout), <span class="math inline">\(D_2\)</span> (a new and experimental layout), and <span class="math inline">\(D_3\)</span> (another new and experimental layout). This setup creates a three-level factor. To summarize in statistical terms, we have:
 <ul>
-<li>One factor: <strong>webpage design</strong>
-</li>
-<li>Three <strong>treatments</strong> (the three layout options), which classifies this study as A/B/n testing.</li>
-<li>The <strong>outcome variable <span class="math inline">\(Y\)</span></strong>, defined as the customer conversion score, which has been explained previously.</li>
+<li>One factor: <strong>webpage design</strong>.</li>
+<li>Three <strong>treatments</strong> (the three layout options), which classifies this study as A/B/n testing. Treatment <span class="math inline">\(D_1\)</span> is referred to as the <strong>control treatment</strong>, whereas <span class="math inline">\(D_2\)</span> and <span class="math inline">\(D_3\)</span> are the <strong>experimental treatments</strong>.</li>
+<li>The <strong>continuous outcome variable <span class="math inline">\(Y\)</span></strong>, defined as the customer conversion score, which has been explained previously.</li>
 </ul>
 </li>
 <li>
@@ -484,7 +484,7 @@ Figure&nbsp;4.2: Diagram depicting confounding <span class="citation" data-cites
 </ol>
 <div class="Heads-up">
 <div class="Heads-up-header">
-<p>Heads-up on the importance of having a balanced experiment</p>
+<p>Heads-up on the importance of having a balanced experiment!</p>
 </div>
 <div class="Heads-up-container">
 <p>In the <strong>design and analysis of experiments</strong>, having a balanced experiment (where each treatment receives the same number of experimental units) offers two advantages:</p>
@@ -500,10 +500,32 @@ Figure&nbsp;4.2: Diagram depicting confounding <span class="citation" data-cites
 </div>
 </section><section id="sec-one-way-ANOVA-data-collection-wrangling" class="level3" data-number="4.1.2"><h3 data-number="4.1.2" class="anchored" data-anchor-id="sec-one-way-ANOVA-data-collection-wrangling">
 <span class="header-section-number">4.1.2</span> Data Collection and Wrangling</h3>
+<p>Having designed our statistical experiment, it is now time to execute it, which we refer to as <strong>data collection</strong>. To ensure we accurately assess the causality of our statistical inquiry regarding changes in the population mean customer conversion score across three different webpage designs, we must randomly assign our <span class="math inline">\(n = 600\)</span> experimental units evenly among the three treatments. This means we will collect <span class="math inline">\(\frac{n}{3} = 200\)</span> data points for each treatment. To achieve this, we can use <strong>a suitable online tool</strong> to route website traffic uniformly, potentially employing stratified randomization based on additional covariates, such as device type and geographical location. This approach will help us allocate the <span class="math inline">\(n = 600\)</span> experimental units to one of the three treatments effectively.</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Heads-up on the importance of treatment randomization in statistical experimentation!</p>
+</div>
+<div class="Heads-up-container">
+<p>In A/B and A/B/n testing, online tools such as <a href="https://www.optimizely.com">Optimizely</a> and <a href="https://www.abtasty.com">ABTasty</a> enable experimenters to randomly assign web traffic units (i.e., experimental units) to different treatments of interest. These tools also offer several additional useful features, which are beyond the scope of this textbook.</p>
+<p>Treatment randomization is a valuable statistical tool because:</p>
+<ul>
+<li>It ensures that, on average, <strong>observed</strong> and <strong>unobserved confounding variables</strong> are evenly distributed across treatments. This helps to avoid obtaining biased estimates of population parameters when evaluating causality between outcomes and the treatments of interest.</li>
+<li>As discussed further in <a href="#sec-one-way-ANOVA-test-flavour" class="quarto-xref"><span>Section 4.1.6</span></a>, treatment randomization also guarantees that all observed data points are <strong>statistically independent</strong> concerning the <strong>random noise</strong> associated with their corresponding measurements. This statistical independence in the random noise (often referred to as the <strong>random component</strong>, which is also assumed to be <strong>identically distributed</strong>) is a critical assumption in ANOVA hypothesis testing. If these probabilistic assumptions are not met, the ANOVA test statistic and null distribution may not be appropriate for our observed data and inferential inquiries.</li>
+</ul>
+</div>
+</div>
+<p><br></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/screen.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/"><em>Manfred Stege</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-portfolio-work-folder-3947911/"><em>Pixabay</em></a>.</figcaption></figure>
 </div>
+<p>Let us discuss our data collection process. Assume you have already conducted this A/B/n testing and recruited <span class="math inline">\(n = 600\)</span> customers for this experiment. These customers have been randomly assigned to one of the three webpage designs, and their conversion scores have been measured accordingly. To begin our inferential process, the following code snippets in <code>R</code> and <code>Python</code> will load the dataset, which contains the following columns:</p>
+<ul>
+<li>
+<code>webpage_design</code>: A factor-type column representing the webpage design to which each experimental unit was assigned (<span class="math inline">\(D_1\)</span>, <span class="math inline">\(D_2\)</span> or <span class="math inline">\(D_3\)</span>).</li>
+<li>
+<code>conversion_score</code>: A numeric, continuous column that records the measured customer conversion scores as previously described at the beginning of this one-way ANOVA section.</li>
+</ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page"><strong><code>R</code> Code</strong></a></li>
@@ -542,8 +564,8 @@ Figure&nbsp;4.2: Diagram depicting confounding <span class="citation" data-cites
 Table&nbsp;4.1: First 100 rows of our A/B/n simulated data with webpage design as a standalone experimental factor.
 </figcaption><div aria-describedby="tbl-ANOVA-ABn-data-r-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-721c2d0387040a1d9305" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-721c2d0387040a1d9305">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],[58.23,59.27,64.93000000000001,60.22,60.41,65.42,61.46,56,57.83,58.59,63.87,61.14,61.27,60.35,58.24,65.65000000000001,61.57,53.78,62.22,58.5,56.62,59.31,56.76,57.7,58.02,54.67,62.65,60.49,56.4,63.96,61.35,59.07,62.83,62.78,62.6,62.18,61.75,59.8,59.03,58.8,57.8,59.34,56,66.86,63.82,56.45,58.73,58.52,62.47,59.74,60.8,59.91,59.86,64.33,59.29,64.8,55.1,61.85,60.39,60.68,61.2,58.41,58.95,56.78,56.61,60.96,61.42,60.17,62.92,66.48,58.45,52.7,63.18,57.76,57.82,63.24,59.1,56.14,60.57,59.56,60.02,61.22,58.83,62.04,59.3,61.05,63.47,61.38,58.97,63.63,63.14,61.73,60.75,58.01,64.3,58.1,66.92,64.84999999999999,59.25,56.75]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"conversion_score","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ccbb79b73c9bb0827ba7" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ccbb79b73c9bb0827ba7">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],[58.23,59.27,64.93000000000001,60.22,60.41,65.42,61.46,56,57.83,58.59,63.87,61.14,61.27,60.35,58.24,65.65000000000001,61.57,53.78,62.22,58.5,56.62,59.31,56.76,57.7,58.02,54.67,62.65,60.49,56.4,63.96,61.35,59.07,62.83,62.78,62.6,62.18,61.75,59.8,59.03,58.8,57.8,59.34,56,66.86,63.82,56.45,58.73,58.52,62.47,59.74,60.8,59.91,59.86,64.33,59.29,64.8,55.1,61.85,60.39,60.68,61.2,58.41,58.95,56.78,56.61,60.96,61.42,60.17,62.92,66.48,58.45,52.7,63.18,57.76,57.82,63.24,59.1,56.14,60.57,59.56,60.02,61.22,58.83,62.04,59.3,61.05,63.47,61.38,58.97,63.63,63.14,61.73,60.75,58.01,64.3,58.1,66.92,64.84999999999999,59.25,56.75]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"conversion_score","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </figure>
@@ -557,8 +579,8 @@ Table&nbsp;4.1: First 100 rows of our A/B/n simulated data with webpage design a
 Table&nbsp;4.2: First 100 rows of our A/B/n simulated data with webpage design as a standalone experimental factor.
 </figcaption><div aria-describedby="tbl-ANOVA-ABn-data-py-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-e21334b35f8658f33f46" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e21334b35f8658f33f46">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],[58.23,59.27,64.93000000000001,60.22,60.41,65.42,61.46,56,57.83,58.59,63.87,61.14,61.27,60.35,58.24,65.65000000000001,61.57,53.78,62.22,58.5,56.62,59.31,56.76,57.7,58.02,54.67,62.65,60.49,56.4,63.96,61.35,59.07,62.83,62.78,62.6,62.18,61.75,59.8,59.03,58.8,57.8,59.34,56,66.86,63.82,56.45,58.73,58.52,62.47,59.74,60.8,59.91,59.86,64.33,59.29,64.8,55.1,61.85,60.39,60.68,61.2,58.41,58.95,56.78,56.61,60.96,61.42,60.17,62.92,66.48,58.45,52.7,63.18,57.76,57.82,63.24,59.1,56.14,60.57,59.56,60.02,61.22,58.83,62.04,59.3,61.05,63.47,61.38,58.97,63.63,63.14,61.73,60.75,58.01,64.3,58.1,66.92,64.84999999999999,59.25,56.75]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"conversion_score","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ca840a566f622f26fb56" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ca840a566f622f26fb56">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],[58.23,59.27,64.93000000000001,60.22,60.41,65.42,61.46,56,57.83,58.59,63.87,61.14,61.27,60.35,58.24,65.65000000000001,61.57,53.78,62.22,58.5,56.62,59.31,56.76,57.7,58.02,54.67,62.65,60.49,56.4,63.96,61.35,59.07,62.83,62.78,62.6,62.18,61.75,59.8,59.03,58.8,57.8,59.34,56,66.86,63.82,56.45,58.73,58.52,62.47,59.74,60.8,59.91,59.86,64.33,59.29,64.8,55.1,61.85,60.39,60.68,61.2,58.41,58.95,56.78,56.61,60.96,61.42,60.17,62.92,66.48,58.45,52.7,63.18,57.76,57.82,63.24,59.1,56.14,60.57,59.56,60.02,61.22,58.83,62.04,59.3,61.05,63.47,61.38,58.97,63.63,63.14,61.73,60.75,58.01,64.3,58.1,66.92,64.84999999999999,59.25,56.75]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"conversion_score","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </figure>
@@ -567,6 +589,28 @@ Table&nbsp;4.2: First 100 rows of our A/B/n simulated data with webpage design a
 </div>
 </div>
 </div>
+<div class="Tip">
+<div class="Tip-header">
+<p>Tip on the generative modelling process for the simulated data!</p>
+</div>
+<div class="Tip-container">
+<p>We have already clarified that the datasets used in this chapter, such as <code>OneWay_ABn_customer_data</code>, are simulated. We chose this approach to explain ANOVA so that the data used in our test workflow meets the modelling assumptions. This ensures that we can provide a clear and comprehensive explanation for the reader on this inferential tool.</p>
+<p>If you are interested in the generative modelling process for <code>OneWay_ABn_customer_data</code> and would like to reproduce it in either <code>R</code> or <code>Python</code>, please refer to <a href="B-simulated-datasets.html#sec-one-way-ANOVA-sim" class="quarto-xref"><span>Section B.3.1</span></a>. It is worth noting that the datasets used in this chapter are the ones generated using <code>R</code>, as both <code>R</code> and <code>Python</code> use different pseudo-random number generators, even when using the same simulation seeds.</p>
+</div>
+</div>
+<p>Now, after collecting the data, it is time to proceed with the data splitting into training and testing. For this specific case, assume the team in charge of this analysis decided to execute a 50-50 random data splitting which would yield a training set size of <span class="math inline">\(n_{\text{training}} = 300\)</span> and testing set size of <span class="math inline">\(n_{\text{testing}} = 300\)</span>. Nevertheless, to keep the balanced nature of our experiment, we have to ensure that both sets will end up with 100 customers allocated to each one of the three treatments. Therefore, we need to implement a stratified randomization (where each treatment is a strata) as follows:</p>
+<ul>
+<li>
+<code>R</code>: This code performs a stratified random split of the <code>OneWay_ABn_customer_data</code> dataset into training and testing sets, ensuring reproducibility and balance across different levels of <code>webpage_design</code>. The library <a href="https://rsample.tidymodels.org">{rsample}</a> <span class="citation" data-cites="rsample">(<a href="references.html#ref-rsample" role="doc-biblioref">Frick et al. 2025</a>)</span> is utilized for executing the stratified random split. Note that the <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code> function is used to fix the random seed, allowing the results to be replicated. Then, the <code><a href="https://rsample.tidymodels.org/reference/initial_split.html">initial_split()</a></code> function divides the <code>OneWay_ABn_customer_data</code> into two parts, allocating 50% for training and 50% for testing while maintaining proportional representation of each category in the <code>webpage_design</code> variable (the <code>strata</code> argument ensures this). The <code><a href="https://rsample.tidymodels.org/reference/initial_split.html">training()</a></code> and <code><a href="https://rsample.tidymodels.org/reference/initial_split.html">testing()</a></code> functions extract the respective subsets from the split object. Lastly, to implement a sanity check, we retrieve the dimensions of each subset (number of rows and columns) and examine the relative proportions of <code>webpage_design</code> levels within each split. This verification step ensures that the experimental treatments remain balanced in both training and testing sets, which is essential for unbiased modeling and valid inference in one-way ANOVA.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/paint.png" class="img-fluid figure-img" width="525"></p>
+<figcaption>Image by <a href="https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3699345"><em>Manfred Steger</em></a> via <a href="https://pixabay.com/vectors/pixel-cells-pixel-social-network-3704049/"><em>Pixabay</em></a>.</figcaption></figure>
+</div>
+<ul>
+<li>
+<code>Python</code>: The code executes a stratified data splitting process similar to its <code>R</code> equivalent, utilizing the <code>train_test_split()</code> function from <a href="https://scikit-learn.org/stable/">scikit-learn</a> <span class="citation" data-cites="scikit-learn">(<a href="references.html#ref-scikit-learn" role="doc-biblioref">Pedregosa et al. 2011</a>)</span>. A fixed random seed is set using the <code>random_state</code> parameter to ensure reproducibility, so that each execution generates the same random partition. The dataset, <code>OneWay_ABn_customer_data</code>, is then divided into two equal subsets: 50% for training and 50% for testing. The <code>stratify</code> argument in <code>train_test_split()</code> guarantees that the <code>webpage_design</code> maintains consistent proportional representation in both subsets, thus preserving balance across experimental treatments. After completing the split, we conduct the same sanity check as described above</li>
+</ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true"><strong><code>R</code> Code</strong></a></li>
@@ -574,8 +618,7 @@ Table&nbsp;4.2: First 100 rows of our A/B/n simulated data with webpage design a
 </ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading libraries</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading library</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rsample.tidymodels.org">rsample</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Seed for reproducibility</span></span>
@@ -703,7 +746,10 @@ Name: proportion, dtype: float64</code></pre>
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-one-summary-stats-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;4.3: Descriptive statistics of one-factor A/B/n testing via training set.
 </figcaption><div aria-describedby="tbl-one-summary-stats-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Computing summaries</span></span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading library</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Computing summaries</span></span>
 <span><span class="va">OneWay_summary_table</span> <span class="op">&lt;-</span> <span class="va">OneWay_ABn_training</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">webpage_design</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
@@ -1030,8 +1076,8 @@ Table&nbsp;4.10: Levene’s test for homogeneity of variances for one-way ANOVA 
 Table&nbsp;4.11: First 100 rows of our A/B/n simulated data with webpage design and discount framing as a experimental factors.
 </figcaption><div aria-describedby="tbl-ANOVA-ABn-data-r-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-210dc57d0e4b6cefcee0" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-210dc57d0e4b6cefcee0">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[46.76,48.08,55.23,49.28,49.52,55.86,50.84,43.94,46.25,47.22,53.9,50.44,50.6,49.44,46.78,56.15,50.99,41.13,51.81,47.11,44.73,48.13,44.9,46.08,46.5,42.25,52.35,49.61,44.45,54.02,50.71,47.82,52.58,52.51,52.29,51.75,51.22,48.75,47.78,47.48,46.22,48.17,43.94,57.68,53.83,44.51,47.39,47.13,52.12,48.67,50.01,48.89,48.83,54.47,48.1,55.07,42.8,51.34,49.5,49.86,50.52,46.99,47.67,44.93,44.71,50.21,50.79,49.21,52.69,57.2,47.04,39.76,53.02,46.16,46.25,53.1,47.86,44.12,49.73,48.44,49.02,50.54,47.52,51.58,48.12,50.33,53.39,50.74,47.7,53.6,52.97,51.19,49.95,46.49,54.44,46.6,57.75,55.13,48.06,44.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-b8dfc61256cb9110a0fe" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b8dfc61256cb9110a0fe">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[46.76,48.08,55.23,49.28,49.52,55.86,50.84,43.94,46.25,47.22,53.9,50.44,50.6,49.44,46.78,56.15,50.99,41.13,51.81,47.11,44.73,48.13,44.9,46.08,46.5,42.25,52.35,49.61,44.45,54.02,50.71,47.82,52.58,52.51,52.29,51.75,51.22,48.75,47.78,47.48,46.22,48.17,43.94,57.68,53.83,44.51,47.39,47.13,52.12,48.67,50.01,48.89,48.83,54.47,48.1,55.07,42.8,51.34,49.5,49.86,50.52,46.99,47.67,44.93,44.71,50.21,50.79,49.21,52.69,57.2,47.04,39.76,53.02,46.16,46.25,53.1,47.86,44.12,49.73,48.44,49.02,50.54,47.52,51.58,48.12,50.33,53.39,50.74,47.7,53.6,52.97,51.19,49.95,46.49,54.44,46.6,57.75,55.13,48.06,44.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </figure>
@@ -1045,8 +1091,8 @@ Table&nbsp;4.11: First 100 rows of our A/B/n simulated data with webpage design 
 Table&nbsp;4.12: First 100 rows of our A/B/n simulated data with webpage design and discount framing as a experimental factors.
 </figcaption><div aria-describedby="tbl-ANOVA-ABn-data-py-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-a9f9e52caaa41ebc3847" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-a9f9e52caaa41ebc3847">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[46.76,48.08,55.23,49.28,49.52,55.86,50.84,43.94,46.25,47.22,53.9,50.44,50.6,49.44,46.78,56.15,50.99,41.13,51.81,47.11,44.73,48.13,44.9,46.08,46.5,42.25,52.35,49.61,44.45,54.02,50.71,47.82,52.58,52.51,52.29,51.75,51.22,48.75,47.78,47.48,46.22,48.17,43.94,57.68,53.83,44.51,47.39,47.13,52.12,48.67,50.01,48.89,48.83,54.47,48.1,55.07,42.8,51.34,49.5,49.86,50.52,46.99,47.67,44.93,44.71,50.21,50.79,49.21,52.69,57.2,47.04,39.76,53.02,46.16,46.25,53.1,47.86,44.12,49.73,48.44,49.02,50.54,47.52,51.58,48.12,50.33,53.39,50.74,47.7,53.6,52.97,51.19,49.95,46.49,54.44,46.6,57.75,55.13,48.06,44.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-0b8397d1b7e62070d664" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0b8397d1b7e62070d664">{"x":{"filter":"none","vertical":false,"data":[["D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1","D1"],["Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low","Low"],[46.76,48.08,55.23,49.28,49.52,55.86,50.84,43.94,46.25,47.22,53.9,50.44,50.6,49.44,46.78,56.15,50.99,41.13,51.81,47.11,44.73,48.13,44.9,46.08,46.5,42.25,52.35,49.61,44.45,54.02,50.71,47.82,52.58,52.51,52.29,51.75,51.22,48.75,47.78,47.48,46.22,48.17,43.94,57.68,53.83,44.51,47.39,47.13,52.12,48.67,50.01,48.89,48.83,54.47,48.1,55.07,42.8,51.34,49.5,49.86,50.52,46.99,47.67,44.93,44.71,50.21,50.79,49.21,52.69,57.2,47.04,39.76,53.02,46.16,46.25,53.1,47.86,44.12,49.73,48.44,49.02,50.54,47.52,51.58,48.12,50.33,53.39,50.74,47.7,53.6,52.97,51.19,49.95,46.49,54.44,46.6,57.75,55.13,48.06,44.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>webpage_design<\/th>\n      <th>discount_framing<\/th>\n      <th>conversion_score<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"ltipr","autoWidth":true,"columnDefs":[{"className":"dt-left","targets":"_all"},{"width":"200px","targets":"_all"},{"name":"webpage_design","targets":0},{"name":"discount_framing","targets":1},{"name":"conversion_score","targets":2}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </figure>
@@ -1518,11 +1564,17 @@ Table&nbsp;4.20: Levene’s test for homogeneity of variances for two-way ANOVA 
 <div id="ref-fisher1925" class="csl-entry" role="listitem">
 Fisher, R. A. 1925. <em>Statistical Methods for Research Workers</em>. Edinburgh Oliver &amp; Boyd.
 </div>
+<div id="ref-rsample" class="csl-entry" role="listitem">
+Frick, Hannah, Fanny Chow, Max Kuhn, Michael Mahoney, Julia Silge, and Hadley Wickham. 2025. <em>Rsample: General Resampling Infrastructure</em>. <a href="https://doi.org/10.32614/CRAN.package.rsample">https://doi.org/10.32614/CRAN.package.rsample</a>.
+</div>
 <div id="ref-kennedyshaffer02024" class="csl-entry" role="listitem">
 Kennedy-Shaffer, Lee. 2024. <span>“Teaching the Difficult Past of Statistics to Improve the Future.”</span> <em>Journal of Statistics and Data Science Education</em> 32 (1): 108–19. <a href="https://doi.org/10.1080/26939169.2023.2224407">https://doi.org/10.1080/26939169.2023.2224407</a>.
 </div>
 <div id="ref-mackenzie1981" class="csl-entry" role="listitem">
 MacKenzie, D. A. 1981. <em>Statistics in Britain, 1865-1930: The Social Construction of Scientific Knowledge</em>. Edinburgh University Press.
+</div>
+<div id="ref-scikit-learn" class="csl-entry" role="listitem">
+Pedregosa, F., G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, et al. 2011. <span>“Scikit-Learn: Machine Learning in <span>P</span>ython.”</span> <em>Journal of Machine Learning Research</em> 12: 2825–30.
 </div>
 <div id="ref-DSCI554" class="csl-entry" role="listitem">
 Rodríguez-Arelis, G. Alexi, Daniel Chen, Benjamin Bloem-Redd, Tiffany Timbers, and Vincenzo Coia. 2024. <span>“DSCI 554: Experimentation and Causal Inference.”</span> <a href="https://ubc-mds.github.io/DSCI_554_exper-causal-inf/README.html" class="uri">https://ubc-mds.github.io/DSCI_554_exper-causal-inf/README.html</a>.
@@ -1966,8 +2018,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../book/chapter5-chi-square.html" class="pagination-link" aria-label="Chapter 5: Chi-square Tests">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Chi-square Tests</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../book/chapter5-chi-square.html" class="pagination-link" aria-label="Chi-squared Tests">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chi-squared Tests</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

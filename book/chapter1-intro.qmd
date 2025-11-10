@@ -140,7 +140,6 @@ With this format, you can tailor your coding journey based on your language pref
 ::::
 :::
 
-
  After we have wrangled our data, we need to split it into two sets:
 
 -   **Training set.** This set is used solely for exploratory data analysis (EDA) and allows us to gain graphical and descriptive insights into how the sample of individuals behaves concerning our main inferential inquiries.
@@ -283,6 +282,7 @@ When presenting our findings to stakeholders, it is essential to include uncerta
 - **[Chapter @sec-one-continuous-mean]** focuses on hypothesis tests applied to a single population mean across two different types of responses. For unbounded responses, traditional tests such as the **one-sample $t$-test** are introduced. For binary responses transformed into proportions (e.g., the fraction of success in a Bernoulli trial), the chapter covers tests for one population proportion, including the **$z$-test for proportions**.
 - **[Chapter @sec-two-continuous-means]** extends the single-group approach to comparisons between two groups, concentrating on both independent and related populations. For two independent populations with unbounded responses, it discusses the **two-sample $t$-test**. For binary outcomes between two groups, the chapter explains inference on two proportions using methods like the **$z$-test for two proportions**. It also addresses related populations (e.g., pre/post measurements or matched pairs) by introducing the **paired-sample $t$-test**, highlighting how dependency affects the testing framework.
 - **[Chapter @sec-anova]** generalizes the two-group comparison to $k$ groups using **analysis of variance (ANOVA)** techniques. This chapter focuses on continuous, unbounded response variables and explains how ANOVA partitions total variation to detect mean differences across groups.
+- **[Chapter @sec-chi-squared-tests]** introduces the **chi-squared family of tests** (such as the goodness of fit and test of independence) to assess associations within and between categorical variables.
 
 ::: {#fig-test-general-mindmap}
 ```{mermaid}
@@ -303,7 +303,8 @@ mindmap
         Two<br/>Related<br/>Populations or<br/>Measurements
           {{Unbounded<br/>Responses}}
       (Chapter 4: ANOVA related <br/>Tests for<br/>k Continuous<br/>Population Means)
-        {{Unbounded<br/>Responses}}
+      (Chapter 5: <br/>Chi-squared<br/>Tests)
+        {{Categorical<br/>Variables}}
 ```
 
 A general hypothesis testing mind map outlining all techniques explored in this book. Depending on the overall approach to be used, these techniques are divided into two broad categories: classical and simulation-based tests.

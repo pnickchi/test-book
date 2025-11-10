@@ -61,7 +61,7 @@ By the end of this chapter, you will be able to:
 :::
 :::::
 
-It is time to expand our hypothesis testing framework from comparing two population means to a generalized approach for $k$ population means by exploring **analysis of variance (ANOVA)**. ANOVA is a foundational test in frequentist statistics designed to compare means across multiple populations under specific distributional assumptions, which we will examine in this chapter. Originally formalized by Ronald A. Fisher [@fisher1925], ANOVA extends the concept of the two-sample $t$-test by partitioning the total variability of our outcome of interest into components attributable to **main effects**, **interactions**, and **random error**. This partitioning enables us to determine whether observed differences in groups are improbable to appear under the null hypothesis, which states that all groups share the same population mean.
+It is time to expand our hypothesis testing framework from comparing two population means to a generalized approach for $k$ population means by exploring **analysis of variance (ANOVA)** as shown in @fig-test-chapter-3-mindmap. ANOVA is a foundational test in frequentist statistics designed to compare means across multiple populations under specific distributional assumptions, which we will examine in this chapter. Originally formalized by Ronald A. Fisher [@fisher1925], ANOVA extends the concept of the two-sample $t$-test by partitioning the total variability of our outcome of interest into components attributable to **main effects**, **interactions**, and **random error**. This partitioning enables us to determine whether observed differences in groups are improbable to appear under the null hypothesis, which states that all groups share the same population mean.
 
 ::: {#fig-test-chapter-3-mindmap}
 ```{mermaid}
@@ -72,14 +72,15 @@ mindmap
   ))
     Simulation Based<br/>Tests
     Classical<br/>Tests
-      (Chapter 1: <br/>Tests for One<br/>Continuous<br/>Population Mean)
-      (Chapter 2: <br/>Tests for Two<br/>Continuous<br/>Population Means)
-      (Chapter 3: <br/>ANOVA-related <br/>Tests for<br/>k Continuous<br/>Population Means)
+      (Chapter 2: <br/>Tests for One<br/>Continuous<br/>Population Mean)
+      (Chapter 3: <br/>Tests for Two<br/>Continuous<br/>Population Means)
+      (Chapter 4: <br/>ANOVA-related <br/>Tests for<br/>k Continuous<br/>Population Means)
         {{Unbounded<br/>Responses}}
           One<br/>Factor type<br/>Feature
             )One way<br/>ANOVA(
           Two<br/>Factor type<br/>Features
             )Two way<br/>ANOVA(
+      (Chapter 5: <br/>Chi-squared<br/>Tests)
 ```
 
 A specific hypothesis testing mind map outlining the techniques explored in this chapter, which include ANOVA-related tests for $k$ population means.
@@ -135,19 +136,19 @@ When conducting experiments with more than two treatments in A/B testing, the ex
 
 ## One-way ANOVA {#sec-one-way-ANOVA}
 
-Imagine you are part of a data-driven marketing team at a well-known tech company that operates a global online store. This store is heavily invested in using statistical experimentation on its website to enhance the customer shopping experience, with the goal of increasing profit margins in the long term. As part of this effort, the team frequently conducts A/B/n testings. These A/B/n testings specifically aim to **increase the customer conversion score**, which is the primary outcome measure. This **continuous score** is a unitless and standardized index of engagement, incorporating various elements such as clicks, time spent on the website, and the probability of making a purchase. The baseline of this score is set at $50$. This index measures customer responsiveness on the online store: **the higher the score, the greater the customer responsiveness**.
+Imagine you are part of a data-driven marketing team at a well-known tech company that operates a global online store. This store is heavily invested in using statistical experimentation on its website to enhance the customer shopping experience, with the goal of increasing profit margins in the long term. As part of this effort, the team frequently conducts A/B/n testings. These A/B/n testings specifically aim to **increase the customer conversion score**, which is the primary outcome measure. This **continuous score** is a unitless and standardized index of engagement, incorporating various elements such as clicks, time spent on the website, and the probability of making a purchase. The baseline of this score is set at $50$. This score measures customer responsiveness on the online store: **the higher the score, the greater the customer responsiveness**.
 
 <br>
 
 ![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-observation-internship-3974186/).](img/study.png){width="80%"}
 
-To start with the first of these A/B/n testings, let us suppose the heads of the marketing and sales departments have come up with the groundbreaking idea of modifying the overall webpage design in two different experimental ways to investigate whether these modifications somehow **cause** the aforementioned **mean customer conversion score** to change. For the sake of this case, the department heads aim to compare how this score behaves between these **two experimental webpage designs** and the **current webpage design**.
+To start with the first of these two A/B/n testings, let us suppose the heads of the marketing and sales departments have come up with the groundbreaking idea of modifying the overall webpage design in two different experimental ways to investigate whether these modifications somehow **cause** the **mean customer conversion score** to change. For the sake of this case, the department heads aim to compare how this score behaves between these **two experimental webpage designs** and the **current webpage design**.
 
 ### Study Design {#sec-one-way-ANOVA-study-design}
 
-The first stage of our testing workflow involves the main statistical inquiry we aim to address. Therefore, let us translate the above situation into a concrete question that is meaningful for both the stakeholders (namely, the marketing and sales departments) and for you as part of the data-driven marketing team. We can frame the main inquiry as follows:
+The first stage of our testing workflow involves the main statistical inquiry we aim to address. Therefore, let us translate the above situation into a concrete question that is meaningful for both the stakeholders (namely, the marketing and sales department heads) and for you as part of the data-driven marketing team. We can frame the main inquiry as follows:
 
-> **Will the change across the two experimental webpage designs and the current design result in any statistical difference in the population mean customer conversion score?**
+> **Will the change across the two experimental webpage designs and the current design cause any statistical difference in the population mean customer conversion score?**
 
 ![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/laptop-games-jigsaw-puzzle-puzzle-7426707/).](img/puzzle.png){width="300"}
 
@@ -155,15 +156,15 @@ This statistical inquiry represents the foundational step in our testing workflo
 
 In terms on how this A/B/n testing would be designed, let us consider the following aspects:
 
-1. The experiment will solely focus on **webpage design**, which we consider a **controllable factor** determined by the experimenter (that is you, as part of the data-driven marketing team). This factor includes three different webpage layouts (or designs): $D_1$ (the current layout), $D_2$ (a new and experimental layout), and $D_3$ (another new and experimental layout). This setup creates a three-level factor. To summarize in statistical terms, we have:
-    - One factor: **webpage design**
-    - Three **treatments** (the three layout options), which classifies this study as A/B/n testing.
-    - The **outcome variable $Y$**, defined as the customer conversion score, which has been explained previously.
+1. The experiment will solely focus on **webpage design**, which we consider a **controllable factor** determined by the **experimenter** (that is you, as part of the data-driven marketing team). This factor includes three different webpage layouts (or designs): $D_1$ (the current layout), $D_2$ (a new and experimental layout), and $D_3$ (another new and experimental layout). This setup creates a three-level factor. To summarize in statistical terms, we have:
+    - One factor: **webpage design**.
+    - Three **treatments** (the three layout options), which classifies this study as A/B/n testing. Treatment $D_1$ is referred to as the **control treatment**, whereas $D_2$ and $D_3$ are the **experimental treatments**.
+    - The **continuous outcome variable $Y$**, defined as the customer conversion score, which has been explained previously.
 2. **Before conducting the experiment**, assume that your team has performed a proper **power analysis** to determine the total sample size of customers to be recruited for the A/B/n testing. This power analysis has indicated an overall sample size of $n = 600$ customers (namely, **experimental units**). Consequently, each treatment group will consist of $\frac{n}{3} = 200$ customers, making this a **balanced experiment**.
 
 ::::: Heads-up
 ::: Heads-up-header
-Heads-up on the importance of having a balanced experiment
+Heads-up on the importance of having a balanced experiment!
 :::
 ::: Heads-up-container
 In the **design and analysis of experiments**, having a balanced experiment (where each treatment receives the same number of experimental units) offers two advantages:
@@ -172,18 +173,35 @@ In the **design and analysis of experiments**, having a balanced experiment (whe
 - On the other hand, from a practical point of view, a balanced experiment makes analysis robust against **biased parameter estimation**, which might be caused by an uneven exposure of experimental units to the different treatments.
 
 ![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-emotion-confused-6230199/).](img/question-2.png){width="250"}
-
 :::
 :::::
 
 ### Data Collection and Wrangling {#sec-one-way-ANOVA-data-collection-wrangling}
 
+Having designed our statistical experiment, it is now time to execute it, which we refer to as **data collection**. To ensure we accurately assess the causality of our statistical inquiry regarding changes in the population mean customer conversion score across three different webpage designs, we must randomly assign our $n = 600$ experimental units evenly among the three treatments. This means we will collect $\frac{n}{3} = 200$ data points for each treatment. To achieve this, we can use **a suitable online tool** to route website traffic uniformly, potentially employing stratified randomization based on additional covariates, such as device type and geographical location. This approach will help us allocate the $n = 600$ experimental units to one of the three treatments effectively.
 
+::::: Heads-up
+::: Heads-up-header
+Heads-up on the importance of treatment randomization in statistical experimentation!
+:::
+::: Heads-up-container
+In A/B and A/B/n testing, online tools such as [Optimizely](https://www.optimizely.com) and [ABTasty](https://www.abtasty.com) enable experimenters to randomly assign web traffic units (i.e., experimental units) to different treatments of interest. These tools also offer several additional useful features, which are beyond the scope of this textbook. 
+
+Treatment randomization is a valuable statistical tool because:
+
+- It ensures that, on average, **observed** and **unobserved confounding variables** are evenly distributed across treatments. This helps to avoid obtaining biased estimates of population parameters when evaluating causality between outcomes and the treatments of interest.
+- As discussed further in @sec-one-way-ANOVA-test-flavour, treatment randomization also guarantees that all observed data points are **statistically independent** concerning the **random noise** associated with their corresponding measurements. This statistical independence in the random noise (often referred to as the **random component**, which is also assumed to be **identically distributed**) is a critical assumption in ANOVA hypothesis testing. If these probabilistic assumptions are not met, the ANOVA test statistic and null distribution may not be appropriate for our observed data and inferential inquiries.
+:::
+:::::
+
+<br>
 
 ![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-portfolio-work-folder-3947911/).](img/screen.png){width="50%"}
 
+Let us discuss our data collection process. Assume you have already conducted this A/B/n testing and recruited $n = 600$ customers for this experiment. These customers have been randomly assigned to one of the three webpage designs, and their conversion scores have been measured accordingly. To begin our inferential process, the following code snippets in `R` and `Python` will load the dataset, which contains the following columns:
 
-
+- `webpage_design`: A factor-type column representing the webpage design to which each experimental unit was assigned ($D_1$, $D_2$ or $D_3$).
+- `conversion_score`: A numeric, continuous column that records the measured customer conversion scores as previously described at the beginning of this one-way ANOVA section.
 
 ::: {.panel-tabset}
 
@@ -255,14 +273,31 @@ print_as_dt(head(py$OneWay_ABn_customer_data, 100))
 
 :::
 
+::::: Tip
+::: Tip-header
+Tip on the generative modelling process for the simulated data! 
+:::
+::: Tip-container
+We have already clarified that the datasets used in this chapter, such as `OneWay_ABn_customer_data`, are simulated. We chose this approach to explain ANOVA so that the data used in our test workflow meets the modelling assumptions. This ensures that we can provide a clear and comprehensive explanation for the reader on this inferential tool. 
+
+If you are interested in the generative modelling process for `OneWay_ABn_customer_data` and would like to reproduce it in either `R` or `Python`, please refer to @sec-one-way-ANOVA-sim. It is worth noting that the datasets used in this chapter are the ones generated using `R`, as both `R` and `Python` use different pseudo-random number generators, even when using the same simulation seeds.
+:::
+:::::
+
+Now, after collecting the data, it is time to proceed with the data splitting into training and testing. For this specific case, assume the team in charge of this analysis decided to execute a 50-50 random data splitting which would yield a training set size of $n_{\text{training}} = 300$ and testing set size of $n_{\text{testing}} = 300$. Nevertheless, to keep the balanced nature of our experiment, we have to ensure that both sets will end up with 100 customers allocated to each one of the three treatments. Therefore, we need to implement a stratified randomization (where each treatment is a strata) as follows:
+
+- `R`: This code performs a stratified random split of the `OneWay_ABn_customer_data` dataset into training and testing sets, ensuring reproducibility and balance across different levels of `webpage_design`. The library [{rsample}](https://rsample.tidymodels.org) [@rsample] is utilized for executing the stratified random split. Note that the `set.seed()` function is used to fix the random seed, allowing the results to be replicated. Then, the `initial_split()` function divides the `OneWay_ABn_customer_data` into two parts, allocating 50% for training and 50% for testing while maintaining proportional representation of each category in the `webpage_design` variable (the `strata` argument ensures this). The `training()` and `testing()` functions extract the respective subsets from the split object. Lastly, to implement a sanity check, we retrieve the dimensions of each subset (number of rows and columns) and examine the relative proportions of `webpage_design` levels within each split. This verification step ensures that the experimental treatments remain balanced in both training and testing sets, which is essential for unbiased modeling and valid inference in one-way ANOVA.
+
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-pixel-social-network-3704049/).](img/paint.png){width="525"}
+
+- `Python`: The code executes a stratified data splitting process similar to its `R` equivalent, utilizing the `train_test_split()` function from [scikit-learn](https://scikit-learn.org/stable/) [@scikit-learn]. A fixed random seed is set using the `random_state` parameter to ensure reproducibility, so that each execution generates the same random partition. The dataset, `OneWay_ABn_customer_data`, is then divided into two equal subsets: 50% for training and 50% for testing. The `stratify` argument in `train_test_split()` guarantees that the `webpage_design` maintains consistent proportional representation in both subsets, thus preserving balance across experimental treatments. After completing the split, we conduct the same sanity check as described above
 
 ::: {.panel-tabset}
 
 ## **`R` Code**
 
 ``` {.r}
-# Loading libraries
-library(tidyverse)
+# Loading library
 library(rsample)
 
 # Seed for reproducibility
@@ -322,8 +357,7 @@ print(OneWay_ABn_testing["webpage_design"].value_counts(normalize=True))
 #| echo: false
 #| message: false
 
-# Loading libraries
-library(tidyverse)
+# Loading library
 library(rsample)
 
 # Seed for reproducibility
@@ -388,6 +422,9 @@ print(OneWay_ABn_testing["webpage_design"].value_counts(normalize=True))
 #| label: tbl-one-summary-stats-r
 #| tbl-cap: "Descriptive statistics of one-factor A/B/n testing via training set."
 #| message: false
+# Loading library
+library(tidyverse)
+
 # Computing summaries
 OneWay_summary_table <- OneWay_ABn_training |>
   group_by(webpage_design) |>
