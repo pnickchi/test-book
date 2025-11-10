@@ -74,7 +74,7 @@ quarto render
 ## Example Chapters
 
 - **Chapter 1:** The Testing Workflow — introduces the eight-stage process.
-- **Chapters 2–4:** Core tests ($t$-tests and ANOVA).
+- **Chapters 2–4:** Core tests (proportion and $t$-tests, and ANOVA).
 - **Chapter 5:** Chi-Squared Tests — categorical data analysis.
 - **Appendix B:** Simulated datasets.
 
