@@ -280,7 +280,7 @@ Tip on the generative modelling process for the simulated data!
 ::: Tip-container
 We have already clarified that the datasets used in this chapter, such as `OneWay_ABn_customer_data`, are simulated. We chose this approach to explain ANOVA so that the data used in our test workflow meets the modelling assumptions. This ensures that we can provide a clear and comprehensive explanation for the reader on this inferential tool. 
 
-If you are interested in the generative modelling process for `OneWay_ABn_customer_data` and would like to reproduce it in either `R` or `Python`, please refer to @sec-one-way-ANOVA-sim. It is worth noting that the datasets used in this chapter are the ones generated using `R`, as both `R` and `Python` use different pseudo-random number generators, even when using the same simulation seeds.
+If you are interested in the generative modelling process for `OneWay_ABn_customer_data` and would like to reproduce it in either `R` or `Python`, you can refer to @sec-one-way-ANOVA-sim. Note that the datasets used in this chapter are generated using `R`, as `R` and `Python` use different pseudo-random number generators, even when using the same simulation seeds, leading to different simulated datasets.
 :::
 :::::
 
