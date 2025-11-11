@@ -160,7 +160,7 @@ In terms on how this A/B/n testing would be designed, let us consider the follow
     - One factor: **webpage design**.
     - Three **treatments** (the three layout options), which classifies this study as A/B/n testing. Treatment $D_1$ is referred to as the **control treatment**, whereas $D_2$ and $D_3$ are the **experimental treatments**.
     - The **continuous outcome variable $Y$**, defined as the customer conversion score, which has been explained previously.
-2. **Before conducting the experiment**, assume that your team has performed a proper **power analysis** to determine the total sample size of customers to be recruited for the A/B/n testing. This power analysis has indicated an overall sample size of $n = 600$ customers (namely, **experimental units**). Consequently, each treatment group will consist of $\frac{n}{3} = 200$ customers, making this a **balanced experiment**.
+2. **Before conducting the experiment**, assume that your team has performed a proper **power analysis** (with a significance level $\alpha = 0.05$ and power $1 - \beta = 0.8$) to determine the total sample size of customers to be recruited for the A/B/n testing so you can detect a large enough effect size. This power analysis has indicated an overall sample size of $n = 600$ customers (namely, **experimental units**) . Consequently, each treatment group will consist of $\frac{n}{3} = 200$ customers, making this a **balanced experiment**.
 
 ::::: Heads-up
 ::: Heads-up-header
@@ -198,7 +198,7 @@ Treatment randomization is a valuable statistical tool because:
 
 ![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-portfolio-work-folder-3947911/).](img/screen.png){width="50%"}
 
-Let us discuss our data collection process. Assume you have already conducted this A/B/n testing and recruited $n = 600$ customers for this experiment. These customers have been randomly assigned to one of the three webpage designs, and their conversion scores have been measured accordingly. To begin our inferential process, the following code snippets in `R` and `Python` will load the dataset, which contains the following columns:
+Let us discuss our data collection process. Assume you have already conducted this A/B/n testing and recruited $n = 600$ customers for this experiment. These customers have been randomly assigned to one of the three webpage designs, and their conversion scores have been measured accordingly. To begin our inferential process, the following code snippets in `R` and `Python` (where the library [{pandas}](https://pandas.pydata.org/) is used) will load the dataset, which contains the following columns:
 
 - `webpage_design`: A factor-type column representing the webpage design to which each experimental unit was assigned ($D_1$, $D_2$ or $D_3$).
 - `conversion_score`: A numeric, continuous column that records the measured customer conversion scores as previously described at the beginning of this one-way ANOVA section.
@@ -290,7 +290,7 @@ Now, after collecting the data, it is time to proceed with the data splitting in
 
 ![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-pixel-social-network-3704049/).](img/paint.png){width="525"}
 
-- `Python`: The code executes a stratified data splitting process similar to its `R` equivalent, utilizing the `train_test_split()` function from [scikit-learn](https://scikit-learn.org/stable/) [@scikit-learn]. A fixed random seed is set using the `random_state` parameter to ensure reproducibility, so that each execution generates the same random partition. The dataset, `OneWay_ABn_customer_data`, is then divided into two equal subsets: 50% for training and 50% for testing. The `stratify` argument in `train_test_split()` guarantees that the `webpage_design` maintains consistent proportional representation in both subsets, thus preserving balance across experimental treatments. After completing the split, we conduct the same sanity check as described above
+- `Python`: The code executes a stratified data splitting process similar to its `R` equivalent, utilizing the `train_test_split()` function from [{scikit-learn}](https://scikit-learn.org/stable/) [@scikit-learn]. A fixed random seed is set using the `random_state` parameter to ensure reproducibility, so that each execution generates the same random partition. The dataset, `OneWay_ABn_customer_data`, is then divided into two equal subsets: 50% for training and 50% for testing. The `stratify` argument in `train_test_split()` guarantees that the `webpage_design` maintains consistent proportional representation in both subsets, thus preserving balance across experimental treatments. After completing the split, we conduct the same sanity check as described above.
 
 ::: {.panel-tabset}
 
@@ -414,6 +414,28 @@ print(OneWay_ABn_testing["webpage_design"].value_counts(normalize=True))
 
 ### Exploratory Data Analysis {#sec-one-way-ANOVA-EDA}
 
+Using our `OneWay_ABn_training` dataset, which consists of $n_{\text{training}} = 300$ experimental units, we will carry out a exploratory data analysis (EDA) to provide descriptive insights for our stakeholders. These insights will be delivered alongside inferential conclusions at the end of this workflow. Before we explore the relevant plots for the outcome and treatments used in this experiment, let us first examine some useful summary statistics.
+
+![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-pixel-to-learn-goal-3674110/).](img/mean.png){width="600"}
+
+Both code snippets below (in `R` and `Python`) take the data frame `OneWay_ABn_training` and compute descriptive summaries of the continuous outcome variable `conversion_score`, grouped by the categorical variable `webpage_design`. The computations include three basic summary measures: 
+
+1. the **mean conversion score** (i.e., average performance of each webpage design), 
+2. the **standard deviation** (i.e., the within-group variability in customer conversion behaviour), and 
+3. the **sample size `n`** (i.e., number of observations per treatment).
+
+These summaries provide a quick, exploratory understanding of the data, helping us obtain descriptive insights into the central tendency and spread of our outcome of interest per experimental treatment. The `R` implementation uses the [{tidyverse}](https://tidyverse.org/) meta-package. Conversely, the `Python` implementation uses the [{pandas}](https://pandas.pydata.org/) library for these numerical computations.
+
+::::: Heads-up
+::: Heads-up-header
+Heads-up on the use of [{reticulate}](https://rstudio.github.io/reticulate/) in the `Python` code snippet!
+:::
+::: Heads-up-container
+In the below `Python` code snippet, we are importing the `OneWay_ABn_training` set, which was created from our random data splitting in the `R` environment using the [{reticulate}](https://rstudio.github.io/reticulate/) [@reticulate] package. We will eventually also do the same with the `OneWay_ABn_testing` dataset. This approach is necessary because both the [{rsample}](https://rsample.tidymodels.org) package in `R` and [{scikit-learn}](https://scikit-learn.org/stable/) in `Python` utilize different pseudo-random number generators. As a result, they produce different training and testing data splits, even when using the same seed values. Therefore, to ensure consistent output across all subsequent `R` and `Python` snippets in our workflow, it is necessary that we use the same training and testing sets.
+:::
+:::::
+
+
 ::: {.panel-tabset}
 
 ## **`R`**
@@ -465,15 +487,25 @@ OneWay_summary_table
 
 :::
 
+The mean conversion scores (found in both @tbl-one-summary-stats-r and @tbl-one-summary-stats-py) are **very similar across the three webpage designs**, ranging narrowly from `r min(OneWay_summary_table$mean_conversion)` to `r max(OneWay_summary_table$mean_conversion)`. Additionally, **the standard deviations are also alike**, with values ranging from `r min(OneWay_summary_table$sd_conversion)` to `r max(OneWay_summary_table$sd_conversion)`. These standard deviations suggest similar levels of variability within each webpage. Although there are minor differences in the treatment means, they are subtle enough that formal hypothesis testing, such as one-way ANOVA, is necessary to determine whether these small fluctuations are due to random variation or represent genuine differences in the population means. These summary statistics therefore provide a solid descriptive check on group comparability and the plausibility of ANOVA assumptions, which sets the stage for **a rigorous inferential analysis**.
+
+We will use two plots in our EDA: **three overlaid histograms** (one per treatment) to compare the continuous conversion scores and **three side-by-side boxplots** of these scores per treatment. We use `R`'s [{ggplot2}](https://ggplot2.tidyverse.org/), from [{tidyverse}](https://tidyverse.org/), along with `Python`'s [{matplotlib}](https://matplotlib.org/) and [{seaborn}](https://seaborn.pydata.org/). The overlaid histograms in @fig-hist-webpage-design-one-r and @fig-hist-webpage-design-one-py indicate the following:
+
+- The three webpage designs exhibit approximately **unimodal** and **roughly symmetric distributions** centred around conversion scores in the low-60s, with slight differences in spread. 
+- Design $D_1$ appears slightly more concentrated around its mean, while $D_2$ and $D_3$ show marginally wider dispersion, reflected in slightly flatter histogram peaks.
+- The overlapping structure suggests that the central tendency (i.e., mean conversion score) is quite similar across the three webpage designs, with no visually apparent separation.
+
+::: {.panel-tabset}
+
+## **`R`**
+
 ```{r}
-#| label: fig-hist-webpage-design-one
-#| fig-cap: "Histograms of conversion score by webpage design via training data."
+#| label: fig-hist-webpage-design-one-r
+#| fig-cap: "Overlaid histograms of customer conversion score by webpage design via training data."
 #| warning: false
-#| echo: false
 #| message: false
 #| fig.height: 8
 #| fig.width: 14
-
 hist_one_way <- ggplot(
   OneWay_ABn_training,
   aes(x = conversion_score, fill = webpage_design)
@@ -511,16 +543,90 @@ hist_one_way <- ggplot(
 hist_one_way
 ```
 
+## **`Python`**
 
-```{r}
-#| label: fig-boxplot-webpage-design-one
-#| fig-cap: "Side-by-side boxplots of conversion score by webpage design via training data."
+```{python}
+#| label: fig-hist-webpage-design-one-py
+#| fig-cap: "Overlaid histograms of customer conversion score by webpage design via training data."
 #| warning: false
-#| echo: false
 #| message: false
 #| fig.height: 8
 #| fig.width: 14
+# Importing libraries
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+# Setting white-grid theme and typography
+sns.set_theme(style="whitegrid")
+plt.rcParams.update({
+    "axes.labelsize": 20,
+    "axes.titlesize": 20,
+    "xtick.labelsize": 15.5,
+    "ytick.labelsize": 15.5,
+    "legend.title_fontsize": 20,
+    "legend.fontsize": 20
+})
+
+# Defining palette
+palette = {
+    "D1": "#E69F00",
+    "D2": "#56B4E9",
+    "D3": "#009E73"
+}
+
+# Creating figure
+plt.figure(figsize=(14, 8))
+
+# Overlaying histograms with transparency and white edges
+for label, color in palette.items():
+    subset = OneWay_ABn_training[OneWay_ABn_training["webpage_design"] == label]
+    plt.hist(
+        subset["conversion_score"],
+        bins=30,
+        alpha=0.7,
+        color=color,
+        edgecolor="white",
+        label=label
+    )
+
+# Axis labels and legend
+plt.xlabel("Conversion Score", fontsize=20)
+plt.ylabel("Count", fontsize=20)
+plt.legend(
+    title="Webpage Design",
+    loc="lower center",
+    bbox_to_anchor=(0.5, -0.3),
+    ncol=3,
+    frameon=False
+)
+
+# Removing top/right spines and adjust layout
+sns.despine()
+plt.tight_layout()
+
+# Displaying
+plt.show()
+```
+
+:::
+
+Now, in  @fig-boxplot-webpage-design-one-r and @fig-boxplot-webpage-design-one-py each boxplot represents the distribution of customer conversion scores for one of the three webpage-design conditions ($D_1$, $D_2$, and $D_3$). The central line in each box is the median score; the top and bottom of the box span the 25th to 75th percentiles (the interquartile range, IQR); and the whiskers extend to the non-outlier extremes (according to the conventional 1.5× IQR rule). From a visual comparison of the three groups, we have the following:
+
+- The medians of $D_1$, $D_2$, and $D_3$ appear **quite similar**, indicating that the central tendency of conversion score is roughly equivalent across the three webpage designs.
+- The box heights (i.e., IQRs) show that **the spread of the middle 50% of scores is also very similar across experimental treatments**, meaning no webpage design shows substantially more variability in the core of its distribution than the others.
+- The whiskers and any outlier points (dots beyond whiskers) may reveal slight differences. For example, if one design has a somewhat longer upper whisker, that signals a larger tail of higher conversion scores in that condition.
+
+::: {.panel-tabset}
+
+## **`R`**
+
+```{r}
+#| label: fig-boxplot-webpage-design-one-r
+#| fig-cap: "Side-by-side boxplots of customer conversion score by webpage design via training data."
+#| warning: false
+#| message: false
+#| fig.height: 8
+#| fig.width: 14
 boxplots_webpage_design_one_way <- ggplot(OneWay_ABn_training, aes(
   x = webpage_design, y = conversion_score,
   fill = webpage_design
@@ -543,6 +649,65 @@ boxplots_webpage_design_one_way <- ggplot(OneWay_ABn_training, aes(
 boxplots_webpage_design_one_way
 ```
 
+## **`Python`**
+
+```{python}
+#| label: fig-boxplot-webpage-design-one-py
+#| fig-cap: "Side-by-side boxplots of customer conversion score by webpage design via training data."
+#| warning: false
+#| message: false
+#| fig.height: 8
+#| fig.width: 14
+# Setting white-grid theme and typography
+sns.set_theme(style="whitegrid")
+plt.rcParams.update({
+    "axes.labelsize": 20,
+    "axes.titlesize": 20,
+    "xtick.labelsize": 15.5,
+    "ytick.labelsize": 15.5
+})
+
+# Defining palette
+palette = {
+    "D1": "#E69F00",
+    "D2": "#56B4E9",
+    "D3": "#009E73"
+}
+
+# Creating figure
+fig, ax = plt.subplots(figsize=(14, 8))
+
+# Side-by-side boxplots
+sns.boxplot(
+    data=OneWay_ABn_training,
+    x="webpage_design",
+    y="conversion_score",
+    palette=palette,
+    saturation=0.7,        
+    linewidth=1.2,
+    fliersize=4,           
+    boxprops={"alpha": 0.7},
+    ax=ax
+)
+
+# Axis labels and formatting
+ax.set_xlabel("Webpage Design", fontsize=20)
+ax.set_ylabel("Conversion Score", fontsize=20)
+
+# Removing legend
+ax.legend_.remove() if ax.get_legend() else None
+
+# Setting background
+sns.despine(offset=10, trim=True)
+fig.tight_layout()
+
+# Displaying
+plt.show()
+```
+
+:::
+
+The combined histograms and side-by-side boxplots indicate that there is **no strong visual separation** among the distributions of customer conversion scores for the three webpage designs. The central tendency, spread, and tails of the distributions **overlap significantly**, suggesting that any treatment effect (if it exists) is likely to be subtle rather than pronounced. In summary, the EDA evidence reveals only minor differences among the webpage designs, highlighting the need for formal statistical testing to determine whether these small observed variations are statistically significant or merely a result of random sampling variability.
 
 ### Testing Settings {#sec-one-way-ANOVA-testing-settings}
 
