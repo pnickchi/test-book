@@ -4,6 +4,11 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
@@ -11,48 +16,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Install Quarto
       - uses: quarto-dev/quarto-actions/setup@v2
 
-      # Install Conda (we use mambaforge as recommended by Quarto)
-      - uses: conda-incubator/setup-miniconda@v3
-        with:
-          miniforge-variant: Mambaforge
-          use-mamba: true
-          python-version: "3.10"
-          activate-environment: quarto-env
+      - name: Install R + Python
+        uses: r-lib/actions/setup-r@v2
 
-      # Create the environment with R + Python dependencies
-      - name: Create environment
-        shell: bash -l {0}
+      - name: Install R packages
         run: |
-          mamba create -y -n quarto-env \
-            python=3.10 \
-            r-base \
-            r-tidyverse \
-            r-dplyr \
-            r-ggplot2 \
-            r-palmerpenguins \
-            r-stringr \
-            r-readr \
-            r-purrr \
-            r-tidyr \
-            r-tibble \
-            r-forcats \
-            r-reticulate \
-            pandas \
-            seaborn \
-            scikit-learn \
-            statsmodels \
-            scipy \
-            numpy \
-            matplotlib
+          Rscript -e 'install.packages(c("tidyverse","dplyr","ggplot2","palmerpenguins","stringr","readr","purrr","tibble","tidyr","forcats"))'
 
-      # Activate environment and render
+      - name: Install Python packages
+        run: |
+          pip install pandas seaborn scikit-learn statsmodels numpy scipy matplotlib
+
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CONDA_ENV: quarto-env
