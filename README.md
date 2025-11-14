@@ -41,7 +41,7 @@ The material follows a unified eight-stage testing workflow used throughout the 
 You will need the following tools installed:  
 - **`R` ≥ 4.0** (with `tidyverse`, `rsample`, `broom`, etc.). 
 - **`Python` ≥ 3.7** (with `pandas`, `numpy`, `scikit-learn`, `statsmodels`, etc.).
-- **Quarto** for rendering the book locally.
+- **`Quarto`** for rendering the book locally.
 
 ### Run Locally  
 
