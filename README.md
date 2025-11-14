@@ -103,7 +103,7 @@ For questions or feedback, open an issue on [GitHub](https://github.com/pnickchi
 
 If you use this material in teaching or research, please cite it as:
 
-Rodriguez-Arelis, G.A., Manskaia, E., & Nickchi, P. (2025). *The Mini Test Book*. University of British Columbia / OER Framework. [https://pnickchi.github.io/test-book/](https://pnickchi.github.io/test-book/)
+> Rodriguez-Arelis, G.A., Manskaia, E., & Nickchi, P. (2025). *The Mini Test Book*. University of British Columbia / OER Framework. [https://pnickchi.github.io/test-book/](https://pnickchi.github.io/test-book/)
 
 Here is a BibTeX entry you can use:
 
