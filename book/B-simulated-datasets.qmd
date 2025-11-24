@@ -265,9 +265,9 @@ set.seed(123)
 n_A <- 150
 n_B <- 200
 
-# Simulate true population proportions
-p_A <- 0.65
-p_B <- 0.35
+# Set the values for true population proportions
+p_A <- 0.57
+p_B <- 0.43
 
 # Generate binary outcomes for survey responses
 support_A <- rbinom(n_A, size = 1, prob = p_A)
@@ -305,9 +305,9 @@ set.seed(123)
 n_A <- 150
 n_B <- 200
 
-# Simulate true population proportions
-p_A <- 0.65
-p_B <- 0.35
+# Set the values for true population proportions
+p_A <- 0.57
+p_B <- 0.43
 
 # Generate binary outcomes for survey responses
 support_A <- rbinom(n_A, size = 1, prob = p_A)

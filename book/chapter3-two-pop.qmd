@@ -1487,9 +1487,9 @@ Based on our analysis, we asked: **Did LDL levels change significantly after tre
 
 ### Review
 
-In the examples we studied in [Section LINK HERE], we estimated the proportion of a population based on the sample proportion $\hat{p}$. This is often the case in practice, as the population proportion is typically unknown and must be inferred from sample data. When we are comparing two groups and wish to test whether their underlying proportions differ, we can extend this idea to a two-proportion test.
+In the examples we studied in @sec-one-continuous-mean, we estimated the proportion of a population based on the sample proportion $\hat{p}$. This is often the case in practice, as the population proportion is typically unknown and must be inferred from sample data. When we are comparing two groups and wish to test whether their underlying proportions differ, we can extend this idea to a two-proportion test.
 
-Suppose you are investigating support for a new policy among two different regions. Each individual either **supports the policy** (coded as 1) or **does not support it** (coded as 0). You want to determine if the proportion of supporters is significantly different between Region A and Region B.
+Suppose you are investigating support for a new policy among two different regions, Region A and Region B. Each individual either **supports the policy** (coded as 1) or **does not support it** (coded as 0). You want to determine if the proportion of supporters of the new policy is significantly different between Region A and Region B.
 
 Formally, let:
 
@@ -1503,7 +1503,7 @@ From each population, we take a random sample:
 
 - From Region B, a sample of size $m$, with observed sample proportion of support $\hat{p}_B$.
 
-where $\hat{p}_A$ and $\hat{p}_B$ are the estimates for the $p_1$ and $p_2$ which are the true population proportion of support in Region A and Region B.
+where $\hat{p}_A$ and $\hat{p}_B$ are the estimates for the $p_A$ and $p_B$. Note that $p_A$ and $p_B$ are the true proportion of new policy supporters in Region A and Region B and we estimate them by $\hat{p}_A$ and $\hat{p}_B$.
 
 The main statistical question becomes: **Is there a significant difference between the true population proportions of support in the two regions?** 
 
@@ -1513,17 +1513,18 @@ $$
 H_0: p_A = p_B \quad \text{versus} \quad H_A: p_A \ne p_B
 $$
 
-To answer this, we use the **two-sample z-test for population proportions**, which compares the observed sample proportions while accounting for the variability expected under the null hypothesis.
+To answer this, we use the **two-sample z-test for population proportions**, which compares the observed sample proportions (i.e. $\hat{p}_A$ and $\hat{p}_B$) while accounting for the variability expected under the null hypothesis.
 
 
 ### Study Design
 
-Consider a survey aimed at estimating support for a new environmental policy in two regions of a country. Researchers randomly sample Region A (n = 150 individuals) and Region B (m = 200 individuals), recording whether each participant supports the policy. The main outcome of interest is whether an individual supports or does not support the policy.
+Consider a survey aimed at estimating support for a new environmental policy in two regions of a country. Researchers randomly sample Region A (n = 150 individuals) and Region B (m = 200 individuals), recording whether each participant supports the new policy. The main outcome of interest is whether an individual supports or does not support the policy. In the next section, we will show the details of a generated dataset to simulate this real scenario in practice.
 
 
 ### Data Collection and Wrangling
 
-We will simulate a dataset to illustrate the concept:
+Similar to previous example, we will work with a simulated dataset that has been specifically created to illustrate the concept of tests for two populations. The code below generates the dataset we will be using. While running these lines is not strictly necessary if you are only interested in following along with the analysis, we recommend reading [@sec-simulated-datasets] for a deeper understanding of how and why the data were generated in this way.
+
 
 ```{r}
 # Set seed
@@ -1533,10 +1534,9 @@ set.seed(123)
 n_A <- 150
 n_B <- 200
 
-# Simulate true population proportions
-p_A <- 0.65
-p_B <- 0.35
-
+# Set the values for true population proportions
+p_A <- 0.57
+p_B <- 0.43
 
 # Generate binary outcomes for survey responses
 support_A <- rbinom(n_A, size = 1, prob = p_A)
@@ -1544,18 +1544,20 @@ support_B <- rbinom(n_B, size = 1, prob = p_B)
 
 # Create dataset
 policy_data <- data.frame(
-  region = c(rep("A", n_A), rep("B", n_B)),
+  region = c(rep('A', n_A), rep('B', n_B)),
   support = c(support_A, support_B) )
-
-# Display first few rows
-head(policy_data, 10)
 ```
 
-The dataset contains a region column and a support column indicating if the participant supports the policy.
+The dataset contains a region column and a support column indicating if the participant supports the policy. To have a better picture of dataset, we take a look at the frequency table.
 
+```{r}
+policy_data |>
+  group_by(region) |>
+  summarise(count = n()) |>
+  arrange( desc(count) )
+```
 
 ### Exploratory Data Analysis
-
 
 ```{r}
 policy_summary <- policy_data |> 
@@ -1571,11 +1573,20 @@ ggplot(policy_summary, aes(x = region, y = prop_support, fill = region)) +
   geom_bar(stat = 'identity', alpha = 0.7) +
   labs(
     x = 'Region', 
-    y = 'Proportion Supporting Policy',
-    title = 'Proportion of Policy Supporters by Region'
-    ) +
-  theme_minimal() +
-  theme(legend.position = 'none')
+    y = '',
+    title = 'Proportion of Policy Supporters by Region',
+    fill = NULL
+  ) +
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1)) +
+  theme(
+    plot.title = element_text(size = 22, hjust = 0.5),
+    axis.title.x = element_text(size = 20),
+    axis.title.y = element_text(size = 20),
+    axis.text = element_text(size = 16),
+    legend.text = element_text(size = 16),
+    strip.text = element_text(size = 20),
+    legend.position = 'none'
+  )
 ```
 
 
@@ -1598,19 +1609,36 @@ $$H_0:p_A = p_B \quad vs \quad H_1:p_A \neq p_B$$
 
 ### Test Flavour and Components
 
-The two-sample z-test for proportions uses the pooled proportion:
+The two-sample `z-test` for proportions is the appropriate method for testing this hypothesis. As with any hypothesis test, we first need to compute the test statistic. For this test, we calculate the pooled proportion as
 
-$$\hat p = \frac{x_1 + x_2}{n_1 + n_2}$$
+$$\hat p = \frac{x_A + x_B}{n_A + n_B}$$
 
-$$z = \frac{\hat p_1 - \hat p_2}{ \hat p (1 - \hat p) \left( \frac{1}{n_1} + \frac{1}{n_2} \right)}$$
+where $x_A$ and $x_B$ are the counts of successes in the two samples and $n_A$ and $n_B$ are the respective sample sizes. The z-statistic is then computed as:
 
-Under $H_0$, this statistic approximately follows a standard normal distribution. The p-value is calculated as:
+$$z = \frac{\hat p_A - \hat p_B}{ \hat p (1 - \hat p) \left( \frac{1}{n_1} + \frac{1}{n_2} \right)}$${#eq-z-statistic-proportion}
 
-$$\text{p-value} = 2 \times Pr(Z \ge |z|)$$
+Under $H_0$, the statistic defined in @eq-z-statistic-proportion approximately follows a standard normal distribution for large sample sizes. The $\texttt{p-value}$ is then calculated as:
+
+$$\texttt{p-value} = 2 \times Pr(Z \ge |z|)$$
+
+::::: Tip
+::: Tip-header
+Standard Normal and Chi-square
+:::
+
+::: Tip-container
+
+- The test statistic for comparing two proportions can also be expressed as a chi-squared statistic $\chi^2$ which under the null hypothesis approximately follows a chi-squared distribution with 1 degree of freedom. 
+
+- For large sample sizes, it can be shown that this statistic is closely related to the square of the z-statistic (i.e. $X^2 \approx z^2$) providing an equivalent measure of the difference between proportions.
+
+:::
+:::::
+
 
 ### Inferential Conclusions
 
-If the p-value is smaller than $\alpha = 0.05$, we reject $H_0$, indicating a significant difference in policy support between the two regions. Otherwise, we fail to reject $H_0$, suggesting no evidence of a difference.
+If the $\textit{p-value}$ is smaller than $\alpha = 0.05$, we reject $H_0$, indicating a significant difference in policy support between the two regions. Otherwise, we fail to reject $H_0$, suggesting no evidence of a difference.
 
 
 ### How to run the two-sample paired t-test in `R` and `Python`
@@ -1642,6 +1670,43 @@ prop.test(x = c(x1, x2), n = c(n1, n2))
 ```
 
 
+The `R` output contains the following components:
+
+- `X-squared:` The chi-squared test statistic for comparing the two proportions; under the null hypothesis, it approximately follows a chi-squared distribution with 1 degree of freedom - provided a large sample size.
+
+- `df:` Degrees of freedom for the chi-squared statistic (usually 1 for a two-sample test).
+
+- `p-value:` The p-value of the test.
+
+- `sample estimates:` The sample proportions for each group.
+
+- `95 percent confidence interval:` The confidence interval for the difference in proportions.
+
+
+::::: Tip
+::: Tip-header
+Note on continuity correction
+:::
+
+::: Tip-container
+
+- You notice `with continuity correction` in the `R` output of `prop.test` function. The continuity correction is a small adjustment applied when using a continuous probability distribution (like the normal distribution) to approximate a discrete distribution (like the binomial) in hypothesis testing. 
+
+- When approximating a discrete distribution, such as the difference in two sample proportions, with a continuous normal distribution, a continuity correction can be applied to improve the approximation. This involves subtracting (or adding) 0.5 in the numerator of the test statistic (scaled appropriately by sample sizes) to account for the fact that the underlying counts are discrete. 
+
+- The effect of this correction is most noticeable with small sample sizes and becomes negligible as sample sizes increase.
+
+- This can be controlled in `prop.test` function by setting `correct = TRUE` (default value) to include continuity correction or `correct = FALSE` to not include this.
+
+:::
+:::::
+
+
+```{r}
+#| label: save_data_policy_summary
+#| include: false
+write.csv(x = policy_summary, file = 'data/policy_summary.csv')
+```
 
 ### Python Code
 
@@ -1649,13 +1714,41 @@ prop.test(x = c(x1, x2), n = c(n1, n2))
 import pandas as pd
 from statsmodels.stats.proportion import proportions_ztest
 
-```
+# Load dataset
+policy_summary = pd.read_csv('data/policy_summary.csv')
 
+# Extract counts and sample sizes
+x1 = policy_summary.loc[policy_summary['region'] == 'A', 'supporters'].values[0]
+x2 = policy_summary.loc[policy_summary['region'] == 'B', 'supporters'].values[0]
+
+n1 = policy_summary.loc[policy_summary['region'] == 'A', 'n'].values[0]
+n2 = policy_summary.loc[policy_summary['region'] == 'B', 'n'].values[0]
+
+count = [x1, x2]
+nobs = [n1, n2]
+
+stat, pval = proportions_ztest(count, nobs)
+
+print(f"Z-statistic: {stat:.4f}, p-value: {pval:.4f}")
+```
 :::
 
 
+::::: Heads-up
+::: Heads-up-header
+Heads-up!
+:::
+
+::: Heads-up-container
+
+- Note that `proportions_ztest` function from `statsmodels.stats.proportion` does **NOT** provide an argument to control the implementation of continuity correction and by default it doe not make any correction. 
+
+- As a result the results between `R` and `Python` differes. You can write a function in `Python` to apply this correction and then compute the `p-value` accordingly but it is not the scope of this textbook.
+
+:::
+:::::
 
 ### Storytelling
 
-- Under dev
+We surveyed people in two regions to see how much support there is for a new environmental policy. In Region A, a little over half of the participants (57%) were in favor, while in Region B, only about 42% supported it. Statistical testing confirmed that this difference is unlikely to be due to chance: the results suggest that support in Region A is genuinely higher than in Region B with `p-value = 0.0068`. In fact, we can be reasonably confident that the true difference in support between the regions lies somewhere between 4% and 26%.
 
