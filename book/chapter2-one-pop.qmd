@@ -76,6 +76,8 @@ Key tests include:
 
 ## One-sample t-test for the mean
 
+### Review
+
 Use this test when: - The population variance **is unknown**, and - The sample is either **normally distributed** or **large enough** to rely on the central limit theorem.
 
 Imagine you want to assess whether a new method of teaching introductory physics improves student performance compared to the traditional method previously used. To explore this, you test the new method at the University of British Columbia (UBC) and compare the results to historical data from students who were taught using the traditional approach. This historical data serves as your **reference value**.
@@ -99,23 +101,6 @@ The central question becomes:
 If, for example, the historical average physics score is known to be **75**, then our question becomes more specific:
 
 > **Is the mean physics score in the sample statistically different from 75?**
-
-### Hypotheses
-
-We can formally express this with the following hypotheses:
-
--   **Null hypothesis** $H_0$: $\mu = 75$
--   **Alternative hypothesis** $H_1$: $\mu \ne 75$
-
-Under the null hypothesis, we assume that the average score under the new method is equal to the historical average of 75. If the null is rejected, we conclude that there is a **statistically significant difference**, suggesting that the new method may lead to either **higher or lower** average performance.
-
-The test statistic is:
-
-$$t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}$$
-
-Where: - ( s ) is the sample standard deviation (used instead of ( $\sigma$ ))
-
-This statistic follows a **t-distribution** with ( n - 1 ) degrees of freedom.
 
 ### Study Design
 
@@ -235,11 +220,63 @@ print(f"t = {t_stat:.3f},  p = {p_value:.4f}")
 ```
 :::
 
+
+### Hypotheses
+
+We can formally express this with the following hypotheses:
+
+-   **Null hypothesis** $H_0$: $\mu = 75$
+-   **Alternative hypothesis** $H_1$: $\mu \ne 75$
+
+Under the null hypothesis, we assume that the average score under the new method is equal to the historical average of 75. If the null is rejected, we conclude that there is a **statistically significant difference**, suggesting that the new method may lead to either **higher or lower** average performance.
+
+### Test Flavour and Components
+
+The test statistic is:
+
+$$t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}$$
+
+Where: - ( s ) is the sample standard deviation (used instead of ( $\sigma$ ))
+
+This statistic follows a **t-distribution** with ( n - 1 ) degrees of freedom.
+
+### Inferential Conclusions
+
 A one-sample t-test was conducted to determine whether the average flipper length of penguins is significantly different from 200 mm. Based on a training sample, the test produced a t-statistic of t and a p-value of p.
 
 Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.
 
+### How to run the test in R and Python?
+
+The following lines of code in tabset show you how to run the test in R or Python.
+
+::: {.panel-tabset}
+
+### R Code
+```{r}
+t_test <- t.test(train_set$flipper_length_mm, mu = 200)
+t_test
+```
+
+### Python Code
+
+```{python}
+import scipy.stats as stats
+
+t_stat, p_value = stats.ttest_1samp(
+    train_set["flipper_length_mm"], popmean=200
+)
+print(f"t = {t_stat:.3f},  p = {p_value:.4f}")
+```
+:::
+
+### Storytelling
+
+Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.
+
 ## One-sample z-test for the mean
+
+### Review
 
 We use this test when: - The population variance **σ² is known**, and - The sample comes from a **normally distributed population**, or the **sample size is large** (typically ( n \geq 30 )).
 
@@ -276,26 +313,6 @@ If, for example, the historical average physics score is known to be **75**, the
 
 > **Is the mean physics score in the sample statistically different from 75?**
 
-### Hypotheses
-
-We can formally express this with the following hypotheses:
-
--   **Null hypothesis** $H_0$: $\mu = 75$
--   **Alternative hypothesis** $H_1$: $\mu \ne 75$
-
-Under the null hypothesis, we assume that the new teaching method does not significantly change the average score. If the null is rejected, we infer that the method may lead to **higher or lower** performance.
-
-The test statistic is:
-
-$$z=xˉ−μ0σ/nz = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}$$
-
-Where: • $\bar{x}$ is the sample mean
-
-• $\mu_0$ is the reference value (e.g., 75)
-
-• $\sigma$ is the known population standard deviation • $n$ is the sample size
-
-This statistic follows a **standard normal distribution** ($\mathcal{N}(0, 1)$)..
 
 ### Study Design
 
@@ -375,10 +392,48 @@ plt.show()
 
 ```
 :::
+### Testing Settings
+
+We use a significant level of to run the test. 
+
+### Hypotheses
+
+We can formally express this with the following hypotheses:
+
+-   **Null hypothesis** $H_0$: $\mu = 75$
+-   **Alternative hypothesis** $H_1$: $\mu \ne 75$
+
+Under the null hypothesis, we assume that the new teaching method does not significantly change the average score. If the null is rejected, we infer that the method may lead to **higher or lower** performance.
+
+### Test Flavour and Components
+
+The test statistic is:
+
+$$z=xˉ−μ0σ/nz = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}$$
+
+Where: • $\bar{x}$ is the sample mean
+
+• $\mu_0$ is the reference value (e.g., 75)
+
+• $\sigma$ is the known population standard deviation • $n$ is the sample size
+
+This statistic follows a **standard normal distribution** ($\mathcal{N}(0, 1)$)..
+
+### Inferential Conclusions
+
+The z-test typically results in a slightly smaller p-value than the t-test because the z-distribution has "thinner tails" than the t-distribution.
+
+### How to run the test in R and Python?
+
+### Storytelling
+
+Rejecting the null here provides high confidence that the population mean has shifted from 200 mm, assuming our historical $\sigma$ is still accurate.
 
 ------------------------------------------------------------------------
 
 ## One-sample z-test for proportions
+
+### Review
 
 Use this test when: - The variable is **binary** (success/failure, yes/no, etc.), and - You want to test a **population proportion** ( p ), using a large enough sample.
 
@@ -393,21 +448,6 @@ Where: - ( $\hat{p}$ ) is the sample proportion\
 Just like the one-sample t-test is used to assess differences in means, the **one-sample z-test** is used when: • You are working with **proportions** (e.g., fraction of penguins with a specific characteristic), • The sample size is **sufficiently large** to justify using the normal approximation. This test is ideal for binary outcomes: for example, whether a penguin is **of the Adelie species or not**. Suppose you want to test whether the **proportion of Adelie penguins** in your sample differs from a historically established value. Let’s say historical records suggest that **45% of penguins** in a certain region were Adelie. You want to know whether the proportion in your current sample is **statistically different from 0.45**.
 
 The central question becomes: \> \*\* Is the proportion of Adelie penguins in the sample different from 0.45?? **We are again working with the** Palmer Station Penguins\*\* dataset.
-
-### Hypotheses
-
-We can formally express this with the following hypotheses:
-
--   **Null hypothesis** $H_0$: $p = 0.45$
--   **Alternative hypothesis** $H_1$: $p \ne 0.45$ Where: • $p$ is the true proportion of Adelie penguins in the population. We will estimate $p$ using $\hat{p}$, the sample proportion of Adelie penguins. The test statistic is:
-
-$$z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}$$
-
-Where: - ( $\hat{p}$ ) is the sample proportion\
-- ( $p_0$ ) is the hypothesized population proportion\
-- ( $n$ ) is the sample size
-
-This follows a **standard normal distribution** ($z$-distribution) under the null hypothesis.
 
 ### Study Design
 
@@ -482,7 +522,22 @@ plt.show()
 ```
 :::
 
-### Performing the One-Sample z-Test
+### Hypotheses
+
+We can formally express this with the following hypotheses:
+
+-   **Null hypothesis** $H_0$: $p = 0.45$
+-   **Alternative hypothesis** $H_1$: $p \ne 0.45$ Where: • $p$ is the true proportion of Adelie penguins in the population. We will estimate $p$ using $\hat{p}$, the sample proportion of Adelie penguins. The test statistic is:
+
+$$z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}$$
+
+Where: - ( $\hat{p}$ ) is the sample proportion\
+- ( $p_0$ ) is the hypothesized population proportion\
+- ( $n$ ) is the sample size
+
+This follows a **standard normal distribution** ($z$-distribution) under the null hypothesis.
+
+### How to run the test in R and Python
 
 Now we perform the z-test for one proportion. Assuming a historical reference proportion of 0.45 for Adelie penguins:
 
@@ -516,6 +571,13 @@ print(f"z = {z_stat:.3f}, p = {p_value:.4f}")
 ```
 :::
 
-A one-sample z-test for proportions was conducted to determine whether the proportion of female penguins differs significantly from 0.45. Based on the sample data, the test produced a z-statistic of z and a p-value of p. Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the proportion of female penguins is significantly different from 0.45. Otherwise, we do not have sufficient evidence to say it differs.
+### Inferential Conclusions
+
+
+A one-sample z-test for proportions was conducted to determine whether the proportion of female penguins differs significantly from 0.45. Based on the sample data, the test produced a z-statistic of z and a p-value of p. If we reject the null, it indicates the species composition in this region has shifted from historical records.
+
+### Storytelling
+
+Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the proportion of female penguins is significantly different from 0.45. Otherwise, we do not have sufficient evidence to say it differs.
 
 ------------------------------------------------------------------------
