@@ -23,8 +23,9 @@ library(rsample)
 library(viridis)
 
 # Setting up Python dependencies
-py_require("scipy")
+py_require(c("numpy", "pandas", "scipy", "statsmodels"))
 scipy <- import("scipy")
+pandas <- import("pandas")
 ```
 
 

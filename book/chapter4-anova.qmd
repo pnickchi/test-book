@@ -268,7 +268,9 @@ OneWay_ABn_customer_data = pd.read_csv("data/ABn_customer_data_one_factor.csv")
 #| echo: false
 
 # Showing the first 100 customers of the A/B/n testing
-print_as_dt(head(py$OneWay_ABn_customer_data, 100))
+csv_txt <- py$OneWay_ABn_customer_data$head(100L)$to_csv(index = FALSE)
+df <- utils::read.csv(text = csv_txt, check.names = FALSE)
+print_as_dt(df)
 ```
 
 :::
@@ -324,7 +326,7 @@ print(prop.table(table(OneWay_ABn_testing$webpage_design)))
 ## **`Python` Code**
 
 ``` {.python}
-# Importing library
+# Importing function
 from sklearn.model_selection import train_test_split
 
 # Seed for reproducibility
@@ -387,7 +389,7 @@ print(prop.table(table(OneWay_ABn_testing$webpage_design)))
 #| echo: false
 #| message: false
 
-# Importing library
+# Importing function
 from sklearn.model_selection import train_test_split
 
 # Seed for reproducibility
@@ -424,17 +426,16 @@ Both code snippets below (in `R` and `Python`) take the data frame `OneWay_ABn_t
 2. the **standard deviation** (i.e., the within-group variability in customer conversion behaviour), and 
 3. the **sample size `n`** (i.e., number of observations per treatment).
 
-These summaries provide a quick, exploratory understanding of the data, helping us obtain descriptive insights into the central tendency and spread of our outcome of interest per experimental treatment. The `R` implementation uses the [{tidyverse}](https://tidyverse.org/) meta-package. Conversely, the `Python` implementation uses the [{pandas}](https://pandas.pydata.org/) library for these numerical computations.
+These summaries provide a quick and exploratory understanding of the data, helping us obtain descriptive insights into the central tendency and spread of our outcome of interest per experimental treatment. The `R` implementation uses the [{tidyverse}](https://tidyverse.org/) meta-package. Conversely, the `Python` implementation uses the [{pandas}](https://pandas.pydata.org/) library for these numerical computations.
 
 ::::: Heads-up
 ::: Heads-up-header
 Heads-up on the use of [{reticulate}](https://rstudio.github.io/reticulate/) in the `Python` code snippet!
 :::
 ::: Heads-up-container
-In the below `Python` code snippet, we are importing the `OneWay_ABn_training` set, which was created from our random data splitting in the `R` environment using the [{reticulate}](https://rstudio.github.io/reticulate/) [@reticulate] package. We will eventually also do the same with the `OneWay_ABn_testing` dataset. This approach is necessary because both the [{rsample}](https://rsample.tidymodels.org) package in `R` and [{scikit-learn}](https://scikit-learn.org/stable/) in `Python` utilize different pseudo-random number generators. As a result, they produce different training and testing data splits, even when using the same seed values. Therefore, to ensure consistent output across all subsequent `R` and `Python` snippets in our workflow, it is necessary that we use the same training and testing sets.
+In the below `Python` code snippet, we are importing the `OneWay_ABn_training` set, which was created from our random data splitting in the `R` environment using the [{reticulate}](https://rstudio.github.io/reticulate/) package [@reticulate]. We will eventually also do the same with the `OneWay_ABn_testing` dataset. This approach is necessary because both the [{rsample}](https://rsample.tidymodels.org) package in `R` and [{scikit-learn}](https://scikit-learn.org/stable/) in `Python` utilize different pseudo-random number generators. As a result, they produce different training and testing data splits, even when using the same seed values. Therefore, to ensure consistent output across all subsequent `R` and `Python` snippets in our workflow, it is necessary that we use the same training and testing sets.
 :::
 :::::
-
 
 ::: {.panel-tabset}
 
@@ -446,6 +447,8 @@ In the below `Python` code snippet, we are importing the `OneWay_ABn_training` s
 #| message: false
 # Loading library
 library(tidyverse)
+# To import R-generated datasets to Python environment
+library(reticulate)
 
 # Computing summaries
 OneWay_summary_table <- OneWay_ABn_training |>
@@ -468,7 +471,7 @@ OneWay_summary_table
 # Importing library
 import numpy as np
 
-# Importing R training set via R library reticulate
+# Importing R-generated training set via R library reticulate
 OneWay_ABn_training = r.OneWay_ABn_training
 
 OneWay_summary_table = (
@@ -489,11 +492,11 @@ OneWay_summary_table
 
 The mean conversion scores (found in both @tbl-one-summary-stats-r and @tbl-one-summary-stats-py) are **very similar across the three webpage designs**, ranging narrowly from `r min(OneWay_summary_table$mean_conversion)` to `r max(OneWay_summary_table$mean_conversion)`. Additionally, **the standard deviations are also alike**, with values ranging from `r min(OneWay_summary_table$sd_conversion)` to `r max(OneWay_summary_table$sd_conversion)`. These standard deviations suggest similar levels of variability within each webpage. Although there are minor differences in the treatment means, they are subtle enough that formal hypothesis testing, such as one-way ANOVA, is necessary to determine whether these small fluctuations are due to random variation or represent genuine differences in the population means. These summary statistics therefore provide a solid descriptive check on group comparability and the plausibility of ANOVA assumptions, which sets the stage for **a rigorous inferential analysis**.
 
-We will use two plots in our EDA: **three overlaid histograms** (one per treatment) to compare the continuous conversion scores and **three side-by-side boxplots** of these scores per treatment. We use `R`'s [{ggplot2}](https://ggplot2.tidyverse.org/), from [{tidyverse}](https://tidyverse.org/), along with `Python`'s [{matplotlib}](https://matplotlib.org/) and [{seaborn}](https://seaborn.pydata.org/). The overlaid histograms in @fig-hist-webpage-design-one-r and @fig-hist-webpage-design-one-py indicate the following:
+We will use two plots in our EDA: **three side-by-side histograms** (one per treatment) to compare the continuous conversion scores and **three side-by-side boxplots** of these scores per treatment. We use `R`'s [{ggplot2}](https://ggplot2.tidyverse.org/), from [{tidyverse}](https://tidyverse.org/), along with `Python`'s [{matplotlib}](https://matplotlib.org/) and [{seaborn}](https://seaborn.pydata.org/). The side-by-side histograms in @fig-hist-webpage-design-one-r and @fig-hist-webpage-design-one-py indicate the following:
 
 - The three webpage designs exhibit approximately **unimodal** and **roughly symmetric distributions** centred around conversion scores in the low-60s, with slight differences in spread. 
 - Design $D_1$ appears slightly more concentrated around its mean, while $D_2$ and $D_3$ show marginally wider dispersion, reflected in slightly flatter histogram peaks.
-- The overlapping structure suggests that the central tendency (i.e., mean conversion score) is quite similar across the three webpage designs, with no visually apparent separation.
+- The distributions and central tendencies (i.e., mean conversion scores) are **pretty similar** across the three webpage designs.
 
 ::: {.panel-tabset}
 
@@ -504,15 +507,14 @@ We will use two plots in our EDA: **three overlaid histograms** (one per treatme
 #| fig-cap: "Overlaid histograms of customer conversion score by webpage design via training data."
 #| warning: false
 #| message: false
-#| fig.height: 8
-#| fig.width: 14
+#| fig.height: 7.5
+#| fig.width: 13.5
 hist_one_way <- ggplot(
   OneWay_ABn_training,
   aes(x = conversion_score, fill = webpage_design)
 ) +
   geom_histogram(
     alpha = 0.7,
-    position = "identity",
     bins = 30,
     color = "white"
   ) +
@@ -527,12 +529,9 @@ hist_one_way <- ggplot(
     axis.title.x = element_text(size = 20),
     axis.title.y = element_text(size = 20, vjust = 0.5),
     strip.text = element_text(size = 20),
-    legend.position = "bottom",
-    legend.title = element_text(size = 20),
-    legend.text = element_text(size = 20),
-    legend.key.size = unit(1.4, "cm"),
-    legend.spacing.x = unit(1, "cm")
+    legend.position = "none"
   ) +
+  facet_wrap(~ webpage_design, nrow = 1) +   # <-- horizontal panels
   scale_fill_manual(
     values = c(
       "D1" = "#E69F00",
@@ -540,6 +539,7 @@ hist_one_way <- ggplot(
       "D3" = "#009E73"
     )
   )
+
 hist_one_way
 ```
 
@@ -550,8 +550,8 @@ hist_one_way
 #| fig-cap: "Overlaid histograms of customer conversion score by webpage design via training data."
 #| warning: false
 #| message: false
-#| fig.height: 8
-#| fig.width: 14
+#| fig.height: 7.5
+#| fig.width: 13.5
 # Importing libraries
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -563,8 +563,6 @@ plt.rcParams.update({
     "axes.titlesize": 20,
     "xtick.labelsize": 15.5,
     "ytick.labelsize": 15.5,
-    "legend.title_fontsize": 20,
-    "legend.fontsize": 20
 })
 
 # Defining palette
@@ -574,37 +572,43 @@ palette = {
     "D3": "#009E73"
 }
 
-# Creating figure
-plt.figure(figsize=(14, 8))
+design_order = ["D1", "D2", "D3"]
 
-# Overlaying histograms with transparency and white edges
-for label, color in palette.items():
-    subset = OneWay_ABn_training[OneWay_ABn_training["webpage_design"] == label]
-    plt.hist(
-        subset["conversion_score"],
-        bins=30,
-        alpha=0.7,
-        color=color,
-        edgecolor="white",
-        label=label
-    )
-
-# Axis labels and legend
-plt.xlabel("Conversion Score", fontsize=20)
-plt.ylabel("Count", fontsize=20)
-plt.legend(
-    title="Webpage Design",
-    loc="lower center",
-    bbox_to_anchor=(0.5, -0.3),
-    ncol=3,
-    frameon=False
+# Creating 1x3 panel layout
+fig, axes = plt.subplots(
+    1, 3,
+    sharex=True,
+    sharey=True,
+    figsize=(13.5, 7.5)
 )
 
-# Removing top/right spines and adjust layout
-sns.despine()
-plt.tight_layout()
+for ax, design in zip(axes, design_order):
+    subset = OneWay_ABn_training[
+        OneWay_ABn_training["webpage_design"] == design
+    ]
 
-# Displaying
+    sns.histplot(
+        data=subset,
+        x="conversion_score",
+        bins=30,
+        edgecolor="white",
+        alpha=0.7,
+        color=palette[design],
+        ax=ax
+    )
+
+    ax.set_title(design, fontsize=20)
+    ax.set_xlabel("Conversion Score")
+
+    if ax is axes[0]:
+        ax.set_ylabel("Count")
+    else:
+        ax.set_ylabel("")
+
+# Cleaning up spines and layout
+sns.despine(fig=fig)
+fig.tight_layout()
+
 plt.show()
 ```
 
@@ -707,7 +711,7 @@ plt.show()
 
 :::
 
-The combined histograms and side-by-side boxplots indicate that there is **no strong visual separation** among the distributions of customer conversion scores for the three webpage designs. The central tendency, spread, and tails of the distributions **overlap significantly**, suggesting that any treatment effect (if it exists) is likely to be subtle rather than pronounced. In summary, the EDA evidence reveals only minor differences among the webpage designs, highlighting the need for formal statistical testing to determine whether these small observed variations are statistically significant or merely a result of random sampling variability.
+The side-by-side histograms and boxplots indicate that there is **no strong visual separation** among the distributions of customer conversion scores for the three webpage designs. The central tendency, spread, and tails of the distributions **overlap significantly**, suggesting that any treatment effect (if it exists) is likely to be subtle rather than pronounced. In summary, the EDA evidence reveals only minor differences among the webpage designs, highlighting the need for formal statistical testing to determine whether these small observed variations are statistically significant or merely a result of random sampling variability.
 
 ### Testing Settings {#sec-one-way-ANOVA-testing-settings}
 
@@ -816,7 +820,7 @@ tidy(OneWay_shapiro) |>
 #| label: tbl-one-shapiro-wilks-py
 #| tbl-cap: "Shapiro–Wilks normality test for one-way ANOVA via residuals."
 #| message: false
-# Importing library
+# Importing function
 from scipy.stats import shapiro
 
 # Extracting residuals
@@ -862,7 +866,7 @@ tidy(OneWay_levene) |>
 #| label: tbl-one-levene-py
 #| tbl-cap: "Levene’s test for homogeneity of variances for one-way ANOVA via testing data."
 #| message: false
-# Importing library
+# Importing function
 from scipy.stats import levene
 
 # Running Levene test
@@ -875,6 +879,57 @@ OneWay_levene = pd.DataFrame({
     "p-value": [round(p1, 2)]
 })
 OneWay_levene
+```
+
+:::
+
+The Durbin–Watson statistic is the primary diagnostic; $p$-values differ across software because `R` computes exact finite-sample distributions, whereas `Python` implementations rely on large-sample normal approximations.”
+
+::: {.panel-tabset}
+
+## **`R`**
+
+```{r}
+#| label: tbl-one-durbin-watson-r
+#| tbl-cap: "Durbin-Watson autocorrelation test for one-way ANOVA via residuals."
+#| message: false
+# Loading library
+library(lmtest)
+
+# Running Durbin-Watson autocorrelation test
+OneWay_durbin_watson <- dwtest(OneWay_aov) 
+
+# Displaying outputs
+tidy(OneWay_durbin_watson) |>
+  mutate_if(is.numeric, round, 2)
+```
+
+## **`Python`**
+
+```{python}
+#| label: tbl-one-durbin-watson-py
+#| tbl-cap: "Durbin-Watson autocorrelation test for one-way ANOVA via residuals."
+#| message: false
+# Importing function
+from statsmodels.stats.stattools import durbin_watson
+from scipy.stats import norm
+
+# Running Durbin-Watson autocorrelation test
+OneWay_durbin_stat = durbin_watson(OneWay_model.resid)
+
+# Sample size
+n = len(OneWay_model.resid)
+
+# Approximate p-value (two-sided; H0: no autocorrelation)
+z = (OneWay_durbin_stat - 2) / np.sqrt(4 / n)
+p_val = 2 * (1 - norm.cdf(abs(z)))
+
+# Displaying outputs
+OneWay_durbin_watson = pd.DataFrame({
+    "statistic": [OneWay_durbin_stat],
+    "p_value": [p_val],
+    "method": ["Durbin–Watson test"]})
+OneWay_durbin_watson
 ```
 
 :::
@@ -946,12 +1001,12 @@ TwoWay_ABn_customer_data = pd.read_csv("data/ABn_customer_data_two_factors.csv")
 #| echo: false
 
 # Showing the first 100 customers of the A/B/n testing
-print_as_dt(head(py$TwoWay_ABn_customer_data, 100))
+csv_txt <- py$TwoWay_ABn_customer_data$head(100L)$to_csv(index = FALSE)
+df <- utils::read.csv(text = csv_txt, check.names = FALSE)
+print_as_dt(df)
 ```
 
 :::
-
-
 
 ::: {.panel-tabset}
 

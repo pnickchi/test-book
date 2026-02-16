@@ -238,8 +238,10 @@ cholesterol_data = pd.DataFrame({
 ```{r}
 #| echo: false
 
-# Showing the first 10 participants 
-print_as_dt(head(py$cholesterol_data, 10))
+# Showing the first 10 participants
+csv_txt <- py$cholesterol_data$head(10L)$to_csv(index = FALSE)
+df <- utils::read.csv(text = csv_txt, check.names = FALSE)
+print_as_dt(df)
 ```
 :::
 
@@ -561,7 +563,9 @@ ABn_customer_data_one_factor = pd.concat(data_list, ignore_index = True)
 #| echo: false
 
 # Showing the first 100 customers of the A/B/n testing
-print_as_dt(head(py$ABn_customer_data_one_factor, 100))
+csv_txt <- py$ABn_customer_data_one_factor$head(100L)$to_csv(index = FALSE)
+df <- utils::read.csv(text = csv_txt, check.names = FALSE)
+print_as_dt(df)
 ```
 
 :::
@@ -872,7 +876,9 @@ ABn_customer_data_two_factors = pd.concat(data_list, ignore_index = True)
 #| echo: false
 
 # Showing the first 100 customers of the A/B/n testing
-print_as_dt(head(py$ABn_customer_data_two_factors, 100))
+csv_txt <- py$ABn_customer_data_two_factors$head(100L)$to_csv(index = FALSE)
+df <- utils::read.csv(text = csv_txt, check.names = FALSE)
+print_as_dt(df)
 ```
 
 :::
