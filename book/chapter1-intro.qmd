@@ -247,7 +247,7 @@ Since we are working within a frequentist framework, it is important to remember
 :::
 :::::
 
-![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via \[*Pixabay*\](https://pixabay.com/vectors/pixel-cells-pixel-digital-3704070/.](img/pinned-notes.png){width="500"}
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-pixel-digital-3704070/).](img/pinned-notes.png){width="500"}
 
 The final step in this stage involves **model diagnostics**. These diagnostics are conducted to verify that the assumptions of data modelling are met (such as normality, independence, homoscedasticity, etc.). If these assumptions are violated, we must reconsider the validity of our inferential conclusions. This process helps prevent drawing incorrect conclusions due to mis-specified models or flawed data structures. If any assumptions are not satisfied, we should return to the previous stage, select a different type of test, and proceed accordingly.
 

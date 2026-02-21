@@ -13,6 +13,7 @@
 ```{r setup, include=FALSE}
 # Setting up Python dependencies
 library(reticulate)
+reticulate::py_config()
 
 py_require("pandas")
 py_require("seaborn")

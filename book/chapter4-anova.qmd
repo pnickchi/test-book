@@ -20,6 +20,7 @@ py_require("pandas")
 py_require("numpy")
 py_require("statsmodels")
 py_require("scipy")
+py_require("scikit-learn")
 pandas <- import("pandas")
 numpy <- import("numpy")
 sklearn <- import("sklearn")
@@ -55,7 +56,7 @@ By the end of this chapter, you will be able to:
 -   Interpret the meaning of the $F$-statistic and its role in testing mean differences across groups.
 -   Describe the difference between **main effects** and **interaction effects** in a two-way ANOVA.
 -   Identify potential **interaction patterns** via appropriate plotting when conducting a two-way ANOVA.
--   Conduct one-way and two-way ANOVA in a **reproducible manner** using the hypothesis testing workflow via `R` and `Python`.
+-   Conduct one and two-way ANOVA in a **reproducible manner** using the hypothesis testing workflow via `R` and `Python`.
 -   Identify the assumptions underlying one-way and two-way ANOVA, including **independence**, **normality**, and **homoscedasticity**.
 -   Evaluate **model diagnostics** to assess whether ANOVA assumptions are met.
 :::
@@ -97,10 +98,9 @@ Fisher’s statistical work remains central to frequentist inference. However, e
 :::
 :::::
 
-This chapter builds on the concepts introduced in the earlier works by @sec-one-continuous-mean and @sec-two-continuous-means, which concentrated on hypothesis testing for one and two groups, respectively. While those chapters primarily addressed pairwise comparisons, we will now shift our focus to multiple comparisons:
+![Image by [*OpenClipart-Vectors*](https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=158332) via [*Pixabay*](https://pixabay.com/vectors/farm-field-plantation-tree-158332/).](img/farm.png){width="80%"}
 
-- The **one-way ANOVA**, discussed in @sec-one-way-ANOVA, will assume a **single categorical factor with** $k$ levels. This approach allows us to test whether at least one group mean is significantly different from the others.
-- In contrast, the **two-way ANOVA**, from @sec-two-way-ANOVA, will incorporate an **additional categorical factor with** $m$ levels, permitting the analysis of both main effects and interaction effects. Interaction terms in ANOVA are especially useful for revealing cases where the effect of one factor depends on the level of another, a situation often encountered in complex experimental designs.
+The most standard application for ANOVA tests is **experimentation**. Actually, the origins of ANOVA were in part motivated by agricultural experiments [@fisher1925]. That said, nowadays, ANOVA has significantly expanded in modern inferential applications, and it has contributed substantially to the advancement in modern data science. The examples in this chapter are written in the spirit of **online controlled experiments** (i.e., a style of randomized experimentation that is used in product and marketing analytics). 
 
 ::::: Heads-up
 ::: Heads-up-header
@@ -113,11 +113,29 @@ In modern data science, ANOVA remains significant, particularly in **A/B/n testi
 :::
 :::::
 
-The **simulated datasets** discussed in this chapter relate to an experimental context known as A/B/n testing, which is an expansion of traditional A/B testing as previously discussed. In a typical A/B testing, participants are randomly assigned to one of two strategies, referred to as treatments: treatment $A$ (the **control treatment**) and treatment $B$ (the **experimental treatment**). This approach enables us to infer **causation** concerning the following inquiry:
+In practice, work teams rarely test only one new experimental idea at a time. Hence, it is common to ship **multiple variants** in the same experiment such as: three checkout layouts, four headline options or five recommendation-ranking tweaks. This generalization is what **A/B/n testing** is, where *n* simply means "*more than two variants*." The moment we move from two to many variants, a tempting (but risky!) strategy is to run many pairwise $t$-tests. The risk is **multiplicity**: the more tests we run, the more likely we are to see a "*significant*" result somewhere purely by chance (i.e., we are more prone to commit **Type I errors**!). That said, ANOVA provides a clean first step: it gives an **overall test** of whether any mean differs, using a single test statistic and a single $p$-value.
+
+::::: Heads-up
+::: Heads-up-header
+Heads-up on ANOVA as a primary overall test!
+:::
+::: Heads-up-container
+In many experiments, ANOVA is best understood as a two-part process:  
+
+1. **Overall test.** We test whether the group means are all equal (i.e., we run one $F$-test as explained further in this chapter).  
+2. **Follow-up test.** *Only if warranted*, we must investigate **which means** differ using a multiple-comparisons procedure that controls the overall error rate (e.g., Tukey's HSD).  
+
+This two-step process is a safe way to avoid over-interpreting random noise at first when many different experimental variants are on the table.
+:::
+:::::
+
+The **simulated datasets** discussed in this chapter relate to the aforementioned experimental context called A/B/n testing, which is a generalization of the traditional A/B testing as previously discussed. In a typical A/B testing, participants are randomly assigned to one of two strategies, referred to as treatments: treatment $A$ (the **control treatment**) and treatment $B$ (the **experimental treatment**). This approach enables us to infer **causation** concerning the following inquiry:
 
 > **Will changing from treatment $A$ to treatment $B$ cause my outcome of interest, $Y$, to increase (or decrease, if that is the case)?**
 
-In an ANOVA setting, the outcome must be **continuous**. The primary goal of A/B testing is to determine whether there is a statistically significant difference between treatments $A$ and $B$ concerning the outcome. Additionally, because we are conducting a proper randomized experiment, we can infer causation (which goes further than mere association), as treatment randomization enables us to get rid of the effect of further **confounders**.
+![Image by [*Pabitra Kaity*](https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6370790) via [*Pixabay*](https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/).](img/ads.png){fig-align="center" width="50%"}
+
+Note that, in an ANOVA setting, the outcome must be **continuous**. Furthermore, the **primary goal** of A/B testing is to determine whether there is a statistically significant difference between treatments $A$ and $B$ concerning the outcome. It is important to stress that, because we are dealing with **randomized experiments** which allows us to get rid of the effect of further **confounders**, we can talk about **causal effects** (not just associations), provided random assignment is implemented properly and the experimental protocol is respected. This is why our upcoming **main inferential inquiries** will be phrased in causal language (e.g., "*does changing the design cause the mean score to change?*") rather than purely association phrasing.
 
 ::::: Heads-up
 ::: Heads-up-header
@@ -130,34 +148,54 @@ In causal inference, confounding refers to the mixing of effects between the out
 :::
 :::::
 
-When conducting experiments with more than two treatments in A/B testing, the experiment is referred to as **A/B/n testing**. In this case, the "*n*" does not indicate the sample size; rather, it simply represents any number of additional treatments beyond treatments $A$ and $B$. With this clarification, we can now proceed with our two ANOVA cases (one and two-way) with their corresponding datasets to illustrate how this statistical approach can be applied via the structured test workflow from @fig-hypothesis-testing-workflow found in @sec-test-workflow.
+With that framing in mind, we can now proceed with our two ANOVA cases (one-way and two-way) and their corresponding datasets to illustrate how this statistical approach can be applied via the structured test workflow from @fig-hypothesis-testing-workflow found in @sec-test-workflow. As a side note, this chapter builds on the concepts introduced in the earlier works by @sec-one-continuous-mean and @sec-two-continuous-means, which concentrated on hypothesis testing for one and two groups, respectively. While those chapters primarily addressed pairwise comparisons, we will now shift our focus to multiple comparisons:
 
-![Image by [*Pabitra Kaity*](https://pixabay.com/users/pabitrakaity-7844390/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6370790) via [*Pixabay*](https://pixabay.com/illustrations/ads-digital-marketing-advertisements-6370790/).](img/ads.png){fig-align="center" width="50%"}
+- The **one-way ANOVA**, discussed in @sec-one-way-ANOVA, will assume a **single categorical factor with** $k$ levels. This approach allows us to test whether at least one group mean is significantly different from the others.
+- In contrast, the **two-way ANOVA**, from @sec-two-way-ANOVA, will incorporate an **additional categorical factor with** $m$ levels, permitting the analysis of both main effects and interaction effects. Interaction terms in ANOVA are especially useful for revealing cases where the effect of one factor depends on the level of another, a situation often encountered in complex experimental designs.
+
+::::: Tip
+::: Tip-header
+Tip on a further A/B testing resource!
+:::
+::: Tip-container
+If you would like to check an industry-focused guide to A/B testing pitfalls, you can check the book by @kohavi2020.
+
+![Image by [*manfredsteger*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-e-learning-online-6230157/).](img/offer.png){width="500"}
+:::
+:::::
 
 ## One-way ANOVA {#sec-one-way-ANOVA}
 
-Imagine you are part of a data-driven marketing team at a well-known tech company that operates a global online store. This store is heavily invested in using statistical experimentation on its website to enhance the customer shopping experience, with the goal of increasing profit margins in the long term. As part of this effort, the team frequently conducts A/B/n testings. These A/B/n testings specifically aim to **increase the customer conversion score**, which is the primary outcome measure. This **continuous score** is a unitless and standardized index of engagement, incorporating various elements such as clicks, time spent on the website, and the probability of making a purchase. The baseline of this score is set at $50$. This score measures customer responsiveness on the online store: **the higher the score, the greater the customer responsiveness**.
+Imagine you are a **data scientist at well-known food delivery app** working with a cross-functional "*Growth*" team (product, marketing, and engineering). The company is heavily invested in statistical experimentation on its app to enhance the customer experience, aiming to increase long-term profit margins. As part of this effort, the team frequently conducts A/B/n testings on the checkout funnel. These A/B/n testings have a clear business goal: 
+
+> **We must increase the average customer conversion score.**
+
+For this chapter, in general, we treat the **conversion score** as a **continuous** and unitless index (whose baseline is around $50$) that rolls up three signals: *completed orders*, *checkout completion speed*, and *meaningful engagement*. Higher scores mean customers are moving through the funnel more successfully. Having said all this, to start with the first of the two A/B/n testings in this chapter, let us suppose the stakeholders have come up with the groundbreaking idea of modifying the checkout-page design in two different experimental ways to investigate whether these modifications somehow **cause** the **average customer conversion score** to change. For the sake of this one-way ANOVA case, the designs are the following:
+
+- $D_1$: the current (control) design,  
+- $D_2$: a new design that simplifies the checkout layout,  
+- $D_3$: a new design that highlights delivery-time estimates earlier.  
+
+This is exactly the kind of "*more than two variants*" experiment where one-way ANOVA becomes the natural inferential tool.
 
 <br>
 
 ![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-observation-internship-3974186/).](img/study.png){width="80%"}
 
-To start with the first of these two A/B/n testings, let us suppose the heads of the marketing and sales departments have come up with the groundbreaking idea of modifying the overall webpage design in two different experimental ways to investigate whether these modifications somehow **cause** the **mean customer conversion score** to change. For the sake of this case, the department heads aim to compare how this score behaves between these **two experimental webpage designs** and the **current webpage design**.
-
 ### Study Design {#sec-one-way-ANOVA-study-design}
 
-The first stage of our testing workflow involves the main statistical inquiry we aim to address. Therefore, let us translate the above situation into a concrete question that is meaningful for both the stakeholders (namely, the marketing and sales department heads) and for you as part of the data-driven marketing team. We can frame the main inquiry as follows:
+The first stage of our testing workflow involves the main statistical inquiry we aim to address. Therefore, let us translate the above situation into a concrete question that is meaningful for both the stakeholders and for you as part of the this "*Growth*" team. We can frame the main inquiry as follows:
 
-> **Will the change across the two experimental webpage designs and the current design cause any statistical difference in the population mean customer conversion score?**
+> **Does changing the checkout page design (from $D_1$ to $D_2$ or $D_3$) cause a difference in the *population mean* conversion score?**
 
 ![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/laptop-games-jigsaw-puzzle-puzzle-7426707/).](img/puzzle.png){width="300"}
 
-This statistical inquiry represents the foundational step in our testing workflow. We transform a practical business question into a testable inferential statement (specifically, a causal one). By framing the problem as whether the average customer conversion score varies across different webpage designs, we connect stakeholder demands with statistical analysis.
+This statistical inquiry represents the foundational step in our testing workflow. We transform a practical business question into a testable inferential statement (specifically, a causal one). By framing the problem as whether the average customer conversion score varies across different checkout-page designs, we connect stakeholder demands with statistical analysis.
 
 In terms on how this A/B/n testing would be designed, let us consider the following aspects:
 
-1. The experiment will solely focus on **webpage design**, which we consider a **controllable factor** determined by the **experimenter** (that is you, as part of the data-driven marketing team). This factor includes three different webpage layouts (or designs): $D_1$ (the current layout), $D_2$ (a new and experimental layout), and $D_3$ (another new and experimental layout). This setup creates a three-level factor. To summarize in statistical terms, we have:
-    - One factor: **webpage design**.
+1. The experiment will solely focus on **checkout-page design**, which we consider a **controllable factor** determined by the **experimenter** (that is you, as part of the work team). This factor includes three different checkout-page layouts (or designs): $D_1$ (the current layout), $D_2$ (a new and experimental layout), and $D_3$ (another new and experimental layout). This setup creates a three-level factor. To summarize in statistical terms, we have:
+    - One factor: **checkout design**.
     - Three **treatments** (the three layout options), which classifies this study as A/B/n testing. Treatment $D_1$ is referred to as the **control treatment**, whereas $D_2$ and $D_3$ are the **experimental treatments**.
     - The **continuous outcome variable $Y$**, defined as the customer conversion score, which has been explained previously.
 2. **Before conducting the experiment**, assume that your team has performed a proper **power analysis** (with a significance level $\alpha = 0.05$ and power $1 - \beta = 0.8$) to determine the total sample size of customers to be recruited for the A/B/n testing so you can detect a large enough effect size. This power analysis has indicated an overall sample size of $n = 600$ customers (namely, **experimental units**) . Consequently, each treatment group will consist of $\frac{n}{3} = 200$ customers, making this a **balanced experiment**.
@@ -178,7 +216,7 @@ In the **design and analysis of experiments**, having a balanced experiment (whe
 
 ### Data Collection and Wrangling {#sec-one-way-ANOVA-data-collection-wrangling}
 
-Having designed our statistical experiment, it is now time to execute it, which we refer to as **data collection**. To ensure we accurately assess the causality of our statistical inquiry regarding changes in the population mean customer conversion score across three different webpage designs, we must randomly assign our $n = 600$ experimental units evenly among the three treatments. This means we will collect $\frac{n}{3} = 200$ data points for each treatment. To achieve this, we can use **a suitable online tool** to route website traffic uniformly, potentially employing stratified randomization based on additional covariates, such as device type and geographical location. This approach will help us allocate the $n = 600$ experimental units to one of the three treatments effectively.
+Having designed our statistical experiment, it is now time to execute it, which we refer to as **data collection**. To ensure we accurately assess the causality of our statistical inquiry regarding changes in the population mean customer conversion score across three different checkout designs, we must randomly assign our $n = 600$ experimental units evenly among the three treatments. This means we will collect $\frac{n}{3} = 200$ data points for each treatment. To achieve this, we can use **a suitable online tool** to route website traffic uniformly, potentially employing **stratified randomization** based on additional covariates, such as device type and geographical location. This approach will help us allocate the $n = 600$ experimental units to one of the three treatments effectively.
 
 ::::: Heads-up
 ::: Heads-up-header
@@ -198,9 +236,9 @@ Treatment randomization is a valuable statistical tool because:
 
 ![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-portfolio-work-folder-3947911/).](img/screen.png){width="50%"}
 
-Let us discuss our data collection process. Assume you have already conducted this A/B/n testing and recruited $n = 600$ customers for this experiment. These customers have been randomly assigned to one of the three webpage designs, and their conversion scores have been measured accordingly. To begin our inferential process, the following code snippets in `R` and `Python` (where the library [{pandas}](https://pandas.pydata.org/) is used) will load the dataset, which contains the following columns:
+Let us discuss our data collection process. Assume you have already conducted this A/B/n testing and recruited $n = 600$ customers for this experiment. These customers have been randomly assigned to one of the three checkout designs, and their conversion scores have been measured accordingly. To begin our inferential process, the following code snippets in `R` and `Python` (where the library [{pandas}](https://pandas.pydata.org/) is used) will load the dataset, which contains the following columns:
 
-- `webpage_design`: A factor-type column representing the webpage design to which each experimental unit was assigned ($D_1$, $D_2$ or $D_3$).
+- `checkout_design`: A categorical-type column representing the checkout design to which each experimental unit was assigned ($D_1$, $D_2$ or $D_3$).
 - `conversion_score`: A numeric, continuous column that records the measured customer conversion scores as previously described at the beginning of this one-way ANOVA section.
 
 ::: {.panel-tabset}
@@ -236,7 +274,7 @@ print(OneWay_ABn_customer_data.head(100))
 
 ```{r}
 #| label: tbl-ANOVA-ABn-data-r-one
-#| tbl-cap: "First 100 rows of our A/B/n simulated data with webpage design as a standalone experimental factor."
+#| tbl-cap: "First 100 rows of our A/B/n simulated data with checkout design as a standalone experimental factor."
 #| echo: false
 #| message: false
 
@@ -264,7 +302,7 @@ OneWay_ABn_customer_data = pd.read_csv("data/ABn_customer_data_one_factor.csv")
 
 ```{r}
 #| label: tbl-ANOVA-ABn-data-py-one
-#| tbl-cap: "First 100 rows of our A/B/n simulated data with webpage design as a standalone experimental factor."
+#| tbl-cap: "First 100 rows of our A/B/n simulated data with checkout design as a standalone experimental factor."
 #| echo: false
 
 # Showing the first 100 customers of the A/B/n testing
@@ -282,92 +320,36 @@ Tip on the generative modelling process for the simulated data!
 ::: Tip-container
 We have already clarified that the datasets used in this chapter, such as `OneWay_ABn_customer_data`, are simulated. We chose this approach to explain ANOVA so that the data used in our test workflow meets the modelling assumptions. This ensures that we can provide a clear and comprehensive explanation for the reader on this inferential tool. 
 
-If you are interested in the generative modelling process for `OneWay_ABn_customer_data` and would like to reproduce it in either `R` or `Python`, you can refer to @sec-one-way-ANOVA-sim. Note that the datasets used in this chapter are generated using `R`, as `R` and `Python` use different pseudo-random number generators, even when using the same simulation seeds, leading to different simulated datasets.
+If you are interested in the generative modelling process for `OneWay_ABn_customer_data` and would like to reproduce it in either `R` or `Python`, you can refer to @sec-one-way-ANOVA-sim. Note that the datasets used in this chapter are generated using `R`, as `R` and `Python` use different pseudo-random number generators, even when using the same seeds, leading to different simulated datasets.
 :::
 :::::
 
 Now, after collecting the data, it is time to proceed with the data splitting into training and testing. For this specific case, assume the team in charge of this analysis decided to execute a 50-50 random data splitting which would yield a training set size of $n_{\text{training}} = 300$ and testing set size of $n_{\text{testing}} = 300$. Nevertheless, to keep the balanced nature of our experiment, we have to ensure that both sets will end up with 100 customers allocated to each one of the three treatments. Therefore, we need to implement a stratified randomization (where each treatment is a strata) as follows:
 
-- `R`: This code performs a stratified random split of the `OneWay_ABn_customer_data` dataset into training and testing sets, ensuring reproducibility and balance across different levels of `webpage_design`. The library [{rsample}](https://rsample.tidymodels.org) [@rsample] is utilized for executing the stratified random split. Note that the `set.seed()` function is used to fix the random seed, allowing the results to be replicated. Then, the `initial_split()` function divides the `OneWay_ABn_customer_data` into two parts, allocating 50% for training and 50% for testing while maintaining proportional representation of each category in the `webpage_design` variable (the `strata` argument ensures this). The `training()` and `testing()` functions extract the respective subsets from the split object. Lastly, to implement a sanity check, we retrieve the dimensions of each subset (number of rows and columns) and examine the relative proportions of `webpage_design` levels within each split. This verification step ensures that the experimental treatments remain balanced in both training and testing sets, which is essential for unbiased modeling and valid inference in one-way ANOVA.
+- `R`: The code in @lst-one-way-data-splitting-r performs a stratified random split of the `OneWay_ABn_customer_data` dataset into training and testing sets, ensuring reproducibility and balance across different levels of `checkout_design`. The library [{rsample}](https://rsample.tidymodels.org) [@rsample] is utilized for executing the stratified random split. Note that the `set.seed()` function is used to fix the random seed, allowing the results to be replicated. Then, the `initial_split()` function divides the `OneWay_ABn_customer_data` into two parts, allocating 50% for training and 50% for testing while maintaining proportional representation of each category in the `checkout_design` variable (the `strata` argument ensures this). The `training()` and `testing()` functions extract the respective subsets from the split object. Lastly, to implement a sanity check, we retrieve the dimensions of each subset (number of rows and columns) and examine the relative proportions of `checkout_design` levels within each split. This sanity check ensures that the experimental treatments remain balanced in both training and testing sets, which is essential for unbiased modelling and valid inference in **classical one-way ANOVA**.
 
 ![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-pixel-social-network-3704049/).](img/paint.png){width="525"}
 
-- `Python`: The code executes a stratified data splitting process similar to its `R` equivalent, utilizing the `train_test_split()` function from [{scikit-learn}](https://scikit-learn.org/stable/) [@scikit-learn]. A fixed random seed is set using the `random_state` parameter to ensure reproducibility, so that each execution generates the same random partition. The dataset, `OneWay_ABn_customer_data`, is then divided into two equal subsets: 50% for training and 50% for testing. The `stratify` argument in `train_test_split()` guarantees that the `webpage_design` maintains consistent proportional representation in both subsets, thus preserving balance across experimental treatments. After completing the split, we conduct the same sanity check as described above.
+- `Python`: The code in @lst-one-way-data-splitting-py executes a stratified data splitting process similar to its `R` equivalent, utilizing the `train_test_split()` function from [{scikit-learn}](https://scikit-learn.org/stable/) [@scikit-learn]. A fixed random seed is set using the `random_state` parameter to ensure reproducibility, so that each execution generates the same random partition. The dataset, `OneWay_ABn_customer_data`, is then divided into two equal subsets: 50% for training and 50% for testing. The `stratify` argument in `train_test_split()` guarantees that the `checkout_design` maintains consistent proportional representation in both subsets, thus preserving balance across experimental treatments. After completing the split, we conduct the same sanity check as described above.
 
 ::: {.panel-tabset}
 
-## **`R` Code**
-
-``` {.r}
-# Loading library
-library(rsample)
-
-# Seed for reproducibility
-set.seed(123)
-
-# Randomly splitting into training and testing sets by webpage_design
-OneWay_ABn_customer_data_splitting <- initial_split(OneWay_ABn_customer_data,
-  prop = 0.5, strata = webpage_design
-)
-
-# Assigning data points to training and testing sets
-OneWay_ABn_training <- training(OneWay_ABn_customer_data_splitting)
-OneWay_ABn_testing <- testing(OneWay_ABn_customer_data_splitting)
-
-# Sanity check
-cat("Training shape:", dim(OneWay_ABn_training), "\n")
-cat("Testing shape:", dim(OneWay_ABn_testing), "\n\n")
-cat("Training proportions:\n")
-print(prop.table(table(OneWay_ABn_training$webpage_design)))
-cat("\nTesting proportions:\n")
-print(prop.table(table(OneWay_ABn_testing$webpage_design)))
-```
-
-## **`Python` Code**
-
-``` {.python}
-# Importing function
-from sklearn.model_selection import train_test_split
-
-# Seed for reproducibility
-random_state = 123
-
-# Randomly splitting into training and testing sets by webpage_design
-OneWay_ABn_training, OneWay_ABn_testing = train_test_split(
-    OneWay_ABn_customer_data,
-    test_size=0.5,
-    stratify=OneWay_ABn_customer_data["webpage_design"],
-    random_state=random_state
-)
-
-# Sanity check
-print("Training shape:", OneWay_ABn_training.shape)
-print("Testing shape:", OneWay_ABn_testing.shape)
-print("\nTraining proportions:")
-print(OneWay_ABn_training["webpage_design"].value_counts(normalize=True))
-print("\nTesting proportions:")
-print(OneWay_ABn_testing["webpage_design"].value_counts(normalize=True))
-```
-
-:::
-
-::: {.panel-tabset}
-
-## **`R` Output**
+## **`R`**
 
 ```{r}
-#| echo: false
+#| echo: true
+#| lst-label: lst-one-way-data-splitting-r
+#| lst-cap: "Code to randomly split housing data into training and testing sets."
 #| message: false
-
 # Loading library
 library(rsample)
 
 # Seed for reproducibility
 set.seed(123)
 
-# Randomly splitting into training and testing sets by webpage_design
+# Randomly splitting into training and testing sets by checkout_design
 OneWay_ABn_customer_data_splitting <- initial_split(OneWay_ABn_customer_data,
-  prop = 0.5, strata = webpage_design
+  prop = 0.5, strata = checkout_design
 )
 
 # Assigning data points to training and testing sets
@@ -375,41 +357,48 @@ OneWay_ABn_training <- training(OneWay_ABn_customer_data_splitting)
 OneWay_ABn_testing <- testing(OneWay_ABn_customer_data_splitting)
 
 # Sanity check
-cat("Training shape:", dim(OneWay_ABn_training), "\n")
-cat("Testing shape:", dim(OneWay_ABn_testing), "\n\n")
-cat("Training proportions:\n")
-print(prop.table(table(OneWay_ABn_training$webpage_design)))
-cat("\nTesting proportions:\n")
-print(prop.table(table(OneWay_ABn_testing$webpage_design)))
+cat(sprintf(
+  "Training shape: %d %d\nTesting shape:  %d %d\n\n
+Training proportions (checkout_design):\n%s\n\nTesting proportions (checkout_design):\n%s\n",
+  nrow(OneWay_ABn_training), ncol(OneWay_ABn_training),
+  nrow(OneWay_ABn_testing), ncol(OneWay_ABn_testing),
+  paste(capture.output(prop.table(table(OneWay_ABn_training$checkout_design))),
+    collapse = "\n"
+  ),
+  paste(capture.output(prop.table(table(OneWay_ABn_testing$checkout_design))),
+    collapse = "\n"
+  )
+))
 ```
 
-## **`Python` Output**
+## **`Python`**
 
 ```{python}
-#| echo: false
+#| echo: true
+#| lst-label: lst-one-way-data-splitting-py
+#| lst-cap: "Code to randomly split housing data into training and testing sets."
 #| message: false
-
 # Importing function
 from sklearn.model_selection import train_test_split
 
 # Seed for reproducibility
 random_state = 123
 
-# Randomly splitting into training and testing sets by webpage_design
+# Randomly splitting into training and testing sets by checkout_design
 OneWay_ABn_training, OneWay_ABn_testing = train_test_split(
     OneWay_ABn_customer_data,
     test_size=0.5,
-    stratify=OneWay_ABn_customer_data["webpage_design"],
+    stratify=OneWay_ABn_customer_data["checkout_design"],
     random_state=random_state
 )
 
 # Sanity check
-print("Training shape:", OneWay_ABn_training.shape)
-print("Testing shape:", OneWay_ABn_testing.shape)
-print("\nTraining proportions:")
-print(OneWay_ABn_training["webpage_design"].value_counts(normalize=True))
-print("\nTesting proportions:")
-print(OneWay_ABn_testing["webpage_design"].value_counts(normalize=True))
+print(
+    f"Training shape: {OneWay_ABn_training.shape}\n"
+    f"Testing shape: {OneWay_ABn_testing.shape}\n"
+    f"\nTraining proportions:\n{OneWay_ABn_training['checkout_design'].value_counts(normalize=True)}"
+    f"\n\nTesting proportions:\n{OneWay_ABn_testing['checkout_design'].value_counts(normalize=True)}"
+)
 ```
 
 :::
@@ -420,20 +409,20 @@ Using our `OneWay_ABn_training` dataset, which consists of $n_{\text{training}} 
 
 ![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-pixel-to-learn-goal-3674110/).](img/mean.png){width="600"}
 
-Both code snippets below (in `R` and `Python`) take the data frame `OneWay_ABn_training` and compute descriptive summaries of the continuous outcome variable `conversion_score`, grouped by the categorical variable `webpage_design`. The computations include three basic summary measures: 
+Both @lst-one-summary-stats-r and @lst-one-summary-stats-py (in `R` and `Python`, respectively) take the data frame `OneWay_ABn_training` and compute descriptive summaries of the continuous outcome variable `conversion_score`, grouped by the categorical variable `checkout_design`. The computations include three basic summary measures: 
 
-1. the **mean conversion score** (i.e., average performance of each webpage design), 
+1. the **mean conversion score** (i.e., average performance of each checkout design), 
 2. the **standard deviation** (i.e., the within-group variability in customer conversion behaviour), and 
-3. the **sample size `n`** (i.e., number of observations per treatment).
+3. the **sample size `n`** (i.e., number of observations per treatment or checkout design).
 
-These summaries provide a quick and exploratory understanding of the data, helping us obtain descriptive insights into the central tendency and spread of our outcome of interest per experimental treatment. The `R` implementation uses the [{tidyverse}](https://tidyverse.org/) meta-package. Conversely, the `Python` implementation uses the [{pandas}](https://pandas.pydata.org/) library for these numerical computations.
+These summaries provide a quick and exploratory understanding of the data, helping us obtain descriptive insights into the central tendency and spread of our outcome of interest per experimental treatment. The `R` implementation in @lst-one-summary-stats-r uses the [{tidyverse}](https://tidyverse.org/) meta-package. Conversely, the `Python` implementation in @lst-one-summary-stats-py uses the [{pandas}](https://pandas.pydata.org/) library for these numerical computations.
 
 ::::: Heads-up
 ::: Heads-up-header
 Heads-up on the use of [{reticulate}](https://rstudio.github.io/reticulate/) in the `Python` code snippet!
 :::
 ::: Heads-up-container
-In the below `Python` code snippet, we are importing the `OneWay_ABn_training` set, which was created from our random data splitting in the `R` environment using the [{reticulate}](https://rstudio.github.io/reticulate/) package [@reticulate]. We will eventually also do the same with the `OneWay_ABn_testing` dataset. This approach is necessary because both the [{rsample}](https://rsample.tidymodels.org) package in `R` and [{scikit-learn}](https://scikit-learn.org/stable/) in `Python` utilize different pseudo-random number generators. As a result, they produce different training and testing data splits, even when using the same seed values. Therefore, to ensure consistent output across all subsequent `R` and `Python` snippets in our workflow, it is necessary that we use the same training and testing sets.
+In the below @lst-one-summary-stats-py in `Python`, we are importing the `OneWay_ABn_training` set (from @lst-one-way-data-splitting-r), which was created from our random data splitting in the `R` environment via the [{reticulate}](https://rstudio.github.io/reticulate/) package [@reticulate]. We will eventually also do the same with the `OneWay_ABn_testing` dataset. This approach is necessary because both the [{rsample}](https://rsample.tidymodels.org) package in `R` (used in @lst-one-way-data-splitting-r) and [{scikit-learn}](https://scikit-learn.org/stable/) in `Python` (used in @lst-one-way-data-splitting-py) utilize different pseudo-random number generators. As a result, they produce different training and testing data splits, **even when using the same seed values**. Therefore, to ensure consistent output across all subsequent `R` and `Python` snippets in our workflow, it is necessary that we use the same training and testing sets.
 :::
 :::::
 
@@ -442,8 +431,8 @@ In the below `Python` code snippet, we are importing the `OneWay_ABn_training` s
 ## **`R`**
 
 ```{r}
-#| label: tbl-one-summary-stats-r
-#| tbl-cap: "Descriptive statistics of one-factor A/B/n testing via training set."
+#| lst-label: lst-one-summary-stats-r
+#| lst-cap: "Code to obtain descriptive statistics of one-factor A/B/n testing via training set."
 #| message: false
 # Loading library
 library(tidyverse)
@@ -452,21 +441,21 @@ library(reticulate)
 
 # Computing summaries
 OneWay_summary_table <- OneWay_ABn_training |>
-  group_by(webpage_design) |>
+  group_by(checkout_design) |>
   summarise(
     mean_conversion = round(mean(conversion_score), 2),
     sd_conversion = round(sd(conversion_score), 2),
     n = n()
   ) |>
-  arrange(webpage_design)
+  arrange(checkout_design)
 OneWay_summary_table
 ```
 
 ## **`Python`**
 
 ```{python}
-#| label: tbl-one-summary-stats-py
-#| tbl-cap: "Descriptive statistics of one-factor A/B/n testing via training set."
+#| lst-label: lst-one-summary-stats-py
+#| lst-cap: "Code to obtain descriptive statistics of one-factor A/B/n testing via training set."
 #| message: false
 # Importing library
 import numpy as np
@@ -476,42 +465,42 @@ OneWay_ABn_training = r.OneWay_ABn_training
 
 OneWay_summary_table = (
     OneWay_ABn_training
-    .groupby("webpage_design")
+    .groupby("checkout_design")
     .agg(
         mean_conversion=("conversion_score", lambda x: round(np.mean(x), 2)),
         sd_conversion=("conversion_score", lambda x: round(np.std(x, ddof=1), 2)),
         n=("conversion_score", "count")
     )
     .reset_index()
-    .sort_values("webpage_design")
+    .sort_values("checkout_design")
 )
 OneWay_summary_table
 ```
 
 :::
 
-The mean conversion scores (found in both @tbl-one-summary-stats-r and @tbl-one-summary-stats-py) are **very similar across the three webpage designs**, ranging narrowly from `r min(OneWay_summary_table$mean_conversion)` to `r max(OneWay_summary_table$mean_conversion)`. Additionally, **the standard deviations are also alike**, with values ranging from `r min(OneWay_summary_table$sd_conversion)` to `r max(OneWay_summary_table$sd_conversion)`. These standard deviations suggest similar levels of variability within each webpage. Although there are minor differences in the treatment means, they are subtle enough that formal hypothesis testing, such as one-way ANOVA, is necessary to determine whether these small fluctuations are due to random variation or represent genuine differences in the population means. These summary statistics therefore provide a solid descriptive check on group comparability and the plausibility of ANOVA assumptions, which sets the stage for **a rigorous inferential analysis**.
+The **sample average conversion scores** (found in the outputs from @lst-one-summary-stats-r and @lst-one-summary-stats-py) are **very similar across the three checkout designs**, ranging narrowly from `r min(OneWay_summary_table$mean_conversion)` to `r max(OneWay_summary_table$mean_conversion)`. Additionally, **the sample standard deviations are also alike**, with values ranging from `r min(OneWay_summary_table$sd_conversion)` to `r max(OneWay_summary_table$sd_conversion)`. These standard deviations suggest similar levels of variability within each design. Although there are minor differences in the treatment means, they are subtle enough that formal hypothesis testing, such as one-way ANOVA, is necessary to determine whether these small fluctuations are due to random variation or represent genuine differences in the population means. These summary statistics therefore provide a solid descriptive check on group comparability and the plausibility of ANOVA assumptions, which sets the stage for **a rigorous subsequent inferential analysis**.
 
-We will use two plots in our EDA: **three side-by-side histograms** (one per treatment) to compare the continuous conversion scores and **three side-by-side boxplots** of these scores per treatment. We use `R`'s [{ggplot2}](https://ggplot2.tidyverse.org/), from [{tidyverse}](https://tidyverse.org/), along with `Python`'s [{matplotlib}](https://matplotlib.org/) and [{seaborn}](https://seaborn.pydata.org/). The side-by-side histograms in @fig-hist-webpage-design-one-r and @fig-hist-webpage-design-one-py indicate the following:
+We will use two plots in our EDA: **three side-by-side histograms** (one per treatment) to compare the continuous conversion scores and **three side-by-side boxplots** of these scores per treatment. We use `R`'s [{ggplot2}](https://ggplot2.tidyverse.org/), from [{tidyverse}](https://tidyverse.org/), along with `Python`'s [{matplotlib}](https://matplotlib.org/) and [{seaborn}](https://seaborn.pydata.org/). The side-by-side histograms in @fig-hist-checkout-design-one-r or @fig-hist-checkout-design-one-py indicate the following:
 
-- The three webpage designs exhibit approximately **unimodal** and **roughly symmetric distributions** centred around conversion scores in the low-60s, with slight differences in spread. 
-- Design $D_1$ appears slightly more concentrated around its mean, while $D_2$ and $D_3$ show marginally wider dispersion, reflected in slightly flatter histogram peaks.
-- The distributions and central tendencies (i.e., mean conversion scores) are **pretty similar** across the three webpage designs.
+- The three checkout designs exhibit approximately **unimodal** and **roughly symmetric distributions** centred around conversion scores in the low-60s, with slight differences in spread. 
+- Design $D_1$ appears slightly more concentrated around its sample average, while $D_2$ and $D_3$ show marginally wider dispersion, reflected in slightly flatter histogram peaks.
+- The distributions and central tendencies (i.e., average conversion scores) are **pretty similar** across the three checkout designs.
 
 ::: {.panel-tabset}
 
 ## **`R`**
 
 ```{r}
-#| label: fig-hist-webpage-design-one-r
-#| fig-cap: "Overlaid histograms of customer conversion score by webpage design via training data."
+#| label: fig-hist-checkout-design-one-r
+#| fig-cap: "Facetted histograms of customer conversion score by checkout design via training data."
 #| warning: false
 #| message: false
 #| fig.height: 7.5
 #| fig.width: 13.5
 hist_one_way <- ggplot(
   OneWay_ABn_training,
-  aes(x = conversion_score, fill = webpage_design)
+  aes(x = conversion_score, fill = checkout_design)
 ) +
   geom_histogram(
     alpha = 0.7,
@@ -531,7 +520,7 @@ hist_one_way <- ggplot(
     strip.text = element_text(size = 20),
     legend.position = "none"
   ) +
-  facet_wrap(~ webpage_design, nrow = 1) +   # <-- horizontal panels
+  facet_wrap(~ checkout_design, nrow = 1) +   # <-- horizontal panels
   scale_fill_manual(
     values = c(
       "D1" = "#E69F00",
@@ -546,8 +535,8 @@ hist_one_way
 ## **`Python`**
 
 ```{python}
-#| label: fig-hist-webpage-design-one-py
-#| fig-cap: "Overlaid histograms of customer conversion score by webpage design via training data."
+#| label: fig-hist-checkout-design-one-py
+#| fig-cap: "Facetted histograms of customer conversion score by checkout design via training data."
 #| warning: false
 #| message: false
 #| fig.height: 7.5
@@ -584,7 +573,7 @@ fig, axes = plt.subplots(
 
 for ax, design in zip(axes, design_order):
     subset = OneWay_ABn_training[
-        OneWay_ABn_training["webpage_design"] == design
+        OneWay_ABn_training["checkout_design"] == design
     ]
 
     sns.histplot(
@@ -614,30 +603,30 @@ plt.show()
 
 :::
 
-Now, in  @fig-boxplot-webpage-design-one-r and @fig-boxplot-webpage-design-one-py each boxplot represents the distribution of customer conversion scores for one of the three webpage-design conditions ($D_1$, $D_2$, and $D_3$). The central line in each box is the median score; the top and bottom of the box span the 25th to 75th percentiles (the interquartile range, IQR); and the whiskers extend to the non-outlier extremes (according to the conventional 1.5× IQR rule). From a visual comparison of the three groups, we have the following:
+Now, in  @fig-boxplot-checkout-design-one-r or @fig-boxplot-checkout-design-one-py, each boxplot represents the distribution of customer conversion scores for one of the three checkout designs ($D_1$, $D_2$, and $D_3$). The central line in each box is the sample median score; the top and bottom of the box span the 25th to 75th percentiles (the interquartile range, IQR); and the whiskers extend to the non-outlier extremes (according to the conventional 1.5× IQR rule). From a visual comparison of the three treatments (i.e., designs), we have the following:
 
-- The medians of $D_1$, $D_2$, and $D_3$ appear **quite similar**, indicating that the central tendency of conversion score is roughly equivalent across the three webpage designs.
-- The box heights (i.e., IQRs) show that **the spread of the middle 50% of scores is also very similar across experimental treatments**, meaning no webpage design shows substantially more variability in the core of its distribution than the others.
-- The whiskers and any outlier points (dots beyond whiskers) may reveal slight differences. For example, if one design has a somewhat longer upper whisker, that signals a larger tail of higher conversion scores in that condition.
+- The sample medians of $D_1$, $D_2$, and $D_3$ appear **quite similar**, indicating that the central tendency of conversion score is roughly equivalent across the three checkout designs.
+- The box heights (i.e., IQRs) show that **the spread of the middle 50% of scores is also very similar across experimental treatments**, meaning no checkout design shows substantially more variability in the core of its distribution than the others.
+- The whiskers and any outlier points (dots beyond whiskers) may reveal slight differences. For example, if one design has a somewhat longer upper whisker, that signals a larger tail of higher conversion scores in that design.
 
 ::: {.panel-tabset}
 
 ## **`R`**
 
 ```{r}
-#| label: fig-boxplot-webpage-design-one-r
-#| fig-cap: "Side-by-side boxplots of customer conversion score by webpage design via training data."
+#| label: fig-boxplot-checkout-design-one-r
+#| fig-cap: "Side-by-side boxplots of customer conversion score by checkout design via training data."
 #| warning: false
 #| message: false
 #| fig.height: 8
 #| fig.width: 14
-boxplots_webpage_design_one_way <- ggplot(OneWay_ABn_training, aes(
-  x = webpage_design, y = conversion_score,
-  fill = webpage_design
+boxplots_checkout_design_one_way <- ggplot(OneWay_ABn_training, aes(
+  x = checkout_design, y = conversion_score,
+  fill = checkout_design
 )) +
   geom_boxplot(alpha = 0.7, outlier.color = "black") +
   labs(
-    x = "Webpage Design",
+    x = "Checkout Design",
     y = "Conversion Score"
   ) +
   theme_minimal(base_size = 14) +
@@ -650,14 +639,14 @@ boxplots_webpage_design_one_way <- ggplot(OneWay_ABn_training, aes(
   ) +
   theme(legend.position = "none") +
   scale_fill_manual(values = c("D1" = "#E69F00", "D2" = "#56B4E9", "D3" = "#009E73"))
-boxplots_webpage_design_one_way
+boxplots_checkout_design_one_way
 ```
 
 ## **`Python`**
 
 ```{python}
-#| label: fig-boxplot-webpage-design-one-py
-#| fig-cap: "Side-by-side boxplots of customer conversion score by webpage design via training data."
+#| label: fig-boxplot-checkout-design-one-py
+#| fig-cap: "Side-by-side boxplots of customer conversion score by checkout design via training data."
 #| warning: false
 #| message: false
 #| fig.height: 8
@@ -684,7 +673,7 @@ fig, ax = plt.subplots(figsize=(14, 8))
 # Side-by-side boxplots
 sns.boxplot(
     data=OneWay_ABn_training,
-    x="webpage_design",
+    x="checkout_design",
     y="conversion_score",
     palette=palette,
     saturation=0.7,        
@@ -695,7 +684,7 @@ sns.boxplot(
 )
 
 # Axis labels and formatting
-ax.set_xlabel("Webpage Design", fontsize=20)
+ax.set_xlabel("Checkout Design", fontsize=20)
 ax.set_ylabel("Conversion Score", fontsize=20)
 
 # Removing legend
@@ -711,11 +700,71 @@ plt.show()
 
 :::
 
-The side-by-side histograms and boxplots indicate that there is **no strong visual separation** among the distributions of customer conversion scores for the three webpage designs. The central tendency, spread, and tails of the distributions **overlap significantly**, suggesting that any treatment effect (if it exists) is likely to be subtle rather than pronounced. In summary, the EDA evidence reveals only minor differences among the webpage designs, highlighting the need for formal statistical testing to determine whether these small observed variations are statistically significant or merely a result of random sampling variability.
+The side-by-side histograms and boxplots indicate that there is **no strong visual separation** among the distributions of customer conversion scores for the three checkout designs. The central tendency, spread, and tails of the distributions **overlap significantly**, suggesting that any treatment effect (if it exists) is likely to be subtle rather than pronounced. In summary, the EDA evidence reveals only minor differences among the checkout designs, highlighting the need for formal statistical testing to determine whether these small observed variations are statistically significant or merely a result of random sampling variability.
 
 ### Testing Settings {#sec-one-way-ANOVA-testing-settings}
 
+Now, let us move to the one-way ANOVA settings before outlining our corresponding hypotheses. Via our **training data**, the EDA results in @sec-one-way-ANOVA-EDA suggest a very clear graphical fact: **the three checkout designs look quite similar in regards to descriptive statistics and distributional plots**, and any possible treatment effect appears subtle. The sample average conversion scores reported in @lst-one-summary-stats-r (or @lst-one-summary-stats-py) are very similar across treatments $D_1$, $D_2$, and $D_3$, ranging narrowly from `r min(OneWay_summary_table$mean_conversion)` to `r max(OneWay_summary_table$mean_conversion)`, and the corresponding sample standard deviations are also alike, ranging from `r min(OneWay_summary_table$sd_conversion)` to `r max(OneWay_summary_table$sd_conversion)`. Visually, the side-by-side histograms in @fig-hist-checkout-design-one-r (or @fig-hist-checkout-design-one-py) show approximately unimodal, roughly symmetric distributions centred in the low-60s, while the side-by-side boxplots in @fig-boxplot-checkout-design-one-r (or @fig-boxplot-checkout-design-one-py) show sample medians and IQRs that are quite similar across the three designs. Taken together, these descriptive findings support two key takeaways we want to carry over in our testing workflow:
+
+1. Any difference in population means (if it exists!) might **not** be statistically significant, and
+2. the overall similarity in spreads would make an **equal-population-variance assumption** reasonable across the three treatments (while still requiring formal **diagnostics** later).
+
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-blended-learning-6230153/).](img/blender.png){width="400"}
+
+Having all the above EDA context in mind, we can proceed to the frequentist testing settings used to evaluate whether the small observed differences in conversion scores across the three treatments are beyond random fluctuation. Each **population parameter** used in our one-way ANOVA must be defined to match the stakeholder question about deployment:
+
+- $\mu_{D_1}$ is the *fixed* population mean conversion score we would expect if **all eligible customers** were shown design $D_1$ (i.e., the **control treatement**) under our A/B/n protocol.
+- $\mu_{D_2}$ is the analogous *fixed* population mean conversion score if **all eligible customers** were instead shown design $D_2$ (i.e., the first **experimental treatement**) under our A/B/n protocol.
+- $\mu_{D_3}$ is the other analogous *fixed* population mean conversion score under design $D_3$ (i.e., the second **experimental treatement**). 
+
+$\mu_{D_1}$, $\mu_{D_2}$, and $\mu_{D_2}$ are the corresponding population means (or averages, if we adapt the statistical terminology to the stakeholders' context) under hypothetical experimental rollouts, and that is exactly why they are the **parameters of interest** for the "*Growth*" team: 
+
+> **A decision like "*ship experimental checkout design $D_2$ (or $D_3$, if that is the case) to production*" is ultimately a claim about what would happen on average in the customer population if $D_2$ (or $D_3$) were deployed.** 
+
+::::: Heads-up
+::: Heads-up-header
+Heads-up on *sample* versus *population* language!
+:::
+::: Heads-up-container
+In this chapter, we avoid phrasing like "*the sample mean under $D_2$ is higher than the sample mean under $D_1$*" when making inferential claims, because **ANOVA is not about describing our dataset**. It is about learning (with uncertainty via sampled data coming from the A/B/n testing) about **population quantities** that stakeholders care about such as $\mu_{D_1}$, $\mu_{D_2}$, and $\mu_{D_3}$.
+
+![Image by [*Manfred Stege*](https://pixabay.com/users/manfredsteger-1848497/) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-emotion-confused-6230199/).](img/question.png){width="250"}
+
+The observed group averages $\bar{y}_{D_1}$, $\bar{y}_{D_2}$, and $\bar{y}_{D_3}$ from @sec-one-way-ANOVA-EDA are useful as descriptive summaries. Still, they are noisy estimates that vary from sample to sample (if we were to run a subsequent A/B/n testing) and should not be treated as the **population truth** about the checkout designs. So, when we communicate results, we phrase conclusions in terms of **population means** (and evidence about them), because those are the quantities that support decisions like "*ship $D_2$ (or $D_3$, if that is the case)*" or "*run a follow-up experiment*."
+:::
+:::::
+
+We set the significance level at $\alpha=0.05$, and we keep this choice consistent with the **power analysis** that would have been used when planning the experiment (our A/B/n testing) in the first place. In plain words, $\alpha$ is our tolerance for a **false positive**: if the status quo is actually true (meaning the checkout designs truly do not differ in their population mean conversion scores), then we are willing to accept about a $5\%$ chance of mistakenly declaring "*a difference exists*" anyway (a **Type I error** as in @tbl-errors). This is why $\alpha$ should be fixed **before** looking at the inferential results: it is a standard setting that governs how strong the **observed evidence** must be before we overturn the status quo. Practically, choosing $\alpha=0.05$ says to stakeholders:
+
+> **We will not recommend a design change based on weak evidence, because shipping the wrong experimental checkout design variant has real business cost.**
+
 ### Hypothesis Definitions {#sec-one-way-ANOVA-hypothesis-definitions}
+
+With the testing settings locked in, we can now define the **null and alternative hypotheses** in a way that matches the company's A/B/n testing and the exploratory insights from the training split. The EDA suggested that the three checkout designs have **very similar** sample distributions, averages, and standard deviations, with no strong visual separation, so any true treatment effect (if it exists!) likely shows up as a subtle shift in population mean conversion score rather than a large jump. This is exactly the situation where we need formal hypothesis testing: we want to determine whether the small differences we observed in the training split are compatible with **random sampling variability**, or whether they reflect a **genuine difference in the underlying population means**.
+
+![Image by [*Manfred Steger*](https://pixabay.com/users/manfredsteger-1848497/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3699345) via [*Pixabay*](https://pixabay.com/vectors/pixel-cells-protocol-exchange-3947913/).](img/test.png){width="420"}
+
+Let $\mu_{D_j}$ (for $j = 1, 2, 3$) denote the population mean conversion score that  would expect if the checkout design $D_j$ were deployed to the full eligible customer traffic under the same experimental protocol. The null hypothesis $H_0$ in one-way ANOVA expresses the **status quo** position that the experiment has not changed average customer behaviour: even if the observed group averages differ slightly in our sampled data, the underlying population means are the same across designs. Formally, we write this as
+
+$$
+H_0 \text{: } \mu_{D_1}=\mu_{D_2}=\mu_{D_3}.
+$$
+
+In plain words, $H_0$ says: 
+
+> **If the company rolled out any of these above three checkout designs at scale, the average conversion score in the eligible population would be the same.**
+
+The alternative hypothesis $H_1$ in one-way ANOVA is deliberately broad (recall it is an **overall test**) because, before testing, we do not want to commit to a specific ordering (for example, "*$D_3$ is best*") based on subtle EDA differences alone. Instead, we allow for any departure from the status quo as follows:
+
+$$
+H_1 \text{: at least one of }\mu_{D_1},\mu_{D_2}\text{ or }\mu_{D_3}\text{ differs}.
+$$
+
+In stakeholder terms, $H_1$ says: 
+
+> **There is evidence that, at least, one checkout design changes the population mean conversion score, without yet specifying which design is higher or lower.** 
+
+All this arrangement keeps the hypotheses **mutually exclusive** and ensures that the inferential decision we make later has a clear logical interpretation: we either fail to find evidence against the status quo, or we find enough evidence (at significance level $\alpha$) to argue that the population means are not all equal.
 
 ### Test Flavour and Components {#sec-one-way-ANOVA-test-flavour}
 
@@ -731,7 +780,7 @@ The side-by-side histograms and boxplots indicate that there is **no strong visu
 library(broom)
 
 # Running one-way ANOVA
-OneWay_aov <- aov(conversion_score ~ webpage_design,
+OneWay_aov <- aov(conversion_score ~ checkout_design,
   data = OneWay_ABn_testing
 )
 
@@ -754,7 +803,7 @@ from statsmodels.formula.api import ols
 OneWay_ABn_testing = r.OneWay_ABn_testing
 
 # Running one-way ANOVA
-OneWay_model = ols('conversion_score ~ C(webpage_design)', data=OneWay_ABn_testing).fit()
+OneWay_model = ols('conversion_score ~ C(checkout_design)', data=OneWay_ABn_testing).fit()
 OneWay_aov = sm.stats.anova_lm(OneWay_model, typ=2)
 
 # Displaying full one-way ANOVA table
@@ -851,7 +900,7 @@ OneWay_shapiro
 library(car)
 
 # Running Levene test
-OneWay_levene <- leveneTest(conversion_score ~ as.factor(webpage_design),
+OneWay_levene <- leveneTest(conversion_score ~ as.factor(checkout_design),
   data = OneWay_ABn_testing
 )
 
@@ -870,7 +919,7 @@ tidy(OneWay_levene) |>
 from scipy.stats import levene
 
 # Running Levene test
-groups_OneWay = [group["conversion_score"].values for _, group in OneWay_ABn_testing.groupby("webpage_design")]
+groups_OneWay = [group["conversion_score"].values for _, group in OneWay_ABn_testing.groupby("checkout_design")]
 stat1, p1 = levene(*groups_OneWay)
 
 # Displaying outputs
@@ -1018,7 +1067,7 @@ set.seed(123)
 
 # Create a combined stratification variable
 TwoWay_ABn_customer_data <- TwoWay_ABn_customer_data |>
-  mutate(strata = interaction(webpage_design, discount_framing))
+  mutate(strata = interaction(checkout_design, discount_framing))
 
 # Randomly splitting into training and testing sets by both factors
 TwoWay_ABn_customer_data_splitting <- initial_split(
@@ -1036,10 +1085,10 @@ cat("Training shape:", dim(TwoWay_ABn_training), "\n")
 cat("Testing shape:", dim(TwoWay_ABn_testing), "\n\n")
 
 cat("Training proportions:\n")
-print(prop.table(table(TwoWay_ABn_training$webpage_design, TwoWay_ABn_training$discount_framing)))
+print(prop.table(table(TwoWay_ABn_training$checkout_design, TwoWay_ABn_training$discount_framing)))
 
 cat("\nTesting proportions:\n")
-print(prop.table(table(TwoWay_ABn_testing$webpage_design, TwoWay_ABn_testing$discount_framing)))
+print(prop.table(table(TwoWay_ABn_testing$checkout_design, TwoWay_ABn_testing$discount_framing)))
 ```
 
 ## **`Python` Code**
@@ -1050,7 +1099,7 @@ random_state = 123
 
 # Create a combined stratification variable
 TwoWay_ABn_customer_data["strata"] = (
-    TwoWay_ABn_customer_data["webpage_design"].astype(str)
+    TwoWay_ABn_customer_data["checkout_design"].astype(str)
     + "_"
     + TwoWay_ABn_customer_data["discount_framing"].astype(str)
 )
@@ -1068,10 +1117,10 @@ print("Training shape:", TwoWay_ABn_training.shape)
 print("Testing shape:", TwoWay_ABn_testing.shape)
 
 print("\nTraining proportions:")
-print(TwoWay_ABn_training.groupby(["webpage_design", "discount_framing"]).size().div(len(TwoWay_ABn_training)))
+print(TwoWay_ABn_training.groupby(["checkout_design", "discount_framing"]).size().div(len(TwoWay_ABn_training)))
 
 print("\nTesting proportions:")
-print(TwoWay_ABn_testing.groupby(["webpage_design", "discount_framing"]).size().div(len(TwoWay_ABn_testing)))
+print(TwoWay_ABn_testing.groupby(["checkout_design", "discount_framing"]).size().div(len(TwoWay_ABn_testing)))
 ```
 
 :::
@@ -1089,7 +1138,7 @@ set.seed(123)
 
 # Create a combined stratification variable
 TwoWay_ABn_customer_data <- TwoWay_ABn_customer_data |>
-  mutate(strata = interaction(webpage_design, discount_framing))
+  mutate(strata = interaction(checkout_design, discount_framing))
 
 # Randomly splitting into training and testing sets by both factors
 TwoWay_ABn_customer_data_splitting <- initial_split(
@@ -1107,10 +1156,10 @@ cat("Training shape:", dim(TwoWay_ABn_training), "\n")
 cat("Testing shape:", dim(TwoWay_ABn_testing), "\n\n")
 
 cat("Training proportions:\n")
-print(prop.table(table(TwoWay_ABn_training$webpage_design, TwoWay_ABn_training$discount_framing)))
+print(prop.table(table(TwoWay_ABn_training$checkout_design, TwoWay_ABn_training$discount_framing)))
 
 cat("\nTesting proportions:\n")
-print(prop.table(table(TwoWay_ABn_testing$webpage_design, TwoWay_ABn_testing$discount_framing)))
+print(prop.table(table(TwoWay_ABn_testing$checkout_design, TwoWay_ABn_testing$discount_framing)))
 ```
 
 ## **`Python` Output**
@@ -1124,7 +1173,7 @@ random_state = 123
 
 # Create a combined stratification variable
 TwoWay_ABn_customer_data["strata"] = (
-    TwoWay_ABn_customer_data["webpage_design"].astype(str)
+    TwoWay_ABn_customer_data["checkout_design"].astype(str)
     + "_"
     + TwoWay_ABn_customer_data["discount_framing"].astype(str)
 )
@@ -1142,10 +1191,10 @@ print("Training shape:", TwoWay_ABn_training.shape)
 print("Testing shape:", TwoWay_ABn_testing.shape)
 
 print("\nTraining proportions:")
-print(TwoWay_ABn_training.groupby(["webpage_design", "discount_framing"]).size().div(len(TwoWay_ABn_training)))
+print(TwoWay_ABn_training.groupby(["checkout_design", "discount_framing"]).size().div(len(TwoWay_ABn_training)))
 
 print("\nTesting proportions:")
-print(TwoWay_ABn_testing.groupby(["webpage_design", "discount_framing"]).size().div(len(TwoWay_ABn_testing)))
+print(TwoWay_ABn_testing.groupby(["checkout_design", "discount_framing"]).size().div(len(TwoWay_ABn_testing)))
 ```
 
 :::
@@ -1162,13 +1211,13 @@ print(TwoWay_ABn_testing.groupby(["webpage_design", "discount_framing"]).size().
 #| message: false
 # Computing summaries
 TwoWay_summary_table <- TwoWay_ABn_training |>
-  group_by(webpage_design, discount_framing) |>
+  group_by(checkout_design, discount_framing) |>
   summarise(
     mean_conversion = round(mean(conversion_score), 2),
     sd_conversion = round(sd(conversion_score), 2),
     n = n()
   ) |>
-  arrange(webpage_design, discount_framing)
+  arrange(checkout_design, discount_framing)
 TwoWay_summary_table
 ```
 
@@ -1184,14 +1233,14 @@ TwoWay_ABn_training = r.TwoWay_ABn_training
 # Computing summaries
 TwoWay_summary_table = (
     TwoWay_ABn_training
-    .groupby(["webpage_design", "discount_framing"])
+    .groupby(["checkout_design", "discount_framing"])
     .agg(
         mean_conversion=("conversion_score", lambda x: round(np.mean(x), 2)),
         sd_conversion=("conversion_score", lambda x: round(np.std(x, ddof=1), 2)),
         n=("conversion_score", "count")
     )
     .reset_index()
-    .sort_values(["webpage_design", "discount_framing"])
+    .sort_values(["checkout_design", "discount_framing"])
 )
 TwoWay_summary_table
 ```
@@ -1209,7 +1258,7 @@ TwoWay_summary_table
 
 hist_two_way <- ggplot(
   TwoWay_ABn_training,
-  aes(x = conversion_score, fill = webpage_design)
+  aes(x = conversion_score, fill = checkout_design)
 ) +
   geom_histogram(
     alpha = 0.7,
@@ -1256,9 +1305,9 @@ hist_two_way
 #| fig.height: 8
 #| fig.width: 14
 
-boxplots_webpage_design_two_way <- ggplot(TwoWay_ABn_training, aes(
+boxplots_checkout_design_two_way <- ggplot(TwoWay_ABn_training, aes(
   x = discount_framing, y = conversion_score,
-  fill = webpage_design
+  fill = checkout_design
 )) +
   geom_boxplot(alpha = 0.7, outlier.color = "black") +
   labs(
@@ -1280,7 +1329,7 @@ boxplots_webpage_design_two_way <- ggplot(TwoWay_ABn_training, aes(
     strip.text = element_text(size = 20)
   ) +
   scale_fill_manual(values = c("D1" = "#E69F00", "D2" = "#56B4E9", "D3" = "#009E73"))
-boxplots_webpage_design_two_way
+boxplots_checkout_design_two_way
 ```
 
 
@@ -1295,7 +1344,7 @@ boxplots_webpage_design_two_way
 
 # Compute means for each combination
 interaction_means <- TwoWay_ABn_training |>
-  group_by(discount_framing, webpage_design) |>
+  group_by(discount_framing, checkout_design) |>
   summarise(
     mean_conversion = mean(conversion_score),
     .groups = "drop"
@@ -1309,8 +1358,8 @@ interaction_means$discount_framing <- factor(
 interaction_plot <- ggplot(interaction_means, aes(
   x = discount_framing,
   y = mean_conversion,
-  color = webpage_design,
-  group = webpage_design
+  color = checkout_design,
+  group = checkout_design
 )) +
   geom_line(linewidth = 1.2) +
   geom_point(size = 4) +
@@ -1350,7 +1399,7 @@ interaction_plot
 #| tbl-cap: "Two-way ANOVA: Conversion score by webpage design and discount framing via testing set."
 #| message: false
 # Running two-way ANOVA
-TwoWay_aov <- aov(conversion_score ~ webpage_design * discount_framing,
+TwoWay_aov <- aov(conversion_score ~ checkout_design * discount_framing,
   data = TwoWay_ABn_testing
 )
 
@@ -1370,7 +1419,7 @@ TwoWay_aov
 TwoWay_ABn_testing = r.TwoWay_ABn_testing
 
 # Running two-way ANOVA
-TwoWay_model = ols('conversion_score ~ C(webpage_design) * C(discount_framing)', data=TwoWay_ABn_testing).fit()
+TwoWay_model = ols('conversion_score ~ C(checkout_design) * C(discount_framing)', data=TwoWay_ABn_testing).fit()
 TwoWay_aov = sm.stats.anova_lm(TwoWay_model, typ=2)
 
 # Round all numeric columns except p-values
@@ -1395,7 +1444,7 @@ TwoWay_aov
 #| fig.width: 14
 
 # Extract residuals from model
-TwoWay_aov <- aov(conversion_score ~ webpage_design * discount_framing,
+TwoWay_aov <- aov(conversion_score ~ checkout_design * discount_framing,
   data = TwoWay_ABn_testing
 )
 TwoWay_resid <- augment(TwoWay_aov)
@@ -1470,7 +1519,7 @@ TwoWay_shapiro
 library(car)
 
 # Running Levene test
-TwoWay_levene <- leveneTest(conversion_score ~ as.factor(webpage_design) * as.factor(discount_framing),
+TwoWay_levene <- leveneTest(conversion_score ~ as.factor(checkout_design) * as.factor(discount_framing),
   data = TwoWay_ABn_testing
 )
 
@@ -1486,7 +1535,7 @@ tidy(TwoWay_levene) |>
 #| tbl-cap: "Levene’s test for homogeneity of variances for two-way ANOVA via testing data."
 #| message: false
 # Running Levene test
-TwoWay_ABn_testing["group"] = TwoWay_ABn_testing["webpage_design"].astype(str) + "_" + TwoWay_ABn_testing["discount_framing"].astype(str)
+TwoWay_ABn_testing["group"] = TwoWay_ABn_testing["checkout_design"].astype(str) + "_" + TwoWay_ABn_testing["discount_framing"].astype(str)
 groups_TwoWay = [group["conversion_score"].values for _, group in TwoWay_ABn_testing.groupby("group")]
 stat1, p1 = levene(*groups_TwoWay)
 
