@@ -10,7 +10,16 @@
 
 # Tests for One Continuous Population Mean {#sec-one-continuous-mean}
 
-```{r setup, include=FALSE}
+```{r, echo = FALSE}
+#| label: setup
+#| include: false
+
+# Load R packages
+library(palmerpenguins)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+
 # Setting up Python dependencies
 library(reticulate)
 reticulate::py_config()
@@ -19,12 +28,6 @@ py_require("pandas")
 py_require("seaborn")
 py_require("scikit-learn")
 py_require("statsmodels")
-
-# Optional: check if modules are available
-if (!py_module_available("pandas")) stop("pandas not found")
-if (!py_module_available("seaborn")) stop("seaborn not found")
-if (!py_module_available("sklearn")) stop("scikit-learn not found")
-if (!py_module_available("statsmodels")) stop("statsmodels not found")
 
 # Import Python modules
 pandas <- import("pandas")
@@ -121,9 +124,6 @@ We obtain the dataset **Palmer Station Penguins** dataset collected by the 'LTER
 
 ### R Code
 ```{r}
-library(palmerpenguins)
-library(dplyr)
-library(tidyverse)
 set.seed(42)
 
 penguins_clean <- penguins %>% drop_na()
@@ -501,8 +501,6 @@ Let’s visualize the distribution of penguin species in our training sample.
 
 ### R Code
 ```{r}
-library(ggplot2)
-
 ggplot(train_set, aes(x = species)) +
   geom_bar(fill = "orange", color = "black") +
   labs(title = "Penguin Species Count in Training Set",
