@@ -36,7 +36,32 @@ sklearn <- import("sklearn")
 statsmodels <- import("statsmodels")
 ```
 
-This chapter introduces statistical tests designed to analyze a single sample, which is a fundamental task in data analysis across many disciplines. Whether you're evaluating whether the average recovery time from a treatment differs from a known standard, assessing whether student test scores exceed a benchmark, or testing if the proportion of success in a group differs from an expected rate, these methods help determine whether the observed values are statistically significant or simply due to chance.
+
+::::: LO
+::: LO-header
+Learning Objectives
+:::
+
+::: LO-container
+
+By the end of this chapter, you should be able to:
+
+  - Formulate hypotheses for testing a single population mean or proportion.
+  
+  - Choose and conduct an appropriate one-sample `t-test` or one-sample `z-test` based on study context and assumptions.
+  
+  - Differentiate between cases where the population variance is known and unknown, and select the appropriate test for each case.
+  
+  - Perform one-sample `t-tests` and `z-tests` using both `R` and `Python`, and interpret the outputs.
+  
+  - Apply statistical reasoning to real-world data examples, including evaluating assumptions and limitations.
+  
+:::
+:::::
+
+
+This chapter introduces statistical tests for analyzing a single sample, a common task in data analysis across many disciplines. These methods are used when we want to compare a sample-based estimate to a known or hypothesized population value. For example, we may want to test whether the average recovery time after a treatment differs from a clinical standard, whether student test scores exceed a benchmark, or whether the proportion of successes in a group differs from an expected rate. In each case, hypothesis testing helps us assess whether the observed difference is large enough to provide evidence against the null hypothesis, or whether it could reasonably be explained by random sampling variation.
+
 
 ::: {#fig-test-chapter-1-mindmap}
 ```{mermaid}
@@ -62,218 +87,542 @@ mindmap
 A specific hypothesis testing mind map outlining the techniques explored in this chapter, which are classical tests for one continuous population mean.
 :::
 
-There are several statistical tests used to evaluate hypotheses about a single sample. The appropriate test depends on the type of variable (mean or proportion), sample size, and whether population parameters like variance are known.
+In this chapter, we review tests for making inference about a single population parameter based on one sample. We focus on two common settings:
 
-We test whether a population mean equals a specific value. The right test depends on:
+-   A population mean, where the response variable is continuous, and
+-   A population proportion, where the response variable is binary.
 
--   Type of response
--   Whether the population variance is known
--   Sample size
+For a single population mean, the choice of test depends on whether the population variance is known or unknown. When the population variance is unknown, we use the one-sample `t-test`. When the population variance is known, we use the one-sample `z-test`. For binary outcomes, we use a one-sample proportion `z-test` to compare the population proportion to a hypothesized value.
 
-In this chapter, we focus on statistical tests used to evaluate hypotheses about a **single population mean** or **proportion**, based on sample data. These tests help determine whether a sample provides sufficient evidence to conclude that the population mean (or proportion) differs from a specified value.
+The choice of test depends on the type of response variable, the information available about the population variance, and the sample size. Each section below introduces the test setup, hypotheses, assumptions, theoretical background, and implementation in both `R` and `Python` using real or simulated data.
 
-We cover two cases for the mean — depending on whether the population variance is known or unknown — and one test for binary outcomes where we're testing a population proportion.
-
-------------------------------------------------------------------------
-
-Key tests include:
 
 ## One-sample t-test for the mean
 
 ### Review
 
-Use this test when: - The population variance **is unknown**, and - The sample is either **normally distributed** or **large enough** to rely on the central limit theorem.
+Use this test when:
 
-Imagine you want to assess whether a new method of teaching introductory physics improves student performance compared to the traditional method previously used. To explore this, you test the new method at the University of British Columbia (UBC) and compare the results to historical data from students who were taught using the traditional approach. This historical data serves as your **reference value**.
+-   You have **one sample** from a population.
+-   The response variable is **quantitative** (also known as **continuous**).
+-   You want to test whether the population mean is equal to a specific reference value.
+-   The population variance is **unknown**.
+-   The sample is approximately normal, or the sample size is large enough for the sampling distribution of the sample mean to be approximately normal.
 
-Suppose the population has an unknown average physics score, denoted as:
+In this section, we focus on the case where the population variance is unknown. The known-variance case will be discussed later using the one-sample `z-test`.
+
+The one-sample `t-test` is used when we want to compare a sample mean to a hypothesized population mean. Suppose we observe a random sample of size $n$,
 
 $$
-\mu \quad \text{(mean physics score at UBC)}
+X_1, X_2, \dots, X_n,
 $$
 
-Since we do not have access to the grades of all students, we take a **random sample** from the population. Let this sample consist of $n$ students, with observed scores:
+from a population with unknown mean $\mu$. We want to assess whether the data provide enough evidence to conclude that $\mu$ differs from a specified reference value, denoted by $\mu_0$.
+
+The main statistical question is:
+
+> **Is the population mean statistically different from the hypothesized value $\mu_0$?**
+
+For example, if the hypothesized value is $\mu_0 = 200$, then the question becomes:
+
+> **Does the sample provide evidence that the population mean is different from 200?**
+
+Because the population variance is unknown, we estimate it using the sample standard deviation. This additional uncertainty is why the test statistic follows a `t-distribution` rather than a standard normal distribution.
+
+
+### Study design
+
+Now that we have reviewed the general idea behind the one-sample `t-test`, let us apply it to a real data example. In this section, we use the `penguins` data set from the `palmerpenguins` package in `R`. This data set contains measurements for penguins observed near Palmer Station, Antarctica. Some of the main quantitative variables include `flipper_length_mm`, which records the length of a penguin's flipper in millimetres; `bill_length_mm`, which records the length of the penguin's bill in millimetres; `bill_depth_mm`, which records the depth or thickness of the bill in millimetres; and `body_mass_g`, which records the penguin's body mass in grams.
+
+For this example, the response variable of interest is `flipper_length_mm`, which records penguin flipper length in millimetres. We treat the observed penguins in the data set as a sample from a broader population of similar penguins. Let $\mu$ denotes the population mean flipper length of penguins. Suppose we want to compare the population mean flipper length to a reference value of 200 mm. In other words, we want to assess whether the sample provides evidence that the average flipper length in the population is different from 200 mm.
+
+The main statistical question is:
+
+> **Does the data provide evidence that the population mean flipper length of penguins is different from 200 mm?**
+
+In this example, the hypothesized population mean is
 
 $$
-X_1, X_2, \dots, X_n
+\mu_0 = 200.
 $$
 
-The central question becomes:
+To keep the exploratory and inferential parts of the analysis separate, we will split the data into a training set and a test set. The training set will be used for exploratory data analysis, and the test set will be used to conduct the formal hypothesis test.
 
-> **Is the mean physics score in our sample statistically different from a given reference value?**
 
-If, for example, the historical average physics score is known to be **75**, then our question becomes more specific:
+### Data Collection and Wrangling
 
-> **Is the mean physics score in the sample statistically different from 75?**
-
-### Study Design
-
-In this example we use the **Palmer Station Penguins** dataset collected by the LTER in Antarctica (2007 – 2009).\
-The dataset spans three penguin species and includes continuous variables such as *flipper length*, *bill size*, and *body mass*.
-
-> **Research question:**\
-> *Is the average flipper length of penguins significantly different from 200 mm?*
-
-------------------------------------------------------------------------
-
-### Data Collection & Wrangling
-
-We obtain the dataset **Palmer Station Penguins** dataset collected by the 'LTER'
+To answer this question, we obtain the `penguins` data set from the `palmerpenguins` package. Note that we treat these data as a sample from a broader population of similar penguins. First, we create a new copy of the data set to avoid modifying the original data directly. This step is optional but it is a good habit when preparing data for analysis from datasets in `R` packages.
 
 ::: {.panel-tabset}
 
 ### R Code
+
 ```{r}
-set.seed(42)
+# Get a copy of the data set
+penguins_data <- penguins
 
-penguins_clean <- penguins %>% drop_na()
-
-# 80/20 split
-train_index <- sample(seq_len(nrow(penguins_clean)), 
-                      size = 0.8 * nrow(penguins_clean))
-train_set <- penguins_clean[train_index, ]
-test_set <- penguins_clean[-train_index, ]
+# Keep variables used in this section and remove missing values
+penguins_data <- penguins_data |>
+  dplyr::select(
+    species,
+    island,
+    bill_length_mm,
+    bill_depth_mm,
+    flipper_length_mm,
+    body_mass_g
+  ) |>
+  tidyr::drop_na()
 ```
 
 ### Python Code
+
 ```{python}
 import seaborn as sns
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-# Load dataset
-penguins = sns.load_dataset("penguins")
+# Load the penguins data set and create a copy
+penguins_data = sns.load_dataset("penguins").copy()
 
-# Drop rows with missing values
-penguins_clean = penguins.dropna()
-
-# 80/20 train–test split
-train_set, test_set = train_test_split(
-    penguins_clean, test_size=0.2, random_state=42
-)
+# Keep variables used in this section and remove missing values
+penguins_data = penguins_data[
+    [
+        "species",
+        "island",
+        "bill_length_mm",
+        "bill_depth_mm",
+        "flipper_length_mm",
+        "body_mass_g",
+    ]
+].dropna()
 ```
+
 :::
 
-### Exploratory Data Analysis (EDA)
+Finally, we randomly create training and test sets from this data set, using an 80-20 split. The training set will be used for exploratory data analysis, while the test set will be reserved for the formal one-sample `t-test`.
 
-Before conducting the statistical test, we begin with an exploratory analysis to understand the distribution and characteristics of the flipper_length_mm variable.
+Because penguin species differ in their physical measurements, it is helpful to keep the proportion of species similar across the training and test sets. Otherwise, one set may contain relatively more penguins from a species with naturally longer or shorter flippers, which could affect the analysis. We therefore stratify the split by `species`.
 
-First, we examine summary statistics such as the mean, standard deviation, and quartiles. This helps us get a sense of the central tendency and spread of the data:
+
+::::: Heads-up
+::: Heads-up-header
+Quick review!
+:::
+
+::: Heads-up-container
+Although both `R` and `Python` allow us to set a random seed, `set.seed(42)` in `R` and `random_state = 42` in `Python` do not generally produce the same random split. This is because the two languages use different random number generators and different splitting algorithms. To make the results from `R` and `Python` directly comparable, we create the training and test sets once in `R` and then pass those same data sets to the Python code.
+:::
+:::::
+
 
 ::: {.panel-tabset}
 
 ### R Code
+
 ```{r}
-summary(train_set$flipper_length_mm)
+# Set seed for reproducibility
+set.seed(42)
+
+# Randomly split into training and testing sets, stratified by species
+penguins_split <- rsample::initial_split(
+  penguins_data,
+  prop = 0.8,
+  strata = species
+)
+
+# Assign observations to training and testing sets
+train_set <- rsample::training(penguins_split)
+test_set  <- rsample::testing(penguins_split)
+
+# Sanity check
+cat("Training shape:", dim(train_set), "\n")
+cat("Testing shape:", dim(test_set), "\n\n")
+
+cat("Training species proportions:\n")
+print(prop.table(table(train_set$species)))
+
+cat("\nTesting species proportions:\n")
+print(prop.table(table(test_set$species)))
 ```
 
 ### Python Code
+
 ```{python}
-print(train_set["flipper_length_mm"].describe())
+# Use the training and test sets created in the R chunk
+train_set = r.train_set.copy()
+test_set = r.test_set.copy()
+
+# Sanity check
+print("Training shape:", train_set.shape)
+print("Testing shape:", test_set.shape)
+
+print("\nTraining species proportions:")
+print(train_set["species"].value_counts(normalize=True))
+
+print("\nTesting species proportions:")
+print(test_set["species"].value_counts(normalize=True))
 ```
+
 :::
 
-Next, we visualize the distribution of flipper lengths using a histogram. This allows us to assess whether the data are approximately symmetric and whether any outliers are present:
+The species proportions in the training and test sets are quite similar. For example, Adelie penguins make up about 44% of both sets, Chinstrap penguins about 20%, and Gentoo penguins about 36%. This suggests that the stratified split worked as intended and that the two sets have comparable species.
+
+
+### Exploratory Data Analysis (EDA)
+
+Before conducting the formal hypothesis test, we use the training set to explore the distribution of `flipper_length_mm`. Since the one-sample `t-test` is used for a quantitative response variable, we first examine the center, spread, and overall shape of the flipper length distribution.
+
+We begin by computing summary statistics for `flipper_length_mm` in the training set.
+
+::: {.panel-tabset}
+
+### R Code
+
+```{r}
+summary(train_set$flipper_length_mm)
+
+sd(train_set$flipper_length_mm)
+```
+
+### Python Code
+
+```{python}
+print(train_set["flipper_length_mm"].describe())
+
+print("\nStandard deviation:")
+print(train_set["flipper_length_mm"].std())
+```
+
+:::
+
+The summary statistics give us an initial sense of the typical flipper length and the amount of variability in the training data. In the training set, flipper lengths range from 174 mm to 231 mm. The sample mean is about 201.1 mm, while the median is 197 mm. The sample standard deviation is about 14.0 mm, indicating that flipper lengths vary noticeably across penguins. Since the hypothesized value in this section is 200 mm, the training-set mean appears close to the reference value. However, the formal test will be conducted later using the test set.
+
+Next, we visualize the distribution of flipper lengths using a histogram. This helps us assess whether the data are approximately symmetric and whether there are unusual observations.
+
+::: {.panel-tabset}
+
+### R Code
+
+```{r}
+ggplot(train_set, aes(x = flipper_length_mm)) +
+  geom_histogram(bins = 20, color = "black", fill = "skyblue") +
+  labs(
+    title = "Distribution of Flipper Length in the Training Set",
+    x = "Flipper length (mm)",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+```
+
+### Python Code
 
 ```{python}
 import matplotlib.pyplot as plt
 
-train_set["flipper_length_mm"].hist(edgecolor="black", color="skyblue")
-plt.title("Distribution of Flipper Length (mm)")
-plt.xlabel("Flipper Length (mm)")
+plt.hist(
+    train_set["flipper_length_mm"],
+    bins=20,
+    edgecolor="black"
+)
+
+plt.title("Distribution of Flipper Length in the Training Set")
+plt.xlabel("Flipper length (mm)")
 plt.ylabel("Frequency")
 plt.show()
 ```
 
-To explore the relationship between flipper length and another continuous variable, we create a scatter plot of flipper length versus body mass. This helps us visually assess whether larger penguins tend to have longer flippers, and whether this relationship is linear or varies across ranges:
+:::
+
+The histogram shows that the distribution of flipper length is not perfectly bell-shaped. Instead, it appears to have more than one cluster, with many observations around 190--200 mm and another group around 210--220 mm. This suggests that the overall distribution may be influenced by differences among penguin species. Although the distribution is not exactly normal, it does not show extreme skewness or severe outliers. Since the sample size is reasonably large, the one-sample `t-test` may still be appropriate due to the central limit theorem.
+
+We can also use a Q-Q plot to compare the distribution of flipper lengths to a normal distribution. If the points roughly follow a straight line, this suggests that the normality assumption is not seriously violated.
+
+::: {.panel-tabset}
+
+### R Code
+
+```{r}
+ggplot(train_set, aes(sample = flipper_length_mm)) +
+  stat_qq() +
+  stat_qq_line() +
+  labs(
+    title = "Q-Q Plot of Flipper Length in the Training Set",
+    x = "Theoretical quantiles",
+    y = "Sample quantiles"
+  ) +
+  theme_minimal()
+```
+
+### Python Code
 
 ```{python}
-plt.scatter(
-    train_set["body_mass_g"],
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+
+stats.probplot(
     train_set["flipper_length_mm"],
-    alpha=0.6
+    dist="norm",
+    plot=plt
 )
-plt.title("Body Mass vs. Flipper Length")
-plt.xlabel("Body Mass (g)")
-plt.ylabel("Flipper Length (mm)")
+
+plt.title("Q-Q Plot of Flipper Length in the Training Set")
+plt.xlabel("Theoretical quantiles")
+plt.ylabel("Sample quantiles")
 plt.show()
 ```
 
-Now, we can perform one‑Sample t-Test
+:::
+
+The Q-Q plot also suggests that the flipper length distribution is not perfectly normal. The points deviate from the reference line, especially in the lower and upper tails. This is consistent with what we observed in the histogram. However, the one-sample `t-test` is generally robust for moderate to large sample sizes, especially when there are no extreme outliers.
+
+Finally, because penguin species differ in their physical measurements, we examine flipper length by species. This is not part of the formal one-sample test, but it helps us understand the structure of the data and why stratifying the train-test split by species was useful.
 
 ::: {.panel-tabset}
 
 ### R Code
+
 ```{r}
-t_test <- t.test(train_set$flipper_length_mm, mu = 200)
-t_test
+ggplot(train_set, aes(x = species, y = flipper_length_mm, fill = species)) +
+  geom_boxplot() +
+  labs(
+    title = "Flipper Length by Species in the Training Set",
+    x = "Species",
+    y = "Flipper length (mm)"
+  ) +
+  scale_fill_brewer(palette = "Set2") +
+  theme_minimal() +
+  theme(legend.position = "none")
 ```
 
 ### Python Code
 
 ```{python}
-import scipy.stats as stats
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-t_stat, p_value = stats.ttest_1samp(
-    train_set["flipper_length_mm"], popmean=200
+species_order = ["Adelie", "Chinstrap", "Gentoo"]
+
+sns.boxplot(
+    data=train_set,
+    x="species",
+    y="flipper_length_mm",
+    hue="species",
+    order=species_order,
+    hue_order=species_order,
+    palette="Set2",
+    legend=False
 )
-print(f"t = {t_stat:.3f},  p = {p_value:.4f}")
+
+plt.title("Flipper Length by Species in the Training Set")
+plt.xlabel("Species")
+plt.ylabel("Flipper length (mm)")
+plt.show()
 ```
+
 :::
 
+The boxplots show that flipper length differs noticeably by species. Gentoo penguins tend to have longer flippers than Adelie and Chinstrap penguins, while Adelie penguins tend to have the shortest flippers among the three species. This helps explain why the overall distribution of flipper length is not perfectly normal: the full sample combines penguins from species with different typical flipper lengths.
 
-### Hypotheses
+Overall, the exploratory analysis shows that flipper length has a meaningful species structure and is not perfectly normally distributed. However, because the training and test sets have similar species proportions and the sample size is reasonably large, the one-sample `t-test` remains a reasonable first approach for testing the average flipper length in the broader penguin population represented by these data. The formal test will be conducted on the test set to keep the exploratory and inferential parts of the analysis separate.
 
-We can formally express this with the following hypotheses:
 
--   **Null hypothesis** $H_0$: $\mu = 75$
--   **Alternative hypothesis** $H_1$: $\mu \ne 75$
+### Testing Settings
 
-Under the null hypothesis, we assume that the average score under the new method is equal to the historical average of 75. If the null is rejected, we conclude that there is a **statistically significant difference**, suggesting that the new method may lead to either **higher or lower** average performance.
+Before writing the hypotheses, we summarize the testing setup for this example. The response variable is `flipper_length_mm`, which is a quantitative variable measured in millimetres. The parameter of interest is the population mean flipper length, denoted by $\mu$.
+
+In this example, we compare the population mean flipper length to the reference value
+
+$$
+\mu_0 = 200.
+$$
+
+Since the population standard deviation is unknown, we use the sample standard deviation to estimate it. Therefore, the appropriate test is a one-sample `t-test`.
+
+The formal test will be conducted using the test set. This keeps the exploratory analysis and the hypothesis test separate: the training set was used to understand the data, while the test set is used to calculate the test statistic and p-value.
+
+For this test, we use:
+
+-   **Response variable:** `flipper_length_mm`
+-   **Parameter of interest:** $\mu$, the population mean flipper length
+-   **Reference value:** $\mu_0 = 200$
+-   **Test:** one-sample `t-test`
+-   **Population variance:** unknown
+-   **Sample used for inference:** `test_set`
+-   **Significance level:** $\alpha = 0.05$
+
+Because this is a one-sample `t-test`, we assume that the observations are independent and that the sampling distribution of the sample mean is approximately normal. The exploratory analysis suggested that the raw flipper length distribution is not perfectly normal, partly because penguin species differ in their typical flipper lengths. However, the sample size is reasonably large and there are no severe outliers, so using the one-sample `t-test` is still a reasonable approach for this example.
+
+
+### Hypothesis Definitions
+
+We now translate the research question into formal statistical hypotheses. Recall that $\mu$ denotes the population mean flipper length of penguins, and the reference value is
+
+$$
+\mu_0 = 200.
+$$
+
+Since the research question asks whether the population mean flipper length is **different from** 200 mm, we use a two-sided test.
+
+The hypotheses are:
+
+$$H_0: \mu = 200 \quad vs \quad H_a: \mu \neq 200$$
+
+The null hypothesis states that the population mean flipper length is 200 mm. Under this hypothesis, any difference between the sample mean and 200 mm is attributed to random sampling variation.
+
+The alternative hypothesis states that the population mean flipper length is not 200 mm. This includes both possibilities: the population mean could be less than 200 mm or greater than 200 mm.
+
+In words, we are testing whether the test-set data provide sufficient evidence that the average flipper length in the broader penguin population represented by these data differs from 200 mm.
+
 
 ### Test Flavour and Components
 
-The test statistic is:
+The one-sample `t-test` compares the sample mean to the hypothesized population mean. In this example, the hypothesized value is $\mu_0 = 200$ mm. Let $\bar{x}$ denotes the sample mean flipper length in the test set, and let $s$ denotes the sample standard deviation of flipper length in the test set. If the test set contains $n$ penguins, the test statistic is
 
-$$t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}$$
+$$
+t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}.
+$$
 
-Where: - ( s ) is the sample standard deviation (used instead of ( $\sigma$ ))
+In this formula:
 
-This statistic follows a **t-distribution** with ( n - 1 ) degrees of freedom.
+-   $\bar{x}$ is the sample mean flipper length.
+-   $\mu_0$ is the hypothesized population mean, which is 200 mm in this example.
+-   $s$ is the sample standard deviation.
+-   $n$ is the sample size.
+-   $s / \sqrt{n}$ is the estimated standard error of the sample mean.
+
+The numerator, $\bar{x} - \mu_0$, measures how far the sample mean is from the hypothesized value. The denominator, $s / \sqrt{n}$, scales this difference by the estimated variability of the sample mean. Therefore, the test statistic measures how many estimated standard errors the sample mean is away from the hypothesized value.
+
+Because the population standard deviation is unknown, we estimate it using the sample standard deviation $s$. Under the null hypothesis, $H_0: \mu = 200$, the test statistic follows a `t-distribution` with $n-1$ degrees of freedom. Since our alternative hypothesis is two-sided, i.e. $H_A: \mu \neq 200$ the p-value measures the probability of observing a test statistic at least as extreme as the one obtained from the data, in either direction, assuming that the null hypothesis is true.
+
+At the significance level $\alpha = 0.05$, we reject the null hypothesis if the p-value is less than 0.05. Otherwise, we do not reject the null hypothesis.
+
 
 ### Inferential Conclusions
 
-A one-sample t-test was conducted to determine whether the average flipper length of penguins is significantly different from 200 mm. Based on a training sample, the test produced a t-statistic of t and a p-value of p.
+The goal of the one-sample `t-test` is to decide whether the observed sample mean is far enough from the hypothesized value to provide evidence against the null hypothesis. In this example, the null and alternative hypotheses are:
 
-Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.
+$$
+H_0: \mu = 200 \quad \textit{vs} \quad H_a: \mu \neq 200
+$$
+where $\mu$ denotes the population mean flipper length of penguins. The hypothesized value is 200 mm. After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
+
+If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient evidence that the population mean flipper length is different from 200 mm.
+
+If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient evidence that the population mean flipper length is different from 200 mm.
+
+It is important to phrase the second conclusion carefully. Failing to reject the null hypothesis does not prove that the population mean is exactly 200 mm. It only means that, based on the available sample, we do not have enough evidence to conclude that it differs from 200 mm.
+
 
 ### How to run the test in R and Python?
 
-The following lines of code in tabset show you how to run the test in R or Python.
+We now conduct the formal one-sample `t-test` using the test set. Recall that the training set was used for exploratory data analysis, while the test set is reserved for the formal hypothesis test. The test compares the sample mean of `flipper_length_mm` to the hypothesized value $\mu_0 = 200$.
 
 ::: {.panel-tabset}
 
 ### R Code
+
 ```{r}
-t_test <- t.test(train_set$flipper_length_mm, mu = 200)
-t_test
+t_test_result <- t.test(
+  test_set$flipper_length_mm,
+  mu = 200,
+  alternative = "two.sided",
+  conf.level = 0.95
+)
+
+t_test_result
 ```
 
 ### Python Code
 
 ```{python}
+import numpy as np
 import scipy.stats as stats
 
+# Extract the response variable from the R-created test set
+flipper_test = test_set["flipper_length_mm"]
+
+# Hypothesized population mean
+mu_0 = 200
+
+# One-sample t-test
 t_stat, p_value = stats.ttest_1samp(
-    train_set["flipper_length_mm"], popmean=200
+    flipper_test,
+    popmean=mu_0,
+    alternative="two-sided"
 )
-print(f"t = {t_stat:.3f},  p = {p_value:.4f}")
+
+# Sample size and degrees of freedom
+n = len(flipper_test)
+df = n - 1
+
+# Sample mean and sample standard deviation
+sample_mean = flipper_test.mean()
+sample_sd = flipper_test.std(ddof=1)
+
+# Standard error
+standard_error = sample_sd / np.sqrt(n)
+
+# 95% confidence interval for the population mean
+confidence_level = 0.95
+alpha = 1 - confidence_level
+t_critical = stats.t.ppf(1 - alpha / 2, df)
+
+ci_lower = sample_mean - t_critical * standard_error
+ci_upper = sample_mean + t_critical * standard_error
+
+print(f"Sample mean: {sample_mean:.3f}")
+print(f"Sample standard deviation: {sample_sd:.3f}")
+print(f"Sample size: {n}")
+print(f"Degrees of freedom: {df}")
+print(f"t-statistic: {t_stat:.3f}")
+print(f"p-value: {p_value:.4f}")
+print(f"95% confidence interval: ({ci_lower:.3f}, {ci_upper:.3f})")
 ```
+
 :::
+
+**Details about `R` code and output**
+
+In order to run this test in `R`, we use the `t.test()` function. This function can be used to perform both one-sample and two-sample `t-tests`. In this section, we use it for a one-sample test because we are comparing one sample mean to a fixed hypothesized value.
+
+The relevant arguments are as follows:
+
+-   `x` is the numeric vector of observed data values. In this example, `x` is `test_set$flipper_length_mm`.
+
+-   `mu` is the hypothesized population mean under the null hypothesis. In this example, we set `mu = 200` because we are testing whether the population mean flipper length differs from 200 mm.
+
+-   `alternative` specifies the direction of the alternative hypothesis. We use `alternative = "two.sided"` because our alternative hypothesis is $H_A: \mu \neq 200$.
+
+-   `conf.level` specifies the confidence level for the confidence interval. We use `conf.level = 0.95`, which gives a 95% confidence interval for the population mean.
+
+The output from `t.test()` includes the test statistic, degrees of freedom, p-value, alternative hypothesis, confidence interval, and sample mean. The p-value is used to decide whether to reject the null hypothesis at the chosen significance level. The confidence interval gives a range of plausible values for the population mean flipper length.
+
+**Details about `Python` code and output**
+
+In `Python`, we use the `ttest_1samp()` function from the `scipy.stats` module. This function performs a one-sample `t-test` by comparing a sample mean to a hypothesized population mean.
+
+The relevant arguments are:
+
+-   The first argument is the numeric vector of observed data values. In this example, we use `flipper_test`, which contains the `flipper_length_mm` values from the test set.
+
+-   `popmean` is the hypothesized population mean under the null hypothesis. In this example, we set `popmean = 200`.
+
+-   `alternative` specifies the direction of the alternative hypothesis. We use `alternative = "two-sided"` because we are testing whether the population mean is different from 200 mm.
+
+The `ttest_1samp()` function returns the test statistic and p-value. Unlike the `R` function `t.test()`, it does not automatically print the sample mean, degrees of freedom, standard deviation, or confidence interval in the same formatted output. For this reason, we calculate these quantities manually in the Python code.
+
+The output gives the test statistic, degrees of freedom, p-value, and a 95% confidence interval for the population mean flipper length. These values will be used to decide whether the test set provides sufficient evidence that the population mean flipper length differs from 200 mm.
+
 
 ### Storytelling
 
-Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the average flipper length is significantly different from 200 mm. If not, we do not have sufficient evidence to say it differs.
+Based on the test set, the average flipper length is 200.3 mm, which is very close to the hypothesized value of 200 mm. The one-sample `t-test` gives a test statistic of 0.175 and a p-value of 0.8615.
+
+Since the p-value is much larger than the significance level $\alpha = 0.05$, we do not reject the null hypothesis. In other words, the test set does not provide sufficient evidence that the population mean flipper length differs from 200 mm.
+
+The 95% confidence interval for the population mean flipper length is $(196.88,\ 203.72).$ This interval includes 200 mm, which is consistent with the hypothesis test result. Based on these data, an average flipper length of 200 mm is a plausible value for the broader penguin population represented by this sample.
+
+In plain language, the observed average flipper length is not significantly different from 200 mm, and the small difference between 200.3 mm and 200 mm can reasonably be explained by random sampling variation.
 
 ## One-sample z-test for the mean
 
@@ -430,7 +779,6 @@ The z-test typically results in a slightly smaller p-value than the t-test becau
 
 Rejecting the null here provides high confidence that the population mean has shifted from 200 mm, assuming our historical $\sigma$ is still accurate.
 
-------------------------------------------------------------------------
 
 ## One-sample z-test for proportions
 
