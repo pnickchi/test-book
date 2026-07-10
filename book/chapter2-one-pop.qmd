@@ -611,15 +611,17 @@ where $t$ is the test statistic computed from the observed sample in @eq-one-sam
 
 ### Inferential Conclusions
 
-The null distribution described above gives us a reference point for deciding whether the observed test statistic is unusually large. In other words, it tells us what values of the test statistic are typical when the null hypothesis is true.
+The null distribution described above gives us a reference point for deciding whether the observed test statistic is unusual. Since we know the sampling distribution of the test statistic in @eq-one-sample-t-statistic under the null hypothesis, we can use this distribution to compute the p-value.
+
+In this two-sided test, the p-value measures the probability of observing a test statistic as far from 0 as the one computed from our sample, or even farther, assuming that the null hypothesis is true.
 
 After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
 
-If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient evidence that the population mean flipper length is different from 200 mm.
+If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient statistical evidence that the population mean flipper length is different from 200 mm.
 
-If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient evidence that the population mean flipper length is different from 200 mm.
+If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient statistical evidence that the population mean flipper length is different from 200 mm.
 
-It is important to phrase the second conclusion carefully. Failing to reject the null hypothesis does not prove that the population mean is exactly 200 mm. It only means that, based on the available sample, we do not have enough evidence to conclude that it differs from 200 mm.
+It is important to phrase the second conclusion carefully. Failing to reject the null hypothesis does not prove that the population mean is exactly 200 mm. It only means that, based on the available sample, we do not have enough evidence to conclude that it differs from 200 mm. We should not make a stronger conclusion than what the hypothesis test supports.
 
 ### How to run the test in R and Python?
 
