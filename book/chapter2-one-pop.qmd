@@ -297,9 +297,7 @@ The species proportions in the training and test sets are quite similar. For exa
 
 ### Exploratory Data Analysis (EDA)
 
-Before conducting the formal hypothesis test, we use the training set to explore the distribution of `flipper_length_mm`. Since the one-sample `t-test` is used for a quantitative response variable, we first examine the center, spread, and overall shape of the flipper length distribution.
-
-We begin by computing summary statistics for `flipper_length_mm` in the training set.
+Before conducting the formal hypothesis test, we use the training set to explore the distribution of `flipper_length_mm`. Since the one-sample `t-test` is used for a quantitative response variable, we first examine the center, spread, and overall shape of the flipper length distribution. We begin by computing summary statistics for `flipper_length_mm` in the training set.
 
 ::: {.panel-tabset}
 
@@ -324,13 +322,16 @@ print(train_set["flipper_length_mm"].std())
 
 The summary statistics give us an initial sense of the typical flipper length and the amount of variability in the training data. In the training set, flipper lengths range from 174 mm to 231 mm. The sample mean is about 201.1 mm, while the median is 197 mm. The sample standard deviation is about 14.0 mm, indicating that flipper lengths vary noticeably across penguins. Since the hypothesized value in this section is 200 mm, the training-set mean appears close to the reference value. However, the formal test will be conducted later using the test set.
 
-Next, we visualize the distribution of flipper lengths using a histogram. This helps us assess whether the data are approximately symmetric and whether there are unusual observations.
+Next, we visualize the distribution of flipper lengths using a histogram. This helps us assess whether the data are approximately symmetric and whether there are unusual observations. The distribution of flipper length in the training set is shown in @fig-flipper-length-hist-r and @fig-flipper-length-hist-python.
 
 ::: {.panel-tabset}
 
 ### R Code
 
 ```{r}
+#| label: fig-flipper-length-hist-r
+#| fig-cap: "Histogram of flipper length in the training set using R."
+
 ggplot(train_set, aes(x = flipper_length_mm)) +
   geom_histogram(bins = 20, color = "black", fill = "skyblue") +
   labs(
@@ -344,6 +345,9 @@ ggplot(train_set, aes(x = flipper_length_mm)) +
 ### Python Code
 
 ```{python}
+#| label: fig-flipper-length-hist-python
+#| fig-cap: "Histogram of flipper length in the training set using Python."
+
 import matplotlib.pyplot as plt
 
 plt.hist(
@@ -360,15 +364,20 @@ plt.show()
 
 :::
 
-The histogram shows that the distribution of flipper length is not perfectly bell-shaped. Instead, it appears to have more than one cluster, with many observations around 190--200 mm and another group around 210--220 mm. This suggests that the overall distribution may be influenced by differences among penguin species. Although the distribution is not exactly normal, it does not show extreme skewness or severe outliers. Since the sample size is reasonably large, the one-sample `t-test` may still be appropriate due to the central limit theorem.
+The histogram shows that the distribution of flipper length is not perfectly bell-shaped. Instead, it appears to have more than one cluster, with many observations around 190--200 mm and another group around 210--220 mm. This suggests that the overall distribution may be influenced by differences among penguin species. 
 
-We can also use a Q-Q plot to compare the distribution of flipper lengths to a normal distribution. If the points roughly follow a straight line, this suggests that the normality assumption is not seriously violated.
+Although the distribution is not exactly normal, it does not show extreme skewness or severe outliers. Since the sample size is reasonably large, the one-sample `t-test` may still be appropriate due to the central limit theorem.
+
+We can also use a Q-Q plot to compare the distribution of flipper lengths to a normal distribution. If the points roughly follow a straight line, this suggests that the normality assumption is not seriously violated. The Q-Q plot of flipper length in the training set is shown in @fig-flipper-length-qq-r and @fig-flipper-length-qq-python.
 
 ::: {.panel-tabset}
 
 ### R Code
 
 ```{r}
+#| label: fig-flipper-length-qq-r
+#| fig-cap: "Q-Q plot of flipper length in the training set using R."
+
 ggplot(train_set, aes(sample = flipper_length_mm)) +
   stat_qq() +
   stat_qq_line() +
@@ -377,14 +386,24 @@ ggplot(train_set, aes(sample = flipper_length_mm)) +
     x = "Theoretical quantiles",
     y = "Sample quantiles"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 16) +
+  theme(
+    plot.title = element_text(size = 18, face = "bold"),
+    axis.title = element_text(size = 16),
+    axis.text = element_text(size = 14)
+  )
 ```
 
 ### Python Code
 
 ```{python}
+#| label: fig-flipper-length-qq-python
+#| fig-cap: "Q-Q plot of flipper length in the training set using Python."
+
 import scipy.stats as stats
 import matplotlib.pyplot as plt
+
+plt.figure(figsize=(8, 6))
 
 stats.probplot(
     train_set["flipper_length_mm"],
@@ -392,9 +411,12 @@ stats.probplot(
     plot=plt
 )
 
-plt.title("Q-Q Plot of Flipper Length in the Training Set")
-plt.xlabel("Theoretical quantiles")
-plt.ylabel("Sample quantiles")
+plt.title("Q-Q Plot of Flipper Length in the Training Set", fontsize=18, fontweight="bold")
+plt.xlabel("Theoretical quantiles", fontsize=16)
+plt.ylabel("Sample quantiles", fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.tight_layout()
 plt.show()
 ```
 
@@ -402,13 +424,17 @@ plt.show()
 
 The Q-Q plot also suggests that the flipper length distribution is not perfectly normal. The points deviate from the reference line, especially in the lower and upper tails. This is consistent with what we observed in the histogram. However, the one-sample `t-test` is generally robust for moderate to large sample sizes, especially when there are no extreme outliers.
 
-Finally, because penguin species differ in their physical measurements, we examine flipper length by species. This is not part of the formal one-sample test, but it helps us understand the structure of the data and why stratifying the train-test split by species was useful.
+Finally, because penguin species differ in their physical measurements, we examine flipper length by species. This is not part of the formal one-sample test, but it helps us understand the structure of the data and why stratifying the train-test split by species was useful. The species-specific boxplots are shown in @fig-flipper-length-species-boxplot-r and @fig-flipper-length-species-boxplot-python.
+
 
 ::: {.panel-tabset}
 
 ### R Code
 
 ```{r}
+#| label: fig-flipper-length-species-boxplot-r
+#| fig-cap: "Boxplot of flipper length by species in the training set using R."
+
 ggplot(train_set, aes(x = species, y = flipper_length_mm, fill = species)) +
   geom_boxplot() +
   labs(
@@ -417,17 +443,27 @@ ggplot(train_set, aes(x = species, y = flipper_length_mm, fill = species)) +
     y = "Flipper length (mm)"
   ) +
   scale_fill_brewer(palette = "Set2") +
-  theme_minimal() +
-  theme(legend.position = "none")
+  theme_minimal(base_size = 16) +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(size = 18, face = "bold"),
+    axis.title = element_text(size = 16),
+    axis.text = element_text(size = 14)
+  )
 ```
 
 ### Python Code
 
 ```{python}
+#| label: fig-flipper-length-species-boxplot-python
+#| fig-cap: "Boxplot of flipper length by species in the training set using Python."
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 species_order = ["Adelie", "Chinstrap", "Gentoo"]
+
+plt.figure(figsize=(8, 6))
 
 sns.boxplot(
     data=train_set,
@@ -440,13 +476,17 @@ sns.boxplot(
     legend=False
 )
 
-plt.title("Flipper Length by Species in the Training Set")
-plt.xlabel("Species")
-plt.ylabel("Flipper length (mm)")
+plt.title("Flipper Length by Species in the Training Set", fontsize=18, fontweight="bold")
+plt.xlabel("Species", fontsize=16)
+plt.ylabel("Flipper length (mm)", fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.tight_layout()
 plt.show()
 ```
 
 :::
+
 
 The boxplots show that flipper length differs noticeably by species. Gentoo penguins tend to have longer flippers than Adelie and Chinstrap penguins, while Adelie penguins tend to have the shortest flippers among the three species. This helps explain why the overall distribution of flipper length is not perfectly normal: the full sample combines penguins from species with different typical flipper lengths.
 
