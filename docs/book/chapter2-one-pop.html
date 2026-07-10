@@ -290,11 +290,11 @@ window.Quarto = {
 <a href="#one-sample-z-test-for-the-mean" id="toc-one-sample-z-test-for-the-mean" class="nav-link" data-scroll-target="#one-sample-z-test-for-the-mean"><span class="header-section-number">2.2</span> One-sample z-test for the mean</a>
   <ul>
 <li><a href="#review-1" id="toc-review-1" class="nav-link" data-scroll-target="#review-1"><span class="header-section-number">2.2.1</span> Review</a></li>
-  <li><a href="#study-design-1" id="toc-study-design-1" class="nav-link" data-scroll-target="#study-design-1"><span class="header-section-number">2.2.2</span> Study Design</a></li>
-  <li><a href="#data-collection-wrangling" id="toc-data-collection-wrangling" class="nav-link" data-scroll-target="#data-collection-wrangling"><span class="header-section-number">2.2.3</span> Data Collection &amp; Wrangling</a></li>
+  <li><a href="#study-design-1" id="toc-study-design-1" class="nav-link" data-scroll-target="#study-design-1"><span class="header-section-number">2.2.2</span> Study design</a></li>
+  <li><a href="#data-collection-and-wrangling-1" id="toc-data-collection-and-wrangling-1" class="nav-link" data-scroll-target="#data-collection-and-wrangling-1"><span class="header-section-number">2.2.3</span> Data Collection and Wrangling</a></li>
   <li><a href="#exploratory-data-analysis-eda-1" id="toc-exploratory-data-analysis-eda-1" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda-1"><span class="header-section-number">2.2.4</span> Exploratory Data Analysis (EDA)</a></li>
   <li><a href="#testing-settings-1" id="toc-testing-settings-1" class="nav-link" data-scroll-target="#testing-settings-1"><span class="header-section-number">2.2.5</span> Testing Settings</a></li>
-  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">2.2.6</span> Hypotheses</a></li>
+  <li><a href="#hypothesis-definitions-1" id="toc-hypothesis-definitions-1" class="nav-link" data-scroll-target="#hypothesis-definitions-1"><span class="header-section-number">2.2.6</span> Hypothesis Definitions</a></li>
   <li><a href="#test-flavour-and-components-1" id="toc-test-flavour-and-components-1" class="nav-link" data-scroll-target="#test-flavour-and-components-1"><span class="header-section-number">2.2.7</span> Test Flavour and Components</a></li>
   <li><a href="#inferential-conclusions-1" id="toc-inferential-conclusions-1" class="nav-link" data-scroll-target="#inferential-conclusions-1"><span class="header-section-number">2.2.8</span> Inferential Conclusions</a></li>
   <li><a href="#how-to-run-the-test-in-r-and-python-1" id="toc-how-to-run-the-test-in-r-and-python-1" class="nav-link" data-scroll-target="#how-to-run-the-test-in-r-and-python-1"><span class="header-section-number">2.2.9</span> How to run the test in R and Python?</a></li>
@@ -306,9 +306,9 @@ window.Quarto = {
   <ul>
 <li><a href="#review-2" id="toc-review-2" class="nav-link" data-scroll-target="#review-2"><span class="header-section-number">2.3.1</span> Review</a></li>
   <li><a href="#study-design-2" id="toc-study-design-2" class="nav-link" data-scroll-target="#study-design-2"><span class="header-section-number">2.3.2</span> Study Design</a></li>
-  <li><a href="#data-collection-wrangling-1" id="toc-data-collection-wrangling-1" class="nav-link" data-scroll-target="#data-collection-wrangling-1"><span class="header-section-number">2.3.3</span> Data Collection &amp; Wrangling</a></li>
+  <li><a href="#data-collection-wrangling" id="toc-data-collection-wrangling" class="nav-link" data-scroll-target="#data-collection-wrangling"><span class="header-section-number">2.3.3</span> Data Collection &amp; Wrangling</a></li>
   <li><a href="#exploratory-data-analysis-eda-2" id="toc-exploratory-data-analysis-eda-2" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda-2"><span class="header-section-number">2.3.4</span> Exploratory Data Analysis (EDA)</a></li>
-  <li><a href="#hypotheses-1" id="toc-hypotheses-1" class="nav-link" data-scroll-target="#hypotheses-1"><span class="header-section-number">2.3.5</span> Hypotheses</a></li>
+  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">2.3.5</span> Hypotheses</a></li>
   <li><a href="#how-to-run-the-test-in-r-and-python-2" id="toc-how-to-run-the-test-in-r-and-python-2" class="nav-link" data-scroll-target="#how-to-run-the-test-in-r-and-python-2"><span class="header-section-number">2.3.6</span> How to run the test in R and Python</a></li>
   <li><a href="#inferential-conclusions-2" id="toc-inferential-conclusions-2" class="nav-link" data-scroll-target="#inferential-conclusions-2"><span class="header-section-number">2.3.7</span> Inferential Conclusions</a></li>
   <li><a href="#storytelling-2" id="toc-storytelling-2" class="nav-link" data-scroll-target="#storytelling-2"><span class="header-section-number">2.3.8</span> Storytelling</a></li>
@@ -1096,40 +1096,70 @@ mean of x
 <span class="header-section-number">2.2</span> One-sample z-test for the mean</h2>
 <section id="review-1" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="review-1">
 <span class="header-section-number">2.2.1</span> Review</h3>
-<p>We use this test when: - The population variance <strong>σ² is known</strong>, and - The sample comes from a <strong>normally distributed population</strong>, or the <strong>sample size is large</strong> (typically ( n )).</p>
-<p>The test statistic is:</p>
-<p><span class="math display">\[ z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}} \]</span></p>
-<p>Where: - ( <span class="math inline">\(\bar{x}\)</span> ) is the sample mean<br>
-- ( <span class="math inline">\(\mu_0\)</span> ) is the hypothesized population mean<br>
-- ( <span class="math inline">\(\sigma\)</span> ) is the known population standard deviation<br>
-- ( n ) is the sample size</p>
-<p>We compare the calculated ( z )-value to a standard normal distribution to compute a p-value or make a decision based on a critical value.</p>
-<p>Let’s revisit the earlier scenario: you want to assess whether a new method of teaching introductory physics at the University of British Columbia (UBC) improves student performance compared to historical results. This time, assume that the population standard deviation is known from previous years of large-scale data collection. This allows us to use a z-test. Suppose the average physics score in the population is: $$</p>
-<p>μ(mean physics score at UBC)</p>
-<p>$$</p>
+<p>Use this test when:</p>
+<ul>
+<li>You have <strong>one sample</strong> from a population.</li>
+<li>The response variable is <strong>quantitative</strong> (also known as <strong>continuous</strong>).</li>
+<li>You want to test whether the population mean is equal to a specific reference value.</li>
+<li>The population variance, or equivalently the population standard deviation, is <strong>known</strong>.</li>
+<li>The sample is approximately normal, or the sample size is large enough for the sampling distribution of the sample mean to be approximately normal.</li>
+</ul>
+<p>In the previous section, we used the one-sample <code>t-test</code> because the population variance was unknown and had to be estimated using the sample standard deviation. In this section, we focus on a different case: the population variance is assumed to be known.</p>
+<p>The one-sample <code>z-test</code> is used when we want to compare a sample mean to a hypothesized population mean and the population standard deviation is known. Suppose we observe a random sample of size <span class="math inline">\(n\)</span>,</p>
 <p><span class="math display">\[
-\mu \quad \text{(mean physics score at UBC)}
-\]</span> And we collect a <strong>random sample</strong> of <span class="math inline">\(n\)</span> students, recording their scores:</p>
-<p><span class="math display">\[
-X1,X2,…,XnX_1, X_2, \dots, X_n
+x_1, x_2, \dots, x_n,
 \]</span></p>
-<p>The Key question becomes:</p>
+<p>from a population with unknown mean <span class="math inline">\(\mu\)</span> but also known population standard deviation <span class="math inline">\(\sigma\)</span>. We want to assess whether the data provide enough evidence to conclude that <span class="math inline">\(\mu\)</span> differs from a specified reference value, denoted by <span class="math inline">\(\mu_0\)</span>.</p>
+<p>The main statistical question is:</p>
 <blockquote class="blockquote">
-<p><strong>Is the sample mean statistically different from a known reference value?</strong></p>
+<p><strong>Is the population mean statistically different from the hypothesized value <span class="math inline">\(\mu_0\)</span>?</strong></p>
 </blockquote>
-<p>If, for example, the historical average physics score is known to be <strong>75</strong>, then our question becomes more specific:</p>
+<p>For example, if the hypothesized value is <span class="math inline">\(\mu_0 = 200\)</span>, then the question becomes:</p>
 <blockquote class="blockquote">
-<p><strong>Is the mean physics score in the sample statistically different from 75?</strong></p>
+<p><strong>Does the sample provide evidence that the population mean is different from 200?</strong></p>
 </blockquote>
+<p>The key difference from the one-sample <code>t-test</code> is how we measure uncertainty. For the <code>t-test</code>, the population standard deviation is unknown, so we estimate it using the sample standard deviation. For the <code>z-test</code>, the population standard deviation <span class="math inline">\(\sigma\)</span> is treated as known. As a result, the test statistic follows a standard normal distribution under the null hypothesis.</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Quick review!</p>
+</div>
+<div class="Heads-up-container">
+<p>In practice, the population standard deviation is rarely known exactly. The one-sample <code>z-test</code> is most appropriate when <span class="math inline">\(\sigma\)</span> is known from reliable external information, such as historical records, a very large previous study, or a well-established measurement process. When <span class="math inline">\(\sigma\)</span> is unknown, the one-sample <code>t-test</code> is always the more appropriate choice.</p>
+</div>
+</div>
 </section><section id="study-design-1" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="study-design-1">
-<span class="header-section-number">2.2.2</span> Study Design</h3>
-<p>We again use the <strong>Palmer Station Penguins</strong> dataset collected by the LTER in Antarctica (2007 – 2009).<br>
-It includes measurements such as <em>flipper length</em>, <em>bill size</em>, and <em>body mass</em> across three penguin species.</p>
+<span class="header-section-number">2.2.2</span> Study design</h3>
+<p>We continue with the <code>penguins</code> data set from the <code>palmerpenguins</code> package. As before, the response variable of interest is <code>flipper_length_mm</code>, which records penguin flipper length in millimetres. We treat the observed penguins in the data set as a sample from a broader population of similar penguins.</p>
+<p>Let <span class="math inline">\(\mu\)</span> denote the population mean flipper length of penguins. We again compare the population mean flipper length to the reference value</p>
+<p><span class="math display">\[
+\mu_0 = 200.
+\]</span></p>
+<p>The main statistical question is:</p>
 <blockquote class="blockquote">
-<p><strong>Research question:</strong><br><em>Is the average flipper length of penguins significantly different from 200 mm, assuming a known population standard deviation?</em></p>
+<p><strong>Does the data provide evidence that the population mean flipper length of penguins is different from 200 mm?</strong></p>
 </blockquote>
-<hr></section><section id="data-collection-wrangling" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="data-collection-wrangling">
-<span class="header-section-number">2.2.3</span> Data Collection &amp; Wrangling</h3>
+<p>The difference between this section and the previous one is that we now assume the population standard deviation is known. For this example, suppose that reliable historical records or a very large previous study suggest that the population standard deviation of penguin flipper length is known to be</p>
+<p><span class="math display">\[
+\sigma = 14.
+\]</span></p>
+<p>Because <span class="math inline">\(\sigma\)</span> is treated as known, we use a one-sample <code>z-test</code> instead of a one-sample <code>t-test</code>.</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Quick review!</p>
+</div>
+<div class="Heads-up-container">
+<p>The value <span class="math inline">\(\sigma = 14\)</span> is used here as an assumed known population standard deviation for teaching purposes. In a real analysis, this value should come from reliable external information, not from the same sample used for the hypothesis test. If the population standard deviation is estimated from the sample, then the one-sample <code>t-test</code> is usually the more appropriate method.</p>
+</div>
+</div>
+<p>As before, we will keep the exploratory and inferential parts of the analysis separate. The training set will be used for exploratory data analysis, and the test set will be used to conduct the formal one-sample <code>z-test</code>.</p>
+</section><section id="data-collection-and-wrangling-1" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="data-collection-and-wrangling-1">
+<span class="header-section-number">2.2.3</span> Data Collection and Wrangling</h3>
+<p>For the one-sample <code>z-test</code>, we use the same cleaned <code>penguins</code> data set and the same training and test sets created in the previous section. This keeps the comparison between the one-sample <code>t-test</code> and the one-sample <code>z-test</code> clear: both tests are applied to the same response variable, the same hypothesis for population mean, and the same test set.</p>
+<p>The only additional information needed for the <code>z-test</code> is the known population standard deviation. In this example, we assume that this value is available from reliable external information and is equal to</p>
+<p><span class="math display">\[
+\sigma = 14.
+\]</span></p>
+<p>We store this value so it can be used later when computing the test statistic and confidence interval.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">R Code</a></li>
@@ -1138,36 +1168,161 @@ It includes measurements such as <em>flipper length</em>, <em>bill size</em>, an
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Known population standard deviation assumed from external information</span></span>
+<span><span class="va">sigma_known</span> <span class="op">&lt;-</span> <span class="fl">14</span></span>
 <span></span>
-<span><span class="va">penguins_clean</span> <span class="op">&lt;-</span> <span class="va">penguins</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">train_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">penguins_clean</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>                      size <span class="op">=</span> <span class="fl">0.8</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">penguins_clean</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">train_set</span> <span class="op">&lt;-</span> <span class="va">penguins_clean</span><span class="op">[</span><span class="va">train_index</span>, <span class="op">]</span></span>
-<span><span class="va">test_set</span> <span class="op">&lt;-</span> <span class="va">penguins_clean</span><span class="op">[</span><span class="op">-</span><span class="va">train_index</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co"># Hypothesized population mean</span></span>
+<span><span class="va">mu_0</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
+<span></span>
+<span><span class="co"># Sanity check for the test set used in this section</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Testing shape:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">test_set</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Testing shape: 70 6 </code></pre>
+</div>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Known population standard deviation:"</span>, <span class="va">sigma_known</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Known population standard deviation: 14 </code></pre>
+</div>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Hypothesized population mean:"</span>, <span class="va">mu_0</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hypothesized population mean: 200 </code></pre>
+</div>
 </div>
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load dataset</span></span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="op">=</span> penguins.dropna()</span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>train_set, test_set <span class="op">=</span> train_test_split(</span>
-<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>    penguins_clean, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
-<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the test set created in the R chunk</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> r.test_set.copy()</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the same known population standard deviation and hypothesized mean</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>sigma_known <span class="op">=</span> <span class="bu">float</span>(r.sigma_known)</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>mu_0 <span class="op">=</span> <span class="bu">float</span>(r.mu_0)</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Sanity check for the test set used in this section</span></span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing shape:"</span>, test_set.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Testing shape: (70, 6)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Known population standard deviation:"</span>, sigma_known)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Known population standard deviation: 14.0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hypothesized population mean:"</span>, mu_0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hypothesized population mean: 200.0</code></pre>
 </div>
 </div>
 </div>
 </div>
+</div>
+<p>By reusing the same test set, the results from the <code>t-test</code> and <code>z-test</code> can be compared directly. The difference between the two methods comes from how the standard error is computed: the <code>t-test</code> estimates the population standard deviation using the sample standard deviation, while the <code>z-test</code> uses the known value of <span class="math inline">\(\sigma\)</span>.</p>
 </section><section id="exploratory-data-analysis-eda-1" class="level3" data-number="2.2.4"><h3 data-number="2.2.4" class="anchored" data-anchor-id="exploratory-data-analysis-eda-1">
 <span class="header-section-number">2.2.4</span> Exploratory Data Analysis (EDA)</h3>
+<p>Because the one-sample <code>z-test</code> uses the same response variable, <code>flipper_length_mm</code>, and the same training and test sets as the previous section, we do not repeat the full exploratory analysis here. The earlier EDA showed that flipper length is not perfectly normally distributed and that species differences explain much of the structure in the data.</p>
+<p>For the one-sample <code>z-test</code>, the key additional assumption is that the population standard deviation is known. In this example, we assume that reliable external information gives <span class="math inline">\(\sigma = 14\)</span>. Therefore, the exploratory analysis is mainly used to remind us that the response variable is quantitative, the sample size is reasonably large, and there are no severe outliers that would make the test inappropriate.</p>
+<p>Overall, the same EDA considerations from the one-sample <code>t-test</code> section apply here. The main difference is not the data, but the information available about the population standard deviation.</p>
+</section><section id="testing-settings-1" class="level3" data-number="2.2.5"><h3 data-number="2.2.5" class="anchored" data-anchor-id="testing-settings-1">
+<span class="header-section-number">2.2.5</span> Testing Settings</h3>
+<p>Before writing the hypotheses, we summarize the testing setup for the one-sample <code>z-test</code>. The response variable is <code>flipper_length_mm</code>, which is a quantitative variable measured in millimetres. The parameter of interest is the population mean flipper length, denoted by <span class="math inline">\(\mu\)</span>.</p>
+<p>As in the previous section, we compare the population mean flipper length to the reference value</p>
+<p><span class="math display">\[
+\mu_0 = 200.
+\]</span></p>
+<p>The key difference is that, for the one-sample <code>z-test</code>, the population standard deviation is assumed to be known. In this example, we assume</p>
+<p><span class="math display">\[
+\sigma = 14.
+\]</span></p>
+<p>Because the population standard deviation is treated as known, the standard error of the sample mean is computed using <span class="math inline">\(\sigma / \sqrt{n}\)</span> rather than <span class="math inline">\(s / \sqrt{n}\)</span>.</p>
+<p>The formal test will be conducted using the test set. This keeps the exploratory analysis and the hypothesis test separate: the training set was used to understand the data, while the test set is used to calculate the test statistic and p-value.</p>
+<p>For this test, we use:</p>
+<ul>
+<li>
+<strong>Response variable:</strong> <code>flipper_length_mm</code>
+</li>
+<li>
+<strong>Parameter of interest:</strong> <span class="math inline">\(\mu\)</span>, the population mean flipper length</li>
+<li>
+<strong>Reference value:</strong> <span class="math inline">\(\mu_0 = 200\)</span>
+</li>
+<li>
+<strong>Known population standard deviation:</strong> <span class="math inline">\(\sigma = 14\)</span>
+</li>
+<li>
+<strong>Test:</strong> one-sample <code>z-test</code>
+</li>
+<li>
+<strong>Sample used for inference:</strong> <code>test_set</code>
+</li>
+<li>
+<strong>Significance level:</strong> <span class="math inline">\(\alpha = 0.05\)</span>
+</li>
+</ul>
+<p>Because this is a one-sample <code>z-test</code>, we assume that the observations are independent, that the population standard deviation is known, and that the sampling distribution of the sample mean is approximately normal. The earlier exploratory analysis showed that the raw flipper length distribution is not perfectly normal, partly because penguin species differ in their typical flipper lengths. However, the sample size is reasonably large and there are no severe outliers, so using the one-sample <code>z-test</code> is reasonable for this teaching example.</p>
+</section><section id="hypothesis-definitions-1" class="level3" data-number="2.2.6"><h3 data-number="2.2.6" class="anchored" data-anchor-id="hypothesis-definitions-1">
+<span class="header-section-number">2.2.6</span> Hypothesis Definitions</h3>
+<p>We now translate the research question into formal statistical hypotheses. Recall that <span class="math inline">\(\mu\)</span> denotes the population mean flipper length of penguins, and the reference value is</p>
+<p><span class="math display">\[
+\mu_0 = 200.
+\]</span></p>
+<p>Since the research question asks whether the population mean flipper length is <strong>different from</strong> 200 mm, we use a two-sided test.</p>
+<p>The hypotheses are:</p>
+<p><span class="math display">\[
+H_0: \mu = 200 \quad \textit{vs} \quad H_A: \mu \neq 200
+\]</span></p>
+<p>The null hypothesis states that the population mean flipper length is 200 mm. Under this hypothesis, any difference between the sample mean and 200 mm is attributed to random sampling variation.</p>
+<p>The alternative hypothesis states that the population mean flipper length is not 200 mm. This includes both possibilities: the population mean could be less than 200 mm or greater than 200 mm.</p>
+<p>These hypotheses are the same as the hypotheses used in the one-sample <code>t-test</code> section. The difference between the two tests is not the research question or the hypotheses. The difference is that the one-sample <code>z-test</code> assumes the population standard deviation <span class="math inline">\(\sigma\)</span> is known, while the one-sample <code>t-test</code> estimates the standard deviation from the sample.</p>
+</section><section id="test-flavour-and-components-1" class="level3" data-number="2.2.7"><h3 data-number="2.2.7" class="anchored" data-anchor-id="test-flavour-and-components-1">
+<span class="header-section-number">2.2.7</span> Test Flavour and Components</h3>
+<p>The one-sample <code>z-test</code> compares the sample mean to the hypothesized population mean when the population standard deviation is known. In this example, the hypothesized value is <span class="math inline">\(\mu_0 = 200\)</span> mm, and the known population standard deviation is assumed to be <span class="math inline">\(\sigma = 14\)</span> mm.</p>
+<p>Let <span class="math inline">\(\bar{x}\)</span> denote the sample mean flipper length in the test set. If the test set contains <span class="math inline">\(n\)</span> penguins, the test statistic is</p>
+<p><span class="math display">\[
+z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}.
+\]</span></p>
+<p>In this formula:</p>
+<ul>
+<li>
+<span class="math inline">\(\bar{x}\)</span> is the sample mean flipper length.</li>
+<li>
+<span class="math inline">\(\mu_0\)</span> is the hypothesized population mean, which is 200 mm in this example.</li>
+<li>
+<span class="math inline">\(\sigma\)</span> is the known population standard deviation, which is assumed to be 14 mm in this example.</li>
+<li>
+<span class="math inline">\(n\)</span> is the sample size.</li>
+<li>
+<span class="math inline">\(\sigma / \sqrt{n}\)</span> is the standard error of the sample mean.</li>
+</ul>
+<p>The numerator, <span class="math inline">\(\bar{x} - \mu_0\)</span>, measures how far the sample mean is from the hypothesized value. The denominator, <span class="math inline">\(\sigma / \sqrt{n}\)</span>, scales this difference by the known standard error of the sample mean. Therefore, the test statistic measures how many standard errors the sample mean is away from the hypothesized value.</p>
+<p>The key difference between the one-sample <code>z-test</code> and the one-sample <code>t-test</code> is the standard deviation used in the denominator. For the one-sample <code>t-test</code>, the population standard deviation is unknown and is estimated using the sample standard deviation <span class="math inline">\(s\)</span>. For the one-sample <code>z-test</code>, the population standard deviation <span class="math inline">\(\sigma\)</span> is treated as known.</p>
+<p>Under the null hypothesis,</p>
+<p><span class="math display">\[
+H_0: \mu = 200,
+\]</span></p>
+<p>the test statistic follows a standard normal distribution:</p>
+<p><span class="math display">\[
+Z \sim N(0, 1).
+\]</span></p>
+<p>Since our alternative hypothesis is two-sided,</p>
+<p><span class="math display">\[
+H_A: \mu \neq 200,
+\]</span></p>
+<p>the p-value measures the probability of observing a test statistic at least as extreme as the one obtained from the data, in either direction, assuming that the null hypothesis is true.</p>
+<p>At the significance level <span class="math inline">\(\alpha = 0.05\)</span>, we reject the null hypothesis if the p-value is less than 0.05. Otherwise, we do not reject the null hypothesis.</p>
+</section><section id="inferential-conclusions-1" class="level3" data-number="2.2.8"><h3 data-number="2.2.8" class="anchored" data-anchor-id="inferential-conclusions-1">
+<span class="header-section-number">2.2.8</span> Inferential Conclusions</h3>
+<p>The goal of the one-sample <code>z-test</code> is to decide whether the observed sample mean is far enough from the hypothesized value to provide evidence against the null hypothesis, assuming that the population standard deviation is known.</p>
+<p>In this example, the null and alternative hypotheses are:</p>
+<p><span class="math display">\[
+H_0: \mu = 200 \quad \textit{vs} \quad H_A: \mu \neq 200
+\]</span></p>
+<p>where <span class="math inline">\(\mu\)</span> denotes the population mean flipper length of penguins. The hypothesized value is 200 mm, and the known population standard deviation is assumed to be <span class="math inline">\(\sigma = 14\)</span> mm.</p>
+<p>After computing the test statistic and p-value, we compare the p-value to the significance level <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient evidence that the population mean flipper length is different from 200 mm.</p>
+<p>If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient evidence that the population mean flipper length is different from 200 mm.</p>
+<p>As before, failing to reject the null hypothesis does not prove that the population mean is exactly 200 mm. It only means that, based on the available sample and the assumed known population standard deviation, we do not have enough evidence to conclude that it differs from 200 mm.</p>
+</section><section id="how-to-run-the-test-in-r-and-python-1" class="level3" data-number="2.2.9"><h3 data-number="2.2.9" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python-1">
+<span class="header-section-number">2.2.9</span> How to run the test in R and Python?</h3>
+<p>We now conduct the formal one-sample <code>z-test</code> using the test set. Recall that the training set was used for exploratory data analysis, while the test set is reserved for the formal hypothesis test. The test compares the sample mean of <code>flipper_length_mm</code> to the hypothesized value <span class="math inline">\(\mu_0 = 200\)</span>, assuming that the population standard deviation is known and equal to <span class="math inline">\(\sigma = 14\)</span>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">R Code</a></li>
@@ -1176,90 +1331,147 @@ It includes measurements such as <em>flipper length</em>, <em>bill size</em>, an
 <div class="tab-content">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">train_set</span><span class="op">$</span><span class="va">flipper_length_mm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Run one-sample z-test using the BSDA package</span></span>
+<span><span class="va">z_test_result</span> <span class="op">&lt;-</span> <span class="fu">BSDA</span><span class="fu">::</span><span class="fu"><a href="https://alanarnholt.github.io/BSDA/reference/z.test.html">z.test</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">test_set</span><span class="op">$</span><span class="va">flipper_length_mm</span>,</span>
+<span>  mu <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>  sigma.x <span class="op">=</span> <span class="fl">14</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="st">"two.sided"</span>,</span>
+<span>  conf.level <span class="op">=</span> <span class="fl">0.95</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">z_test_result</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  172.0   190.0   198.0   201.5   214.0   231.0 </code></pre>
+<pre><code>
+    One-sample z-Test
+
+data:  test_set$flipper_length_mm
+z = 0.17928, p-value = 0.8577
+alternative hypothesis: true mean is not equal to 200
+95 percent confidence interval:
+ 197.0204 203.5796
+sample estimates:
+mean of x 
+    200.3 </code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train_set[<span class="st">"flipper_length_mm"</span>].describe())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the test set created in the R chunk</span></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> r.test_set.copy()</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the response variable from the test set</span></span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>flipper_test <span class="op">=</span> test_set[<span class="st">"flipper_length_mm"</span>]</span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a helper function for a one-sample z-test with known population sd</span></span>
+<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> z_test_mean(x, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="va">None</span>, alternative<span class="op">=</span><span class="st">"two-sided"</span>, conf_level<span class="op">=</span><span class="fl">0.95</span>):</span>
+<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a><span class="co">    One-sample z-test for a population mean when the population standard</span></span>
+<span id="cb75-15"><a href="#cb75-15" aria-hidden="true" tabindex="-1"></a><span class="co">    deviation is known.</span></span>
+<span id="cb75-16"><a href="#cb75-16" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb75-17"><a href="#cb75-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-18"><a href="#cb75-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sigma <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb75-19"><a href="#cb75-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"sigma must be provided for a one-sample z-test."</span>)</span>
+<span id="cb75-20"><a href="#cb75-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-21"><a href="#cb75-21" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.asarray(x, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb75-22"><a href="#cb75-22" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> x[<span class="op">~</span>np.isnan(x)]</span>
+<span id="cb75-23"><a href="#cb75-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-24"><a href="#cb75-24" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb75-25"><a href="#cb75-25" aria-hidden="true" tabindex="-1"></a>    sample_mean <span class="op">=</span> np.mean(x)</span>
+<span id="cb75-26"><a href="#cb75-26" aria-hidden="true" tabindex="-1"></a>    standard_error <span class="op">=</span> sigma <span class="op">/</span> np.sqrt(n)</span>
+<span id="cb75-27"><a href="#cb75-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-28"><a href="#cb75-28" aria-hidden="true" tabindex="-1"></a>    z_stat <span class="op">=</span> (sample_mean <span class="op">-</span> mu) <span class="op">/</span> standard_error</span>
+<span id="cb75-29"><a href="#cb75-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-30"><a href="#cb75-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> alternative <span class="op">==</span> <span class="st">"two-sided"</span>:</span>
+<span id="cb75-31"><a href="#cb75-31" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
+<span id="cb75-32"><a href="#cb75-32" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(<span class="dv">1</span> <span class="op">-</span> (<span class="dv">1</span> <span class="op">-</span> conf_level) <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb75-33"><a href="#cb75-33" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> sample_mean <span class="op">-</span> z_critical <span class="op">*</span> standard_error</span>
+<span id="cb75-34"><a href="#cb75-34" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> sample_mean <span class="op">+</span> z_critical <span class="op">*</span> standard_error</span>
+<span id="cb75-35"><a href="#cb75-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-36"><a href="#cb75-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> alternative <span class="op">==</span> <span class="st">"greater"</span>:</span>
+<span id="cb75-37"><a href="#cb75-37" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(z_stat)</span>
+<span id="cb75-38"><a href="#cb75-38" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(conf_level)</span>
+<span id="cb75-39"><a href="#cb75-39" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> sample_mean <span class="op">-</span> z_critical <span class="op">*</span> standard_error</span>
+<span id="cb75-40"><a href="#cb75-40" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> np.inf</span>
+<span id="cb75-41"><a href="#cb75-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-42"><a href="#cb75-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> alternative <span class="op">==</span> <span class="st">"less"</span>:</span>
+<span id="cb75-43"><a href="#cb75-43" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> stats.norm.cdf(z_stat)</span>
+<span id="cb75-44"><a href="#cb75-44" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(conf_level)</span>
+<span id="cb75-45"><a href="#cb75-45" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> <span class="op">-</span>np.inf</span>
+<span id="cb75-46"><a href="#cb75-46" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> sample_mean <span class="op">+</span> z_critical <span class="op">*</span> standard_error</span>
+<span id="cb75-47"><a href="#cb75-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-48"><a href="#cb75-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb75-49"><a href="#cb75-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"alternative must be 'two-sided', 'greater', or 'less'."</span>)</span>
+<span id="cb75-50"><a href="#cb75-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-51"><a href="#cb75-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame({</span>
+<span id="cb75-52"><a href="#cb75-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sample_mean"</span>: [sample_mean],</span>
+<span id="cb75-53"><a href="#cb75-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">"known_sigma"</span>: [sigma],</span>
+<span id="cb75-54"><a href="#cb75-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sample_size"</span>: [n],</span>
+<span id="cb75-55"><a href="#cb75-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"standard_error"</span>: [standard_error],</span>
+<span id="cb75-56"><a href="#cb75-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">"z_statistic"</span>: [z_stat],</span>
+<span id="cb75-57"><a href="#cb75-57" aria-hidden="true" tabindex="-1"></a>        <span class="st">"p_value"</span>: [p_value],</span>
+<span id="cb75-58"><a href="#cb75-58" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ci_lower"</span>: [ci_lower],</span>
+<span id="cb75-59"><a href="#cb75-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ci_upper"</span>: [ci_upper]</span>
+<span id="cb75-60"><a href="#cb75-60" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb75-61"><a href="#cb75-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-62"><a href="#cb75-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-63"><a href="#cb75-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Run one-sample z-test</span></span>
+<span id="cb75-64"><a href="#cb75-64" aria-hidden="true" tabindex="-1"></a>z_test_result <span class="op">=</span> z_test_mean(</span>
+<span id="cb75-65"><a href="#cb75-65" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>flipper_test,</span>
+<span id="cb75-66"><a href="#cb75-66" aria-hidden="true" tabindex="-1"></a>    mu<span class="op">=</span><span class="dv">200</span>,</span>
+<span id="cb75-67"><a href="#cb75-67" aria-hidden="true" tabindex="-1"></a>    sigma<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb75-68"><a href="#cb75-68" aria-hidden="true" tabindex="-1"></a>    alternative<span class="op">=</span><span class="st">"two-sided"</span>,</span>
+<span id="cb75-69"><a href="#cb75-69" aria-hidden="true" tabindex="-1"></a>    conf_level<span class="op">=</span><span class="fl">0.95</span></span>
+<span id="cb75-70"><a href="#cb75-70" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb75-71"><a href="#cb75-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-72"><a href="#cb75-72" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z_test_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>count    266.00000
-mean     201.00000
-std       13.91592
-min      172.00000
-25%      190.00000
-50%      197.00000
-75%      213.00000
-max      231.00000
-Name: flipper_length_mm, dtype: float64</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>train_set[<span class="st">"flipper_length_mm"</span>].hist(edgecolor<span class="op">=</span><span class="st">"black"</span>, color<span class="op">=</span><span class="st">"skyblue"</span>)</span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Flipper Length (mm)"</span>)</span>
-<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Flipper Length (mm)"</span>)</span>
-<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>)</span>
-<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(</span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>    train_set[<span class="st">"body_mass_g"</span>],</span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>    train_set[<span class="st">"flipper_length_mm"</span>],</span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.6</span></span>
-<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Body Mass vs. Flipper Length"</span>)</span>
-<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Body Mass (g)"</span>)</span>
-<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Flipper Length (mm)"</span>)</span>
-<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<pre><code>   sample_mean  known_sigma  sample_size  ...   p_value    ci_lower    ci_upper
+0        200.3           14           70  ...  0.857714  197.020353  203.579647
+
+[1 rows x 8 columns]</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div>
-</section><section id="testing-settings-1" class="level3" data-number="2.2.5"><h3 data-number="2.2.5" class="anchored" data-anchor-id="testing-settings-1">
-<span class="header-section-number">2.2.5</span> Testing Settings</h3>
-<p>We use a significant level of to run the test.</p>
-</section><section id="hypotheses" class="level3" data-number="2.2.6"><h3 data-number="2.2.6" class="anchored" data-anchor-id="hypotheses">
-<span class="header-section-number">2.2.6</span> Hypotheses</h3>
-<p>We can formally express this with the following hypotheses:</p>
+<p><strong>Details about <code>R</code> code and output</strong></p>
+<p>In <code>R</code>, we use the <code>z.test()</code> function from the <code>BSDA</code> package. This function can be used to perform one-sample and two-sample <code>z-tests</code>. In this section, we use it for a one-sample test because we are comparing one sample mean to a fixed hypothesized value.</p>
+<p>The relevant arguments are as follows:</p>
 <ul>
-<li>
-<strong>Null hypothesis</strong> <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu = 75\)</span>
-</li>
-<li>
-<strong>Alternative hypothesis</strong> <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu \ne 75\)</span>
-</li>
+<li><p><code>x</code> is the numeric vector of observed data values. In this example, <code>x</code> is <code>test_set$flipper_length_mm</code>.</p></li>
+<li><p><code>mu</code> is the hypothesized population mean under the null hypothesis. In this example, we set <code>mu = 200</code> because we are testing whether the population mean flipper length differs from 200 mm.</p></li>
+<li><p><code>sigma.x</code> is the known population standard deviation for the sample. In this example, we set <code>sigma.x = 14</code>.</p></li>
+<li><p><code>alternative</code> specifies the direction of the alternative hypothesis. We use <code>alternative = "two.sided"</code> because our alternative hypothesis is <span class="math inline">\(H_A: \mu \neq 200\)</span>.</p></li>
+<li><p><code>conf.level</code> specifies the confidence level for the confidence interval. We use <code>conf.level = 0.95</code>, which gives a 95% confidence interval for the population mean.</p></li>
 </ul>
-<p>Under the null hypothesis, we assume that the new teaching method does not significantly change the average score. If the null is rejected, we infer that the method may lead to <strong>higher or lower</strong> performance.</p>
-</section><section id="test-flavour-and-components-1" class="level3" data-number="2.2.7"><h3 data-number="2.2.7" class="anchored" data-anchor-id="test-flavour-and-components-1">
-<span class="header-section-number">2.2.7</span> Test Flavour and Components</h3>
-<p>The test statistic is:</p>
-<p><span class="math display">\[z=xˉ−μ0σ/nz = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}\]</span></p>
-<p>Where: • <span class="math inline">\(\bar{x}\)</span> is the sample mean</p>
-<p>• <span class="math inline">\(\mu_0\)</span> is the reference value (e.g., 75)</p>
-<p>• <span class="math inline">\(\sigma\)</span> is the known population standard deviation • <span class="math inline">\(n\)</span> is the sample size</p>
-<p>This statistic follows a <strong>standard normal distribution</strong> (<span class="math inline">\(\mathcal{N}(0, 1)\)</span>)..</p>
-</section><section id="inferential-conclusions-1" class="level3" data-number="2.2.8"><h3 data-number="2.2.8" class="anchored" data-anchor-id="inferential-conclusions-1">
-<span class="header-section-number">2.2.8</span> Inferential Conclusions</h3>
-<p>The z-test typically results in a slightly smaller p-value than the t-test because the z-distribution has “thinner tails” than the t-distribution.</p>
-</section><section id="how-to-run-the-test-in-r-and-python-1" class="level3" data-number="2.2.9"><h3 data-number="2.2.9" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python-1">
-<span class="header-section-number">2.2.9</span> How to run the test in R and Python?</h3>
+<p>The output from <code><a href="https://alanarnholt.github.io/BSDA/reference/z.test.html">BSDA::z.test()</a></code> includes the z-statistic, p-value, alternative hypothesis, confidence interval, and sample mean. The p-value is used to decide whether to reject the null hypothesis at the chosen significance level. The confidence interval gives a range of plausible values for the population mean flipper length, assuming the population standard deviation is known.</p>
+<p><strong>Details about <code>Python</code> code and output</strong></p>
+<p>In <code>Python</code>, we define a small helper function called <code>z_test_mean()</code> to perform the same calculation. This function mirrors the logic of the one-sample <code>z-test</code> with a known population standard deviation.</p>
+<p>The relevant inputs are as follows:</p>
+<ul>
+<li><p><code>x</code> is the numeric vector of observed data values. In this example, <code>x</code> is <code>flipper_test</code>, which contains the <code>flipper_length_mm</code> values from the test set.</p></li>
+<li><p><code>mu</code> is the hypothesized population mean under the null hypothesis. In this example, we set <code>mu = 200</code>.</p></li>
+<li><p><code>sigma</code> is the known population standard deviation. In this example, we set <code>sigma = 14</code>.</p></li>
+<li><p><code>alternative</code> specifies the direction of the alternative hypothesis. We use <code>alternative = "two-sided"</code> because our alternative hypothesis is <span class="math inline">\(H_A: \mu \neq 200\)</span>.</p></li>
+<li><p><code>conf_level</code> specifies the confidence level for the confidence interval. We use <code>conf_level = 0.95</code>.</p></li>
+</ul>
+<p>Inside the function, we calculate the sample mean, the standard error, the z-statistic, the p-value, and the 95% confidence interval. The standard error is computed using the known population standard deviation:</p>
+<p><span class="math display">\[
+\frac{\sigma}{\sqrt{n}}.
+\]</span></p>
+<p>The output gives the same main quantities as the <code>R</code> code: sample mean, known population standard deviation, sample size, standard error, z-statistic, p-value, and 95% confidence interval.</p>
 </section><section id="storytelling-1" class="level3" data-number="2.2.10"><h3 data-number="2.2.10" class="anchored" data-anchor-id="storytelling-1">
 <span class="header-section-number">2.2.10</span> Storytelling</h3>
-<p>Rejecting the null here provides high confidence that the population mean has shifted from 200 mm, assuming our historical <span class="math inline">\(\sigma\)</span> is still accurate.</p>
+<p>Based on the test set, the average flipper length is about 200.3 mm, which is very close to the hypothesized value of 200 mm. Using the assumed known population standard deviation of 14 mm, the one-sample <code>z-test</code> gives a z-statistic close to 0 and a large p-value.</p>
+<p>Since the p-value is much larger than the significance level <span class="math inline">\(\alpha = 0.05\)</span>, we do not reject the null hypothesis. In other words, the test set does not provide sufficient evidence that the population mean flipper length differs from 200 mm.</p>
+<p>The 95% confidence interval for the population mean flipper length is approximately <span class="math inline">\((197.02,\ 203.58).\)</span> This interval includes 200 mm, which is consistent with the hypothesis test result. Based on these data, and under the assumption that the population standard deviation is known to be 14 mm, a population mean flipper length of 200 mm remains a plausible value.</p>
+<p>In plain language, the observed average flipper length in the test set is very close to 200 mm. Based on this sample and the assumed known population standard deviation, we do not have strong evidence that the population mean flipper length differs from 200 mm.</p>
 </section></section><section id="one-sample-z-test-for-proportions" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="one-sample-z-test-for-proportions">
 <span class="header-section-number">2.3</span> One-sample z-test for proportions</h2>
 <section id="review-2" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="review-2">
@@ -1279,7 +1491,7 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 <p><strong>Research question:</strong><br>
 * Is the proportion of Adelie penguins in the training dataset significantly different from 45%?**</p>
 </blockquote>
-<hr></section><section id="data-collection-wrangling-1" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="data-collection-wrangling-1">
+<hr></section><section id="data-collection-wrangling" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="data-collection-wrangling">
 <span class="header-section-number">2.3.3</span> Data Collection &amp; Wrangling</h3>
 <p>We continue with the same cleaned and split dataset from the earlier section.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -1290,45 +1502,45 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 <div class="tab-content">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_set</span><span class="op">$</span><span class="va">is_adelie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">train_set</span><span class="op">$</span><span class="va">species</span> <span class="op">==</span> <span class="st">"Adelie"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_set</span><span class="op">$</span><span class="va">is_adelie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">train_set</span><span class="op">$</span><span class="va">species</span> <span class="op">==</span> <span class="st">"Adelie"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">train_set</span><span class="op">)</span></span>
 <span><span class="va">num_adelie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">train_set</span><span class="op">$</span><span class="va">is_adelie</span><span class="op">)</span></span>
 <span><span class="va">p_hat</span> <span class="op">&lt;-</span> <span class="va">num_adelie</span> <span class="op">/</span> <span class="va">n</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Sample size:"</span>, <span class="va">n</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sample size: 266 </code></pre>
+<pre><code>Sample size: 272 </code></pre>
 </div>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Number of Adelie penguins:"</span>, <span class="va">num_adelie</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Number of Adelie penguins:"</span>, <span class="va">num_adelie</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of Adelie penguins: 113 </code></pre>
+<pre><code>Number of Adelie penguins: 120 </code></pre>
 </div>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Sample proportion:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">p_hat</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Sample proportion:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">p_hat</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sample proportion: 0.425 </code></pre>
+<pre><code>Sample proportion: 0.441 </code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a binary column: 1 if Adelie, 0 otherwise</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>train_set[<span class="st">"is_adelie"</span>] <span class="op">=</span> (train_set[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Total number of observations</span></span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> train_set.shape[<span class="dv">0</span>]</span>
-<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of Adelie penguins</span></span>
-<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>num_adelie <span class="op">=</span> train_set[<span class="st">"is_adelie"</span>].<span class="bu">sum</span>() </span>
-<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample proportion</span></span>
-<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> num_adelie <span class="op">/</span> n</span>
-<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample size: </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a binary column: 1 if Adelie, 0 otherwise</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>train_set[<span class="st">"is_adelie"</span>] <span class="op">=</span> (train_set[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Total number of observations</span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> train_set.shape[<span class="dv">0</span>]</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of Adelie penguins</span></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>num_adelie <span class="op">=</span> train_set[<span class="st">"is_adelie"</span>].<span class="bu">sum</span>() </span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample proportion</span></span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> num_adelie <span class="op">/</span> n</span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample size: </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sample size: 266</code></pre>
+<pre><code>Sample size: 272</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of Adelie penguins: </span><span class="sc">{</span>num_adelie<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of Adelie penguins: </span><span class="sc">{</span>num_adelie<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of Adelie penguins: 115</code></pre>
+<pre><code>Number of Adelie penguins: 120</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample proportion: </span><span class="sc">{</span>p_hat<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample proportion: </span><span class="sc">{</span>p_hat<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sample proportion: 0.432</code></pre>
+<pre><code>Sample proportion: 0.441</code></pre>
 </div>
 </div>
 </div>
@@ -1345,9 +1557,9 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 <div class="tab-content">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">train_set</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"orange"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Penguin Species Count in Training Set"</span>,</span>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">train_set</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"orange"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Penguin Species Count in Training Set"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"Species"</span>, y <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -1359,17 +1571,17 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 </div>
 <div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>train_set[<span class="st">"species"</span>].value_counts().plot(</span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>kind<span class="op">=</span><span class="st">"bar"</span>, color<span class="op">=</span><span class="st">"orange"</span>, edgecolor<span class="op">=</span><span class="st">"black"</span></span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Penguin Species Count in Training Set"</span>)</span>
-<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
-<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Species"</span>)</span>
-<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>train_set[<span class="st">"species"</span>].value_counts().plot(</span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>kind<span class="op">=</span><span class="st">"bar"</span>, color<span class="op">=</span><span class="st">"orange"</span>, edgecolor<span class="op">=</span><span class="st">"black"</span></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Penguin Species Count in Training Set"</span>)</span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Species"</span>)</span>
+<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(array([0, 1, 2]), [Text(0, 0, 'Adelie'), Text(1, 0, 'Gentoo'), Text(2, 0, 'Chinstrap')])</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1380,7 +1592,7 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-</section><section id="hypotheses-1" class="level3" data-number="2.3.5"><h3 data-number="2.3.5" class="anchored" data-anchor-id="hypotheses-1">
+</section><section id="hypotheses" class="level3" data-number="2.3.5"><h3 data-number="2.3.5" class="anchored" data-anchor-id="hypotheses">
 <span class="header-section-number">2.3.5</span> Hypotheses</h3>
 <p>We can formally express this with the following hypotheses:</p>
 <ul>
@@ -1406,34 +1618,34 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 <div class="tab-content">
 <div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fl">0.45</span></span>
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fl">0.45</span></span>
 <span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p0</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span><span class="op">)</span></span>
 <span><span class="va">z_stat</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">p_hat</span> <span class="op">-</span> <span class="va">p0</span><span class="op">)</span> <span class="op">/</span> <span class="va">se</span></span>
 <span><span class="va">p_value</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">z_stat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"z ="</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">z_stat</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">", p ="</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">p_value</span>, <span class="fl">4</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>z = -0.826 , p = 0.4089 </code></pre>
+<pre><code>z = -0.293 , p = 0.7699 </code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
-<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference proportion</span></span>
-<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> <span class="fl">0.45</span></span>
-<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample proportion</span></span>
-<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> num_adelie <span class="op">/</span> n</span>
-<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard error under H0</span></span>
-<span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a>se <span class="op">=</span> np.sqrt(p0 <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p0) <span class="op">/</span> n)</span>
-<span id="cb87-9"><a href="#cb87-9" aria-hidden="true" tabindex="-1"></a><span class="co"># z-statistic</span></span>
-<span id="cb87-10"><a href="#cb87-10" aria-hidden="true" tabindex="-1"></a>z_stat <span class="op">=</span> (p_hat <span class="op">-</span> p0) <span class="op">/</span> se</span>
-<span id="cb87-11"><a href="#cb87-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed p-value</span></span>
-<span id="cb87-12"><a href="#cb87-12" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
-<span id="cb87-13"><a href="#cb87-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"z = </span><span class="sc">{</span>z_stat<span class="sc">:.3f}</span><span class="ss">, p = </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference proportion</span></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> <span class="fl">0.45</span></span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample proportion</span></span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> num_adelie <span class="op">/</span> n</span>
+<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard error under H0</span></span>
+<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a>se <span class="op">=</span> np.sqrt(p0 <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p0) <span class="op">/</span> n)</span>
+<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a><span class="co"># z-statistic</span></span>
+<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a>z_stat <span class="op">=</span> (p_hat <span class="op">-</span> p0) <span class="op">/</span> se</span>
+<span id="cb95-11"><a href="#cb95-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed p-value</span></span>
+<span id="cb95-12"><a href="#cb95-12" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
+<span id="cb95-13"><a href="#cb95-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"z = </span><span class="sc">{</span>z_stat<span class="sc">:.3f}</span><span class="ss">, p = </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>z = -0.579, p = 0.5624</code></pre>
+<pre><code>z = -0.293, p = 0.7699</code></pre>
 </div>
 </div>
 </div>
