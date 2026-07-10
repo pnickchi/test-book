@@ -305,13 +305,15 @@ window.Quarto = {
 <a href="#one-sample-z-test-for-proportions" id="toc-one-sample-z-test-for-proportions" class="nav-link" data-scroll-target="#one-sample-z-test-for-proportions"><span class="header-section-number">2.3</span> One-sample z-test for proportions</a>
   <ul>
 <li><a href="#review-2" id="toc-review-2" class="nav-link" data-scroll-target="#review-2"><span class="header-section-number">2.3.1</span> Review</a></li>
-  <li><a href="#study-design-2" id="toc-study-design-2" class="nav-link" data-scroll-target="#study-design-2"><span class="header-section-number">2.3.2</span> Study Design</a></li>
-  <li><a href="#data-collection-wrangling" id="toc-data-collection-wrangling" class="nav-link" data-scroll-target="#data-collection-wrangling"><span class="header-section-number">2.3.3</span> Data Collection &amp; Wrangling</a></li>
+  <li><a href="#study-design-2" id="toc-study-design-2" class="nav-link" data-scroll-target="#study-design-2"><span class="header-section-number">2.3.2</span> Study design</a></li>
+  <li><a href="#data-collection-and-wrangling-2" id="toc-data-collection-and-wrangling-2" class="nav-link" data-scroll-target="#data-collection-and-wrangling-2"><span class="header-section-number">2.3.3</span> Data Collection and Wrangling</a></li>
   <li><a href="#exploratory-data-analysis-eda-2" id="toc-exploratory-data-analysis-eda-2" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda-2"><span class="header-section-number">2.3.4</span> Exploratory Data Analysis (EDA)</a></li>
-  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">2.3.5</span> Hypotheses</a></li>
-  <li><a href="#how-to-run-the-test-in-r-and-python-2" id="toc-how-to-run-the-test-in-r-and-python-2" class="nav-link" data-scroll-target="#how-to-run-the-test-in-r-and-python-2"><span class="header-section-number">2.3.6</span> How to run the test in R and Python</a></li>
-  <li><a href="#inferential-conclusions-2" id="toc-inferential-conclusions-2" class="nav-link" data-scroll-target="#inferential-conclusions-2"><span class="header-section-number">2.3.7</span> Inferential Conclusions</a></li>
-  <li><a href="#storytelling-2" id="toc-storytelling-2" class="nav-link" data-scroll-target="#storytelling-2"><span class="header-section-number">2.3.8</span> Storytelling</a></li>
+  <li><a href="#testing-settings-2" id="toc-testing-settings-2" class="nav-link" data-scroll-target="#testing-settings-2"><span class="header-section-number">2.3.5</span> Testing Settings</a></li>
+  <li><a href="#hypothesis-definitions-2" id="toc-hypothesis-definitions-2" class="nav-link" data-scroll-target="#hypothesis-definitions-2"><span class="header-section-number">2.3.6</span> Hypothesis Definitions</a></li>
+  <li><a href="#test-flavour-and-components-2" id="toc-test-flavour-and-components-2" class="nav-link" data-scroll-target="#test-flavour-and-components-2"><span class="header-section-number">2.3.7</span> Test Flavour and Components</a></li>
+  <li><a href="#inferential-conclusions-2" id="toc-inferential-conclusions-2" class="nav-link" data-scroll-target="#inferential-conclusions-2"><span class="header-section-number">2.3.8</span> Inferential Conclusions</a></li>
+  <li><a href="#how-to-run-the-test-in-r-and-python-2" id="toc-how-to-run-the-test-in-r-and-python-2" class="nav-link" data-scroll-target="#how-to-run-the-test-in-r-and-python-2"><span class="header-section-number">2.3.9</span> How to run the test in R and Python?</a></li>
+  <li><a href="#storytelling-2" id="toc-storytelling-2" class="nav-link" data-scroll-target="#storytelling-2"><span class="header-section-number">2.3.10</span> Storytelling</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/pnickchi/test-book/edit/main/book/chapter2-one-pop.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pnickchi/test-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/pnickchi/test-book/blob/main/book/chapter2-one-pop.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -1476,24 +1478,92 @@ mean of x
 <span class="header-section-number">2.3</span> One-sample z-test for proportions</h2>
 <section id="review-2" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="review-2">
 <span class="header-section-number">2.3.1</span> Review</h3>
-<p>Use this test when: - The variable is <strong>binary</strong> (success/failure, yes/no, etc.), and - You want to test a <strong>population proportion</strong> ( p ), using a large enough sample.</p>
-<p>The test statistic is:</p>
-<p><span class="math display">\[z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}\]</span></p>
-<p>Where: - ( <span class="math inline">\(\hat{p}\)</span> ) is the sample proportion<br>
-- ( <span class="math inline">\(p_0\)</span> ) is the hypothesized population proportion<br>
-- ( <span class="math inline">\(n\)</span> ) is the sample size</p>
-<p>Just like the one-sample t-test is used to assess differences in means, the <strong>one-sample z-test</strong> is used when: • You are working with <strong>proportions</strong> (e.g., fraction of penguins with a specific characteristic), • The sample size is <strong>sufficiently large</strong> to justify using the normal approximation. This test is ideal for binary outcomes: for example, whether a penguin is <strong>of the Adelie species or not</strong>. Suppose you want to test whether the <strong>proportion of Adelie penguins</strong> in your sample differs from a historically established value. Let’s say historical records suggest that <strong>45% of penguins</strong> in a certain region were Adelie. You want to know whether the proportion in your current sample is <strong>statistically different from 0.45</strong>.</p>
-<p>The central question becomes: &gt; ** Is the proportion of Adelie penguins in the sample different from 0.45?? <strong>We are again working with the</strong> Palmer Station Penguins** dataset.</p>
-</section><section id="study-design-2" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="study-design-2">
-<span class="header-section-number">2.3.2</span> Study Design</h3>
-<p>Once again, we turn to the <strong>Palmer Station Penguins</strong> dataset, which includes species information for each penguin observed.</p>
+<p>Use this test when:</p>
+<ul>
+<li>You have <strong>one sample</strong> from a population.</li>
+<li>The response variable is <strong>binary</strong>, meaning each observation can be classified into one of two categories.</li>
+<li>You want to test whether the population proportion is equal to a specific reference value.</li>
+<li>The sample size is large enough for the normal approximation to the sampling distribution of the sample proportion to be reasonable.</li>
+</ul>
+<p>The one-sample <code>z-test</code> for proportions is used when we want to compare a sample proportion to a hypothesized population proportion. Suppose each observation is classified as either having or not having a particular characteristic. We can define a binary variable</p>
+<p><span class="math display">\[
+Y_i =
+\begin{cases}
+1, &amp; \text{if observation } i \text{ has the characteristic of interest},\\
+0, &amp; \text{otherwise}.
+\end{cases}
+\]</span></p>
+<p>The population parameter of interest is <span class="math inline">\(p\)</span>, which denotes the population proportion of observations with the characteristic of interest. In this section, the characteristic of interest is having body mass greater than 4000 g. Therefore, <span class="math inline">\(p\)</span> represents the population proportion of penguins whose body mass is greater than 4000 g.</p>
+<p>From the sample, we estimate <span class="math inline">\(p\)</span> using the sample proportion, denoted by <span class="math inline">\(\hat{p}\)</span>. To calculate <span class="math inline">\(\hat{p}\)</span>, we first count the number of observations that have the characteristic of interest. In our example, this is the number of penguins with <code>body_mass_g &gt; 4000</code>. We then divide this count by the total sample size.</p>
+<p>If <span class="math inline">\(x\)</span> denotes the number of penguins with body mass greater than 4000 g, and <span class="math inline">\(n\)</span> denotes the total number of penguins in the sample, then the sample proportion is</p>
+<p><span class="math display">\[
+\hat{p} = \frac{x}{n}.
+\]</span></p>
+<p>For example, if 37 out of 70 penguins in the test set have body mass greater than 4000 g, then</p>
+<p><span class="math display">\[
+\hat{p} = \frac{37}{70} \approx 0.529.
+\]</span></p>
+<p>This means that about 52.9% of penguins in the test set have body mass greater than 4000 g. We use this sample proportion, <span class="math inline">\(\hat{p}\)</span>, as an estimate of the unknown population proportion <span class="math inline">\(p\)</span>.</p>
+<p>Now back to the main statistical question we would like to test and answer this inferential question:</p>
 <blockquote class="blockquote">
-<p><strong>Research question:</strong><br>
-* Is the proportion of Adelie penguins in the training dataset significantly different from 45%?**</p>
+<p><strong>Is the population proportion statistically different from the hypothesized value <span class="math inline">\(p_0\)</span>?</strong></p>
 </blockquote>
-<hr></section><section id="data-collection-wrangling" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="data-collection-wrangling">
-<span class="header-section-number">2.3.3</span> Data Collection &amp; Wrangling</h3>
-<p>We continue with the same cleaned and split dataset from the earlier section.</p>
+<p>In this section, we continue using the <code>penguins</code> data set. To create a binary response variable, we classify penguins based on whether their body mass is above 4000 grams. That is, we define a penguin as being in the group of interest if</p>
+<p><span class="math display">\[
+\texttt{body\_mass\_g} &gt; 4000.
+\]</span></p>
+<p>The corresponding binary variable is:</p>
+<p><span class="math display">\[
+Y_i =
+\begin{cases}
+1, &amp; \text{if penguin } i \text{ has body mass greater than 4000 g},\\
+0, &amp; \text{otherwise}.
+\end{cases}
+\]</span></p>
+<p>For example, if the hypothesized population proportion is <span class="math inline">\(p_0 = 0.50\)</span>, then the question becomes:</p>
+<blockquote class="blockquote">
+<p><strong>Does the sample provide evidence that the population proportion of penguins with body mass above 4000 g is different from 50%?</strong></p>
+</blockquote>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Heads up!</p>
+</div>
+<div class="Heads-up-container">
+<p>The one-sample proportion <code>z-test</code> relies on a normal approximation to the sampling distribution of <span class="math inline">\(\hat{p}\)</span>. A common rule of thumb is that the expected number of observations in each category under the null hypothesis should be reasonably large:</p>
+<p><span class="math display">\[
+n p_0 \geq 10
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+n(1 - p_0) \geq 10.
+\]</span></p>
+<p>When these conditions are satisfied, the <code>z-test</code> provides a reasonable large-sample test for the population proportion.</p>
+</div>
+</div>
+<p>In this example, we create a binary variable from a quantitative variable by choosing the cutoff <code>body_mass_g &gt; 4000</code>. This is useful for teaching the mechanics of a one-sample proportion test. In a real analysis, the cutoff should be chosen before conducting the formal test and should have a meaningful scientific or practical interpretation.</p>
+</section><section id="study-design-2" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="study-design-2">
+<span class="header-section-number">2.3.2</span> Study design</h3>
+<p>We continue with the <code>penguins</code> data set from the <code>palmerpenguins</code> package. In the previous sections, we studied the population mean of a quantitative variable. In this section, we change the focus from a population mean to a population proportion.</p>
+<p>The quantitative variable <code>body_mass_g</code> records a penguin’s body mass in grams. To create a binary response variable, we classify each penguin based on whether its body mass is greater than 4000 g. Penguins with body mass greater than 4000 g are coded as 1, and penguins with body mass less than or equal to 4000 g are coded as 0.</p>
+<p>Let <span class="math inline">\(p\)</span> denote the population proportion of penguins with body mass greater than 4000 g. Suppose we want to compare this population proportion to the reference value <span class="math inline">\(p_0 = 0.50.\)</span></p>
+<p>The main statistical question is:</p>
+<blockquote class="blockquote">
+<p><strong>Does the data provide evidence that the population proportion of penguins with body mass greater than 4000 g is different from 50%?</strong></p>
+</blockquote>
+<p>This is a one-sample proportion problem because we have one sample and a binary response variable: each penguin either has body mass greater than 4000 g or does not. Since the sample size is reasonably large, we use a one-sample proportion <code>z-test</code> to compare the observed sample proportion to the hypothesized value of 0.50.</p>
+<p>As before, we will keep the exploratory and inferential parts of the analysis separate. The training set will be used for exploratory data analysis, and the test set will be used to conduct the formal one-sample proportion <code>z-test</code>.</p>
+</section><section id="data-collection-and-wrangling-2" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="data-collection-and-wrangling-2">
+<span class="header-section-number">2.3.3</span> Data Collection and Wrangling</h3>
+<p>For the one-sample proportion <code>z-test</code>, we use the same cleaned <code>penguins</code> data set and the same training and test sets created earlier in this chapter. The difference is that we now create a binary response variable from <code>body_mass_g</code>.</p>
+<p>We define a penguin as being in the group of interest if its body mass is greater than 4000 g. This creates the binary variable <code>is_heavy</code>, where</p>
+<p><span class="math display">\[
+\texttt{is\_heavy} =
+\begin{cases}
+1, &amp; \text{if body mass is greater than 4000 g},\\
+0, &amp; \text{otherwise}.
+\end{cases}
+\]</span></p>
+<p>We create this variable in both the training set and the test set. The training set will be used for exploratory data analysis, while the test set will be used for the formal one-sample proportion <code>z-test</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">R Code</a></li>
@@ -1502,53 +1572,151 @@ mean of x
 <div class="tab-content">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_set</span><span class="op">$</span><span class="va">is_adelie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">train_set</span><span class="op">$</span><span class="va">species</span> <span class="op">==</span> <span class="st">"Adelie"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">train_set</span><span class="op">)</span></span>
-<span><span class="va">num_adelie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">train_set</span><span class="op">$</span><span class="va">is_adelie</span><span class="op">)</span></span>
-<span><span class="va">p_hat</span> <span class="op">&lt;-</span> <span class="va">num_adelie</span> <span class="op">/</span> <span class="va">n</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Sample size:"</span>, <span class="va">n</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Hypothesized population proportion</span></span>
+<span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fl">0.50</span></span>
+<span></span>
+<span><span class="co"># Create binary response variable in the training set</span></span>
+<span><span class="va">train_prop</span> <span class="op">&lt;-</span> <span class="va">train_set</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    is_heavy <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">body_mass_g</span> <span class="op">&gt;</span> <span class="fl">4000</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create binary response variable in the test set</span></span>
+<span><span class="va">test_prop</span> <span class="op">&lt;-</span> <span class="va">test_set</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    is_heavy <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">body_mass_g</span> <span class="op">&gt;</span> <span class="fl">4000</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Sanity check for the training set</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Training shape:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">train_prop</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sample size: 272 </code></pre>
+<pre><code>Training shape: 272 7 </code></pre>
 </div>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Number of Adelie penguins:"</span>, <span class="va">num_adelie</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Testing shape:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">test_prop</span><span class="op">)</span>, <span class="st">"\n\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of Adelie penguins: 120 </code></pre>
+<pre><code>Testing shape: 70 7 </code></pre>
 </div>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Sample proportion:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">p_hat</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Training counts for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sample proportion: 0.441 </code></pre>
+<pre><code>Training counts for is_heavy:</code></pre>
+</div>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">train_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  0   1 
+137 135 </code></pre>
+</div>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nTraining proportions for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Training proportions for is_heavy:</code></pre>
+</div>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">train_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+        0         1 
+0.5036765 0.4963235 </code></pre>
+</div>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nTesting counts for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Testing counts for is_heavy:</code></pre>
+</div>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">test_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 0  1 
+33 37 </code></pre>
+</div>
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nTesting proportions for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Testing proportions for is_heavy:</code></pre>
+</div>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">test_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+        0         1 
+0.4714286 0.5285714 </code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a binary column: 1 if Adelie, 0 otherwise</span></span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>train_set[<span class="st">"is_adelie"</span>] <span class="op">=</span> (train_set[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Total number of observations</span></span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> train_set.shape[<span class="dv">0</span>]</span>
-<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of Adelie penguins</span></span>
-<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>num_adelie <span class="op">=</span> train_set[<span class="st">"is_adelie"</span>].<span class="bu">sum</span>() </span>
-<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample proportion</span></span>
-<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> num_adelie <span class="op">/</span> n</span>
-<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample size: </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the proportion-test data sets created in the R chunk</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>train_prop <span class="op">=</span> r.train_prop.copy()</span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>test_prop <span class="op">=</span> r.test_prop.copy()</span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the same hypothesized population proportion</span></span>
+<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> <span class="bu">float</span>(r.p0)</span>
+<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Sanity check for the training and test sets</span></span>
+<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training shape:"</span>, train_prop.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sample size: 272</code></pre>
+<pre><code>Training shape: (272, 7)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of Adelie penguins: </span><span class="sc">{</span>num_adelie<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing shape:"</span>, test_prop.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of Adelie penguins: 120</code></pre>
+<pre><code>Testing shape: (70, 7)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample proportion: </span><span class="sc">{</span>p_hat<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Training counts for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sample proportion: 0.441</code></pre>
+<pre><code>
+Training counts for is_heavy:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train_prop[<span class="st">"is_heavy"</span>].value_counts().sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>is_heavy
+0.0    137
+1.0    135
+Name: count, dtype: int64</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Training proportions for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Training proportions for is_heavy:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train_prop[<span class="st">"is_heavy"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>is_heavy
+0.0    0.503676
+1.0    0.496324
+Name: proportion, dtype: float64</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Testing counts for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Testing counts for is_heavy:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_prop[<span class="st">"is_heavy"</span>].value_counts().sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>is_heavy
+0.0    33
+1.0    37
+Name: count, dtype: int64</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Testing proportions for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Testing proportions for is_heavy:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_prop[<span class="st">"is_heavy"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>is_heavy
+0.0    0.471429
+1.0    0.528571
+Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
+<p>The variable <code>is_heavy</code> is now a binary response variable, so it is appropriate for a one-sample proportion test. A value of 1 means that the penguin has body mass greater than 4000 g, while a value of 0 means that the penguin has body mass less than or equal to 4000 g.</p>
+<p>By creating this variable in both the training and test sets, we keep the workflow consistent with the earlier sections. We use the training set to understand the data and the test set to conduct the formal hypothesis test.</p>
 </section><section id="exploratory-data-analysis-eda-2" class="level3" data-number="2.3.4"><h3 data-number="2.3.4" class="anchored" data-anchor-id="exploratory-data-analysis-eda-2">
 <span class="header-section-number">2.3.4</span> Exploratory Data Analysis (EDA)</h3>
-<p>Let’s visualize the distribution of penguin species in our training sample.</p>
+<p>Before conducting the formal one-sample proportion <code>z-test</code>, we use the training set to explore the binary variable <code>is_heavy</code>. Recall that <code>is_heavy = 1</code> means the penguin has body mass greater than 4000 g, and <code>is_heavy = 0</code> means the penguin has body mass less than or equal to 4000 g.</p>
+<p>We begin by summarizing the number and proportion of penguins in each category.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">R Code</a></li>
@@ -1557,59 +1725,60 @@ mean of x
 <div class="tab-content">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">train_set</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_bar</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"orange"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Penguin Species Count in Training Set"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"Species"</span>, y <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Count and proportion of the binary response in the training set</span></span>
+<span><span class="va">heavy_summary</span> <span class="op">&lt;-</span> <span class="va">train_prop</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    body_mass_group <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span></span>
+<span>      <span class="va">is_heavy</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>      <span class="st">"Body mass &gt; 4000 g"</span>,</span>
+<span>      <span class="st">"Body mass &lt;= 4000 g"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">body_mass_group</span>, <span class="va">is_heavy</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    proportion <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">heavy_summary</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  body_mass_group     is_heavy     n proportion
+  &lt;chr&gt;                  &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
+1 Body mass &lt;= 4000 g        0   137      0.504
+2 Body mass &gt; 4000 g         1   135      0.496</code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>train_set[<span class="st">"species"</span>].value_counts().plot(</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>kind<span class="op">=</span><span class="st">"bar"</span>, color<span class="op">=</span><span class="st">"orange"</span>, edgecolor<span class="op">=</span><span class="st">"black"</span></span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Penguin Species Count in Training Set"</span>)</span>
-<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
-<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Species"</span>)</span>
-<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count and proportion of the binary response in the training set</span></span>
+<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>heavy_summary <span class="op">=</span> (</span>
+<span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a>    train_prop[<span class="st">"is_heavy"</span>]</span>
+<span id="cb119-4"><a href="#cb119-4" aria-hidden="true" tabindex="-1"></a>    .value_counts()</span>
+<span id="cb119-5"><a href="#cb119-5" aria-hidden="true" tabindex="-1"></a>    .sort_index()</span>
+<span id="cb119-6"><a href="#cb119-6" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb119-7"><a href="#cb119-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb119-8"><a href="#cb119-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-9"><a href="#cb119-9" aria-hidden="true" tabindex="-1"></a>heavy_summary.columns <span class="op">=</span> [<span class="st">"is_heavy"</span>, <span class="st">"n"</span>]</span>
+<span id="cb119-10"><a href="#cb119-10" aria-hidden="true" tabindex="-1"></a>heavy_summary[<span class="st">"proportion"</span>] <span class="op">=</span> heavy_summary[<span class="st">"n"</span>] <span class="op">/</span> heavy_summary[<span class="st">"n"</span>].<span class="bu">sum</span>()</span>
+<span id="cb119-11"><a href="#cb119-11" aria-hidden="true" tabindex="-1"></a>heavy_summary[<span class="st">"body_mass_group"</span>] <span class="op">=</span> heavy_summary[<span class="st">"is_heavy"</span>].<span class="bu">map</span>({</span>
+<span id="cb119-12"><a href="#cb119-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: <span class="st">"Body mass &lt;= 4000 g"</span>,</span>
+<span id="cb119-13"><a href="#cb119-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>: <span class="st">"Body mass &gt; 4000 g"</span></span>
+<span id="cb119-14"><a href="#cb119-14" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb119-15"><a href="#cb119-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-16"><a href="#cb119-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(heavy_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>(array([0, 1, 2]), [Text(0, 0, 'Adelie'), Text(1, 0, 'Gentoo'), Text(2, 0, 'Chinstrap')])</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<pre><code>   is_heavy    n  proportion      body_mass_group
+0       0.0  137    0.503676  Body mass &lt;= 4000 g
+1       1.0  135    0.496324   Body mass &gt; 4000 g</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div>
-</section><section id="hypotheses" class="level3" data-number="2.3.5"><h3 data-number="2.3.5" class="anchored" data-anchor-id="hypotheses">
-<span class="header-section-number">2.3.5</span> Hypotheses</h3>
-<p>We can formally express this with the following hypotheses:</p>
-<ul>
-<li>
-<strong>Null hypothesis</strong> <span class="math inline">\(H_0\)</span>: <span class="math inline">\(p = 0.45\)</span>
-</li>
-<li>
-<strong>Alternative hypothesis</strong> <span class="math inline">\(H_1\)</span>: <span class="math inline">\(p \ne 0.45\)</span> Where: • <span class="math inline">\(p\)</span> is the true proportion of Adelie penguins in the population. We will estimate <span class="math inline">\(p\)</span> using <span class="math inline">\(\hat{p}\)</span>, the sample proportion of Adelie penguins. The test statistic is:</li>
-</ul>
-<p><span class="math display">\[z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}\]</span></p>
-<p>Where: - ( <span class="math inline">\(\hat{p}\)</span> ) is the sample proportion<br>
-- ( <span class="math inline">\(p_0\)</span> ) is the hypothesized population proportion<br>
-- ( <span class="math inline">\(n\)</span> ) is the sample size</p>
-<p>This follows a <strong>standard normal distribution</strong> (<span class="math inline">\(z\)</span>-distribution) under the null hypothesis.</p>
-</section><section id="how-to-run-the-test-in-r-and-python-2" class="level3" data-number="2.3.6"><h3 data-number="2.3.6" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python-2">
-<span class="header-section-number">2.3.6</span> How to run the test in R and Python</h3>
-<p>Now we perform the z-test for one proportion. Assuming a historical reference proportion of 0.45 for Adelie penguins:</p>
+<p>In the training set, 137 penguins have body mass less than or equal to 4000 g, while 135 penguins have body mass greater than 4000 g. This corresponds to proportions of approximately 0.504 and 0.496, respectively. Therefore, the two body-mass categories are almost evenly balanced in the training set.</p>
+<p>Since the one-sample proportion <code>z-test</code> compares an observed sample proportion to a hypothesized value, the sample proportion of penguins with <code>is_heavy = 1</code> is the main quantity of interest. In the training set, this proportion is about 0.496, which is very close to the reference value <span class="math inline">\(p_0 = 0.50\)</span> that we will use in the formal test.</p>
+<p>Next, we visualize the binary response using a bar plot. This helps us see whether the two categories are roughly balanced or whether one category is much more common than the other.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true">R Code</a></li>
@@ -1618,46 +1787,448 @@ mean of x
 <div class="tab-content">
 <div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fl">0.45</span></span>
-<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p0</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span><span class="op">)</span></span>
-<span><span class="va">z_stat</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">p_hat</span> <span class="op">-</span> <span class="va">p0</span><span class="op">)</span> <span class="op">/</span> <span class="va">se</span></span>
-<span><span class="va">p_value</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">z_stat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"z ="</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">z_stat</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">", p ="</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">p_value</span>, <span class="fl">4</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>z = -0.293 , p = 0.7699 </code></pre>
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">heavy_summary</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass_group</span>, y <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">body_mass_group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Counts by Body Mass Category in the Training Set"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Body mass category"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Count"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    plot.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">18</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>    axis.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span>,</span>
+<span>    axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
-<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference proportion</span></span>
-<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> <span class="fl">0.45</span></span>
-<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample proportion</span></span>
-<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> num_adelie <span class="op">/</span> n</span>
-<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard error under H0</span></span>
-<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a>se <span class="op">=</span> np.sqrt(p0 <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p0) <span class="op">/</span> n)</span>
-<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a><span class="co"># z-statistic</span></span>
-<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a>z_stat <span class="op">=</span> (p_hat <span class="op">-</span> p0) <span class="op">/</span> se</span>
-<span id="cb95-11"><a href="#cb95-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-tailed p-value</span></span>
-<span id="cb95-12"><a href="#cb95-12" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
-<span id="cb95-13"><a href="#cb95-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"z = </span><span class="sc">{</span>z_stat<span class="sc">:.3f}</span><span class="ss">, p = </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-6"><a href="#cb122-6" aria-hidden="true" tabindex="-1"></a>sns.barplot(</span>
+<span id="cb122-7"><a href="#cb122-7" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>heavy_summary,</span>
+<span id="cb122-8"><a href="#cb122-8" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"body_mass_group"</span>,</span>
+<span id="cb122-9"><a href="#cb122-9" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"n"</span>,</span>
+<span id="cb122-10"><a href="#cb122-10" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">"body_mass_group"</span>,</span>
+<span id="cb122-11"><a href="#cb122-11" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span><span class="st">"Set2"</span>,</span>
+<span id="cb122-12"><a href="#cb122-12" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">False</span></span>
+<span id="cb122-13"><a href="#cb122-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb122-14"><a href="#cb122-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-15"><a href="#cb122-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Counts by Body Mass Category in the Training Set"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb122-16"><a href="#cb122-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Body mass category"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb122-17"><a href="#cb122-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb122-18"><a href="#cb122-18" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">0</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>z = -0.293, p = 0.7699</code></pre>
+<pre><code>([0, 1], [Text(0, 0, 'Body mass &lt;= 4000 g'), Text(1, 0, 'Body mass &gt; 4000 g')])</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>plt.yticks(fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(array([  0.,  20.,  40.,  60.,  80., 100., 120., 140., 160.]), [Text(0, 0.0, '0'), Text(0, 20.0, '20'), Text(0, 40.0, '40'), Text(0, 60.0, '60'), Text(0, 80.0, '80'), Text(0, 100.0, '100'), Text(0, 120.0, '120'), Text(0, 140.0, '140'), Text(0, 160.0, '160')])</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section><section id="inferential-conclusions-2" class="level3" data-number="2.3.7"><h3 data-number="2.3.7" class="anchored" data-anchor-id="inferential-conclusions-2">
-<span class="header-section-number">2.3.7</span> Inferential Conclusions</h3>
-<p>A one-sample z-test for proportions was conducted to determine whether the proportion of female penguins differs significantly from 0.45. Based on the sample data, the test produced a z-statistic of z and a p-value of p.&nbsp;If we reject the null, it indicates the species composition in this region has shifted from historical records.</p>
-</section><section id="storytelling-2" class="level3" data-number="2.3.8"><h3 data-number="2.3.8" class="anchored" data-anchor-id="storytelling-2">
-<span class="header-section-number">2.3.8</span> Storytelling</h3>
-<p>Given a significance level of 0.05, if the p-value is less than 0.05, we reject the null hypothesis and conclude that the proportion of female penguins is significantly different from 0.45. Otherwise, we do not have sufficient evidence to say it differs.</p>
-<hr>
+</div>
+<p>The bar plot confirms what we saw in the summary table: the two body-mass categories are very similar in size. This is useful for the proportion test because we are not dealing with a rare outcome. Both categories are well represented in the training data.</p>
+<p>Because the binary variable was created from the quantitative variable <code>body_mass_g</code>, it is also useful to inspect the original body-mass distribution and show where the 4000 g cutoff falls.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true">R Code</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false">Python Code</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
+<div class="cell">
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">train_prop</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass_g</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_histogram</span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span>, color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="st">"skyblue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">4000</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, linewidth <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Distribution of Body Mass in the Training Set"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Body mass (g)"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Frequency"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span></span>
+<span>    plot.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">18</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>    axis.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span>,</span>
+<span>    axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-26-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a>plt.hist(</span>
+<span id="cb128-6"><a href="#cb128-6" aria-hidden="true" tabindex="-1"></a>    train_prop[<span class="st">"body_mass_g"</span>],</span>
+<span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">"black"</span></span>
+<span id="cb128-9"><a href="#cb128-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb128-10"><a href="#cb128-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-11"><a href="#cb128-11" aria-hidden="true" tabindex="-1"></a>plt.axvline(</span>
+<span id="cb128-12"><a href="#cb128-12" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="dv">4000</span>,</span>
+<span id="cb128-13"><a href="#cb128-13" aria-hidden="true" tabindex="-1"></a>    linestyle<span class="op">=</span><span class="st">"--"</span>,</span>
+<span id="cb128-14"><a href="#cb128-14" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="fl">2.5</span></span>
+<span id="cb128-15"><a href="#cb128-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb128-16"><a href="#cb128-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-17"><a href="#cb128-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Body Mass in the Training Set"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb128-18"><a href="#cb128-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Body mass (g)"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb128-19"><a href="#cb128-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb128-20"><a href="#cb128-20" aria-hidden="true" tabindex="-1"></a>plt.xticks(fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(array([2500., 3000., 3500., 4000., 4500., 5000., 5500., 6000., 6500.]), [Text(2500.0, 0, '2500'), Text(3000.0, 0, '3000'), Text(3500.0, 0, '3500'), Text(4000.0, 0, '4000'), Text(4500.0, 0, '4500'), Text(5000.0, 0, '5000'), Text(5500.0, 0, '5500'), Text(6000.0, 0, '6000'), Text(6500.0, 0, '6500')])</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>plt.yticks(fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(array([ 0.,  5., 10., 15., 20., 25., 30., 35.]), [Text(0, 0.0, '0'), Text(0, 5.0, '5'), Text(0, 10.0, '10'), Text(0, 15.0, '15'), Text(0, 20.0, '20'), Text(0, 25.0, '25'), Text(0, 30.0, '30'), Text(0, 35.0, '35')])</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The histogram shows that the 4000 g cutoff falls near the middle of the body-mass distribution. Penguins to the right of the dashed line are coded as <code>is_heavy = 1</code>, while penguins to the left of the dashed line are coded as <code>is_heavy = 0</code>. This explains why the two categories are close to balanced: the cutoff splits the training data into two groups of similar size.</p>
+<p>Overall, the exploratory analysis confirms that <code>is_heavy</code> is a binary response variable and that both categories are well represented. The formal one-sample proportion <code>z-test</code> will be conducted using the test set, where we will compare the observed proportion of penguins with body mass greater than 4000 g to the hypothesized value <span class="math inline">\(p_0 = 0.50\)</span>.</p>
+</section><section id="testing-settings-2" class="level3" data-number="2.3.5"><h3 data-number="2.3.5" class="anchored" data-anchor-id="testing-settings-2">
+<span class="header-section-number">2.3.5</span> Testing Settings</h3>
+<p>Before writing the hypotheses, we summarize the testing setup for the one-sample proportion <code>z-test</code>. The response variable is <code>is_heavy</code>, which is a binary variable created from <code>body_mass_g</code>.</p>
+<p>Recall that</p>
+<p><span class="math display">\[
+\texttt{is\_heavy} =
+\begin{cases}
+1, &amp; \text{if body mass is greater than 4000 g},\\
+0, &amp; \text{otherwise}.
+\end{cases}
+\]</span></p>
+<p>The parameter of interest is the population proportion of penguins with body mass greater than 4000 g, denoted by <span class="math inline">\(p\)</span>. Note that this parameter is unknown and we want to make an inference about it using a random sample.</p>
+<p>In this example, we compare this population proportion to the reference value</p>
+<p><span class="math display">\[
+p_0 = 0.50.
+\]</span></p>
+<p>This means we are testing whether the proportion of penguins with body mass greater than 4000 g is different from 50%.</p>
+<p>The formal test will be conducted using the test set. This keeps the exploratory analysis and the hypothesis test separate: the training set was used to understand the data, while the test set is used to calculate the sample proportion, test statistic, and p-value.</p>
+<p>For this test, we use:</p>
+<ul>
+<li>
+<strong>Response variable:</strong> <code>is_heavy</code>
+</li>
+<li>
+<strong>Definition of success:</strong> <code>body_mass_g &gt; 4000</code>
+</li>
+<li>
+<strong>Parameter of interest:</strong> <span class="math inline">\(p\)</span>, the population proportion of penguins with body mass greater than 4000 g</li>
+<li>
+<strong>Reference value:</strong> <span class="math inline">\(p_0 = 0.50\)</span>
+</li>
+<li>
+<strong>Test:</strong> one-sample proportion <code>z-test</code>
+</li>
+<li>
+<strong>Sample used for inference:</strong> <code>test_prop</code>
+</li>
+<li>
+<strong>Significance level:</strong> <span class="math inline">\(\alpha = 0.05\)</span>
+</li>
+</ul>
+<p>Because this is a one-sample proportion <code>z-test</code>, we assume that the observations are independent and that the normal approximation to the sampling distribution of <span class="math inline">\(\hat{p}\)</span> is reasonable.</p>
+<div class="Heads-up">
+<div class="Heads-up-header">
+<p>Quick review!</p>
+</div>
+<div class="Heads-up-container">
+<p>For the formal test, we will use the test set. In the test set, 37 out of 70 penguins have body mass greater than 4000 g, giving a sample proportion of about 0.529.</p>
+<p>Under the null hypothesis <span class="math inline">\(p_0 = 0.50\)</span>, the expected number of observations in each category is</p>
+<p><span class="math display">\[
+n p_0 = 70(0.50) = 35
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+n(1 - p_0) = 70(0.50) = 35.
+\]</span></p>
+<p>Both expected counts are greater than 10, so the normal approximation condition for the one-sample proportion <code>z-test</code> is satisfied.</p>
+</div>
+</div>
+</section><section id="hypothesis-definitions-2" class="level3" data-number="2.3.6"><h3 data-number="2.3.6" class="anchored" data-anchor-id="hypothesis-definitions-2">
+<span class="header-section-number">2.3.6</span> Hypothesis Definitions</h3>
+<p>We now translate the research question into formal statistical hypotheses. Recall that <span class="math inline">\(p\)</span> denotes the population proportion of penguins with body mass greater than 4000 g, and the reference value is</p>
+<p><span class="math display">\[
+p_0 = 0.50.
+\]</span></p>
+<p>Since the main statistical question asks whether the population proportion is <strong>different from</strong> 50%, we use a two-sided test.</p>
+<p>The hypotheses are:</p>
+<p><span class="math display">\[
+H_0: p = 0.50 \quad \textit{vs} \quad H_A: p \neq 0.50
+\]</span></p>
+<p>The null hypothesis states that 50% of penguins in the population have body mass greater than 4000 g. Under this hypothesis, any difference between the observed sample proportion <span class="math inline">\(\hat{p}\)</span> and 0.50 is attributed to random sampling variation.</p>
+<p>The alternative hypothesis states that the population proportion of penguins with body mass greater than 4000 g is not 0.50. This includes both possibilities: the population proportion could be less than 0.50 or greater than 0.50.</p>
+<p>In this example, a “success” means that a penguin has body mass greater than 4000 g. Therefore, the sample proportion <span class="math inline">\(\hat{p}\)</span> is calculated as</p>
+<p><span class="math display">\[
+\hat{p} = \frac{\text{number of penguins with body mass greater than 4000 g}}{\text{total number of penguins in the sample}}.
+\]</span></p>
+<p>For the formal test, we will use the test set and compare the observed sample proportion to the hypothesized value <span class="math inline">\(p_0 = 0.50\)</span>.</p>
+</section><section id="test-flavour-and-components-2" class="level3" data-number="2.3.7"><h3 data-number="2.3.7" class="anchored" data-anchor-id="test-flavour-and-components-2">
+<span class="header-section-number">2.3.7</span> Test Flavour and Components</h3>
+<p>The one-sample proportion <code>z-test</code> compares the sample proportion <span class="math inline">\(\hat{p}\)</span> to the hypothesized population proportion <span class="math inline">\(p_0\)</span>. In this example, the hypothesized value is</p>
+<p><span class="math display">\[
+p_0 = 0.50.
+\]</span></p>
+<p>Let <span class="math inline">\(x\)</span> denote the number of penguins in the test set with body mass greater than 4000 g, and let <span class="math inline">\(n\)</span> denote the total number of penguins in the test set. The sample proportion is</p>
+<p><span class="math display">\[
+\hat{p} = \frac{x}{n}.
+\]</span></p>
+<p>For this example, a success is defined as</p>
+<p><span class="math display">\[
+\texttt{body\_mass\_g} &gt; 4000.
+\]</span></p>
+<p>The test statistic is</p>
+<p><span class="math display">\[
+z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}.
+\]</span></p>
+<p>In this formula:</p>
+<ul>
+<li>
+<span class="math inline">\(\hat{p}\)</span> is the sample proportion of penguins with body mass greater than 4000 g.</li>
+<li>
+<span class="math inline">\(p_0\)</span> is the hypothesized population proportion, which is 0.50 in this example.</li>
+<li>
+<span class="math inline">\(n\)</span> is the sample size.</li>
+<li>
+<span class="math inline">\(\sqrt{p_0(1 - p_0)/n}\)</span> is the standard error of the sample proportion under the null hypothesis.</li>
+</ul>
+<p>The numerator, <span class="math inline">\(\hat{p} - p_0\)</span>, measures how far the observed sample proportion is from the hypothesized population proportion. The denominator, <span class="math inline">\(\sqrt{p_0(1 - p_0)/n}\)</span>, scales this difference by the standard error expected under the null hypothesis. Therefore, the test statistic measures how many standard errors the observed sample proportion is away from the hypothesized value.</p>
+<p>Under the null hypothesis,</p>
+<p><span class="math display">\[
+H_0: p = 0.50,
+\]</span></p>
+<p>and when the normal approximation is reasonable, the test statistic follows a standard normal distribution:</p>
+<p><span class="math display">\[
+Z \sim N(0, 1).
+\]</span></p>
+<p>Since our alternative hypothesis is two-sided,</p>
+<p><span class="math display">\[
+H_A: p \neq 0.50,
+\]</span></p>
+<p>the p-value measures the probability of observing a sample proportion at least as far from 0.50 as the one obtained from the data, in either direction, assuming that the null hypothesis is true.</p>
+<p>At the significance level <span class="math inline">\(\alpha = 0.05\)</span>, we reject the null hypothesis if the p-value is less than 0.05. Otherwise, we do not reject the null hypothesis.</p>
+</section><section id="inferential-conclusions-2" class="level3" data-number="2.3.8"><h3 data-number="2.3.8" class="anchored" data-anchor-id="inferential-conclusions-2">
+<span class="header-section-number">2.3.8</span> Inferential Conclusions</h3>
+<p>The goal of the one-sample proportion <code>z-test</code> is to decide whether the observed sample proportion is far enough from the hypothesized value to provide evidence against the null hypothesis.</p>
+<p>In this example, the null and alternative hypotheses are:</p>
+<p><span class="math display">\[
+H_0: p = 0.50 \quad \textit{vs} \quad H_A: p \neq 0.50
+\]</span></p>
+<p>where <span class="math inline">\(p\)</span> denotes the population proportion of penguins with body mass greater than 4000 g.</p>
+<p>After computing the test statistic and p-value, we compare the p-value to the significance level <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient evidence that the population proportion of penguins with body mass greater than 4000 g is different from 50%.</p>
+<p>If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient evidence that the population proportion of penguins with body mass greater than 4000 g is different from 50%.</p>
+<p>As before, failing to reject the null hypothesis does not prove that the population proportion is exactly 0.50. It only means that, based on the available sample, we do not have enough evidence to conclude that it differs from 0.50.</p>
+</section><section id="how-to-run-the-test-in-r-and-python-2" class="level3" data-number="2.3.9"><h3 data-number="2.3.9" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python-2">
+<span class="header-section-number">2.3.9</span> How to run the test in R and Python?</h3>
+<p>We now conduct the formal one-sample proportion <code>z-test</code> using the test set. Recall that the training set was used for exploratory data analysis, while the test set is reserved for the formal hypothesis test. The test compares the observed proportion of penguins with body mass greater than 4000 g to the hypothesized value <span class="math inline">\(p_0 = 0.50\)</span>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true">R Code</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false">Python Code</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
+<div class="cell">
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Hypothesized population proportion</span></span>
+<span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fl">0.50</span></span>
+<span></span>
+<span><span class="co"># Number of successes: penguins with body mass greater than 4000 g</span></span>
+<span><span class="va">x_success</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">test_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Sample size</span></span>
+<span><span class="va">n_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">test_prop</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Sample proportion</span></span>
+<span><span class="va">p_hat</span> <span class="op">&lt;-</span> <span class="va">x_success</span> <span class="op">/</span> <span class="va">n_test</span></span>
+<span></span>
+<span><span class="co"># One-sample proportion z-test</span></span>
+<span><span class="va">prop_test_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prop.test.html">prop.test</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">x_success</span>,</span>
+<span>  n <span class="op">=</span> <span class="va">n_test</span>,</span>
+<span>  p <span class="op">=</span> <span class="va">p0</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="st">"two.sided"</span>,</span>
+<span>  correct <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># z-statistic for the one-sample proportion test</span></span>
+<span><span class="va">z_stat</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">p_hat</span> <span class="op">-</span> <span class="va">p0</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p0</span><span class="op">)</span> <span class="op">/</span> <span class="va">n_test</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Display results</span></span>
+<span><span class="va">prop_test_result</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    1-sample proportions test without continuity correction
+
+data:  x_success out of n_test, null probability p0
+X-squared = 0.22857, df = 1, p-value = 0.6326
+alternative hypothesis: true p is not equal to 0.5
+95 percent confidence interval:
+ 0.4132189 0.6409512
+sample estimates:
+        p 
+0.5285714 </code></pre>
+</div>
+<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nSample proportion:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">p_hat</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Sample proportion: 0.529 </code></pre>
+</div>
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"z-statistic:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">z_stat</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>z-statistic: 0.478 </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.proportion <span class="im">import</span> proportions_ztest, proportion_confint</span>
+<span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-4"><a href="#cb139-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the test set created in the R chunk</span></span>
+<span id="cb139-5"><a href="#cb139-5" aria-hidden="true" tabindex="-1"></a>test_prop <span class="op">=</span> r.test_prop.copy()</span>
+<span id="cb139-6"><a href="#cb139-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-7"><a href="#cb139-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Hypothesized population proportion</span></span>
+<span id="cb139-8"><a href="#cb139-8" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> <span class="fl">0.50</span></span>
+<span id="cb139-9"><a href="#cb139-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-10"><a href="#cb139-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of successes: penguins with body mass greater than 4000 g</span></span>
+<span id="cb139-11"><a href="#cb139-11" aria-hidden="true" tabindex="-1"></a>x_success <span class="op">=</span> <span class="bu">int</span>(test_prop[<span class="st">"is_heavy"</span>].<span class="bu">sum</span>())</span>
+<span id="cb139-12"><a href="#cb139-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-13"><a href="#cb139-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size</span></span>
+<span id="cb139-14"><a href="#cb139-14" aria-hidden="true" tabindex="-1"></a>n_test <span class="op">=</span> <span class="bu">int</span>(test_prop.shape[<span class="dv">0</span>])</span>
+<span id="cb139-15"><a href="#cb139-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-16"><a href="#cb139-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample proportion</span></span>
+<span id="cb139-17"><a href="#cb139-17" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> x_success <span class="op">/</span> n_test</span>
+<span id="cb139-18"><a href="#cb139-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-19"><a href="#cb139-19" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sample proportion z-test</span></span>
+<span id="cb139-20"><a href="#cb139-20" aria-hidden="true" tabindex="-1"></a>z_stat, p_value <span class="op">=</span> proportions_ztest(</span>
+<span id="cb139-21"><a href="#cb139-21" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span>x_success,</span>
+<span id="cb139-22"><a href="#cb139-22" aria-hidden="true" tabindex="-1"></a>    nobs<span class="op">=</span>n_test,</span>
+<span id="cb139-23"><a href="#cb139-23" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span>p0,</span>
+<span id="cb139-24"><a href="#cb139-24" aria-hidden="true" tabindex="-1"></a>    alternative<span class="op">=</span><span class="st">"two-sided"</span>,</span>
+<span id="cb139-25"><a href="#cb139-25" aria-hidden="true" tabindex="-1"></a>    prop_var<span class="op">=</span>p0</span>
+<span id="cb139-26"><a href="#cb139-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb139-27"><a href="#cb139-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-28"><a href="#cb139-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-29"><a href="#cb139-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% confidence interval for the population proportion</span></span>
+<span id="cb139-30"><a href="#cb139-30" aria-hidden="true" tabindex="-1"></a>ci_lower, ci_upper <span class="op">=</span> proportion_confint(</span>
+<span id="cb139-31"><a href="#cb139-31" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span>x_success,</span>
+<span id="cb139-32"><a href="#cb139-32" aria-hidden="true" tabindex="-1"></a>    nobs<span class="op">=</span>n_test,</span>
+<span id="cb139-33"><a href="#cb139-33" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb139-34"><a href="#cb139-34" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">"normal"</span></span>
+<span id="cb139-35"><a href="#cb139-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb139-36"><a href="#cb139-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-37"><a href="#cb139-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of successes: </span><span class="sc">{</span>x_success<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of successes: 37</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample size: </span><span class="sc">{</span>n_test<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sample size: 70</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample proportion: </span><span class="sc">{</span>p_hat<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sample proportion: 0.529</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"z-statistic: </span><span class="sc">{</span>z_stat<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>z-statistic: 0.478</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>p-value: 0.6326</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"95% confidence interval: (</span><span class="sc">{</span>ci_lower<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>ci_upper<span class="sc">:.3f}</span><span class="ss">)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>95% confidence interval: (0.412, 0.646)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Details about <code>R</code> code and output</strong></p>
+<p>In <code>R</code>, we use the <code><a href="https://rdrr.io/r/stats/prop.test.html">prop.test()</a></code> function. This function can be used to test hypotheses about one or more population proportions. In this section, we use it for a one-sample proportion test because we are comparing one observed sample proportion to a fixed hypothesized value.</p>
+<p>The relevant arguments are as follows:</p>
+<ul>
+<li><p><code>x</code> is the number of successes. In this example, a success means that a penguin has body mass greater than 4000 g.</p></li>
+<li><p><code>n</code> is the total sample size. In this example, this is the number of penguins in the test set.</p></li>
+<li><p><code>p</code> is the hypothesized population proportion under the null hypothesis. We use <code>p = 0.50</code>.</p></li>
+<li><p><code>alternative</code> specifies the direction of the alternative hypothesis. We use <code>alternative = "two.sided"</code> because our alternative hypothesis is <span class="math inline">\(H_A: p \neq 0.50\)</span>.</p></li>
+<li><p><code>correct = FALSE</code> turns off the continuity correction, giving the large-sample version of the proportion test that aligns with the usual one-sample proportion <code>z-test</code>.</p></li>
+</ul>
+<p>The output from <code><a href="https://rdrr.io/r/stats/prop.test.html">prop.test()</a></code> includes the test statistic, p-value, alternative hypothesis, confidence interval, and sample proportion. Note that <code><a href="https://rdrr.io/r/stats/prop.test.html">prop.test()</a></code> reports the test statistic as a chi-square statistic. For a one-sample two-sided proportion test without continuity correction, this chi-square statistic is equal to the square of the corresponding z-statistic.</p>
+<p>That is,</p>
+<p><span class="math display">\[
+X^2 = z^2.
+\]</span></p>
+<p>For this reason, we also compute and print the z-statistic directly in the code.</p>
+<p><strong>Details about <code>Python</code> code and output</strong></p>
+<p>In <code>Python</code>, we use the <code>proportions_ztest()</code> function from <code>statsmodels.stats.proportion</code>. This function performs a z-test for one or more population proportions.</p>
+<p>The relevant inputs are as follows:</p>
+<ul>
+<li><p><code>count</code> is the number of successes. In this example, it is the number of penguins in the test set with body mass greater than 4000 g.</p></li>
+<li><p><code>nobs</code> is the total sample size.</p></li>
+<li><p><code>value</code> is the hypothesized population proportion under the null hypothesis. We use <code>value = 0.50</code>.</p></li>
+<li><p><code>alternative</code> specifies the direction of the alternative hypothesis. We use <code>alternative = "two-sided"</code> because our alternative hypothesis is <span class="math inline">\(H_A: p \neq 0.50\)</span>.</p></li>
+</ul>
+<p>The function returns the z-statistic and p-value. We also use <code>proportion_confint()</code> to compute a 95% confidence interval for the population proportion. The output gives the number of successes, sample size, sample proportion, z-statistic, p-value, and confidence interval.</p>
+</section><section id="storytelling-2" class="level3" data-number="2.3.10"><h3 data-number="2.3.10" class="anchored" data-anchor-id="storytelling-2">
+<span class="header-section-number">2.3.10</span> Storytelling</h3>
+<p>In the test set, 37 out of 70 penguins have body mass greater than 4000 g. This gives a sample proportion of</p>
+<p><span class="math display">\[
+\hat{p} = 0.5286.
+\]</span></p>
+<p>This means that about 52.9% of penguins in the test set have body mass greater than 4000 g. The hypothesized population proportion is</p>
+<p><span class="math display">\[
+p_0 = 0.50,
+\]</span></p>
+<p>so the observed sample proportion is slightly above the reference value of 50%.</p>
+<p>The one-sample proportion test gives a p-value of 0.6326. Since this p-value is greater than the significance level <span class="math inline">\(\alpha = 0.05\)</span>, we do not reject the null hypothesis.</p>
+<p>Therefore, based on the test set, we do not have sufficient evidence to conclude that the population proportion of penguins with body mass greater than 4000 g is different from 50%.</p>
+<p>The 95% confidence interval for the population proportion is</p>
+<p><span class="math display">\[
+(0.4132,\ 0.6410).
+\]</span></p>
+<p>This interval includes 0.50, which supports the same conclusion as the hypothesis test. A population proportion of 50% is still a plausible value based on these data.</p>
+<p>In plain language, although the test-set proportion is slightly above 50%, the difference is small relative to the sampling variability. Based on this sample, we do not have strong evidence that the population proportion of penguins with body mass greater than 4000 g differs from 50%.</p>
 
 
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
