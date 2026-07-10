@@ -528,9 +528,7 @@ $$
 \mu_0 = 200.
 $$
 
-Since the research question asks whether the population mean flipper length is **different from** 200 mm, we use a two-sided test.
-
-The hypotheses are:
+Since the research question asks whether the population mean flipper length is **different from** 200 mm, we use a two-sided test. The hypotheses are:
 
 $$H_0: \mu = 200 \quad vs \quad H_a: \mu \neq 200$$
 
@@ -538,7 +536,7 @@ The null hypothesis states that the population mean flipper length is 200 mm. Un
 
 The alternative hypothesis states that the population mean flipper length is not 200 mm. This includes both possibilities: the population mean could be less than 200 mm or greater than 200 mm.
 
-In words, we are testing whether the test-set data provide sufficient evidence that the average flipper length in the broader penguin population represented by these data differs from 200 mm.
+In plain words, we are testing whether the test-set data provide sufficient evidence that the average flipper length in the broader penguin population represented by these data differs from 200 mm.
 
 
 ### Test Flavour and Components

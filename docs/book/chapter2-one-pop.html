@@ -1056,12 +1056,11 @@ Figure&nbsp;2.7: Boxplot of flipper length by species in the training set using 
 <p><span class="math display">\[
 \mu_0 = 200.
 \]</span></p>
-<p>Since the research question asks whether the population mean flipper length is <strong>different from</strong> 200 mm, we use a two-sided test.</p>
-<p>The hypotheses are:</p>
+<p>Since the research question asks whether the population mean flipper length is <strong>different from</strong> 200 mm, we use a two-sided test. The hypotheses are:</p>
 <p><span class="math display">\[H_0: \mu = 200 \quad vs \quad H_a: \mu \neq 200\]</span></p>
 <p>The null hypothesis states that the population mean flipper length is 200 mm. Under this hypothesis, any difference between the sample mean and 200 mm is attributed to random sampling variation.</p>
 <p>The alternative hypothesis states that the population mean flipper length is not 200 mm. This includes both possibilities: the population mean could be less than 200 mm or greater than 200 mm.</p>
-<p>In words, we are testing whether the test-set data provide sufficient evidence that the average flipper length in the broader penguin population represented by these data differs from 200 mm.</p>
+<p>In plain words, we are testing whether the test-set data provide sufficient evidence that the average flipper length in the broader penguin population represented by these data differs from 200 mm.</p>
 </section><section id="test-flavour-and-components" class="level3" data-number="2.1.7"><h3 data-number="2.1.7" class="anchored" data-anchor-id="test-flavour-and-components">
 <span class="header-section-number">2.1.7</span> Test Flavour and Components</h3>
 <p>The one-sample <code>t-test</code> compares the sample mean to the hypothesized population mean. In this example, the hypothesized value is <span class="math inline">\(\mu_0 = 200\)</span> mm. Let <span class="math inline">\(\bar{x}\)</span> denote the sample mean flipper length in the test set, and let <span class="math inline">\(s\)</span> denote the sample standard deviation of flipper length in the test set. If the test set contains <span class="math inline">\(n\)</span> penguins, the test statistic is</p>
