@@ -645,7 +645,6 @@ t_test_result
 ### Python Code
 
 ```{python}
-import numpy as np
 import scipy.stats as stats
 
 # Extract the response variable from the R-created test set
@@ -655,38 +654,19 @@ flipper_test = test_set["flipper_length_mm"]
 mu_0 = 200
 
 # One-sample t-test
-t_stat, p_value = stats.ttest_1samp(
+t_result = stats.ttest_1samp(
     flipper_test,
     popmean=mu_0,
     alternative="two-sided"
 )
 
-# Sample size and degrees of freedom
-n = len(flipper_test)
-df = n - 1
+# 95% confidence interval
+ci = t_result.confidence_interval(confidence_level=0.95)
 
-# Sample mean and sample standard deviation
-sample_mean = flipper_test.mean()
-sample_sd = flipper_test.std(ddof=1)
-
-# Standard error
-standard_error = sample_sd / np.sqrt(n)
-
-# 95% confidence interval for the population mean
-confidence_level = 0.95
-alpha = 1 - confidence_level
-t_critical = stats.t.ppf(1 - alpha / 2, df)
-
-ci_lower = sample_mean - t_critical * standard_error
-ci_upper = sample_mean + t_critical * standard_error
-
-print(f"Sample mean: {sample_mean:.3f}")
-print(f"Sample standard deviation: {sample_sd:.3f}")
-print(f"Sample size: {n}")
-print(f"Degrees of freedom: {df}")
-print(f"t-statistic: {t_stat:.3f}")
-print(f"p-value: {p_value:.4f}")
-print(f"95% confidence interval: ({ci_lower:.3f}, {ci_upper:.3f})")
+print(f"t-statistic: {t_result.statistic:.3f}")
+print(f"p-value: {t_result.pvalue:.4f}")
+print(f"Degrees of freedom: {t_result.df}")
+print(f"95% confidence interval: ({ci.low:.3f}, {ci.high:.3f})")
 ```
 
 :::
@@ -697,7 +677,7 @@ In order to run this test in `R`, we use the `t.test()` function. This function 
 
 The relevant arguments are as follows:
 
--   `x` is the numeric vector of observed data values. In this example, `x` is `test_set$flipper_length_mm`.
+-   `x` is the numeric vector of observed data values. In this example, `x` is `test_set$flipper_length_mm`. Note in `t.test()` documentation that there is a `y` argument set to `NULL` by default. We can leave it as it is and do not need to worry about it now. We will come back to this function argument later in @sec-t-test-ind-samples.
 
 -   `mu` is the hypothesized population mean under the null hypothesis. In this example, we set `mu = 200` because we are testing whether the population mean flipper length differs from 200 mm.
 

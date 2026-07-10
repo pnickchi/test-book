@@ -1159,66 +1159,37 @@ mean of x
 </div>
 <div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the response variable from the R-created test set</span></span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>flipper_test <span class="op">=</span> test_set[<span class="st">"flipper_length_mm"</span>]</span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Hypothesized population mean</span></span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>mu_0 <span class="op">=</span> <span class="dv">200</span></span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sample t-test</span></span>
-<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>t_stat, p_value <span class="op">=</span> stats.ttest_1samp(</span>
-<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>    flipper_test,</span>
-<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>    popmean<span class="op">=</span>mu_0,</span>
-<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>    alternative<span class="op">=</span><span class="st">"two-sided"</span></span>
-<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size and degrees of freedom</span></span>
-<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(flipper_test)</span>
-<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> n <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb56-20"><a href="#cb56-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-21"><a href="#cb56-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample mean and sample standard deviation</span></span>
-<span id="cb56-22"><a href="#cb56-22" aria-hidden="true" tabindex="-1"></a>sample_mean <span class="op">=</span> flipper_test.mean()</span>
-<span id="cb56-23"><a href="#cb56-23" aria-hidden="true" tabindex="-1"></a>sample_sd <span class="op">=</span> flipper_test.std(ddof<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb56-24"><a href="#cb56-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-25"><a href="#cb56-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard error</span></span>
-<span id="cb56-26"><a href="#cb56-26" aria-hidden="true" tabindex="-1"></a>standard_error <span class="op">=</span> sample_sd <span class="op">/</span> np.sqrt(n)</span>
-<span id="cb56-27"><a href="#cb56-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-28"><a href="#cb56-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% confidence interval for the population mean</span></span>
-<span id="cb56-29"><a href="#cb56-29" aria-hidden="true" tabindex="-1"></a>confidence_level <span class="op">=</span> <span class="fl">0.95</span></span>
-<span id="cb56-30"><a href="#cb56-30" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> confidence_level</span>
-<span id="cb56-31"><a href="#cb56-31" aria-hidden="true" tabindex="-1"></a>t_critical <span class="op">=</span> stats.t.ppf(<span class="dv">1</span> <span class="op">-</span> alpha <span class="op">/</span> <span class="dv">2</span>, df)</span>
-<span id="cb56-32"><a href="#cb56-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-33"><a href="#cb56-33" aria-hidden="true" tabindex="-1"></a>ci_lower <span class="op">=</span> sample_mean <span class="op">-</span> t_critical <span class="op">*</span> standard_error</span>
-<span id="cb56-34"><a href="#cb56-34" aria-hidden="true" tabindex="-1"></a>ci_upper <span class="op">=</span> sample_mean <span class="op">+</span> t_critical <span class="op">*</span> standard_error</span>
-<span id="cb56-35"><a href="#cb56-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-36"><a href="#cb56-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample mean: </span><span class="sc">{</span>sample_mean<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Sample mean: 200.300</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample standard deviation: </span><span class="sc">{</span>sample_sd<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Sample standard deviation: 14.333</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample size: </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Sample size: 70</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Degrees of freedom: </span><span class="sc">{</span>df<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Degrees of freedom: 69</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"t-statistic: </span><span class="sc">{</span>t_stat<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the response variable from the R-created test set</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>flipper_test <span class="op">=</span> test_set[<span class="st">"flipper_length_mm"</span>]</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Hypothesized population mean</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>mu_0 <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sample t-test</span></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>t_result <span class="op">=</span> stats.ttest_1samp(</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>    flipper_test,</span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>    popmean<span class="op">=</span>mu_0,</span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>    alternative<span class="op">=</span><span class="st">"two-sided"</span></span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% confidence interval</span></span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>ci <span class="op">=</span> t_result.confidence_interval(confidence_level<span class="op">=</span><span class="fl">0.95</span>)</span>
+<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"t-statistic: </span><span class="sc">{</span>t_result<span class="sc">.</span>statistic<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>t-statistic: 0.175</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>t_result<span class="sc">.</span>pvalue<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>p-value: 0.8615</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"95% confidence interval: (</span><span class="sc">{</span>ci_lower<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>ci_upper<span class="sc">:.3f}</span><span class="ss">)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Degrees of freedom: </span><span class="sc">{</span>t_result<span class="sc">.</span>df<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Degrees of freedom: 69</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"95% confidence interval: (</span><span class="sc">{</span>ci<span class="sc">.</span>low<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>ci<span class="sc">.</span>high<span class="sc">:.3f}</span><span class="ss">)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>95% confidence interval: (196.882, 203.718)</code></pre>
 </div>
@@ -1230,7 +1201,7 @@ mean of x
 <p>In order to run this test in <code>R</code>, we use the <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> function. This function can be used to perform both one-sample and two-sample <code>t-tests</code>. In this section, we use it for a one-sample test because we are comparing one sample mean to a fixed hypothesized value.</p>
 <p>The relevant arguments are as follows:</p>
 <ul>
-<li><p><code>x</code> is the numeric vector of observed data values. In this example, <code>x</code> is <code>test_set$flipper_length_mm</code>.</p></li>
+<li><p><code>x</code> is the numeric vector of observed data values. In this example, <code>x</code> is <code>test_set$flipper_length_mm</code>. Note in <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> documentation that there is a <code>y</code> argument set to <code>NULL</code> by default. We can leave it as it is and do not need to worry about it now. We will come back to this function argument later in <a href="chapter3-two-pop.html#sec-t-test-ind-samples" class="quarto-xref"><span>Section 3.1</span></a>.</p></li>
 <li><p><code>mu</code> is the hypothesized population mean under the null hypothesis. In this example, we set <code>mu = 200</code> because we are testing whether the population mean flipper length differs from 200 mm.</p></li>
 <li><p><code>alternative</code> specifies the direction of the alternative hypothesis. We use <code>alternative = "two.sided"</code> because our alternative hypothesis is <span class="math inline">\(H_A: \mu \neq 200\)</span>.</p></li>
 <li><p><code>conf.level</code> specifies the confidence level for the confidence interval. We use <code>conf.level = 0.95</code>, which gives a 95% confidence interval for the population mean.</p></li>
@@ -1328,7 +1299,7 @@ x_1, x_2, \dots, x_n,
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Known population standard deviation assumed from external information</span></span>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Known population standard deviation assumed from external information</span></span>
 <span><span class="va">sigma_known</span> <span class="op">&lt;-</span> <span class="fl">14</span></span>
 <span></span>
 <span><span class="co"># Hypothesized population mean</span></span>
@@ -1339,11 +1310,11 @@ x_1, x_2, \dots, x_n,
 <div class="cell-output cell-output-stdout">
 <pre><code>Testing shape: 70 6 </code></pre>
 </div>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Known population standard deviation:"</span>, <span class="va">sigma_known</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Known population standard deviation:"</span>, <span class="va">sigma_known</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Known population standard deviation: 14 </code></pre>
 </div>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Hypothesized population mean:"</span>, <span class="va">mu_0</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Hypothesized population mean:"</span>, <span class="va">mu_0</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hypothesized population mean: 200 </code></pre>
 </div>
@@ -1351,23 +1322,23 @@ x_1, x_2, \dots, x_n,
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the test set created in the R chunk</span></span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> r.test_set.copy()</span>
-<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the same known population standard deviation and hypothesized mean</span></span>
-<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>sigma_known <span class="op">=</span> <span class="bu">float</span>(r.sigma_known)</span>
-<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>mu_0 <span class="op">=</span> <span class="bu">float</span>(r.mu_0)</span>
-<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Sanity check for the test set used in this section</span></span>
-<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing shape:"</span>, test_set.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the test set created in the R chunk</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> r.test_set.copy()</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the same known population standard deviation and hypothesized mean</span></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>sigma_known <span class="op">=</span> <span class="bu">float</span>(r.sigma_known)</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>mu_0 <span class="op">=</span> <span class="bu">float</span>(r.mu_0)</span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Sanity check for the test set used in this section</span></span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing shape:"</span>, test_set.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Testing shape: (70, 6)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Known population standard deviation:"</span>, sigma_known)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Known population standard deviation:"</span>, sigma_known)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Known population standard deviation: 14.0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hypothesized population mean:"</span>, mu_0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hypothesized population mean:"</span>, mu_0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hypothesized population mean: 200.0</code></pre>
 </div>
@@ -1504,7 +1475,7 @@ Z \sim N(0, 1).
 <div class="tab-content">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Run one-sample z-test using the BSDA package</span></span>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Run one-sample z-test using the BSDA package</span></span>
 <span><span class="va">z_test_result</span> <span class="op">&lt;-</span> <span class="fu">BSDA</span><span class="fu">::</span><span class="fu"><a href="https://alanarnholt.github.io/BSDA/reference/z.test.html">z.test</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">test_set</span><span class="op">$</span><span class="va">flipper_length_mm</span>,</span>
 <span>  mu <span class="op">=</span> <span class="fl">200</span>,</span>
@@ -1531,78 +1502,78 @@ mean of x
 </div>
 <div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the test set created in the R chunk</span></span>
-<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> r.test_set.copy()</span>
-<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the response variable from the test set</span></span>
-<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a>flipper_test <span class="op">=</span> test_set[<span class="st">"flipper_length_mm"</span>]</span>
-<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-11"><a href="#cb84-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a helper function for a one-sample z-test with known population sd</span></span>
-<span id="cb84-12"><a href="#cb84-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> z_test_mean(x, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="va">None</span>, alternative<span class="op">=</span><span class="st">"two-sided"</span>, conf_level<span class="op">=</span><span class="fl">0.95</span>):</span>
-<span id="cb84-13"><a href="#cb84-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb84-14"><a href="#cb84-14" aria-hidden="true" tabindex="-1"></a><span class="co">    One-sample z-test for a population mean when the population standard</span></span>
-<span id="cb84-15"><a href="#cb84-15" aria-hidden="true" tabindex="-1"></a><span class="co">    deviation is known.</span></span>
-<span id="cb84-16"><a href="#cb84-16" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb84-17"><a href="#cb84-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-18"><a href="#cb84-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sigma <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb84-19"><a href="#cb84-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"sigma must be provided for a one-sample z-test."</span>)</span>
-<span id="cb84-20"><a href="#cb84-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-21"><a href="#cb84-21" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.asarray(x, dtype<span class="op">=</span><span class="bu">float</span>)</span>
-<span id="cb84-22"><a href="#cb84-22" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> x[<span class="op">~</span>np.isnan(x)]</span>
-<span id="cb84-23"><a href="#cb84-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-24"><a href="#cb84-24" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
-<span id="cb84-25"><a href="#cb84-25" aria-hidden="true" tabindex="-1"></a>    sample_mean <span class="op">=</span> np.mean(x)</span>
-<span id="cb84-26"><a href="#cb84-26" aria-hidden="true" tabindex="-1"></a>    standard_error <span class="op">=</span> sigma <span class="op">/</span> np.sqrt(n)</span>
-<span id="cb84-27"><a href="#cb84-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-28"><a href="#cb84-28" aria-hidden="true" tabindex="-1"></a>    z_stat <span class="op">=</span> (sample_mean <span class="op">-</span> mu) <span class="op">/</span> standard_error</span>
-<span id="cb84-29"><a href="#cb84-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-30"><a href="#cb84-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> alternative <span class="op">==</span> <span class="st">"two-sided"</span>:</span>
-<span id="cb84-31"><a href="#cb84-31" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
-<span id="cb84-32"><a href="#cb84-32" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(<span class="dv">1</span> <span class="op">-</span> (<span class="dv">1</span> <span class="op">-</span> conf_level) <span class="op">/</span> <span class="dv">2</span>)</span>
-<span id="cb84-33"><a href="#cb84-33" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> sample_mean <span class="op">-</span> z_critical <span class="op">*</span> standard_error</span>
-<span id="cb84-34"><a href="#cb84-34" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> sample_mean <span class="op">+</span> z_critical <span class="op">*</span> standard_error</span>
-<span id="cb84-35"><a href="#cb84-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-36"><a href="#cb84-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> alternative <span class="op">==</span> <span class="st">"greater"</span>:</span>
-<span id="cb84-37"><a href="#cb84-37" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(z_stat)</span>
-<span id="cb84-38"><a href="#cb84-38" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(conf_level)</span>
-<span id="cb84-39"><a href="#cb84-39" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> sample_mean <span class="op">-</span> z_critical <span class="op">*</span> standard_error</span>
-<span id="cb84-40"><a href="#cb84-40" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> np.inf</span>
-<span id="cb84-41"><a href="#cb84-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-42"><a href="#cb84-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> alternative <span class="op">==</span> <span class="st">"less"</span>:</span>
-<span id="cb84-43"><a href="#cb84-43" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> stats.norm.cdf(z_stat)</span>
-<span id="cb84-44"><a href="#cb84-44" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(conf_level)</span>
-<span id="cb84-45"><a href="#cb84-45" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> <span class="op">-</span>np.inf</span>
-<span id="cb84-46"><a href="#cb84-46" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> sample_mean <span class="op">+</span> z_critical <span class="op">*</span> standard_error</span>
-<span id="cb84-47"><a href="#cb84-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-48"><a href="#cb84-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb84-49"><a href="#cb84-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"alternative must be 'two-sided', 'greater', or 'less'."</span>)</span>
-<span id="cb84-50"><a href="#cb84-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-51"><a href="#cb84-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame({</span>
-<span id="cb84-52"><a href="#cb84-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sample_mean"</span>: [sample_mean],</span>
-<span id="cb84-53"><a href="#cb84-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">"known_sigma"</span>: [sigma],</span>
-<span id="cb84-54"><a href="#cb84-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sample_size"</span>: [n],</span>
-<span id="cb84-55"><a href="#cb84-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"standard_error"</span>: [standard_error],</span>
-<span id="cb84-56"><a href="#cb84-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">"z_statistic"</span>: [z_stat],</span>
-<span id="cb84-57"><a href="#cb84-57" aria-hidden="true" tabindex="-1"></a>        <span class="st">"p_value"</span>: [p_value],</span>
-<span id="cb84-58"><a href="#cb84-58" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ci_lower"</span>: [ci_lower],</span>
-<span id="cb84-59"><a href="#cb84-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ci_upper"</span>: [ci_upper]</span>
-<span id="cb84-60"><a href="#cb84-60" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb84-61"><a href="#cb84-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-62"><a href="#cb84-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-63"><a href="#cb84-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Run one-sample z-test</span></span>
-<span id="cb84-64"><a href="#cb84-64" aria-hidden="true" tabindex="-1"></a>z_test_result <span class="op">=</span> z_test_mean(</span>
-<span id="cb84-65"><a href="#cb84-65" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>flipper_test,</span>
-<span id="cb84-66"><a href="#cb84-66" aria-hidden="true" tabindex="-1"></a>    mu<span class="op">=</span><span class="dv">200</span>,</span>
-<span id="cb84-67"><a href="#cb84-67" aria-hidden="true" tabindex="-1"></a>    sigma<span class="op">=</span><span class="dv">14</span>,</span>
-<span id="cb84-68"><a href="#cb84-68" aria-hidden="true" tabindex="-1"></a>    alternative<span class="op">=</span><span class="st">"two-sided"</span>,</span>
-<span id="cb84-69"><a href="#cb84-69" aria-hidden="true" tabindex="-1"></a>    conf_level<span class="op">=</span><span class="fl">0.95</span></span>
-<span id="cb84-70"><a href="#cb84-70" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb84-71"><a href="#cb84-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-72"><a href="#cb84-72" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z_test_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the test set created in the R chunk</span></span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> r.test_set.copy()</span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the response variable from the test set</span></span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a>flipper_test <span class="op">=</span> test_set[<span class="st">"flipper_length_mm"</span>]</span>
+<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a helper function for a one-sample z-test with known population sd</span></span>
+<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> z_test_mean(x, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="va">None</span>, alternative<span class="op">=</span><span class="st">"two-sided"</span>, conf_level<span class="op">=</span><span class="fl">0.95</span>):</span>
+<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb78-14"><a href="#cb78-14" aria-hidden="true" tabindex="-1"></a><span class="co">    One-sample z-test for a population mean when the population standard</span></span>
+<span id="cb78-15"><a href="#cb78-15" aria-hidden="true" tabindex="-1"></a><span class="co">    deviation is known.</span></span>
+<span id="cb78-16"><a href="#cb78-16" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb78-17"><a href="#cb78-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-18"><a href="#cb78-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sigma <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb78-19"><a href="#cb78-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"sigma must be provided for a one-sample z-test."</span>)</span>
+<span id="cb78-20"><a href="#cb78-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-21"><a href="#cb78-21" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.asarray(x, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb78-22"><a href="#cb78-22" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> x[<span class="op">~</span>np.isnan(x)]</span>
+<span id="cb78-23"><a href="#cb78-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-24"><a href="#cb78-24" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb78-25"><a href="#cb78-25" aria-hidden="true" tabindex="-1"></a>    sample_mean <span class="op">=</span> np.mean(x)</span>
+<span id="cb78-26"><a href="#cb78-26" aria-hidden="true" tabindex="-1"></a>    standard_error <span class="op">=</span> sigma <span class="op">/</span> np.sqrt(n)</span>
+<span id="cb78-27"><a href="#cb78-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-28"><a href="#cb78-28" aria-hidden="true" tabindex="-1"></a>    z_stat <span class="op">=</span> (sample_mean <span class="op">-</span> mu) <span class="op">/</span> standard_error</span>
+<span id="cb78-29"><a href="#cb78-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-30"><a href="#cb78-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> alternative <span class="op">==</span> <span class="st">"two-sided"</span>:</span>
+<span id="cb78-31"><a href="#cb78-31" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
+<span id="cb78-32"><a href="#cb78-32" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(<span class="dv">1</span> <span class="op">-</span> (<span class="dv">1</span> <span class="op">-</span> conf_level) <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb78-33"><a href="#cb78-33" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> sample_mean <span class="op">-</span> z_critical <span class="op">*</span> standard_error</span>
+<span id="cb78-34"><a href="#cb78-34" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> sample_mean <span class="op">+</span> z_critical <span class="op">*</span> standard_error</span>
+<span id="cb78-35"><a href="#cb78-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-36"><a href="#cb78-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> alternative <span class="op">==</span> <span class="st">"greater"</span>:</span>
+<span id="cb78-37"><a href="#cb78-37" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(z_stat)</span>
+<span id="cb78-38"><a href="#cb78-38" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(conf_level)</span>
+<span id="cb78-39"><a href="#cb78-39" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> sample_mean <span class="op">-</span> z_critical <span class="op">*</span> standard_error</span>
+<span id="cb78-40"><a href="#cb78-40" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> np.inf</span>
+<span id="cb78-41"><a href="#cb78-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-42"><a href="#cb78-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> alternative <span class="op">==</span> <span class="st">"less"</span>:</span>
+<span id="cb78-43"><a href="#cb78-43" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> stats.norm.cdf(z_stat)</span>
+<span id="cb78-44"><a href="#cb78-44" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(conf_level)</span>
+<span id="cb78-45"><a href="#cb78-45" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> <span class="op">-</span>np.inf</span>
+<span id="cb78-46"><a href="#cb78-46" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> sample_mean <span class="op">+</span> z_critical <span class="op">*</span> standard_error</span>
+<span id="cb78-47"><a href="#cb78-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-48"><a href="#cb78-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb78-49"><a href="#cb78-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"alternative must be 'two-sided', 'greater', or 'less'."</span>)</span>
+<span id="cb78-50"><a href="#cb78-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-51"><a href="#cb78-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame({</span>
+<span id="cb78-52"><a href="#cb78-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sample_mean"</span>: [sample_mean],</span>
+<span id="cb78-53"><a href="#cb78-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">"known_sigma"</span>: [sigma],</span>
+<span id="cb78-54"><a href="#cb78-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sample_size"</span>: [n],</span>
+<span id="cb78-55"><a href="#cb78-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"standard_error"</span>: [standard_error],</span>
+<span id="cb78-56"><a href="#cb78-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">"z_statistic"</span>: [z_stat],</span>
+<span id="cb78-57"><a href="#cb78-57" aria-hidden="true" tabindex="-1"></a>        <span class="st">"p_value"</span>: [p_value],</span>
+<span id="cb78-58"><a href="#cb78-58" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ci_lower"</span>: [ci_lower],</span>
+<span id="cb78-59"><a href="#cb78-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ci_upper"</span>: [ci_upper]</span>
+<span id="cb78-60"><a href="#cb78-60" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb78-61"><a href="#cb78-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-62"><a href="#cb78-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-63"><a href="#cb78-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Run one-sample z-test</span></span>
+<span id="cb78-64"><a href="#cb78-64" aria-hidden="true" tabindex="-1"></a>z_test_result <span class="op">=</span> z_test_mean(</span>
+<span id="cb78-65"><a href="#cb78-65" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>flipper_test,</span>
+<span id="cb78-66"><a href="#cb78-66" aria-hidden="true" tabindex="-1"></a>    mu<span class="op">=</span><span class="dv">200</span>,</span>
+<span id="cb78-67"><a href="#cb78-67" aria-hidden="true" tabindex="-1"></a>    sigma<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb78-68"><a href="#cb78-68" aria-hidden="true" tabindex="-1"></a>    alternative<span class="op">=</span><span class="st">"two-sided"</span>,</span>
+<span id="cb78-69"><a href="#cb78-69" aria-hidden="true" tabindex="-1"></a>    conf_level<span class="op">=</span><span class="fl">0.95</span></span>
+<span id="cb78-70"><a href="#cb78-70" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb78-71"><a href="#cb78-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-72"><a href="#cb78-72" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z_test_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   sample_mean  known_sigma  sample_size  ...   p_value    ci_lower    ci_upper
 0        200.3           14           70  ...  0.857714  197.020353  203.579647
@@ -1743,7 +1714,7 @@ n(1 - p_0) \geq 10.
 <div class="tab-content">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Hypothesized population proportion</span></span>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Hypothesized population proportion</span></span>
 <span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fl">0.50</span></span>
 <span></span>
 <span><span class="co"># Create binary response variable in the training set</span></span>
@@ -1763,48 +1734,48 @@ n(1 - p_0) \geq 10.
 <div class="cell-output cell-output-stdout">
 <pre><code>Training shape: 272 7 </code></pre>
 </div>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Testing shape:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">test_prop</span><span class="op">)</span>, <span class="st">"\n\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Testing shape:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">test_prop</span><span class="op">)</span>, <span class="st">"\n\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Testing shape: 70 7 </code></pre>
 </div>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Training counts for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Training counts for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training counts for is_heavy:</code></pre>
 </div>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">train_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">train_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   0   1 
 137 135 </code></pre>
 </div>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nTraining proportions for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nTraining proportions for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Training proportions for is_heavy:</code></pre>
 </div>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">train_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">train_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
         0         1 
 0.5036765 0.4963235 </code></pre>
 </div>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nTesting counts for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nTesting counts for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Testing counts for is_heavy:</code></pre>
 </div>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">test_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">test_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  0  1 
 33 37 </code></pre>
 </div>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nTesting proportions for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nTesting proportions for is_heavy:\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Testing proportions for is_heavy:</code></pre>
 </div>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">test_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">test_prop</span><span class="op">$</span><span class="va">is_heavy</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
         0         1 
@@ -1814,64 +1785,64 @@ Testing proportions for is_heavy:</code></pre>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the proportion-test data sets created in the R chunk</span></span>
-<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>train_prop <span class="op">=</span> r.train_prop.copy()</span>
-<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>test_prop <span class="op">=</span> r.test_prop.copy()</span>
-<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the same hypothesized population proportion</span></span>
-<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> <span class="bu">float</span>(r.p0)</span>
-<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Sanity check for the training and test sets</span></span>
-<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training shape:"</span>, train_prop.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the proportion-test data sets created in the R chunk</span></span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>train_prop <span class="op">=</span> r.train_prop.copy()</span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>test_prop <span class="op">=</span> r.test_prop.copy()</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the same hypothesized population proportion</span></span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> <span class="bu">float</span>(r.p0)</span>
+<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Sanity check for the training and test sets</span></span>
+<span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training shape:"</span>, train_prop.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training shape: (272, 7)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing shape:"</span>, test_prop.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing shape:"</span>, test_prop.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Testing shape: (70, 7)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Training counts for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Training counts for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Training counts for is_heavy:</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train_prop[<span class="st">"is_heavy"</span>].value_counts().sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train_prop[<span class="st">"is_heavy"</span>].value_counts().sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>is_heavy
 0.0    137
 1.0    135
 Name: count, dtype: int64</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Training proportions for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Training proportions for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Training proportions for is_heavy:</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train_prop[<span class="st">"is_heavy"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train_prop[<span class="st">"is_heavy"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>is_heavy
 0.0    0.503676
 1.0    0.496324
 Name: proportion, dtype: float64</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Testing counts for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Testing counts for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Testing counts for is_heavy:</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_prop[<span class="st">"is_heavy"</span>].value_counts().sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_prop[<span class="st">"is_heavy"</span>].value_counts().sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>is_heavy
 0.0    33
 1.0    37
 Name: count, dtype: int64</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Testing proportions for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Testing proportions for is_heavy:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Testing proportions for is_heavy:</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_prop[<span class="st">"is_heavy"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_prop[<span class="st">"is_heavy"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>is_heavy
 0.0    0.471429
@@ -1896,7 +1867,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="tab-content">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Count and proportion of the binary response in the training set</span></span>
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Count and proportion of the binary response in the training set</span></span>
 <span><span class="va">heavy_summary</span> <span class="op">&lt;-</span> <span class="va">train_prop</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    body_mass_group <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span></span>
@@ -1922,22 +1893,22 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 <div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count and proportion of the binary response in the training set</span></span>
-<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>heavy_summary <span class="op">=</span> (</span>
-<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>    train_prop[<span class="st">"is_heavy"</span>]</span>
-<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a>    .value_counts()</span>
-<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a>    .sort_index()</span>
-<span id="cb128-6"><a href="#cb128-6" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
-<span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb128-9"><a href="#cb128-9" aria-hidden="true" tabindex="-1"></a>heavy_summary.columns <span class="op">=</span> [<span class="st">"is_heavy"</span>, <span class="st">"n"</span>]</span>
-<span id="cb128-10"><a href="#cb128-10" aria-hidden="true" tabindex="-1"></a>heavy_summary[<span class="st">"proportion"</span>] <span class="op">=</span> heavy_summary[<span class="st">"n"</span>] <span class="op">/</span> heavy_summary[<span class="st">"n"</span>].<span class="bu">sum</span>()</span>
-<span id="cb128-11"><a href="#cb128-11" aria-hidden="true" tabindex="-1"></a>heavy_summary[<span class="st">"body_mass_group"</span>] <span class="op">=</span> heavy_summary[<span class="st">"is_heavy"</span>].<span class="bu">map</span>({</span>
-<span id="cb128-12"><a href="#cb128-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: <span class="st">"Body mass &lt;= 4000 g"</span>,</span>
-<span id="cb128-13"><a href="#cb128-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>: <span class="st">"Body mass &gt; 4000 g"</span></span>
-<span id="cb128-14"><a href="#cb128-14" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb128-15"><a href="#cb128-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb128-16"><a href="#cb128-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(heavy_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count and proportion of the binary response in the training set</span></span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>heavy_summary <span class="op">=</span> (</span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a>    train_prop[<span class="st">"is_heavy"</span>]</span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a>    .value_counts()</span>
+<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>    .sort_index()</span>
+<span id="cb122-6"><a href="#cb122-6" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb122-7"><a href="#cb122-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb122-8"><a href="#cb122-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-9"><a href="#cb122-9" aria-hidden="true" tabindex="-1"></a>heavy_summary.columns <span class="op">=</span> [<span class="st">"is_heavy"</span>, <span class="st">"n"</span>]</span>
+<span id="cb122-10"><a href="#cb122-10" aria-hidden="true" tabindex="-1"></a>heavy_summary[<span class="st">"proportion"</span>] <span class="op">=</span> heavy_summary[<span class="st">"n"</span>] <span class="op">/</span> heavy_summary[<span class="st">"n"</span>].<span class="bu">sum</span>()</span>
+<span id="cb122-11"><a href="#cb122-11" aria-hidden="true" tabindex="-1"></a>heavy_summary[<span class="st">"body_mass_group"</span>] <span class="op">=</span> heavy_summary[<span class="st">"is_heavy"</span>].<span class="bu">map</span>({</span>
+<span id="cb122-12"><a href="#cb122-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: <span class="st">"Body mass &lt;= 4000 g"</span>,</span>
+<span id="cb122-13"><a href="#cb122-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>: <span class="st">"Body mass &gt; 4000 g"</span></span>
+<span id="cb122-14"><a href="#cb122-14" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb122-15"><a href="#cb122-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-16"><a href="#cb122-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(heavy_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   is_heavy    n  proportion      body_mass_group
 0       0.0  137    0.503676  Body mass &lt;= 4000 g
@@ -1958,7 +1929,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="tab-content">
 <div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">heavy_summary</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass_group</span>, y <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">body_mass_group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">heavy_summary</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass_group</span>, y <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">body_mass_group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_col</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Counts by Body Mass Category in the Training Set"</span>,</span>
@@ -1983,33 +1954,33 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 <div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb131-5"><a href="#cb131-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb131-6"><a href="#cb131-6" aria-hidden="true" tabindex="-1"></a>sns.barplot(</span>
-<span id="cb131-7"><a href="#cb131-7" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>heavy_summary,</span>
-<span id="cb131-8"><a href="#cb131-8" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"body_mass_group"</span>,</span>
-<span id="cb131-9"><a href="#cb131-9" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"n"</span>,</span>
-<span id="cb131-10"><a href="#cb131-10" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">"body_mass_group"</span>,</span>
-<span id="cb131-11"><a href="#cb131-11" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span><span class="st">"Set2"</span>,</span>
-<span id="cb131-12"><a href="#cb131-12" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">False</span></span>
-<span id="cb131-13"><a href="#cb131-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb131-14"><a href="#cb131-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb131-15"><a href="#cb131-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Counts by Body Mass Category in the Training Set"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
-<span id="cb131-16"><a href="#cb131-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Body mass category"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb131-17"><a href="#cb131-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb131-18"><a href="#cb131-18" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">0</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-4"><a href="#cb125-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb125-5"><a href="#cb125-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-6"><a href="#cb125-6" aria-hidden="true" tabindex="-1"></a>sns.barplot(</span>
+<span id="cb125-7"><a href="#cb125-7" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>heavy_summary,</span>
+<span id="cb125-8"><a href="#cb125-8" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"body_mass_group"</span>,</span>
+<span id="cb125-9"><a href="#cb125-9" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"n"</span>,</span>
+<span id="cb125-10"><a href="#cb125-10" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">"body_mass_group"</span>,</span>
+<span id="cb125-11"><a href="#cb125-11" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span><span class="st">"Set2"</span>,</span>
+<span id="cb125-12"><a href="#cb125-12" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">False</span></span>
+<span id="cb125-13"><a href="#cb125-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb125-14"><a href="#cb125-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-15"><a href="#cb125-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Counts by Body Mass Category in the Training Set"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb125-16"><a href="#cb125-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Body mass category"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb125-17"><a href="#cb125-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb125-18"><a href="#cb125-18" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">0</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>([0, 1], [Text(0, 0, 'Body mass &lt;= 4000 g'), Text(1, 0, 'Body mass &gt; 4000 g')])</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>plt.yticks(fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>plt.yticks(fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(array([  0.,  20.,  40.,  60.,  80., 100., 120., 140., 160.]), [Text(0, 0.0, '0'), Text(0, 20.0, '20'), Text(0, 40.0, '40'), Text(0, 60.0, '60'), Text(0, 80.0, '80'), Text(0, 100.0, '100'), Text(0, 120.0, '120'), Text(0, 140.0, '140'), Text(0, 160.0, '160')])</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb129-2"><a href="#cb129-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="768"></p>
@@ -2030,7 +2001,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="tab-content">
 <div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">train_prop</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass_g</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">train_prop</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">body_mass_g</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_histogram</span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span>, color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="st">"skyblue"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">4000</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, linewidth <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span></span>
@@ -2054,35 +2025,35 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 <div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-5"><a href="#cb137-5" aria-hidden="true" tabindex="-1"></a>plt.hist(</span>
-<span id="cb137-6"><a href="#cb137-6" aria-hidden="true" tabindex="-1"></a>    train_prop[<span class="st">"body_mass_g"</span>],</span>
-<span id="cb137-7"><a href="#cb137-7" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb137-8"><a href="#cb137-8" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">"black"</span></span>
-<span id="cb137-9"><a href="#cb137-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb137-10"><a href="#cb137-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-11"><a href="#cb137-11" aria-hidden="true" tabindex="-1"></a>plt.axvline(</span>
-<span id="cb137-12"><a href="#cb137-12" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="dv">4000</span>,</span>
-<span id="cb137-13"><a href="#cb137-13" aria-hidden="true" tabindex="-1"></a>    linestyle<span class="op">=</span><span class="st">"--"</span>,</span>
-<span id="cb137-14"><a href="#cb137-14" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="fl">2.5</span></span>
-<span id="cb137-15"><a href="#cb137-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb137-16"><a href="#cb137-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-17"><a href="#cb137-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Body Mass in the Training Set"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
-<span id="cb137-18"><a href="#cb137-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Body mass (g)"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb137-19"><a href="#cb137-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb137-20"><a href="#cb137-20" aria-hidden="true" tabindex="-1"></a>plt.xticks(fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-5"><a href="#cb131-5" aria-hidden="true" tabindex="-1"></a>plt.hist(</span>
+<span id="cb131-6"><a href="#cb131-6" aria-hidden="true" tabindex="-1"></a>    train_prop[<span class="st">"body_mass_g"</span>],</span>
+<span id="cb131-7"><a href="#cb131-7" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb131-8"><a href="#cb131-8" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">"black"</span></span>
+<span id="cb131-9"><a href="#cb131-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb131-10"><a href="#cb131-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-11"><a href="#cb131-11" aria-hidden="true" tabindex="-1"></a>plt.axvline(</span>
+<span id="cb131-12"><a href="#cb131-12" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="dv">4000</span>,</span>
+<span id="cb131-13"><a href="#cb131-13" aria-hidden="true" tabindex="-1"></a>    linestyle<span class="op">=</span><span class="st">"--"</span>,</span>
+<span id="cb131-14"><a href="#cb131-14" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="fl">2.5</span></span>
+<span id="cb131-15"><a href="#cb131-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb131-16"><a href="#cb131-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-17"><a href="#cb131-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Body Mass in the Training Set"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb131-18"><a href="#cb131-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Body mass (g)"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb131-19"><a href="#cb131-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb131-20"><a href="#cb131-20" aria-hidden="true" tabindex="-1"></a>plt.xticks(fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(array([2500., 3000., 3500., 4000., 4500., 5000., 5500., 6000., 6500.]), [Text(2500.0, 0, '2500'), Text(3000.0, 0, '3000'), Text(3500.0, 0, '3500'), Text(4000.0, 0, '4000'), Text(4500.0, 0, '4500'), Text(5000.0, 0, '5000'), Text(5500.0, 0, '5500'), Text(6000.0, 0, '6000'), Text(6500.0, 0, '6500')])</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>plt.yticks(fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>plt.yticks(fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(array([ 0.,  5., 10., 15., 20., 25., 30., 35.]), [Text(0, 0.0, '0'), Text(0, 5.0, '5'), Text(0, 10.0, '10'), Text(0, 15.0, '15'), Text(0, 20.0, '20'), Text(0, 25.0, '25'), Text(0, 30.0, '30'), Text(0, 35.0, '35')])</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="chapter2-one-pop_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="768"></p>
@@ -2253,7 +2224,7 @@ Z \approx N(0, 1).
 <div class="tab-content">
 <div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
 <div class="cell">
-<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Hypothesized population proportion</span></span>
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Hypothesized population proportion</span></span>
 <span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fl">0.50</span></span>
 <span></span>
 <span><span class="co"># Number of successes: penguins with body mass greater than 4000 g</span></span>
@@ -2292,12 +2263,12 @@ sample estimates:
         p 
 0.5285714 </code></pre>
 </div>
-<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nSample proportion:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">p_hat</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"\nSample proportion:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">p_hat</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Sample proportion: 0.529 </code></pre>
 </div>
-<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"z-statistic:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">z_stat</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"z-statistic:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">z_stat</span>, <span class="fl">3</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>z-statistic: 0.478 </code></pre>
 </div>
@@ -2305,63 +2276,63 @@ Sample proportion: 0.529 </code></pre>
 </div>
 <div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.proportion <span class="im">import</span> proportions_ztest, proportion_confint</span>
-<span id="cb148-3"><a href="#cb148-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-4"><a href="#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the test set created in the R chunk</span></span>
-<span id="cb148-5"><a href="#cb148-5" aria-hidden="true" tabindex="-1"></a>test_prop <span class="op">=</span> r.test_prop.copy()</span>
-<span id="cb148-6"><a href="#cb148-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-7"><a href="#cb148-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Hypothesized population proportion</span></span>
-<span id="cb148-8"><a href="#cb148-8" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> <span class="fl">0.50</span></span>
-<span id="cb148-9"><a href="#cb148-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-10"><a href="#cb148-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of successes: penguins with body mass greater than 4000 g</span></span>
-<span id="cb148-11"><a href="#cb148-11" aria-hidden="true" tabindex="-1"></a>x_success <span class="op">=</span> <span class="bu">int</span>(test_prop[<span class="st">"is_heavy"</span>].<span class="bu">sum</span>())</span>
-<span id="cb148-12"><a href="#cb148-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-13"><a href="#cb148-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size</span></span>
-<span id="cb148-14"><a href="#cb148-14" aria-hidden="true" tabindex="-1"></a>n_test <span class="op">=</span> <span class="bu">int</span>(test_prop.shape[<span class="dv">0</span>])</span>
-<span id="cb148-15"><a href="#cb148-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-16"><a href="#cb148-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample proportion</span></span>
-<span id="cb148-17"><a href="#cb148-17" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> x_success <span class="op">/</span> n_test</span>
-<span id="cb148-18"><a href="#cb148-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-19"><a href="#cb148-19" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sample proportion z-test</span></span>
-<span id="cb148-20"><a href="#cb148-20" aria-hidden="true" tabindex="-1"></a>z_stat, p_value <span class="op">=</span> proportions_ztest(</span>
-<span id="cb148-21"><a href="#cb148-21" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span>x_success,</span>
-<span id="cb148-22"><a href="#cb148-22" aria-hidden="true" tabindex="-1"></a>    nobs<span class="op">=</span>n_test,</span>
-<span id="cb148-23"><a href="#cb148-23" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span>p0,</span>
-<span id="cb148-24"><a href="#cb148-24" aria-hidden="true" tabindex="-1"></a>    alternative<span class="op">=</span><span class="st">"two-sided"</span>,</span>
-<span id="cb148-25"><a href="#cb148-25" aria-hidden="true" tabindex="-1"></a>    prop_var<span class="op">=</span>p0</span>
-<span id="cb148-26"><a href="#cb148-26" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb148-27"><a href="#cb148-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-28"><a href="#cb148-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-29"><a href="#cb148-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% confidence interval for the population proportion</span></span>
-<span id="cb148-30"><a href="#cb148-30" aria-hidden="true" tabindex="-1"></a>ci_lower, ci_upper <span class="op">=</span> proportion_confint(</span>
-<span id="cb148-31"><a href="#cb148-31" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span>x_success,</span>
-<span id="cb148-32"><a href="#cb148-32" aria-hidden="true" tabindex="-1"></a>    nobs<span class="op">=</span>n_test,</span>
-<span id="cb148-33"><a href="#cb148-33" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.05</span>,</span>
-<span id="cb148-34"><a href="#cb148-34" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">"normal"</span></span>
-<span id="cb148-35"><a href="#cb148-35" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb148-36"><a href="#cb148-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-37"><a href="#cb148-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of successes: </span><span class="sc">{</span>x_success<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.proportion <span class="im">import</span> proportions_ztest, proportion_confint</span>
+<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-4"><a href="#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the test set created in the R chunk</span></span>
+<span id="cb142-5"><a href="#cb142-5" aria-hidden="true" tabindex="-1"></a>test_prop <span class="op">=</span> r.test_prop.copy()</span>
+<span id="cb142-6"><a href="#cb142-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-7"><a href="#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Hypothesized population proportion</span></span>
+<span id="cb142-8"><a href="#cb142-8" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> <span class="fl">0.50</span></span>
+<span id="cb142-9"><a href="#cb142-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-10"><a href="#cb142-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of successes: penguins with body mass greater than 4000 g</span></span>
+<span id="cb142-11"><a href="#cb142-11" aria-hidden="true" tabindex="-1"></a>x_success <span class="op">=</span> <span class="bu">int</span>(test_prop[<span class="st">"is_heavy"</span>].<span class="bu">sum</span>())</span>
+<span id="cb142-12"><a href="#cb142-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-13"><a href="#cb142-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size</span></span>
+<span id="cb142-14"><a href="#cb142-14" aria-hidden="true" tabindex="-1"></a>n_test <span class="op">=</span> <span class="bu">int</span>(test_prop.shape[<span class="dv">0</span>])</span>
+<span id="cb142-15"><a href="#cb142-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-16"><a href="#cb142-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample proportion</span></span>
+<span id="cb142-17"><a href="#cb142-17" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> x_success <span class="op">/</span> n_test</span>
+<span id="cb142-18"><a href="#cb142-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-19"><a href="#cb142-19" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sample proportion z-test</span></span>
+<span id="cb142-20"><a href="#cb142-20" aria-hidden="true" tabindex="-1"></a>z_stat, p_value <span class="op">=</span> proportions_ztest(</span>
+<span id="cb142-21"><a href="#cb142-21" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span>x_success,</span>
+<span id="cb142-22"><a href="#cb142-22" aria-hidden="true" tabindex="-1"></a>    nobs<span class="op">=</span>n_test,</span>
+<span id="cb142-23"><a href="#cb142-23" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span>p0,</span>
+<span id="cb142-24"><a href="#cb142-24" aria-hidden="true" tabindex="-1"></a>    alternative<span class="op">=</span><span class="st">"two-sided"</span>,</span>
+<span id="cb142-25"><a href="#cb142-25" aria-hidden="true" tabindex="-1"></a>    prop_var<span class="op">=</span>p0</span>
+<span id="cb142-26"><a href="#cb142-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb142-27"><a href="#cb142-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-28"><a href="#cb142-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-29"><a href="#cb142-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% confidence interval for the population proportion</span></span>
+<span id="cb142-30"><a href="#cb142-30" aria-hidden="true" tabindex="-1"></a>ci_lower, ci_upper <span class="op">=</span> proportion_confint(</span>
+<span id="cb142-31"><a href="#cb142-31" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span>x_success,</span>
+<span id="cb142-32"><a href="#cb142-32" aria-hidden="true" tabindex="-1"></a>    nobs<span class="op">=</span>n_test,</span>
+<span id="cb142-33"><a href="#cb142-33" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb142-34"><a href="#cb142-34" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">"normal"</span></span>
+<span id="cb142-35"><a href="#cb142-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb142-36"><a href="#cb142-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-37"><a href="#cb142-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of successes: </span><span class="sc">{</span>x_success<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of successes: 37</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample size: </span><span class="sc">{</span>n_test<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample size: </span><span class="sc">{</span>n_test<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sample size: 70</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample proportion: </span><span class="sc">{</span>p_hat<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample proportion: </span><span class="sc">{</span>p_hat<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sample proportion: 0.529</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"z-statistic: </span><span class="sc">{</span>z_stat<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"z-statistic: </span><span class="sc">{</span>z_stat<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>z-statistic: 0.478</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>p-value: 0.6326</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"95% confidence interval: (</span><span class="sc">{</span>ci_lower<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>ci_upper<span class="sc">:.3f}</span><span class="ss">)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"95% confidence interval: (</span><span class="sc">{</span>ci_lower<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>ci_upper<span class="sc">:.3f}</span><span class="ss">)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>95% confidence interval: (0.412, 0.646)</code></pre>
 </div>
