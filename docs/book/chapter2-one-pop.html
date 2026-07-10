@@ -1064,15 +1064,15 @@ Figure&nbsp;2.7: Boxplot of flipper length by species in the training set using 
 </section><section id="test-flavour-and-components" class="level3" data-number="2.1.7"><h3 data-number="2.1.7" class="anchored" data-anchor-id="test-flavour-and-components">
 <span class="header-section-number">2.1.7</span> Test Flavour and Components</h3>
 <p>The one-sample <code>t-test</code> compares the sample mean to the hypothesized population mean. In this example, the hypothesized value is <span class="math inline">\(\mu_0 = 200\)</span> mm. Let <span class="math inline">\(\bar{x}\)</span> denote the sample mean flipper length in the test set, and let <span class="math inline">\(s\)</span> denote the sample standard deviation of flipper length in the test set. If the test set contains <span class="math inline">\(n\)</span> penguins, the test statistic is</p>
-<p><span class="math display">\[
+<p><span id="eq-one-sample-t-statistic"><span class="math display">\[
 t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}.
-\]</span></p>
+\tag{2.1}\]</span></span></p>
 <p>In this formula:</p>
 <ul>
 <li>
 <span class="math inline">\(\bar{x}\)</span> is the sample mean flipper length.</li>
 <li>
-<span class="math inline">\(\mu_0\)</span> is the hypothesized population mean, which is 200 mm in this example.</li>
+<span class="math inline">\(\mu_0\)</span> is the hypothesized population mean which is 200 mm in this example.</li>
 <li>
 <span class="math inline">\(s\)</span> is the sample standard deviation.</li>
 <li>
@@ -1080,16 +1080,21 @@ t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}.
 <li>
 <span class="math inline">\(s / \sqrt{n}\)</span> is the estimated standard error of the sample mean.</li>
 </ul>
+<p>If the observed sample values are</p>
+<p><span class="math display">\[
+x_1, x_2, \dots, x_n,
+\]</span></p>
+<p>then the sample mean <span class="math inline">\(\bar{x}\)</span> and sample standard deviation <span class="math inline">\(s\)</span> are calculated as follows:</p>
+<p><span class="math display">\[
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x_i - \bar{x})^2}.
+\]</span></p>
+<p>These two sample quantities are then used in the test statistic in <a href="#eq-one-sample-t-statistic" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>.</p>
 <p>The numerator, <span class="math inline">\(\bar{x} - \mu_0\)</span>, measures how far the sample mean is from the hypothesized value. The denominator, <span class="math inline">\(s / \sqrt{n}\)</span>, scales this difference by the estimated variability of the sample mean. Therefore, the test statistic measures how many estimated standard errors the sample mean is away from the hypothesized value.</p>
-<div class="Heads-up">
-<div class="Heads-up-header">
-<p>Heads-up!</p>
-</div>
-<div class="Heads-up-container">
-<p>The test statistic <span class="math inline">\(t\)</span> is computed from the sample. This means that <span class="math inline">\(t\)</span> itself is a random variable: if we collected a different random sample of penguins, we would likely get a different sample mean <span class="math inline">\(\bar{x}\)</span>, a different sample standard deviation <span class="math inline">\(s\)</span>, and therefore a different value of <span class="math inline">\(t\)</span>.</p>
-</div>
-</div>
-<p>Because the population standard deviation is unknown, we estimate it using the sample standard deviation <span class="math inline">\(s\)</span>. This is the key reason the null distribution is a <code>t-distribution</code> rather than a standard normal distribution.</p>
+<p>The test statistic <span class="math inline">\(t\)</span> calculated in <a href="#eq-one-sample-t-statistic" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> is computed from the sample. This means that <span class="math inline">\(t\)</span> itself is a random variable and varies from sample to sample: if we collected a different random sample of penguins, we would likely get a different sample mean <span class="math inline">\(\bar{x}\)</span>, a different sample standard deviation <span class="math inline">\(s\)</span>, and therefore a different value of <span class="math inline">\(t\)</span>.</p>
 <div class="Tip">
 <div class="Tip-header">
 <p>Tip: Null distribution of the test statistic</p>
@@ -1099,11 +1104,7 @@ t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}.
 <p><span class="math display">\[
 H_0: \mu = 200,
 \]</span></p>
-<p>the test statistic</p>
-<p><span class="math display">\[
-T = \frac{\bar{X} - \mu_0}{S / \sqrt{n}}
-\]</span></p>
-<p>follows a <code>t-distribution</code> with <span class="math inline">\(n - 1\)</span> degrees of freedom:</p>
+<p>the test statistic defined in <a href="#eq-one-sample-t-statistic" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> follows a <code>t-distribution</code> with <span class="math inline">\(n - 1\)</span> degrees of freedom and usually shown as follows in statistics textbooks:</p>
 <p><span class="math display">\[
 T \sim t_{n-1}.
 \]</span></p>
@@ -1111,7 +1112,7 @@ T \sim t_{n-1}.
 <p><span class="math display">\[
 \textit{p-value} = 2 \times Pr(T_{n-1} \geq |t|),
 \]</span></p>
-<p>where <span class="math inline">\(t\)</span> is the test statistic computed from the observed sample.</p>
+<p>where <span class="math inline">\(t\)</span> is the test statistic computed from the observed sample in <a href="#eq-one-sample-t-statistic" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>. Because the population standard deviation is unknown, we estimate it using the sample standard deviation <span class="math inline">\(s\)</span>. This is the key reason the null distribution is a <code>t-distribution</code> rather than a standard normal distribution.</p>
 </div>
 </div>
 </section><section id="inferential-conclusions" class="level3" data-number="2.1.8"><h3 data-number="2.1.8" class="anchored" data-anchor-id="inferential-conclusions">

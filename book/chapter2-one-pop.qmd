@@ -545,29 +545,40 @@ The one-sample `t-test` compares the sample mean to the hypothesized population 
 
 $$
 t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}.
-$$
+$$ {#eq-one-sample-t-statistic}
 
 In this formula:
 
 -   $\bar{x}$ is the sample mean flipper length.
--   $\mu_0$ is the hypothesized population mean, which is 200 mm in this example.
+-   $\mu_0$ is the hypothesized population mean which is 200 mm in this example.
 -   $s$ is the sample standard deviation.
 -   $n$ is the sample size.
 -   $s / \sqrt{n}$ is the estimated standard error of the sample mean.
 
+
+If the observed sample values are
+
+$$
+x_1, x_2, \dots, x_n,
+$$
+
+then the sample mean $\bar{x}$ and sample standard deviation $s$ are calculated as follows:
+
+$$
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+$$
+
+and
+
+$$
+s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x_i - \bar{x})^2}.
+$$
+
+These two sample quantities are then used in the test statistic in @eq-one-sample-t-statistic.
+
 The numerator, $\bar{x} - \mu_0$, measures how far the sample mean is from the hypothesized value. The denominator, $s / \sqrt{n}$, scales this difference by the estimated variability of the sample mean. Therefore, the test statistic measures how many estimated standard errors the sample mean is away from the hypothesized value.
 
-::::: Heads-up
-::: Heads-up-header
-Heads-up!
-:::
-
-::: Heads-up-container
-The test statistic $t$ is computed from the sample. This means that $t$ itself is a random variable: if we collected a different random sample of penguins, we would likely get a different sample mean $\bar{x}$, a different sample standard deviation $s$, and therefore a different value of $t$.
-:::
-:::::
-
-Because the population standard deviation is unknown, we estimate it using the sample standard deviation $s$. This is the key reason the null distribution is a `t-distribution` rather than a standard normal distribution.
+The test statistic $t$ calculated in @eq-one-sample-t-statistic is computed from the sample. This means that $t$ itself is a random variable and varies from sample to sample: if we collected a different random sample of penguins, we would likely get a different sample mean $\bar{x}$, a different sample standard deviation $s$, and therefore a different value of $t$.
 
 ::::: Tip
 ::: Tip-header
@@ -581,16 +592,10 @@ $$
 H_0: \mu = 200,
 $$
 
-the test statistic
+the test statistic defined in @eq-one-sample-t-statistic follows a `t-distribution` with $n - 1$ degrees of freedom and usually shown as follows in statistics textbooks:
 
 $$
-T = \frac{\bar{X} - \mu_0}{S / \sqrt{n}}
-$$
-
-follows a `t-distribution` with $n - 1$ degrees of freedom:
-
-$$
-T \sim t_{n-1}.
+T \sim t_{(n-1)}.
 $$
 
 This distribution describes the values we would expect the test statistic to take if the null hypothesis were true. Since the alternative hypothesis is two-sided, the p-value is computed as
@@ -599,7 +604,8 @@ $$
 \textit{p-value} = 2 \times Pr(T_{n-1} \geq |t|),
 $$
 
-where $t$ is the test statistic computed from the observed sample.
+where $t$ is the test statistic computed from the observed sample in @eq-one-sample-t-statistic. Because the population standard deviation is unknown, we estimate it using the sample standard deviation $s$. This is the key reason the null distribution is a `t-distribution` rather than a standard normal distribution.
+
 :::
 :::::
 
