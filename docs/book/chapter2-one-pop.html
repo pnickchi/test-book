@@ -272,7 +272,7 @@ window.Quarto = {
    
   <ul>
 <li>
-<a href="#one-sample-t-test-for-the-mean" id="toc-one-sample-t-test-for-the-mean" class="nav-link active" data-scroll-target="#one-sample-t-test-for-the-mean"><span class="header-section-number">2.1</span> One-sample t-test for the mean</a>
+<a href="#sec-one-sample-t-test" id="toc-sec-one-sample-t-test" class="nav-link active" data-scroll-target="#sec-one-sample-t-test"><span class="header-section-number">2.1</span> One-sample t-test for the mean</a>
   <ul>
 <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review"><span class="header-section-number">2.1.1</span> Review</a></li>
   <li><a href="#study-design" id="toc-study-design" class="nav-link" data-scroll-target="#study-design"><span class="header-section-number">2.1.2</span> Study design</a></li>
@@ -287,7 +287,7 @@ window.Quarto = {
   </ul>
 </li>
   <li>
-<a href="#one-sample-z-test-for-the-mean" id="toc-one-sample-z-test-for-the-mean" class="nav-link" data-scroll-target="#one-sample-z-test-for-the-mean"><span class="header-section-number">2.2</span> One-sample z-test for the mean</a>
+<a href="#sec-one-sample-z-test" id="toc-sec-one-sample-z-test" class="nav-link" data-scroll-target="#sec-one-sample-z-test"><span class="header-section-number">2.2</span> One-sample z-test for the mean</a>
   <ul>
 <li><a href="#review-1" id="toc-review-1" class="nav-link" data-scroll-target="#review-1"><span class="header-section-number">2.2.1</span> Review</a></li>
   <li><a href="#study-design-1" id="toc-study-design-1" class="nav-link" data-scroll-target="#study-design-1"><span class="header-section-number">2.2.2</span> Study design</a></li>
@@ -302,7 +302,7 @@ window.Quarto = {
   </ul>
 </li>
   <li>
-<a href="#one-sample-z-test-for-proportions" id="toc-one-sample-z-test-for-proportions" class="nav-link" data-scroll-target="#one-sample-z-test-for-proportions"><span class="header-section-number">2.3</span> One-sample z-test for proportions</a>
+<a href="#sec-one-sample-z-test-proportion" id="toc-sec-one-sample-z-test-proportion" class="nav-link" data-scroll-target="#sec-one-sample-z-test-proportion"><span class="header-section-number">2.3</span> One-sample z-test for proportions</a>
   <ul>
 <li><a href="#review-2" id="toc-review-2" class="nav-link" data-scroll-target="#review-2"><span class="header-section-number">2.3.1</span> Review</a></li>
   <li><a href="#study-design-2" id="toc-study-design-2" class="nav-link" data-scroll-target="#study-design-2"><span class="header-section-number">2.3.2</span> Study design</a></li>
@@ -398,7 +398,7 @@ Figure&nbsp;2.1: A specific hypothesis testing mind map outlining the techniques
 </ul>
 <p>For a single population mean, the choice of test depends on whether the population variance is known or unknown. When the population variance is unknown, we use the one-sample <code>t-test</code>. When the population variance is known, we use the one-sample <code>z-test</code>. For binary outcomes, we use a one-sample proportion <code>z-test</code> to compare the population proportion to a hypothesized value.</p>
 <p>The choice of test depends on the type of response variable, the information available about the population variance, and the sample size. Each section below introduces the test setup, hypotheses, assumptions, theoretical background, and implementation in both <code>R</code> and <code>Python</code> using real or simulated data.</p>
-<section id="one-sample-t-test-for-the-mean" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="one-sample-t-test-for-the-mean">
+<section id="sec-one-sample-t-test" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="sec-one-sample-t-test">
 <span class="header-section-number">2.1</span> One-sample t-test for the mean</h2>
 <section id="review" class="level3" data-number="2.1.1"><h3 data-number="2.1.1" class="anchored" data-anchor-id="review">
 <span class="header-section-number">2.1.1</span> Review</h3>
@@ -410,12 +410,8 @@ Figure&nbsp;2.1: A specific hypothesis testing mind map outlining the techniques
 <li>The population variance is <strong>unknown</strong>.</li>
 <li>The sample is approximately normal, or the sample size is large enough for the sampling distribution of the sample mean to be approximately normal.</li>
 </ul>
-<p>In this section, we focus on the case where the population variance is unknown. The known-variance case will be discussed later using the one-sample <code>z-test</code>.</p>
-<p>The one-sample <code>t-test</code> is used when we want to compare a sample mean to a hypothesized population mean. Suppose we observe a random sample of size <span class="math inline">\(n\)</span>,</p>
-<p><span class="math display">\[
-X_1, X_2, \dots, X_n,
-\]</span></p>
-<p>from a population with unknown mean <span class="math inline">\(\mu\)</span>. We want to assess whether the data provide enough evidence to conclude that <span class="math inline">\(\mu\)</span> differs from a specified reference value, denoted by <span class="math inline">\(\mu_0\)</span>.</p>
+<p>In this section, we focus on the case where the population variance is unknown. The known-variance case will be discussed later in <a href="#sec-one-sample-z-test" class="quarto-xref"><span>Section 2.2</span></a> using the one-sample <code>z-test</code>.</p>
+<p>The one-sample <code>t-test</code> is used when we want to compare a sample mean to a specific reference value. Suppose we observe a random sample from a population where both the population mean <span class="math inline">\(\mu\)</span> and population standard deviation <span class="math inline">\(\sigma\)</span> are unknown. We use the sample mean and sample standard deviation to assess whether the population mean appears to differ from the reference value. For example, we may want to know whether the average flipper length of penguins is different from 200 mm.</p>
 <p>The main statistical question is:</p>
 <blockquote class="blockquote">
 <p><strong>Is the population mean statistically different from the hypothesized value <span class="math inline">\(\mu_0\)</span>?</strong></p>
@@ -424,7 +420,19 @@ X_1, X_2, \dots, X_n,
 <blockquote class="blockquote">
 <p><strong>Does the sample provide evidence that the population mean is different from 200?</strong></p>
 </blockquote>
-<p>Because the population variance is unknown, we estimate it using the sample standard deviation. This additional uncertainty is why the test statistic follows a <code>t-distribution</code> rather than a standard normal distribution.</p>
+<p>Because the population variance is unknown, we estimate it using the sample standard deviation. As we will see later in this chapter, this additional uncertainty (estimating the variance) is why the test statistic follows a <code>t-distribution</code> rather than a standard normal distribution.</p>
+<div class="Tip">
+<div class="Tip-header">
+<p>Tip: Sample standard deviation</p>
+</div>
+<div class="Tip-container">
+<p>When the population standard deviation <span class="math inline">\(\sigma\)</span> is unknown, we estimate it using the sample standard deviation:</p>
+<p><span class="math display">\[
+s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(X_i - \bar{X})^2}.
+\]</span></p>
+<p>Here, <span class="math inline">\(\bar{X}\)</span> is the sample mean, and <span class="math inline">\(s\)</span> measures how spread out the observations are around the sample mean.</p>
+</div>
+</div>
 </section><section id="study-design" class="level3" data-number="2.1.2"><h3 data-number="2.1.2" class="anchored" data-anchor-id="study-design">
 <span class="header-section-number">2.1.2</span> Study design</h3>
 <p>Now that we have reviewed the general idea behind the one-sample <code>t-test</code>, let us apply it to a real data example. In this section, we use the <code>penguins</code> data set from the <code>palmerpenguins</code> package in <code>R</code>. This data set contains measurements for penguins observed near Palmer Station, Antarctica. Some of the main quantitative variables include <code>flipper_length_mm</code>, which records the length of a penguin’s flipper in millimetres; <code>bill_length_mm</code>, which records the length of the penguin’s bill in millimetres; <code>bill_depth_mm</code>, which records the depth or thickness of the bill in millimetres; and <code>body_mass_g</code>, which records the penguin’s body mass in grams.</p>
@@ -1123,7 +1131,7 @@ mean of x
 <p>Since the p-value is much larger than the significance level <span class="math inline">\(\alpha = 0.05\)</span>, we do not reject the null hypothesis. In other words, the test set does not provide sufficient evidence that the population mean flipper length differs from 200 mm.</p>
 <p>The 95% confidence interval for the population mean flipper length is <span class="math inline">\((196.88,\ 203.72).\)</span> This interval includes 200 mm, which is consistent with the hypothesis test result. Based on these data, an average flipper length of 200 mm is a plausible value for the broader penguin population represented by this sample.</p>
 <p>In plain language, the observed average flipper length is not significantly different from 200 mm, and the small difference between 200.3 mm and 200 mm can reasonably be explained by random sampling variation.</p>
-</section></section><section id="one-sample-z-test-for-the-mean" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="one-sample-z-test-for-the-mean">
+</section></section><section id="sec-one-sample-z-test" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="sec-one-sample-z-test">
 <span class="header-section-number">2.2</span> One-sample z-test for the mean</h2>
 <section id="review-1" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="review-1">
 <span class="header-section-number">2.2.1</span> Review</h3>
@@ -1516,7 +1524,7 @@ mean of x
 <p>Since the p-value is much larger than the significance level <span class="math inline">\(\alpha = 0.05\)</span>, we do not reject the null hypothesis. In other words, the test set does not provide sufficient evidence that the population mean flipper length differs from 200 mm.</p>
 <p>The 95% confidence interval for the population mean flipper length is approximately <span class="math inline">\((197.02,\ 203.58).\)</span> This interval includes 200 mm, which is consistent with the hypothesis test result. Based on these data, and under the assumption that the population standard deviation is known to be 14 mm, a population mean flipper length of 200 mm remains a plausible value.</p>
 <p>In plain language, the observed average flipper length in the test set is very close to 200 mm. Based on this sample and the assumed known population standard deviation, we do not have strong evidence that the population mean flipper length differs from 200 mm.</p>
-</section></section><section id="one-sample-z-test-for-proportions" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="one-sample-z-test-for-proportions">
+</section></section><section id="sec-one-sample-z-test-proportion" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="sec-one-sample-z-test-proportion">
 <span class="header-section-number">2.3</span> One-sample z-test for proportions</h2>
 <section id="review-2" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="review-2">
 <span class="header-section-number">2.3.1</span> Review</h3>

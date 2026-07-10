@@ -109,15 +109,9 @@ Use this test when:
 -   The population variance is **unknown**.
 -   The sample is approximately normal, or the sample size is large enough for the sampling distribution of the sample mean to be approximately normal.
 
-In this section, we focus on the case where the population variance is unknown. The known-variance case will be discussed later using the one-sample `z-test`.
+In this section, we focus on the case where the population variance is unknown. The known-variance case will be discussed later in @sec-one-sample-z-test using the one-sample `z-test`.
 
-The one-sample `t-test` is used when we want to compare a sample mean to a hypothesized population mean. Suppose we observe a random sample of size $n$,
-
-$$
-X_1, X_2, \dots, X_n,
-$$
-
-from a population with unknown mean $\mu$. We want to assess whether the data provide enough evidence to conclude that $\mu$ differs from a specified reference value, denoted by $\mu_0$.
+The one-sample `t-test` is used when we want to compare a sample mean to a specific reference value. Suppose we observe a random sample from a population where both the population mean $\mu$ and population standard deviation $\sigma$ are unknown. We use the sample mean and sample standard deviation to assess whether the population mean appears to differ from the reference value. For example, we may want to know whether the average flipper length of penguins is different from 200 mm.
 
 The main statistical question is:
 
@@ -127,7 +121,23 @@ For example, if the hypothesized value is $\mu_0 = 200$, then the question becom
 
 > **Does the sample provide evidence that the population mean is different from 200?**
 
-Because the population variance is unknown, we estimate it using the sample standard deviation. This additional uncertainty is why the test statistic follows a `t-distribution` rather than a standard normal distribution.
+Because the population variance is unknown, we estimate it using the sample standard deviation. As we will see later in this chapter, this additional uncertainty (estimating the variance) is why the test statistic follows a `t-distribution` rather than a standard normal distribution.
+
+::::: Tip
+::: Tip-header
+Tip: Sample standard deviation
+:::
+
+::: Tip-container
+When the population standard deviation $\sigma$ is unknown, we estimate it using the sample standard deviation:
+
+$$
+s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(X_i - \bar{X})^2}.
+$$
+
+Here, $\bar{X}$ is the sample mean, and $s$ measures how spread out the observations are around the sample mean.
+:::
+:::::
 
 
 ### Study design
