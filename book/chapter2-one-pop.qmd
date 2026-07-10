@@ -172,7 +172,7 @@ To keep the exploratory and inferential parts of the analysis separate, we will 
 
 ### Data Collection and Wrangling
 
-To answer this question, we obtain the `penguins` data set from the `palmerpenguins` package. Note that we treat these data as a sample from a broader population of similar penguins. First, we create a new copy of the data set to avoid modifying the original data directly. This step is optional but it is a good habit when preparing data for analysis from datasets in `R` packages.
+To answer the main statistical question, we obtain the `penguins` data set from the `palmerpenguins` package. We treat these data as a sample from a broader population of similar penguins. First, we create a working copy of the data set. This step is optional, but it is a good habit because it keeps the original data object separate from the version that we clean, filter, and use for analysis.
 
 ::: {.panel-tabset}
 
@@ -227,11 +227,17 @@ Because penguin species differ in their physical measurements, it is helpful to 
 
 ::::: Heads-up
 ::: Heads-up-header
-Quick review!
+A note on random seeds!
 :::
 
 ::: Heads-up-container
-Although both `R` and `Python` allow us to set a random seed, `set.seed(42)` in `R` and `random_state = 42` in `Python` do not generally produce the same random split. This is because the two languages use different random number generators and different splitting algorithms. To make the results from `R` and `Python` directly comparable, we create the training and test sets once in `R` and then pass those same data sets to the Python code.
+Although both `R` and `Python` allow us to set a random seed, `set.seed(42)` in `R` and `random_state = 42` in `Python` do not generally produce the same random split. This is because the two languages use different random number generators and different splitting algorithms. To make the results from `R` and `Python` directly comparable, we create the training and test sets once in `R` and then pass those same data sets to the Python code. Note the following code in `Python` tab:
+
+```python
+train_set = r.train_set.copy()
+test_set = r.test_set.copy()
+```
+
 :::
 :::::
 
@@ -286,7 +292,7 @@ print(test_set["species"].value_counts(normalize=True))
 
 :::
 
-The species proportions in the training and test sets are quite similar. For example, Adelie penguins make up about 44% of both sets, Chinstrap penguins about 20%, and Gentoo penguins about 36%. This suggests that the stratified split worked as intended and that the two sets have comparable species.
+The species proportions in the training and test sets are quite similar. For example, Adelie penguins make up about 44% of both sets, Chinstrap penguins about 20%, and Gentoo penguins about 36%. This suggests that the stratified split worked as intended and that the two sets have comparable proportion of species.
 
 
 ### Exploratory Data Analysis (EDA)
