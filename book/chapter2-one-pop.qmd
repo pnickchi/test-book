@@ -97,7 +97,7 @@ For a single population mean, the choice of test depends on whether the populati
 The choice of test depends on the type of response variable, the information available about the population variance, and the sample size. Each section below introduces the test setup, hypotheses, assumptions, theoretical background, and implementation in both `R` and `Python` using real or simulated data.
 
 
-## One-sample t-test for the mean
+## One-sample t-test for the mean {#sec-one-sample-t-test}
 
 ### Review
 
@@ -662,7 +662,7 @@ The 95% confidence interval for the population mean flipper length is $(196.88,\
 In plain language, the observed average flipper length is not significantly different from 200 mm, and the small difference between 200.3 mm and 200 mm can reasonably be explained by random sampling variation.
 
 
-## One-sample z-test for the mean
+## One-sample z-test for the mean {#sec-one-sample-z-test}
 
 ### Review
 
@@ -1089,7 +1089,7 @@ The 95% confidence interval for the population mean flipper length is approximat
 In plain language, the observed average flipper length in the test set is very close to 200 mm. Based on this sample and the assumed known population standard deviation, we do not have strong evidence that the population mean flipper length differs from 200 mm.
 
 
-## One-sample z-test for proportions
+## One-sample z-test for proportions {#sec-one-sample-z-test-proportion}
 
 ### Review
 
