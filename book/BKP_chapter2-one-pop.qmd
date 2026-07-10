@@ -75,16 +75,16 @@ mindmap
       (Chapter 1: <br/>Tests for One<br/>Continuous<br/>Population Mean)
         {{Unbounded<br/>Response}}
           Known<br/>Population<br/>Variance
-            )One sample<br/>z test(
-          Unknown<br/>Population<br/>Variance
             )One sample<br/>t test(
+          Unknown<br/>Population<br/>Variance
+            )One sample<br/>z test(
         {{Proportion between<br/>0 and 1<br/>obtained from a <br/>Binary Response}}
           )One sample<br/>z test(
       (Chapter 2: <br/>Tests for Two<br/>Continuous<br/>Population Means)
       (Chapter 3: <br/>ANOVA-related <br/>Tests for<br/>k Continuous<br/>Population Means)
 ```
 
-A specific hypothesis testing mind map outlining the techniques explored in this chapter, which are classical tests for one population parameter.
+A specific hypothesis testing mind map outlining the techniques explored in this chapter, which are classical tests for one continuous population mean.
 :::
 
 In this chapter, we review tests for making inference about a single population parameter based on one sample. We focus on two common settings:
@@ -134,7 +134,7 @@ Because the population variance is unknown, we estimate it using the sample stan
 
 Now that we have reviewed the general idea behind the one-sample `t-test`, let us apply it to a real data example. In this section, we use the `penguins` data set from the `palmerpenguins` package in `R`. This data set contains measurements for penguins observed near Palmer Station, Antarctica. Some of the main quantitative variables include `flipper_length_mm`, which records the length of a penguin's flipper in millimetres; `bill_length_mm`, which records the length of the penguin's bill in millimetres; `bill_depth_mm`, which records the depth or thickness of the bill in millimetres; and `body_mass_g`, which records the penguin's body mass in grams.
 
-For this example, the response variable of interest is `flipper_length_mm`, which records penguin flipper length in millimetres. We treat the observed penguins in the data set as a sample from a broader population of similar penguins. Let $\mu$ denote the population mean flipper length of penguins. Suppose we want to compare the population mean flipper length to a reference value of 200 mm. In other words, we want to assess whether the sample provides evidence that the average flipper length in the population is different from 200 mm.
+For this example, the response variable of interest is `flipper_length_mm`, which records penguin flipper length in millimetres. We treat the observed penguins in the data set as a sample from a broader population of similar penguins. Let $\mu$ denotes the population mean flipper length of penguins. Suppose we want to compare the population mean flipper length to a reference value of 200 mm. In other words, we want to assess whether the sample provides evidence that the average flipper length in the population is different from 200 mm.
 
 The main statistical question is:
 
@@ -476,7 +476,7 @@ In words, we are testing whether the test-set data provide sufficient evidence t
 
 ### Test Flavour and Components
 
-The one-sample `t-test` compares the sample mean to the hypothesized population mean. In this example, the hypothesized value is $\mu_0 = 200$ mm. Let $\bar{x}$ denote the sample mean flipper length in the test set, and let $s$ denote the sample standard deviation of flipper length in the test set. If the test set contains $n$ penguins, the test statistic is
+The one-sample `t-test` compares the sample mean to the hypothesized population mean. In this example, the hypothesized value is $\mu_0 = 200$ mm. Let $\bar{x}$ denotes the sample mean flipper length in the test set, and let $s$ denotes the sample standard deviation of flipper length in the test set. If the test set contains $n$ penguins, the test statistic is
 
 $$
 t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}.
@@ -492,63 +492,26 @@ In this formula:
 
 The numerator, $\bar{x} - \mu_0$, measures how far the sample mean is from the hypothesized value. The denominator, $s / \sqrt{n}$, scales this difference by the estimated variability of the sample mean. Therefore, the test statistic measures how many estimated standard errors the sample mean is away from the hypothesized value.
 
-::::: Heads-up
-::: Heads-up-header
-Heads-up!
-:::
+Because the population standard deviation is unknown, we estimate it using the sample standard deviation $s$. Under the null hypothesis, $H_0: \mu = 200$, the test statistic follows a `t-distribution` with $n-1$ degrees of freedom. Since our alternative hypothesis is two-sided, i.e. $H_A: \mu \neq 200$ the p-value measures the probability of observing a test statistic at least as extreme as the one obtained from the data, in either direction, assuming that the null hypothesis is true.
 
-::: Heads-up-container
-The test statistic $t$ is computed from the sample. This means that $t$ itself is a random variable: if we collected a different random sample of penguins, we would likely get a different sample mean $\bar{x}$, a different sample standard deviation $s$, and therefore a different value of $t$.
-:::
-:::::
+At the significance level $\alpha = 0.05$, we reject the null hypothesis if the p-value is less than 0.05. Otherwise, we do not reject the null hypothesis.
 
-Because the population standard deviation is unknown, we estimate it using the sample standard deviation $s$. This is the key reason the null distribution is a `t-distribution` rather than a standard normal distribution.
-
-::::: Tip
-::: Tip-header
-Tip: Null distribution of the test statistic
-:::
-
-::: Tip-container
-Under the null hypothesis,
-
-$$
-H_0: \mu = 200,
-$$
-
-the test statistic
-
-$$
-T = \frac{\bar{X} - \mu_0}{S / \sqrt{n}}
-$$
-
-follows a `t-distribution` with $n - 1$ degrees of freedom:
-
-$$
-T \sim t_{n-1}.
-$$
-
-This distribution describes the values we would expect the test statistic to take if the null hypothesis were true. Since the alternative hypothesis is two-sided, the p-value is computed as
-
-$$
-\textit{p-value} = 2 \times Pr(T_{n-1} \geq |t|),
-$$
-
-where $t$ is the test statistic computed from the observed sample.
-:::
-:::::
 
 ### Inferential Conclusions
 
-The null distribution described above gives us a reference point for deciding whether the observed test statistic is unusually large. In other words, it tells us what values of the test statistic are typical when the null hypothesis is true.
+The goal of the one-sample `t-test` is to decide whether the observed sample mean is far enough from the hypothesized value to provide evidence against the null hypothesis. In this example, the null and alternative hypotheses are:
 
-After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
+$$
+H_0: \mu = 200 \quad \textit{vs} \quad H_a: \mu \neq 200
+$$
+where $\mu$ denotes the population mean flipper length of penguins. The hypothesized value is 200 mm. After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
 
 If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient evidence that the population mean flipper length is different from 200 mm.
 
 If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient evidence that the population mean flipper length is different from 200 mm.
 
 It is important to phrase the second conclusion carefully. Failing to reject the null hypothesis does not prove that the population mean is exactly 200 mm. It only means that, based on the available sample, we do not have enough evidence to conclude that it differs from 200 mm.
+
 
 ### How to run the test in R and Python?
 
@@ -877,63 +840,51 @@ In this formula:
 
 The numerator, $\bar{x} - \mu_0$, measures how far the sample mean is from the hypothesized value. The denominator, $\sigma / \sqrt{n}$, scales this difference by the known standard error of the sample mean. Therefore, the test statistic measures how many standard errors the sample mean is away from the hypothesized value.
 
-::::: Heads-up
-::: Heads-up-header
-Heads-up!
-:::
-
-::: Heads-up-container
-The test statistic $z$ is computed from the sample mean $\bar{x}$. Since the sample mean would change from sample to sample, the test statistic would also change from sample to sample. This is why we need to understand the distribution of the statistic under the null hypothesis.
-:::
-:::::
-
 The key difference between the one-sample `z-test` and the one-sample `t-test` is the standard deviation used in the denominator. For the one-sample `t-test`, the population standard deviation is unknown and is estimated using the sample standard deviation $s$. For the one-sample `z-test`, the population standard deviation $\sigma$ is treated as known.
 
-::::: Tip
-::: Tip-header
-Tip: Null distribution of the test statistic
-:::
-
-::: Tip-container
 Under the null hypothesis,
 
 $$
 H_0: \mu = 200,
 $$
 
-the test statistic
-
-$$
-Z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}}
-$$
-
-follows a standard normal distribution:
+the test statistic follows a standard normal distribution:
 
 $$
 Z \sim N(0, 1).
 $$
 
-This standard normal distribution is the reference distribution used to compute the p-value. Since the alternative hypothesis is two-sided, the p-value is computed as
+Since our alternative hypothesis is two-sided,
 
 $$
-\textit{p-value} = 2 \times Pr(Z \geq |z|),
+H_A: \mu \neq 200,
 $$
 
-where $z$ is the test statistic computed from the observed sample.
-:::
-:::::
+the p-value measures the probability of observing a test statistic at least as extreme as the one obtained from the data, in either direction, assuming that the null hypothesis is true.
+
+At the significance level $\alpha = 0.05$, we reject the null hypothesis if the p-value is less than 0.05. Otherwise, we do not reject the null hypothesis.
+
 
 ### Inferential Conclusions
 
 The goal of the one-sample `z-test` is to decide whether the observed sample mean is far enough from the hypothesized value to provide evidence against the null hypothesis, assuming that the population standard deviation is known.
 
-The null distribution described above tells us what values of the test statistic are typical when $H_0$ is true. After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
+In this example, the null and alternative hypotheses are:
+
+$$
+H_0: \mu = 200 \quad \textit{vs} \quad H_A: \mu \neq 200
+$$
+
+where $\mu$ denotes the population mean flipper length of penguins. The hypothesized value is 200 mm, and the known population standard deviation is assumed to be $\sigma = 14$ mm.
+
+After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
 
 If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient evidence that the population mean flipper length is different from 200 mm.
 
 If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient evidence that the population mean flipper length is different from 200 mm.
 
 As before, failing to reject the null hypothesis does not prove that the population mean is exactly 200 mm. It only means that, based on the available sample and the assumed known population standard deviation, we do not have enough evidence to conclude that it differs from 200 mm.
+
 
 ### How to run the test in R and Python?
 
@@ -1583,57 +1534,42 @@ In this formula:
 
 The numerator, $\hat{p} - p_0$, measures how far the observed sample proportion is from the hypothesized population proportion. The denominator, $\sqrt{p_0(1 - p_0)/n}$, scales this difference by the standard error expected under the null hypothesis. Therefore, the test statistic measures how many standard errors the observed sample proportion is away from the hypothesized value.
 
-::::: Heads-up
-::: Heads-up-header
-Heads-up!
-:::
-
-::: Heads-up-container
-The test statistic $z$ is computed from the sample proportion $\hat{p}$. Since $\hat{p}$ would change from sample to sample, the test statistic would also change from sample to sample. The null distribution tells us what values of $z$ are typical when the true population proportion is $p_0$.
-:::
-:::::
-
-::::: Tip
-::: Tip-header
-Tip: Null distribution of the test statistic
-:::
-
-::: Tip-container
 Under the null hypothesis,
 
 $$
 H_0: p = 0.50,
 $$
 
-and when the normal approximation is reasonable, the test statistic
+and when the normal approximation is reasonable, the test statistic follows a standard normal distribution:
 
 $$
-Z = \frac{\hat{P} - p_0}{\sqrt{p_0(1 - p_0)/n}}
+Z \sim N(0, 1).
 $$
 
-approximately follows a standard normal distribution:
+Since our alternative hypothesis is two-sided,
 
 $$
-Z \approx N(0, 1).
+H_A: p \neq 0.50,
 $$
 
-The word approximately is important here. For a proportion test, the normal distribution is a large-sample approximation. This is why we check that $np_0$ and $n(1-p_0)$ are both reasonably large before using the test.
+the p-value measures the probability of observing a sample proportion at least as far from 0.50 as the one obtained from the data, in either direction, assuming that the null hypothesis is true.
 
-Since the alternative hypothesis is two-sided, the p-value is computed as
+At the significance level $\alpha = 0.05$, we reject the null hypothesis if the p-value is less than 0.05. Otherwise, we do not reject the null hypothesis.
 
-$$
-\textit{p-value} = 2 \times Pr(Z \geq |z|),
-$$
-
-where $z$ is the test statistic computed from the observed sample.
-:::
-:::::
 
 ### Inferential Conclusions
 
 The goal of the one-sample proportion `z-test` is to decide whether the observed sample proportion is far enough from the hypothesized value to provide evidence against the null hypothesis.
 
-The null distribution described above gives us a reference point for deciding whether the observed value of $z$ is unusually large. After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
+In this example, the null and alternative hypotheses are:
+
+$$
+H_0: p = 0.50 \quad \textit{vs} \quad H_A: p \neq 0.50
+$$
+
+where $p$ denotes the population proportion of penguins with body mass greater than 4000 g.
+
+After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
 
 If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient evidence that the population proportion of penguins with body mass greater than 4000 g is different from 50%.
 
