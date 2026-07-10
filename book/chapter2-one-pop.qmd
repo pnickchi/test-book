@@ -142,11 +142,22 @@ Here, $\bar{X}$ is the sample mean, and $s$ measures how spread out the observat
 
 ### Study design
 
-Now that we have reviewed the general idea behind the one-sample `t-test`, let us apply it to a real data example. In this section, we use the `penguins` data set from the `palmerpenguins` package in `R`. This data set contains measurements for penguins observed near Palmer Station, Antarctica. Some of the main quantitative variables include `flipper_length_mm`, which records the length of a penguin's flipper in millimetres; `bill_length_mm`, which records the length of the penguin's bill in millimetres; `bill_depth_mm`, which records the depth or thickness of the bill in millimetres; and `body_mass_g`, which records the penguin's body mass in grams.
+Now that we have reviewed the general idea behind the one-sample `t-test`, let us apply it to a real data example. In this section, we use the `penguins` data set from the `palmerpenguins` package in `R` [@Palmerpenguins]. This data set contains measurements for penguins observed near Palmer Station, Antarctica. Some of the main quantitative variables in the `penguins` data set are summarized in @tbl-penguin-quant-vars.
 
-For this example, the response variable of interest is `flipper_length_mm`, which records penguin flipper length in millimetres. We treat the observed penguins in the data set as a sample from a broader population of similar penguins. Let $\mu$ denote the population mean flipper length of penguins. Suppose we want to compare the population mean flipper length to a reference value of 200 mm. In other words, we want to assess whether the sample provides evidence that the average flipper length in the population is different from 200 mm.
+| Variable | Description | Unit |
+|---|---|---|
+| `flipper_length_mm` | Length of the penguin's flipper | Millimetres |
+| `bill_length_mm` | Length of the penguin's bill | Millimetres |
+| `bill_depth_mm` | Depth or thickness of the penguin's bill | Millimetres |
+| `body_mass_g` | Body mass of the penguin | Grams |
 
-The main statistical question is:
+: Main quantitative variables in the `penguins` data set. {#tbl-penguin-quant-vars}
+
+For this example, the response variable of interest is `flipper_length_mm`, which records penguin flipper length in millimetres (mm). We treat the observed penguins in the data set as a random sample from a broader population of similar penguins. 
+
+Let $\mu$ denote the population mean flipper length of penguins. Suppose we want to compare the population mean flipper length to a reference value of 200 mm. In other words, we want to assess whether the sample provides evidence that the average flipper length in the population is different from 200 mm.
+
+Therefore the main statistical question is:
 
 > **Does the data provide evidence that the population mean flipper length of penguins is different from 200 mm?**
 
