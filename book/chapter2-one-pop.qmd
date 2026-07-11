@@ -719,17 +719,21 @@ In plain language, the observed average flipper length is not significantly diff
 
 ### Review
 
+In @sec-one-sample-t-test, we used the one-sample `t-test` because the population variance was unknown and had to be estimated using the sample standard deviation. In this section, we focus on a different case: the population variance is assumed to be known.
+
+The goal is still the same. We want to compare a sample mean to a hypothesized population mean. The difference is how we measure uncertainty. For the one-sample `t-test`, uncertainty is estimated from the sample using the sample standard deviation. For the one-sample `z-test`, the population standard deviation is treated as known and is used directly as the standard error.
+
+Because the population standard deviation is known in this setting, the test statistic follows a standard normal distribution under the null hypothesis rather than a `t-distribution`.
+
 Use this test when:
 
 -   You have **one sample** from a population.
 -   The response variable is **quantitative** (also known as **continuous**).
 -   You want to test whether the population mean is equal to a specific reference value.
 -   The population variance, or equivalently the population standard deviation, is **known**.
--   The sample is approximately normal, or the sample size is large enough for the sampling distribution of the sample mean to be approximately normal.
+-   The population distribution is approximately normal, or the sample size is large enough for the Central Limit Theorem to make the sampling distribution of the sample mean approximately normal.
 
-In the previous section, we used the one-sample `t-test` because the population variance was unknown and had to be estimated using the sample standard deviation. In this section, we focus on a different case: the population variance is assumed to be known.
-
-The one-sample `z-test` is used when we want to compare a sample mean to a hypothesized population mean and the population standard deviation is known. Suppose we observe a random sample of size $n$,
+Suppose we observe a random sample of size $n$,
 
 $$
 x_1, x_2, \dots, x_n,
@@ -737,7 +741,7 @@ $$
 
 from a population with unknown mean $\mu$ but also known population standard deviation $\sigma$. We want to assess whether the data provide enough evidence to conclude that $\mu$ differs from a specified reference value, denoted by $\mu_0$.
 
-The main statistical question is:
+The main statistical question remains the same:
 
 > **Is the population mean statistically different from the hypothesized value $\mu_0$?**
 
@@ -750,11 +754,20 @@ The key difference from the one-sample `t-test` is how we measure uncertainty. F
 
 ::::: Heads-up
 ::: Heads-up-header
-Quick review!
+Important Note!
 :::
 
 ::: Heads-up-container
-In practice, the population standard deviation is rarely known exactly. The one-sample `z-test` is most appropriate when $\sigma$ is known from reliable external information, such as historical records, a very large previous study, or a well-established measurement process. When $\sigma$ is unknown, the one-sample `t-test` is always the more appropriate choice.
+In real applications, the population standard deviation $\sigma$ is usually not known exactly. Most of the time, we only have access to sample data, so we estimate the standard deviation using the sample standard deviation $s$. In that situation, the one-sample `t-test` is the appropriate method.
+
+The one-sample `z-test` is mainly used when $\sigma$ is available from reliable external information. For example, this might happen when the measurement process has been studied for many years, when historical records provide a stable value of $\sigma$, or when a very large previous study gives a highly reliable estimate of the population standard deviation.
+
+Therefore, the key distinction is:
+
+-   Use the one-sample `z-test` when the population standard deviation $\sigma$ is treated as known.
+
+-   Use the one-sample `t-test` when $\sigma$ is unknown and must be estimated from the sample.
+
 :::
 :::::
 
@@ -773,30 +786,27 @@ The main statistical question is:
 
 > **Does the data provide evidence that the population mean flipper length of penguins is different from 200 mm?**
 
-The difference between this section and the previous one is that we now assume the population standard deviation is known. For this example, suppose that reliable historical records or a very large previous study suggest that the population standard deviation of penguin flipper length is known to be
+For this example, suppose that reliable historical records or a very large previous study suggest that the population standard deviation of penguin flipper length is known to be
 
 $$
 \sigma = 14.
 $$
 
-Because $\sigma$ is treated as known, we use a one-sample `z-test` instead of a one-sample `t-test`.
+Because $\sigma$ is treated as known, we use a one-sample `z-test` instead of a one-sample `t-test`. As before, we will keep the exploratory and inferential parts of the analysis separate. But we will be using the same train and test set.
 
 ::::: Heads-up
 ::: Heads-up-header
-Quick review!
+A note on $\sigma$!
 :::
 
 ::: Heads-up-container
-The value $\sigma = 14$ is used here as an assumed known population standard deviation for teaching purposes. In a real analysis, this value should come from reliable external information, not from the same sample used for the hypothesis test. If the population standard deviation is estimated from the sample, then the one-sample `t-test` is usually the more appropriate method.
+The value $\sigma = 14$ is used here as an assumed known population standard deviation for teaching purposes. In a real analysis, this value should come from reliable external information, not from the same sample used for the hypothesis testing. If the population standard deviation is estimated from the sample, then the one-sample `t-test` is the correct method to use.
 :::
 :::::
 
-As before, we will keep the exploratory and inferential parts of the analysis separate. The training set will be used for exploratory data analysis, and the test set will be used to conduct the formal one-sample `z-test`.
-
-
 ### Data Collection and Wrangling
 
-For the one-sample `z-test`, we use the same cleaned `penguins` data set and the same training and test sets created in the previous section. This keeps the comparison between the one-sample `t-test` and the one-sample `z-test` clear: both tests are applied to the same response variable, the same hypothesis for population mean, and the same test set.
+For the one-sample `z-test`, we use the same cleaned `penguins` data set and the same training and test sets created in @sec-one-sample-t-test. This keeps the comparison between the one-sample `t-test` and the one-sample `z-test` clear: both tests are applied to the same response variable, the same hypothesis for population mean, and the same test set.
 
 The only additional information needed for the `z-test` is the known population standard deviation. In this example, we assume that this value is available from reliable external information and is equal to
 
@@ -918,27 +928,33 @@ Let $\bar{x}$ denote the sample mean flipper length in the test set. If the test
 
 $$
 z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}.
-$$
+$$ {#eq-one-sample-z-statistic}
 
 In this formula:
 
 -   $\bar{x}$ is the sample mean flipper length.
--   $\mu_0$ is the hypothesized population mean, which is 200 mm in this example.
--   $\sigma$ is the known population standard deviation, which is assumed to be 14 mm in this example.
+-   $\mu_0$ is the hypothesized population mean which is 200 mm in this example.
+-   $\sigma$ is the known population standard deviation which is assumed to be 14 mm in this example.
 -   $n$ is the sample size.
 -   $\sigma / \sqrt{n}$ is the standard error of the sample mean.
 
+If the observed sample values are
+
+$$
+x_1, x_2, \dots, x_n,
+$$
+
+then the sample mean $\bar{x}$ is calculated as follows:
+
+$$
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i.
+$$
+
+This sample mean, together with the known population standard deviation $\sigma$, is then used in the test statistic in @eq-one-sample-z-statistic.
+
 The numerator, $\bar{x} - \mu_0$, measures how far the sample mean is from the hypothesized value. The denominator, $\sigma / \sqrt{n}$, scales this difference by the known standard error of the sample mean. Therefore, the test statistic measures how many standard errors the sample mean is away from the hypothesized value.
 
-::::: Heads-up
-::: Heads-up-header
-Heads-up!
-:::
-
-::: Heads-up-container
-The test statistic $z$ is computed from the sample mean $\bar{x}$. Since the sample mean would change from sample to sample, the test statistic would also change from sample to sample. This is why we need to understand the distribution of the statistic under the null hypothesis.
-:::
-:::::
+The test statistic $z$ calculated in @eq-one-sample-z-statistic is computed from the sample. This means that $z$ itself is a random variable and varies from sample to sample: if we collected a different random sample of penguins, we would likely get a different sample mean $\bar{x}$ and therefore a different value of $z$.
 
 The key difference between the one-sample `z-test` and the one-sample `t-test` is the standard deviation used in the denominator. For the one-sample `t-test`, the population standard deviation is unknown and is estimated using the sample standard deviation $s$. For the one-sample `z-test`, the population standard deviation $\sigma$ is treated as known.
 
@@ -954,39 +970,37 @@ $$
 H_0: \mu = 200,
 $$
 
-the test statistic
-
-$$
-Z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}}
-$$
-
-follows a standard normal distribution:
+the test statistic defined in @eq-one-sample-z-statistic follows a standard normal distribution and is usually shown as follows in statistics textbooks:
 
 $$
 Z \sim N(0, 1).
 $$
 
-This standard normal distribution is the reference distribution used to compute the p-value. Since the alternative hypothesis is two-sided, the p-value is computed as
+This distribution describes the values we would expect the test statistic to take if the null hypothesis were true. Since the alternative hypothesis is two-sided, the p-value is computed as
 
 $$
 \textit{p-value} = 2 \times Pr(Z \geq |z|),
 $$
 
-where $z$ is the test statistic computed from the observed sample.
+where $z$ is the test statistic computed from the observed sample in @eq-one-sample-z-statistic. Because the population standard deviation $\sigma$ is treated as known, the null distribution is a standard normal distribution rather than a `t-distribution`.
 :::
 :::::
 
+
 ### Inferential Conclusions
 
-The goal of the one-sample `z-test` is to decide whether the observed sample mean is far enough from the hypothesized value to provide evidence against the null hypothesis, assuming that the population standard deviation is known.
+The null distribution described above gives us a reference point for deciding whether the observed test statistic is unusual. Since we know the sampling distribution of the test statistic in @eq-one-sample-z-statistic under the null hypothesis, we can use this distribution to compute the p-value.
 
-The null distribution described above tells us what values of the test statistic are typical when $H_0$ is true. After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
+In this two-sided test, the p-value measures the probability of observing a test statistic as far from 0 as the one computed from our sample, or even farther, assuming that the null hypothesis is true.
 
-If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient evidence that the population mean flipper length is different from 200 mm.
+After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
 
-If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient evidence that the population mean flipper length is different from 200 mm.
+If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient statistical evidence that the population mean flipper length is different from 200 mm.
 
-As before, failing to reject the null hypothesis does not prove that the population mean is exactly 200 mm. It only means that, based on the available sample and the assumed known population standard deviation, we do not have enough evidence to conclude that it differs from 200 mm.
+If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient statistical evidence that the population mean flipper length is different from 200 mm.
+
+As before, failing to reject the null hypothesis does not prove that the population mean is exactly 200 mm. It only means that, based on the available sample and the assumed known population standard deviation, we do not have enough evidence to conclude that it differs from 200 mm. We should not make a stronger conclusion than what the hypothesis test supports.
+
 
 ### How to run the test in R and Python?
 
@@ -1022,71 +1036,57 @@ test_set = r.test_set.copy()
 # Extract the response variable from the test set
 flipper_test = test_set["flipper_length_mm"]
 
-# Define a helper function for a one-sample z-test with known population sd
-def z_test_mean(x, mu=0, sigma=None, alternative="two-sided", conf_level=0.95):
-    """
-    One-sample z-test for a population mean when the population standard
-    deviation is known.
-    """
+# Hypothesized population mean and known population standard deviation
+mu_0 = 200
+sigma_known = 14
 
-    if sigma is None:
-        raise ValueError("sigma must be provided for a one-sample z-test.")
+# Sample size and sample mean
+n = len(flipper_test)
+sample_mean = flipper_test.mean()
 
-    x = np.asarray(x, dtype=float)
-    x = x[~np.isnan(x)]
+# Standard error using the known population standard deviation
+standard_error = sigma_known / np.sqrt(n)
 
-    n = len(x)
-    sample_mean = np.mean(x)
-    standard_error = sigma / np.sqrt(n)
+# One-sample z-test statistic
+z_stat = (sample_mean - mu_0) / standard_error
 
-    z_stat = (sample_mean - mu) / standard_error
+# Two-sided p-value
+p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
 
-    if alternative == "two-sided":
-        p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
-        z_critical = stats.norm.ppf(1 - (1 - conf_level) / 2)
-        ci_lower = sample_mean - z_critical * standard_error
-        ci_upper = sample_mean + z_critical * standard_error
+# 95% confidence interval
+confidence_level = 0.95
+alpha = 1 - confidence_level
+z_critical = stats.norm.ppf(1 - alpha / 2)
 
-    elif alternative == "greater":
-        p_value = 1 - stats.norm.cdf(z_stat)
-        z_critical = stats.norm.ppf(conf_level)
-        ci_lower = sample_mean - z_critical * standard_error
-        ci_upper = np.inf
+ci_lower = sample_mean - z_critical * standard_error
+ci_upper = sample_mean + z_critical * standard_error
 
-    elif alternative == "less":
-        p_value = stats.norm.cdf(z_stat)
-        z_critical = stats.norm.ppf(conf_level)
-        ci_lower = -np.inf
-        ci_upper = sample_mean + z_critical * standard_error
-
-    else:
-        raise ValueError("alternative must be 'two-sided', 'greater', or 'less'.")
-
-    return pd.DataFrame({
-        "sample_mean": [sample_mean],
-        "known_sigma": [sigma],
-        "sample_size": [n],
-        "standard_error": [standard_error],
-        "z_statistic": [z_stat],
-        "p_value": [p_value],
-        "ci_lower": [ci_lower],
-        "ci_upper": [ci_upper]
-    })
-
-
-# Run one-sample z-test
-z_test_result = z_test_mean(
-    x=flipper_test,
-    mu=200,
-    sigma=14,
-    alternative="two-sided",
-    conf_level=0.95
-)
+# Display results
+z_test_result = pd.DataFrame({
+    "sample_mean": [sample_mean],
+    "known_sigma": [sigma_known],
+    "sample_size": [n],
+    "standard_error": [standard_error],
+    "z_statistic": [z_stat],
+    "p_value": [p_value],
+    "ci_lower": [ci_lower],
+    "ci_upper": [ci_upper]
+})
 
 print(z_test_result)
 ```
 
 :::
+
+::::: Tip
+::: Tip-header
+`Python` implementation of the one-sample z-test
+:::
+
+::: Tip-container
+Unlike the one-sample `t-test`, Python does not have a common built-in function that directly performs the textbook one-sample `z-test` for a mean with a user-specified known population standard deviation. Therefore, we compute the test statistic, p-value, and confidence interval directly from the formula.
+:::
+:::::
 
 **Details about `R` code and output**
 
@@ -1108,27 +1108,35 @@ The output from `BSDA::z.test()` includes the z-statistic, p-value, alternative 
 
 **Details about `Python` code and output**
 
-In `Python`, we define a small helper function called `z_test_mean()` to perform the same calculation. This function mirrors the logic of the one-sample `z-test` with a known population standard deviation.
+In `Python`, we compute the one-sample `z-test` directly from the formula. This is useful because the textbook version of the one-sample `z-test` assumes that the population standard deviation $\sigma$ is known and provided by the user.
 
-The relevant inputs are as follows:
+The relevant quantities in the code are as follows:
 
--   `x` is the numeric vector of observed data values. In this example, `x` is `flipper_test`, which contains the `flipper_length_mm` values from the test set.
+-   `flipper_test` is the numeric vector of observed data values. In this example, it contains the `flipper_length_mm` values from the test set.
 
--   `mu` is the hypothesized population mean under the null hypothesis. In this example, we set `mu = 200`.
+-   `mu_0` is the hypothesized population mean under the null hypothesis. In this example, we set `mu_0 = 200`.
 
--   `sigma` is the known population standard deviation. In this example, we set `sigma = 14`.
+-   `sigma_known` is the known population standard deviation. In this example, we set `sigma_known = 14`.
 
--   `alternative` specifies the direction of the alternative hypothesis. We use `alternative = "two-sided"` because our alternative hypothesis is $H_A: \mu \neq 200$.
+-   `n` is the sample size.
 
--   `conf_level` specifies the confidence level for the confidence interval. We use `conf_level = 0.95`.
+-   `sample_mean` is the observed sample mean, denoted by $\bar{x}$.
 
-Inside the function, we calculate the sample mean, the standard error, the z-statistic, the p-value, and the 95% confidence interval. The standard error is computed using the known population standard deviation:
+-   `standard_error` is the standard error of the sample mean, computed using the known population standard deviation:
 
 $$
 \frac{\sigma}{\sqrt{n}}.
 $$
 
-The output gives the same main quantities as the `R` code: sample mean, known population standard deviation, sample size, standard error, z-statistic, p-value, and 95% confidence interval.
+The z-statistic is then calculated as
+
+$$
+z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}.
+$$
+
+The p-value is computed from the standard normal distribution using `stats.norm.cdf()`. Since this is a two-sided test, the code calculates the probability of observing a z-statistic as far from 0 as the one obtained from the sample, or even farther.
+
+The 95% confidence interval is computed using the standard normal critical value from `stats.norm.ppf()`. The output gives the same main quantities as the `R` code: sample mean, known population standard deviation, sample size, standard error, z-statistic, p-value, and 95% confidence interval.
 
 
 ### Storytelling

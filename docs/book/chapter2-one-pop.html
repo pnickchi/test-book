@@ -1227,21 +1227,23 @@ mean of x
 <span class="header-section-number">2.2</span> One-sample z-test for the mean</h2>
 <section id="review-1" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="review-1">
 <span class="header-section-number">2.2.1</span> Review</h3>
+<p>In <a href="#sec-one-sample-t-test" class="quarto-xref"><span>Section 2.1</span></a>, we used the one-sample <code>t-test</code> because the population variance was unknown and had to be estimated using the sample standard deviation. In this section, we focus on a different case: the population variance is assumed to be known.</p>
+<p>The goal is still the same. We want to compare a sample mean to a hypothesized population mean. The difference is how we measure uncertainty. For the one-sample <code>t-test</code>, uncertainty is estimated from the sample using the sample standard deviation. For the one-sample <code>z-test</code>, the population standard deviation is treated as known and is used directly as the standard error.</p>
+<p>Because the population standard deviation is known in this setting, the test statistic follows a standard normal distribution under the null hypothesis rather than a <code>t-distribution</code>.</p>
 <p>Use this test when:</p>
 <ul>
 <li>You have <strong>one sample</strong> from a population.</li>
 <li>The response variable is <strong>quantitative</strong> (also known as <strong>continuous</strong>).</li>
 <li>You want to test whether the population mean is equal to a specific reference value.</li>
 <li>The population variance, or equivalently the population standard deviation, is <strong>known</strong>.</li>
-<li>The sample is approximately normal, or the sample size is large enough for the sampling distribution of the sample mean to be approximately normal.</li>
+<li>The population distribution is approximately normal, or the sample size is large enough for the Central Limit Theorem to make the sampling distribution of the sample mean approximately normal.</li>
 </ul>
-<p>In the previous section, we used the one-sample <code>t-test</code> because the population variance was unknown and had to be estimated using the sample standard deviation. In this section, we focus on a different case: the population variance is assumed to be known.</p>
-<p>The one-sample <code>z-test</code> is used when we want to compare a sample mean to a hypothesized population mean and the population standard deviation is known. Suppose we observe a random sample of size <span class="math inline">\(n\)</span>,</p>
+<p>Suppose we observe a random sample of size <span class="math inline">\(n\)</span>,</p>
 <p><span class="math display">\[
 x_1, x_2, \dots, x_n,
 \]</span></p>
 <p>from a population with unknown mean <span class="math inline">\(\mu\)</span> but also known population standard deviation <span class="math inline">\(\sigma\)</span>. We want to assess whether the data provide enough evidence to conclude that <span class="math inline">\(\mu\)</span> differs from a specified reference value, denoted by <span class="math inline">\(\mu_0\)</span>.</p>
-<p>The main statistical question is:</p>
+<p>The main statistical question remains the same:</p>
 <blockquote class="blockquote">
 <p><strong>Is the population mean statistically different from the hypothesized value <span class="math inline">\(\mu_0\)</span>?</strong></p>
 </blockquote>
@@ -1252,10 +1254,16 @@ x_1, x_2, \dots, x_n,
 <p>The key difference from the one-sample <code>t-test</code> is how we measure uncertainty. For the <code>t-test</code>, the population standard deviation is unknown, so we estimate it using the sample standard deviation. For the <code>z-test</code>, the population standard deviation <span class="math inline">\(\sigma\)</span> is treated as known. As a result, the test statistic follows a standard normal distribution under the null hypothesis.</p>
 <div class="Heads-up">
 <div class="Heads-up-header">
-<p>Quick review!</p>
+<p>Important Note!</p>
 </div>
 <div class="Heads-up-container">
-<p>In practice, the population standard deviation is rarely known exactly. The one-sample <code>z-test</code> is most appropriate when <span class="math inline">\(\sigma\)</span> is known from reliable external information, such as historical records, a very large previous study, or a well-established measurement process. When <span class="math inline">\(\sigma\)</span> is unknown, the one-sample <code>t-test</code> is always the more appropriate choice.</p>
+<p>In real applications, the population standard deviation <span class="math inline">\(\sigma\)</span> is usually not known exactly. Most of the time, we only have access to sample data, so we estimate the standard deviation using the sample standard deviation <span class="math inline">\(s\)</span>. In that situation, the one-sample <code>t-test</code> is the appropriate method.</p>
+<p>The one-sample <code>z-test</code> is mainly used when <span class="math inline">\(\sigma\)</span> is available from reliable external information. For example, this might happen when the measurement process has been studied for many years, when historical records provide a stable value of <span class="math inline">\(\sigma\)</span>, or when a very large previous study gives a highly reliable estimate of the population standard deviation.</p>
+<p>Therefore, the key distinction is:</p>
+<ul>
+<li><p>Use the one-sample <code>z-test</code> when the population standard deviation <span class="math inline">\(\sigma\)</span> is treated as known.</p></li>
+<li><p>Use the one-sample <code>t-test</code> when <span class="math inline">\(\sigma\)</span> is unknown and must be estimated from the sample.</p></li>
+</ul>
 </div>
 </div>
 </section><section id="study-design-1" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="study-design-1">
@@ -1269,23 +1277,22 @@ x_1, x_2, \dots, x_n,
 <blockquote class="blockquote">
 <p><strong>Does the data provide evidence that the population mean flipper length of penguins is different from 200 mm?</strong></p>
 </blockquote>
-<p>The difference between this section and the previous one is that we now assume the population standard deviation is known. For this example, suppose that reliable historical records or a very large previous study suggest that the population standard deviation of penguin flipper length is known to be</p>
+<p>For this example, suppose that reliable historical records or a very large previous study suggest that the population standard deviation of penguin flipper length is known to be</p>
 <p><span class="math display">\[
 \sigma = 14.
 \]</span></p>
-<p>Because <span class="math inline">\(\sigma\)</span> is treated as known, we use a one-sample <code>z-test</code> instead of a one-sample <code>t-test</code>.</p>
+<p>Because <span class="math inline">\(\sigma\)</span> is treated as known, we use a one-sample <code>z-test</code> instead of a one-sample <code>t-test</code>. As before, we will keep the exploratory and inferential parts of the analysis separate. But we will be using the same train and test set.</p>
 <div class="Heads-up">
 <div class="Heads-up-header">
-<p>Quick review!</p>
+<p>A note on <span class="math inline">\(\sigma\)</span>!</p>
 </div>
 <div class="Heads-up-container">
-<p>The value <span class="math inline">\(\sigma = 14\)</span> is used here as an assumed known population standard deviation for teaching purposes. In a real analysis, this value should come from reliable external information, not from the same sample used for the hypothesis test. If the population standard deviation is estimated from the sample, then the one-sample <code>t-test</code> is usually the more appropriate method.</p>
+<p>The value <span class="math inline">\(\sigma = 14\)</span> is used here as an assumed known population standard deviation for teaching purposes. In a real analysis, this value should come from reliable external information, not from the same sample used for the hypothesis testing. If the population standard deviation is estimated from the sample, then the one-sample <code>t-test</code> is the correct method to use.</p>
 </div>
 </div>
-<p>As before, we will keep the exploratory and inferential parts of the analysis separate. The training set will be used for exploratory data analysis, and the test set will be used to conduct the formal one-sample <code>z-test</code>.</p>
 </section><section id="data-collection-and-wrangling-1" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="data-collection-and-wrangling-1">
 <span class="header-section-number">2.2.3</span> Data Collection and Wrangling</h3>
-<p>For the one-sample <code>z-test</code>, we use the same cleaned <code>penguins</code> data set and the same training and test sets created in the previous section. This keeps the comparison between the one-sample <code>t-test</code> and the one-sample <code>z-test</code> clear: both tests are applied to the same response variable, the same hypothesis for population mean, and the same test set.</p>
+<p>For the one-sample <code>z-test</code>, we use the same cleaned <code>penguins</code> data set and the same training and test sets created in <a href="#sec-one-sample-t-test" class="quarto-xref"><span>Section 2.1</span></a>. This keeps the comparison between the one-sample <code>t-test</code> and the one-sample <code>z-test</code> clear: both tests are applied to the same response variable, the same hypothesis for population mean, and the same test set.</p>
 <p>The only additional information needed for the <code>z-test</code> is the known population standard deviation. In this example, we assume that this value is available from reliable external information and is equal to</p>
 <p><span class="math display">\[
 \sigma = 14.
@@ -1407,31 +1414,33 @@ H_0: \mu = 200 \quad \textit{vs} \quad H_A: \mu \neq 200
 <span class="header-section-number">2.2.7</span> Test Flavour and Components</h3>
 <p>The one-sample <code>z-test</code> compares the sample mean to the hypothesized population mean when the population standard deviation is known. In this example, the hypothesized value is <span class="math inline">\(\mu_0 = 200\)</span> mm, and the known population standard deviation is assumed to be <span class="math inline">\(\sigma = 14\)</span> mm.</p>
 <p>Let <span class="math inline">\(\bar{x}\)</span> denote the sample mean flipper length in the test set. If the test set contains <span class="math inline">\(n\)</span> penguins, the test statistic is</p>
-<p><span class="math display">\[
+<p><span id="eq-one-sample-z-statistic"><span class="math display">\[
 z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}.
-\]</span></p>
+\tag{2.2}\]</span></span></p>
 <p>In this formula:</p>
 <ul>
 <li>
 <span class="math inline">\(\bar{x}\)</span> is the sample mean flipper length.</li>
 <li>
-<span class="math inline">\(\mu_0\)</span> is the hypothesized population mean, which is 200 mm in this example.</li>
+<span class="math inline">\(\mu_0\)</span> is the hypothesized population mean which is 200 mm in this example.</li>
 <li>
-<span class="math inline">\(\sigma\)</span> is the known population standard deviation, which is assumed to be 14 mm in this example.</li>
+<span class="math inline">\(\sigma\)</span> is the known population standard deviation which is assumed to be 14 mm in this example.</li>
 <li>
 <span class="math inline">\(n\)</span> is the sample size.</li>
 <li>
 <span class="math inline">\(\sigma / \sqrt{n}\)</span> is the standard error of the sample mean.</li>
 </ul>
+<p>If the observed sample values are</p>
+<p><span class="math display">\[
+x_1, x_2, \dots, x_n,
+\]</span></p>
+<p>then the sample mean <span class="math inline">\(\bar{x}\)</span> is calculated as follows:</p>
+<p><span class="math display">\[
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i.
+\]</span></p>
+<p>This sample mean, together with the known population standard deviation <span class="math inline">\(\sigma\)</span>, is then used in the test statistic in <a href="#eq-one-sample-z-statistic" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>.</p>
 <p>The numerator, <span class="math inline">\(\bar{x} - \mu_0\)</span>, measures how far the sample mean is from the hypothesized value. The denominator, <span class="math inline">\(\sigma / \sqrt{n}\)</span>, scales this difference by the known standard error of the sample mean. Therefore, the test statistic measures how many standard errors the sample mean is away from the hypothesized value.</p>
-<div class="Heads-up">
-<div class="Heads-up-header">
-<p>Heads-up!</p>
-</div>
-<div class="Heads-up-container">
-<p>The test statistic <span class="math inline">\(z\)</span> is computed from the sample mean <span class="math inline">\(\bar{x}\)</span>. Since the sample mean would change from sample to sample, the test statistic would also change from sample to sample. This is why we need to understand the distribution of the statistic under the null hypothesis.</p>
-</div>
-</div>
+<p>The test statistic <span class="math inline">\(z\)</span> calculated in <a href="#eq-one-sample-z-statistic" class="quarto-xref">Equation&nbsp;<span>2.2</span></a> is computed from the sample. This means that <span class="math inline">\(z\)</span> itself is a random variable and varies from sample to sample: if we collected a different random sample of penguins, we would likely get a different sample mean <span class="math inline">\(\bar{x}\)</span> and therefore a different value of <span class="math inline">\(z\)</span>.</p>
 <p>The key difference between the one-sample <code>z-test</code> and the one-sample <code>t-test</code> is the standard deviation used in the denominator. For the one-sample <code>t-test</code>, the population standard deviation is unknown and is estimated using the sample standard deviation <span class="math inline">\(s\)</span>. For the one-sample <code>z-test</code>, the population standard deviation <span class="math inline">\(\sigma\)</span> is treated as known.</p>
 <div class="Tip">
 <div class="Tip-header">
@@ -1442,28 +1451,25 @@ z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}.
 <p><span class="math display">\[
 H_0: \mu = 200,
 \]</span></p>
-<p>the test statistic</p>
-<p><span class="math display">\[
-Z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}}
-\]</span></p>
-<p>follows a standard normal distribution:</p>
+<p>the test statistic defined in <a href="#eq-one-sample-z-statistic" class="quarto-xref">Equation&nbsp;<span>2.2</span></a> follows a standard normal distribution and is usually shown as follows in statistics textbooks:</p>
 <p><span class="math display">\[
 Z \sim N(0, 1).
 \]</span></p>
-<p>This standard normal distribution is the reference distribution used to compute the p-value. Since the alternative hypothesis is two-sided, the p-value is computed as</p>
+<p>This distribution describes the values we would expect the test statistic to take if the null hypothesis were true. Since the alternative hypothesis is two-sided, the p-value is computed as</p>
 <p><span class="math display">\[
 \textit{p-value} = 2 \times Pr(Z \geq |z|),
 \]</span></p>
-<p>where <span class="math inline">\(z\)</span> is the test statistic computed from the observed sample.</p>
+<p>where <span class="math inline">\(z\)</span> is the test statistic computed from the observed sample in <a href="#eq-one-sample-z-statistic" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>. Because the population standard deviation <span class="math inline">\(\sigma\)</span> is treated as known, the null distribution is a standard normal distribution rather than a <code>t-distribution</code>.</p>
 </div>
 </div>
 </section><section id="inferential-conclusions-1" class="level3" data-number="2.2.8"><h3 data-number="2.2.8" class="anchored" data-anchor-id="inferential-conclusions-1">
 <span class="header-section-number">2.2.8</span> Inferential Conclusions</h3>
-<p>The goal of the one-sample <code>z-test</code> is to decide whether the observed sample mean is far enough from the hypothesized value to provide evidence against the null hypothesis, assuming that the population standard deviation is known.</p>
-<p>The null distribution described above tells us what values of the test statistic are typical when <span class="math inline">\(H_0\)</span> is true. After computing the test statistic and p-value, we compare the p-value to the significance level <span class="math inline">\(\alpha = 0.05\)</span>.</p>
-<p>If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient evidence that the population mean flipper length is different from 200 mm.</p>
-<p>If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient evidence that the population mean flipper length is different from 200 mm.</p>
-<p>As before, failing to reject the null hypothesis does not prove that the population mean is exactly 200 mm. It only means that, based on the available sample and the assumed known population standard deviation, we do not have enough evidence to conclude that it differs from 200 mm.</p>
+<p>The null distribution described above gives us a reference point for deciding whether the observed test statistic is unusual. Since we know the sampling distribution of the test statistic in <a href="#eq-one-sample-z-statistic" class="quarto-xref">Equation&nbsp;<span>2.2</span></a> under the null hypothesis, we can use this distribution to compute the p-value.</p>
+<p>In this two-sided test, the p-value measures the probability of observing a test statistic as far from 0 as the one computed from our sample, or even farther, assuming that the null hypothesis is true.</p>
+<p>After computing the test statistic and p-value, we compare the p-value to the significance level <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient statistical evidence that the population mean flipper length is different from 200 mm.</p>
+<p>If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient statistical evidence that the population mean flipper length is different from 200 mm.</p>
+<p>As before, failing to reject the null hypothesis does not prove that the population mean is exactly 200 mm. It only means that, based on the available sample and the assumed known population standard deviation, we do not have enough evidence to conclude that it differs from 200 mm. We should not make a stronger conclusion than what the hypothesis test supports.</p>
 </section><section id="how-to-run-the-test-in-r-and-python-1" class="level3" data-number="2.2.9"><h3 data-number="2.2.9" class="anchored" data-anchor-id="how-to-run-the-test-in-r-and-python-1">
 <span class="header-section-number">2.2.9</span> How to run the test in R and Python?</h3>
 <p>We now conduct the formal one-sample <code>z-test</code> using the test set. Recall that the training set was used for exploratory data analysis, while the test set is reserved for the formal hypothesis test. The test compares the sample mean of <code>flipper_length_mm</code> to the hypothesized value <span class="math inline">\(\mu_0 = 200\)</span>, assuming that the population standard deviation is known and equal to <span class="math inline">\(\sigma = 14\)</span>.</p>
@@ -1512,68 +1518,44 @@ mean of x
 <span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the response variable from the test set</span></span>
 <span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a>flipper_test <span class="op">=</span> test_set[<span class="st">"flipper_length_mm"</span>]</span>
 <span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a helper function for a one-sample z-test with known population sd</span></span>
-<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> z_test_mean(x, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="va">None</span>, alternative<span class="op">=</span><span class="st">"two-sided"</span>, conf_level<span class="op">=</span><span class="fl">0.95</span>):</span>
-<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb78-14"><a href="#cb78-14" aria-hidden="true" tabindex="-1"></a><span class="co">    One-sample z-test for a population mean when the population standard</span></span>
-<span id="cb78-15"><a href="#cb78-15" aria-hidden="true" tabindex="-1"></a><span class="co">    deviation is known.</span></span>
-<span id="cb78-16"><a href="#cb78-16" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb78-17"><a href="#cb78-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-18"><a href="#cb78-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sigma <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb78-19"><a href="#cb78-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"sigma must be provided for a one-sample z-test."</span>)</span>
-<span id="cb78-20"><a href="#cb78-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-21"><a href="#cb78-21" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.asarray(x, dtype<span class="op">=</span><span class="bu">float</span>)</span>
-<span id="cb78-22"><a href="#cb78-22" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> x[<span class="op">~</span>np.isnan(x)]</span>
-<span id="cb78-23"><a href="#cb78-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-24"><a href="#cb78-24" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
-<span id="cb78-25"><a href="#cb78-25" aria-hidden="true" tabindex="-1"></a>    sample_mean <span class="op">=</span> np.mean(x)</span>
-<span id="cb78-26"><a href="#cb78-26" aria-hidden="true" tabindex="-1"></a>    standard_error <span class="op">=</span> sigma <span class="op">/</span> np.sqrt(n)</span>
+<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Hypothesized population mean and known population standard deviation</span></span>
+<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a>mu_0 <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a>sigma_known <span class="op">=</span> <span class="dv">14</span></span>
+<span id="cb78-14"><a href="#cb78-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-15"><a href="#cb78-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size and sample mean</span></span>
+<span id="cb78-16"><a href="#cb78-16" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(flipper_test)</span>
+<span id="cb78-17"><a href="#cb78-17" aria-hidden="true" tabindex="-1"></a>sample_mean <span class="op">=</span> flipper_test.mean()</span>
+<span id="cb78-18"><a href="#cb78-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-19"><a href="#cb78-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard error using the known population standard deviation</span></span>
+<span id="cb78-20"><a href="#cb78-20" aria-hidden="true" tabindex="-1"></a>standard_error <span class="op">=</span> sigma_known <span class="op">/</span> np.sqrt(n)</span>
+<span id="cb78-21"><a href="#cb78-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-22"><a href="#cb78-22" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sample z-test statistic</span></span>
+<span id="cb78-23"><a href="#cb78-23" aria-hidden="true" tabindex="-1"></a>z_stat <span class="op">=</span> (sample_mean <span class="op">-</span> mu_0) <span class="op">/</span> standard_error</span>
+<span id="cb78-24"><a href="#cb78-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-25"><a href="#cb78-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-sided p-value</span></span>
+<span id="cb78-26"><a href="#cb78-26" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
 <span id="cb78-27"><a href="#cb78-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-28"><a href="#cb78-28" aria-hidden="true" tabindex="-1"></a>    z_stat <span class="op">=</span> (sample_mean <span class="op">-</span> mu) <span class="op">/</span> standard_error</span>
-<span id="cb78-29"><a href="#cb78-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-30"><a href="#cb78-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> alternative <span class="op">==</span> <span class="st">"two-sided"</span>:</span>
-<span id="cb78-31"><a href="#cb78-31" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z_stat)))</span>
-<span id="cb78-32"><a href="#cb78-32" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(<span class="dv">1</span> <span class="op">-</span> (<span class="dv">1</span> <span class="op">-</span> conf_level) <span class="op">/</span> <span class="dv">2</span>)</span>
-<span id="cb78-33"><a href="#cb78-33" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> sample_mean <span class="op">-</span> z_critical <span class="op">*</span> standard_error</span>
-<span id="cb78-34"><a href="#cb78-34" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> sample_mean <span class="op">+</span> z_critical <span class="op">*</span> standard_error</span>
+<span id="cb78-28"><a href="#cb78-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% confidence interval</span></span>
+<span id="cb78-29"><a href="#cb78-29" aria-hidden="true" tabindex="-1"></a>confidence_level <span class="op">=</span> <span class="fl">0.95</span></span>
+<span id="cb78-30"><a href="#cb78-30" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> confidence_level</span>
+<span id="cb78-31"><a href="#cb78-31" aria-hidden="true" tabindex="-1"></a>z_critical <span class="op">=</span> stats.norm.ppf(<span class="dv">1</span> <span class="op">-</span> alpha <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb78-32"><a href="#cb78-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-33"><a href="#cb78-33" aria-hidden="true" tabindex="-1"></a>ci_lower <span class="op">=</span> sample_mean <span class="op">-</span> z_critical <span class="op">*</span> standard_error</span>
+<span id="cb78-34"><a href="#cb78-34" aria-hidden="true" tabindex="-1"></a>ci_upper <span class="op">=</span> sample_mean <span class="op">+</span> z_critical <span class="op">*</span> standard_error</span>
 <span id="cb78-35"><a href="#cb78-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-36"><a href="#cb78-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> alternative <span class="op">==</span> <span class="st">"greater"</span>:</span>
-<span id="cb78-37"><a href="#cb78-37" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(z_stat)</span>
-<span id="cb78-38"><a href="#cb78-38" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(conf_level)</span>
-<span id="cb78-39"><a href="#cb78-39" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> sample_mean <span class="op">-</span> z_critical <span class="op">*</span> standard_error</span>
-<span id="cb78-40"><a href="#cb78-40" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> np.inf</span>
-<span id="cb78-41"><a href="#cb78-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-42"><a href="#cb78-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> alternative <span class="op">==</span> <span class="st">"less"</span>:</span>
-<span id="cb78-43"><a href="#cb78-43" aria-hidden="true" tabindex="-1"></a>        p_value <span class="op">=</span> stats.norm.cdf(z_stat)</span>
-<span id="cb78-44"><a href="#cb78-44" aria-hidden="true" tabindex="-1"></a>        z_critical <span class="op">=</span> stats.norm.ppf(conf_level)</span>
-<span id="cb78-45"><a href="#cb78-45" aria-hidden="true" tabindex="-1"></a>        ci_lower <span class="op">=</span> <span class="op">-</span>np.inf</span>
-<span id="cb78-46"><a href="#cb78-46" aria-hidden="true" tabindex="-1"></a>        ci_upper <span class="op">=</span> sample_mean <span class="op">+</span> z_critical <span class="op">*</span> standard_error</span>
+<span id="cb78-36"><a href="#cb78-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
+<span id="cb78-37"><a href="#cb78-37" aria-hidden="true" tabindex="-1"></a>z_test_result <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb78-38"><a href="#cb78-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sample_mean"</span>: [sample_mean],</span>
+<span id="cb78-39"><a href="#cb78-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"known_sigma"</span>: [sigma_known],</span>
+<span id="cb78-40"><a href="#cb78-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sample_size"</span>: [n],</span>
+<span id="cb78-41"><a href="#cb78-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"standard_error"</span>: [standard_error],</span>
+<span id="cb78-42"><a href="#cb78-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"z_statistic"</span>: [z_stat],</span>
+<span id="cb78-43"><a href="#cb78-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p_value"</span>: [p_value],</span>
+<span id="cb78-44"><a href="#cb78-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ci_lower"</span>: [ci_lower],</span>
+<span id="cb78-45"><a href="#cb78-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ci_upper"</span>: [ci_upper]</span>
+<span id="cb78-46"><a href="#cb78-46" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb78-47"><a href="#cb78-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-48"><a href="#cb78-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb78-49"><a href="#cb78-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"alternative must be 'two-sided', 'greater', or 'less'."</span>)</span>
-<span id="cb78-50"><a href="#cb78-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-51"><a href="#cb78-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame({</span>
-<span id="cb78-52"><a href="#cb78-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sample_mean"</span>: [sample_mean],</span>
-<span id="cb78-53"><a href="#cb78-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">"known_sigma"</span>: [sigma],</span>
-<span id="cb78-54"><a href="#cb78-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sample_size"</span>: [n],</span>
-<span id="cb78-55"><a href="#cb78-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"standard_error"</span>: [standard_error],</span>
-<span id="cb78-56"><a href="#cb78-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">"z_statistic"</span>: [z_stat],</span>
-<span id="cb78-57"><a href="#cb78-57" aria-hidden="true" tabindex="-1"></a>        <span class="st">"p_value"</span>: [p_value],</span>
-<span id="cb78-58"><a href="#cb78-58" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ci_lower"</span>: [ci_lower],</span>
-<span id="cb78-59"><a href="#cb78-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ci_upper"</span>: [ci_upper]</span>
-<span id="cb78-60"><a href="#cb78-60" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb78-61"><a href="#cb78-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-62"><a href="#cb78-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-63"><a href="#cb78-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Run one-sample z-test</span></span>
-<span id="cb78-64"><a href="#cb78-64" aria-hidden="true" tabindex="-1"></a>z_test_result <span class="op">=</span> z_test_mean(</span>
-<span id="cb78-65"><a href="#cb78-65" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>flipper_test,</span>
-<span id="cb78-66"><a href="#cb78-66" aria-hidden="true" tabindex="-1"></a>    mu<span class="op">=</span><span class="dv">200</span>,</span>
-<span id="cb78-67"><a href="#cb78-67" aria-hidden="true" tabindex="-1"></a>    sigma<span class="op">=</span><span class="dv">14</span>,</span>
-<span id="cb78-68"><a href="#cb78-68" aria-hidden="true" tabindex="-1"></a>    alternative<span class="op">=</span><span class="st">"two-sided"</span>,</span>
-<span id="cb78-69"><a href="#cb78-69" aria-hidden="true" tabindex="-1"></a>    conf_level<span class="op">=</span><span class="fl">0.95</span></span>
-<span id="cb78-70"><a href="#cb78-70" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb78-71"><a href="#cb78-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-72"><a href="#cb78-72" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z_test_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb78-48"><a href="#cb78-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z_test_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   sample_mean  known_sigma  sample_size  ...   p_value    ci_lower    ci_upper
 0        200.3           14           70  ...  0.857714  197.020353  203.579647
@@ -1582,6 +1564,14 @@ mean of x
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="Tip">
+<div class="Tip-header">
+<p><code>Python</code> implementation of the one-sample z-test</p>
+</div>
+<div class="Tip-container">
+<p>Unlike the one-sample <code>t-test</code>, Python does not have a common built-in function that directly performs the textbook one-sample <code>z-test</code> for a mean with a user-specified known population standard deviation. Therefore, we compute the test statistic, p-value, and confidence interval directly from the formula.</p>
 </div>
 </div>
 <p><strong>Details about <code>R</code> code and output</strong></p>
@@ -1596,20 +1586,25 @@ mean of x
 </ul>
 <p>The output from <code><a href="https://alanarnholt.github.io/BSDA/reference/z.test.html">BSDA::z.test()</a></code> includes the z-statistic, p-value, alternative hypothesis, confidence interval, and sample mean. The p-value is used to decide whether to reject the null hypothesis at the chosen significance level. The confidence interval gives a range of plausible values for the population mean flipper length, assuming the population standard deviation is known.</p>
 <p><strong>Details about <code>Python</code> code and output</strong></p>
-<p>In <code>Python</code>, we define a small helper function called <code>z_test_mean()</code> to perform the same calculation. This function mirrors the logic of the one-sample <code>z-test</code> with a known population standard deviation.</p>
-<p>The relevant inputs are as follows:</p>
+<p>In <code>Python</code>, we compute the one-sample <code>z-test</code> directly from the formula. This is useful because the textbook version of the one-sample <code>z-test</code> assumes that the population standard deviation <span class="math inline">\(\sigma\)</span> is known and provided by the user.</p>
+<p>The relevant quantities in the code are as follows:</p>
 <ul>
-<li><p><code>x</code> is the numeric vector of observed data values. In this example, <code>x</code> is <code>flipper_test</code>, which contains the <code>flipper_length_mm</code> values from the test set.</p></li>
-<li><p><code>mu</code> is the hypothesized population mean under the null hypothesis. In this example, we set <code>mu = 200</code>.</p></li>
-<li><p><code>sigma</code> is the known population standard deviation. In this example, we set <code>sigma = 14</code>.</p></li>
-<li><p><code>alternative</code> specifies the direction of the alternative hypothesis. We use <code>alternative = "two-sided"</code> because our alternative hypothesis is <span class="math inline">\(H_A: \mu \neq 200\)</span>.</p></li>
-<li><p><code>conf_level</code> specifies the confidence level for the confidence interval. We use <code>conf_level = 0.95</code>.</p></li>
+<li><p><code>flipper_test</code> is the numeric vector of observed data values. In this example, it contains the <code>flipper_length_mm</code> values from the test set.</p></li>
+<li><p><code>mu_0</code> is the hypothesized population mean under the null hypothesis. In this example, we set <code>mu_0 = 200</code>.</p></li>
+<li><p><code>sigma_known</code> is the known population standard deviation. In this example, we set <code>sigma_known = 14</code>.</p></li>
+<li><p><code>n</code> is the sample size.</p></li>
+<li><p><code>sample_mean</code> is the observed sample mean, denoted by <span class="math inline">\(\bar{x}\)</span>.</p></li>
+<li><p><code>standard_error</code> is the standard error of the sample mean, computed using the known population standard deviation:</p></li>
 </ul>
-<p>Inside the function, we calculate the sample mean, the standard error, the z-statistic, the p-value, and the 95% confidence interval. The standard error is computed using the known population standard deviation:</p>
 <p><span class="math display">\[
 \frac{\sigma}{\sqrt{n}}.
 \]</span></p>
-<p>The output gives the same main quantities as the <code>R</code> code: sample mean, known population standard deviation, sample size, standard error, z-statistic, p-value, and 95% confidence interval.</p>
+<p>The z-statistic is then calculated as</p>
+<p><span class="math display">\[
+z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}.
+\]</span></p>
+<p>The p-value is computed from the standard normal distribution using <code>stats.norm.cdf()</code>. Since this is a two-sided test, the code calculates the probability of observing a z-statistic as far from 0 as the one obtained from the sample, or even farther.</p>
+<p>The 95% confidence interval is computed using the standard normal critical value from <code>stats.norm.ppf()</code>. The output gives the same main quantities as the <code>R</code> code: sample mean, known population standard deviation, sample size, standard error, z-statistic, p-value, and 95% confidence interval.</p>
 </section><section id="storytelling-1" class="level3" data-number="2.2.10"><h3 data-number="2.2.10" class="anchored" data-anchor-id="storytelling-1">
 <span class="header-section-number">2.2.10</span> Storytelling</h3>
 <p>Based on the test set, the average flipper length is about 200.3 mm, which is very close to the hypothesized value of 200 mm. Using the assumed known population standard deviation of 14 mm, the one-sample <code>z-test</code> gives a z-statistic close to 0 and a large p-value.</p>
