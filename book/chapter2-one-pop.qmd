@@ -1171,25 +1171,15 @@ Y_i =
 \end{cases}
 $$
 
-The population parameter of interest is $p$, which denotes the population proportion of observations with the characteristic of interest. In this section, the characteristic of interest is having body mass greater than 4000 g. Therefore, $p$ represents the population proportion of penguins whose body mass is greater than 4000 g.
+The population parameter of interest is $p$, which denotes the population proportion of observations with the characteristic of interest. From the sample, we estimate $p$ using the sample proportion, denoted by $\hat{p}$.
 
-From the sample, we estimate $p$ using the sample proportion, denoted by $\hat{p}$. To calculate $\hat{p}$, we first count the number of observations that have the characteristic of interest. In our example, this is the number of penguins with `body_mass_g > 4000`. We then divide this count by the total sample size.
-
-If $x$ denotes the number of penguins with body mass greater than 4000 g, and $n$ denotes the total number of penguins in the sample, then the sample proportion is
+To calculate $\hat{p}$, we count the number of observations that have the characteristic of interest and divide this count by the total sample size. If $x$ denotes the number of observations with the characteristic of interest and $n$ denotes the total sample size, then
 
 $$
 \hat{p} = \frac{x}{n}.
 $$
 
-For example, if 37 out of 70 penguins in the test set have body mass greater than 4000 g, then
-
-$$
-\hat{p} = \frac{37}{70} \approx 0.529.
-$$
-
-This means that about 52.9% of penguins in the test set have body mass greater than 4000 g. We use this sample proportion, $\hat{p}$, as an estimate of the unknown population proportion $p$.
-
-Now back to the main statistical question we would like to test and answer this inferential question:
+The main statistical question is:
 
 > **Is the population proportion statistically different from the hypothesized value $p_0$?**
 
@@ -1211,16 +1201,14 @@ $$
 
 For example, if the hypothesized population proportion is $p_0 = 0.50$, then the question becomes:
 
-> **Does the sample provide evidence that the population proportion of penguins with body mass above 4000 g is different from 50%?**
-
+> **Does the sample provide evidence that the population proportion of penguins with body mass greater than 4000 g is different from 50%?**
 
 ::::: Heads-up
 ::: Heads-up-header
-Heads up!
+Normal approximation condition
 :::
 
 ::: Heads-up-container
-
 The one-sample proportion `z-test` relies on a normal approximation to the sampling distribution of $\hat{p}$. A common rule of thumb is that the expected number of observations in each category under the null hypothesis should be reasonably large:
 
 $$
@@ -1234,21 +1222,27 @@ n(1 - p_0) \geq 10.
 $$
 
 When these conditions are satisfied, the `z-test` provides a reasonable large-sample test for the population proportion.
-
 :::
 :::::
 
+::::: Tip
+::: Tip-header
+Tip: Defining the binary outcome
+:::
 
+::: Tip-container
 In this example, we create a binary variable from a quantitative variable by choosing the cutoff `body_mass_g > 4000`. This is useful for teaching the mechanics of a one-sample proportion test. In a real analysis, the cutoff should be chosen before conducting the formal test and should have a meaningful scientific or practical interpretation.
+:::
+:::::
 
 
 ### Study design
 
 We continue with the `penguins` data set from the `palmerpenguins` package. In the previous sections, we studied the population mean of a quantitative variable. In this section, we change the focus from a population mean to a population proportion.
 
-The quantitative variable `body_mass_g` records a penguin's body mass in grams. To create a binary response variable, we classify each penguin based on whether its body mass is greater than 4000 g. Penguins with body mass greater than 4000 g are coded as 1, and penguins with body mass less than or equal to 4000 g are coded as 0. 
+The quantitative variable `body_mass_g` records a penguin's body mass in grams. To create a binary response variable, we classify each penguin based on whether its body mass is greater than 4000 g. Penguins with body mass greater than 4000 g are coded as 1, and penguins with body mass less than or equal to 4000 g are coded as 0.
 
-Let $p$ denote the population proportion of penguins with body mass greater than 4000 g. Suppose we want to compare this population proportion to the reference value $p_0 = 0.50.$
+Let $p$ denote the population proportion of penguins with body mass greater than 4000 g. Suppose we want to compare this population proportion to the reference value $p_0 = 0.50$.
 
 The main statistical question is:
 
@@ -1273,7 +1267,7 @@ $$
 \end{cases}
 $$
 
-We create this variable in both the training set and the test set. The training set will be used for exploratory data analysis, while the test set will be used for the formal one-sample proportion `z-test`.
+We create this variable in both the training set and the test set. We also create a descriptive version of the variable, called `body_mass_group`, to make the tables and plots easier to read.
 
 ::: {.panel-tabset}
 
@@ -1286,16 +1280,26 @@ p0 <- 0.50
 # Create binary response variable in the training set
 train_prop <- train_set |>
   dplyr::mutate(
-    is_heavy = if_else(body_mass_g > 4000, 1, 0)
+    is_heavy = dplyr::if_else(body_mass_g > 4000, 1, 0),
+    body_mass_group = dplyr::if_else(
+      is_heavy == 1,
+      "Body mass > 4000 g",
+      "Body mass <= 4000 g"
+    )
   )
 
 # Create binary response variable in the test set
 test_prop <- test_set |>
   dplyr::mutate(
-    is_heavy = if_else(body_mass_g > 4000, 1, 0)
+    is_heavy = dplyr::if_else(body_mass_g > 4000, 1, 0),
+    body_mass_group = dplyr::if_else(
+      is_heavy == 1,
+      "Body mass > 4000 g",
+      "Body mass <= 4000 g"
+    )
   )
 
-# Sanity check for the training set
+# Sanity check for the training and test sets
 cat("Training shape:", dim(train_prop), "\n")
 cat("Testing shape:", dim(test_prop), "\n\n")
 
@@ -1352,7 +1356,6 @@ Before conducting the formal one-sample proportion `z-test`, we use the training
 
 We begin by summarizing the number and proportion of penguins in each category.
 
-
 ::: {.panel-tabset}
 
 ### R Code
@@ -1360,13 +1363,6 @@ We begin by summarizing the number and proportion of penguins in each category.
 ```{r}
 # Count and proportion of the binary response in the training set
 heavy_summary <- train_prop |>
-  dplyr::mutate(
-    body_mass_group = dplyr::if_else(
-      is_heavy == 1,
-      "Body mass > 4000 g",
-      "Body mass <= 4000 g"
-    )
-  ) |>
   dplyr::count(body_mass_group, is_heavy) |>
   dplyr::mutate(
     proportion = n / sum(n)
@@ -1380,36 +1376,33 @@ heavy_summary
 ```{python}
 # Count and proportion of the binary response in the training set
 heavy_summary = (
-    train_prop["is_heavy"]
-    .value_counts()
-    .sort_index()
-    .reset_index()
+    train_prop
+    .groupby(["body_mass_group", "is_heavy"])
+    .size()
+    .reset_index(name="n")
 )
 
-heavy_summary.columns = ["is_heavy", "n"]
 heavy_summary["proportion"] = heavy_summary["n"] / heavy_summary["n"].sum()
-heavy_summary["body_mass_group"] = heavy_summary["is_heavy"].map({
-    0: "Body mass <= 4000 g",
-    1: "Body mass > 4000 g"
-})
 
 print(heavy_summary)
 ```
 
 :::
 
-
 In the training set, 137 penguins have body mass less than or equal to 4000 g, while 135 penguins have body mass greater than 4000 g. This corresponds to proportions of approximately 0.504 and 0.496, respectively. Therefore, the two body-mass categories are almost evenly balanced in the training set.
 
 Since the one-sample proportion `z-test` compares an observed sample proportion to a hypothesized value, the sample proportion of penguins with `is_heavy = 1` is the main quantity of interest. In the training set, this proportion is about 0.496, which is very close to the reference value $p_0 = 0.50$ that we will use in the formal test.
 
-Next, we visualize the binary response using a bar plot. This helps us see whether the two categories are roughly balanced or whether one category is much more common than the other.
+Next, we visualize the binary response using a bar plot. This helps us see whether the two categories are roughly balanced or whether one category is much more common than the other. The bar plots are shown in @fig-body-mass-category-bar-r and @fig-body-mass-category-bar-python.
 
 ::: {.panel-tabset}
 
 ### R Code
 
 ```{r}
+#| label: fig-body-mass-category-bar-r
+#| fig-cap: "Counts by body mass category in the training set using R."
+
 ggplot(heavy_summary, aes(x = body_mass_group, y = n, fill = body_mass_group)) +
   geom_col(color = "black") +
   labs(
@@ -1430,6 +1423,9 @@ ggplot(heavy_summary, aes(x = body_mass_group, y = n, fill = body_mass_group)) +
 ### Python Code
 
 ```{python}
+#| label: fig-body-mass-category-bar-python
+#| fig-cap: "Counts by body mass category in the training set using Python."
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -1457,14 +1453,16 @@ plt.show()
 
 The bar plot confirms what we saw in the summary table: the two body-mass categories are very similar in size. This is useful for the proportion test because we are not dealing with a rare outcome. Both categories are well represented in the training data.
 
-Because the binary variable was created from the quantitative variable `body_mass_g`, it is also useful to inspect the original body-mass distribution and show where the 4000 g cutoff falls.
-
+Because the binary variable was created from the quantitative variable `body_mass_g`, it is also useful to inspect the original body-mass distribution and show where the 4000 g cutoff falls. The histograms are shown in @fig-body-mass-hist-r and @fig-body-mass-hist-python.
 
 ::: {.panel-tabset}
 
 ### R Code
 
 ```{r}
+#| label: fig-body-mass-hist-r
+#| fig-cap: "Distribution of body mass in the training set using R."
+
 ggplot(train_prop, aes(x = body_mass_g)) +
   geom_histogram(bins = 20, color = "black", fill = "skyblue") +
   geom_vline(xintercept = 4000, linetype = "dashed", linewidth = 1.2) +
@@ -1484,6 +1482,9 @@ ggplot(train_prop, aes(x = body_mass_g)) +
 ### Python Code
 
 ```{python}
+#| label: fig-body-mass-hist-python
+#| fig-cap: "Distribution of body mass in the training set using Python."
+
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(8, 6))
@@ -1511,7 +1512,6 @@ plt.show()
 
 :::
 
-
 The histogram shows that the 4000 g cutoff falls near the middle of the body-mass distribution. Penguins to the right of the dashed line are coded as `is_heavy = 1`, while penguins to the left of the dashed line are coded as `is_heavy = 0`. This explains why the two categories are close to balanced: the cutoff splits the training data into two groups of similar size.
 
 Overall, the exploratory analysis confirms that `is_heavy` is a binary response variable and that both categories are well represented. The formal one-sample proportion `z-test` will be conducted using the test set, where we will compare the observed proportion of penguins with body mass greater than 4000 g to the hypothesized value $p_0 = 0.50$.
@@ -1531,7 +1531,7 @@ $$
 \end{cases}
 $$
 
-The parameter of interest is the population proportion of penguins with body mass greater than 4000 g, denoted by $p$. Note that this parameter is unknown and we want to make an inference about it using a random sample.
+The parameter of interest is the population proportion of penguins with body mass greater than 4000 g, denoted by $p$. This parameter is unknown, and we want to make an inference about it using a random sample.
 
 In this example, we compare this population proportion to the reference value
 
@@ -1553,11 +1553,11 @@ For this test, we use:
 -   **Sample used for inference:** `test_prop`
 -   **Significance level:** $\alpha = 0.05$
 
-Because this is a one-sample proportion `z-test`, we assume that the observations are independent and that the normal approximation to the sampling distribution of $\hat{p}$ is reasonable. 
+Because this is a one-sample proportion `z-test`, we assume that the observations are independent and that the normal approximation to the sampling distribution of $\hat{p}$ is reasonable.
 
 ::::: Heads-up
 ::: Heads-up-header
-Quick review!
+Normal approximation check
 :::
 
 ::: Heads-up-container
@@ -1600,13 +1600,7 @@ The null hypothesis states that 50% of penguins in the population have body mass
 
 The alternative hypothesis states that the population proportion of penguins with body mass greater than 4000 g is not 0.50. This includes both possibilities: the population proportion could be less than 0.50 or greater than 0.50.
 
-In this example, a "success" means that a penguin has body mass greater than 4000 g. Therefore, the sample proportion $\hat{p}$ is calculated as
-
-$$
-\hat{p} = \frac{\text{number of penguins with body mass greater than 4000 g}}{\text{total number of penguins in the sample}}.
-$$
-
-For the formal test, we will use the test set and compare the observed sample proportion to the hypothesized value $p_0 = 0.50$.
+In this example, a "success" means that a penguin has body mass greater than 4000 g. For the formal test, we will use the test set and compare the observed sample proportion to the hypothesized value $p_0 = 0.50$.
 
 
 ### Test Flavour and Components
@@ -1629,11 +1623,29 @@ $$
 \texttt{body\_mass\_g} > 4000.
 $$
 
-The test statistic is
+If the observed binary sample values are
+
+$$
+y_1, y_2, \dots, y_n,
+$$
+
+where $y_i = 1$ for a success and $y_i = 0$ otherwise, then the number of successes is
+
+$$
+x = \sum_{i=1}^{n} y_i,
+$$
+
+and the sample proportion can also be written as
+
+$$
+\hat{p} = \frac{1}{n}\sum_{i=1}^{n} y_i.
+$$
+
+The one-sample proportion `z-test` statistic is
 
 $$
 z = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}.
-$$
+$$ {#eq-one-sample-prop-z-statistic}
 
 In this formula:
 
@@ -1644,15 +1656,7 @@ In this formula:
 
 The numerator, $\hat{p} - p_0$, measures how far the observed sample proportion is from the hypothesized population proportion. The denominator, $\sqrt{p_0(1 - p_0)/n}$, scales this difference by the standard error expected under the null hypothesis. Therefore, the test statistic measures how many standard errors the observed sample proportion is away from the hypothesized value.
 
-::::: Heads-up
-::: Heads-up-header
-Heads-up!
-:::
-
-::: Heads-up-container
-The test statistic $z$ is computed from the sample proportion $\hat{p}$. Since $\hat{p}$ would change from sample to sample, the test statistic would also change from sample to sample. The null distribution tells us what values of $z$ are typical when the true population proportion is $p_0$.
-:::
-:::::
+The test statistic $z$ calculated in @eq-one-sample-prop-z-statistic is computed from the sample. This means that $z$ itself is a random variable and varies from sample to sample: if we collected a different random sample of penguins, we would likely get a different sample proportion $\hat{p}$ and therefore a different value of $z$.
 
 ::::: Tip
 ::: Tip-header
@@ -1666,41 +1670,39 @@ $$
 H_0: p = 0.50,
 $$
 
-and when the normal approximation is reasonable, the test statistic
-
-$$
-Z = \frac{\hat{P} - p_0}{\sqrt{p_0(1 - p_0)/n}}
-$$
-
-approximately follows a standard normal distribution:
+and when the normal approximation is reasonable, the test statistic defined in @eq-one-sample-prop-z-statistic approximately follows a standard normal distribution and is usually shown as follows in statistics textbooks:
 
 $$
 Z \approx N(0, 1).
 $$
 
-The word approximately is important here. For a proportion test, the normal distribution is a large-sample approximation. This is why we check that $np_0$ and $n(1-p_0)$ are both reasonably large before using the test.
+This distribution describes the values we would expect the test statistic to take if the null hypothesis were true. The word approximately is important here. For a proportion test, the normal distribution is a large-sample approximation. This is why we check that $np_0$ and $n(1-p_0)$ are both reasonably large before using the test.
 
 Since the alternative hypothesis is two-sided, the p-value is computed as
 
 $$
-\textit{p-value} = 2 \times Pr(Z \geq |z|),
+\textit{p-value} = 2 \times \Pr(Z \geq |z|),
 $$
 
-where $z$ is the test statistic computed from the observed sample.
+where $z$ is the test statistic computed from the observed sample in @eq-one-sample-prop-z-statistic.
 :::
 :::::
 
+
 ### Inferential Conclusions
 
-The goal of the one-sample proportion `z-test` is to decide whether the observed sample proportion is far enough from the hypothesized value to provide evidence against the null hypothesis.
+The null distribution described above gives us a reference point for deciding whether the observed test statistic is unusual. Since the test is two-sided, we are interested in whether the observed value of $z$ is far from 0 in either direction.
 
-The null distribution described above gives us a reference point for deciding whether the observed value of $z$ is unusually large. After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
+The p-value measures the probability of observing a test statistic as far from 0 as the one computed from our sample, or even farther, assuming that the null hypothesis is true.
 
-If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient evidence that the population proportion of penguins with body mass greater than 4000 g is different from 50%.
+After computing the test statistic and p-value, we compare the p-value to the significance level $\alpha = 0.05$.
 
-If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient evidence that the population proportion of penguins with body mass greater than 4000 g is different from 50%.
+If the p-value is less than 0.05, we reject the null hypothesis. In that case, we conclude that the data provide sufficient statistical evidence that the population proportion of penguins with body mass greater than 4000 g is different from 50%.
 
-As before, failing to reject the null hypothesis does not prove that the population proportion is exactly 0.50. It only means that, based on the available sample, we do not have enough evidence to conclude that it differs from 0.50.
+If the p-value is greater than or equal to 0.05, we do not reject the null hypothesis. In that case, we conclude that the data do not provide sufficient statistical evidence that the population proportion of penguins with body mass greater than 4000 g is different from 50%.
+
+As before, failing to reject the null hypothesis does not prove that the population proportion is exactly 0.50. It only means that, based on the available sample, we do not have enough evidence to conclude that it differs from 0.50. We should not make a stronger conclusion than what the hypothesis test supports.
+
 
 ### How to run the test in R and Python?
 
@@ -1772,13 +1774,12 @@ z_stat, p_value = proportions_ztest(
     prop_var=p0
 )
 
-
 # 95% confidence interval for the population proportion
 ci_lower, ci_upper = proportion_confint(
     count=x_success,
     nobs=n_test,
     alpha=0.05,
-    method="normal"
+    method="wilson"
 )
 
 print(f"Number of successes: {x_success}")
@@ -1831,7 +1832,11 @@ The relevant inputs are as follows:
 
 -   `alternative` specifies the direction of the alternative hypothesis. We use `alternative = "two-sided"` because our alternative hypothesis is $H_A: p \neq 0.50$.
 
-The function returns the z-statistic and p-value. We also use `proportion_confint()` to compute a 95% confidence interval for the population proportion. The output gives the number of successes, sample size, sample proportion, z-statistic, p-value, and confidence interval.
+-   `prop_var = p0` tells Python to use the null-hypothesis proportion when computing the standard error. This matches the textbook test statistic in @eq-one-sample-prop-z-statistic, where the denominator is based on $p_0(1-p_0)$.
+
+The function returns the z-statistic and p-value. We also use `proportion_confint()` to compute a 95% confidence interval for the population proportion. In this example, we use `method = "wilson"` because it gives a large-sample confidence interval for a proportion and is close to the confidence interval reported by `prop.test()` in `R`.
+
+The output gives the number of successes, sample size, sample proportion, z-statistic, p-value, and confidence interval.
 
 
 ### Storytelling
@@ -1863,5 +1868,3 @@ $$
 This interval includes 0.50, which supports the same conclusion as the hypothesis test. A population proportion of 50% is still a plausible value based on these data.
 
 In plain language, although the test-set proportion is slightly above 50%, the difference is small relative to the sampling variability. Based on this sample, we do not have strong evidence that the population proportion of penguins with body mass greater than 4000 g differs from 50%.
-
-
